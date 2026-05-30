@@ -5995,4 +5995,10 @@
       return window.atob(window.atob(window.atob(this.apiUrl)));
     }
   }.init()));
+  window.__cells = _0x14d4a3;
+  window.__food = _0x14d4a3.food;
+  window.__camera = _0xddb6d6;
+  window.__player = _0x90a1a7;
+  window.__world = _0x996564;
+  window.__myCells = _0x14d4a3.myCells;
 }(window, $, document);
