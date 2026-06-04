@@ -219,6 +219,7 @@
     showMassInLB: "Show mass in leaderboard",
     cellLuminous: "Cell Luminous",
     multiboxShield: "Multibox Shield",
+    grayscaleInactive: "Grayscale Inactive",
     antiAliasing: "Anti-aliasing",
     virusRing: "Virus Ring",
     foodGlow: "Food Glow",
@@ -373,6 +374,7 @@
     virusGlowStrength: "Virus glow strength",
     virusRingWidth: "Virus Ring Width",
     virusRingColor: "Virus Ring Color",
+    virusGearColor: "Virus Gear Color",
     foodGlowSize: "Food Glow Size",
     foodGlowStrength: "Food Glow Strength",
     foodGlowColor: "Food Glow Color",
@@ -437,6 +439,7 @@
       this.showMassInLB = _0x19d5af.get("settings", "showMassInLB") || 'off';
       this.cellLuminous = _0x19d5af.get("settings", "cellLuminous") || 'off';
       this.multiboxShield = _0x19d5af.get("settings", "multiboxShield") || 'off';
+      this.grayscaleInactive = _0x19d5af.get("settings", "grayscaleInactive") || 'off';
       this.antiAliasing = _0x19d5af.get("settings", "antiAliasing") || 'on';
       this.virusRing = _0x19d5af.get("settings", "virusRing") || 'off';
       this.foodGlow = _0x19d5af.get("settings", "foodGlow") || 'off';
@@ -1621,6 +1624,7 @@
       this.virusGlowStrength = ~~_0x19d5af.get("theme", "virusGlowStrength") || 5;
       this.virusRingWidth = ~~_0x19d5af.get("theme", "virusRingWidth") || 10;
       this.virusRingColor = _0x19d5af.get("theme", "virusRingColor") || "#ffffff";
+      this.virusGearColor = _0x19d5af.get("theme", "virusGearColor") || "#ff0066";
       this.ghostColor = _0x19d5af.get("theme", "ghostColor") || "#aaa";
       this.selfColor = _0x19d5af.get("theme", "selfColor") || "#fff";
       this.selfViewportColor = _0x19d5af.get("theme", "selfViewportColor") || "#fff";
@@ -1645,7 +1649,7 @@
       this.shieldImage.onload = () => { this._shieldReady = true; };
       this.shieldImage.src = this.multiboxShieldUrl && this.multiboxShieldUrl.length > 0
         ? this.multiboxShieldUrl
-        : "https://raw.githubusercontent.com/darknessxd/Endymion-3rb/main/img/hslo_ring.png";
+        : "https://raw.githubusercontent.com/darknessxd/3rbio-multibox/main/hslo_ring.png";
     }
     static ["_initMaouCircle"]() {
       this.maouRotation = 0;
@@ -1657,7 +1661,7 @@
       this.maouInner = new Image();
       this.maouOuter.crossOrigin = "anonymous";
       this.maouInner.crossOrigin = "anonymous";
-      const _0xb0d1c2 = this.maouCircleUrl && this.maouCircleUrl.length > 0 ? this.maouCircleUrl : "https://raw.githubusercontent.com/darknessxd/Endymion-3rb/main/img/";
+      const _0xb0d1c2 = this.maouCircleUrl && this.maouCircleUrl.length > 0 ? this.maouCircleUrl : "https://raw.githubusercontent.com/darknessxd/3rbio-multibox/main/";
       this.maouOuter.onload = () => { this._maouReady = true; };
       this.maouInner.onload = () => { if (this.maouOuter.complete) this._maouReady = true; };
       this.maouOuter.src = _0xb0d1c2 + "hslo_ring.png";
@@ -4368,6 +4372,10 @@
     static ["getColor"](_0x16d8f4, _0x5f426b) {
       return 'rgb(' + (0 | _0x16d8f4.r * _0x5f426b) + ',' + (0 | _0x16d8f4.g * _0x5f426b) + ',' + (0 | _0x16d8f4.b * _0x5f426b) + ')';
     }
+    static ["getGrayscale"](_0x16d8f4, _0x5f426b) {
+      var _0xgray = 0 | (0.299 * _0x16d8f4.r * _0x5f426b + 0.587 * _0x16d8f4.g * _0x5f426b + 0.114 * _0x16d8f4.b * _0x5f426b);
+      return 'rgb(' + _0xgray + ',' + _0xgray + ',' + _0xgray + ')';
+    }
   }
   class _0x4c265b {
     constructor(_0x491bf5) {
@@ -5605,13 +5613,34 @@
           _0xfdf4f4.globalAlpha = 1;
           _0xfdf4f4.stroke();
           if (_0x2cc0f3.virusRing === 'on') {
-            const _0x3c2b6a = _0x5987fa.animRadius * _0x480be4.virusRingWidth / 100;
-            _0xfdf4f4.beginPath();
-            _0xfdf4f4.arc(_0x5987fa.animX - _0x1241cd.x, _0x5987fa.animY - _0x1241cd.y, _0x5987fa.animRadius + 5 - (_0x3c2b6a >> 1), 0, this.pi2, true);
-            _0xfdf4f4.closePath();
-            _0xfdf4f4.lineWidth = _0x3c2b6a | 0;
-            _0xfdf4f4.strokeStyle = _0x480be4.virusRingColor;
-            _0xfdf4f4.stroke();
+            const _0x2cx = _0x5987fa.animX - _0x1241cd.x;
+            const _0x2cy = _0x5987fa.animY - _0x1241cd.y;
+            const _0x2cr = _0x5987fa.animRadius + 5;
+            const _0x2teeth = 16;
+            const _0x2step = this.pi2 / _0x2teeth;
+            const _0x2toothH = _0x2cr * _0x480be4.virusRingWidth / 100;
+            const _0x2outerR = _0x2cr + _0x2toothH;
+            const _0x2innerR = _0x2cr;
+            const _0x2ctrlR = _0x2innerR + _0x2toothH * 0.7;
+            const _0x2rot = (_0xb45f1b.time / 3000 * (_0x480be4.globalRotationSpeed || 5)) % this.pi2;
+            _0xfdf4f4.save();
+            _0xfdf4f4.translate(_0x2cx, _0x2cy);
+            _0xfdf4f4.rotate(_0x2rot);
+            _0xfdf4f4.fillStyle = _0x480be4.virusGearColor || _0x480be4.virusRingColor;
+            _0xfdf4f4.globalAlpha = 0.8;
+            for (let _0x2i = 0; _0x2i < _0x2teeth; _0x2i++) {
+              const _0x2a = _0x2i * _0x2step;
+              const _0x2l = _0x2a - _0x2step * 0.3;
+              const _0x2c = _0x2a + _0x2step * 0.3;
+              _0xfdf4f4.beginPath();
+              _0xfdf4f4.moveTo(Math.cos(_0x2l) * _0x2innerR, Math.sin(_0x2l) * _0x2innerR);
+              _0xfdf4f4.quadraticCurveTo(Math.cos(_0x2l) * _0x2ctrlR, Math.sin(_0x2l) * _0x2ctrlR, Math.cos(_0x2a) * _0x2outerR, Math.sin(_0x2a) * _0x2outerR);
+              _0xfdf4f4.quadraticCurveTo(Math.cos(_0x2c) * _0x2ctrlR, Math.sin(_0x2c) * _0x2ctrlR, Math.cos(_0x2c) * _0x2innerR, Math.sin(_0x2c) * _0x2innerR);
+              _0xfdf4f4.closePath();
+              _0xfdf4f4.fill();
+            }
+            _0xfdf4f4.globalAlpha = 1;
+            _0xfdf4f4.restore();
             _0xfdf4f4.strokeStyle = _0x480be4.virusBorderColor;
             _0xfdf4f4.lineWidth = _0x480be4.virusBorderWidth;
           }
@@ -5629,17 +5658,17 @@
           } else if (_0x2cc0f3.virusMass === "fill") {
             const _0x175afd = _0x5987fa.animX - _0x1241cd.x;
             const _0x4f4e2b = _0x5987fa.animY - _0x1241cd.y;
-            const _0x4edbb9 = ~~_0x5987fa.animRadius * 0.35;
-            _0xfdf4f4.fillStyle = "rgba(0,0,0,0.5)";
+            const _0x2massProg = Math.min(1, Math.max(0, (_0x5987fa.mass - 100) / 100));
+            const _0x2fillR = _0x5987fa.animRadius * _0x2massProg;
+            _0xfdf4f4.save();
+            _0xfdf4f4.globalAlpha = 0.8;
+            _0xfdf4f4.fillStyle = _0x480be4.virusBorderColor;
             _0xfdf4f4.beginPath();
-            _0xfdf4f4.arc(_0x175afd, _0x4f4e2b, _0x5987fa.animRadius + 5, 0, this.pi2, true);
+            _0xfdf4f4.arc(_0x175afd, _0x4f4e2b, _0x2fillR, 0, this.pi2, true);
             _0xfdf4f4.closePath();
             _0xfdf4f4.fill();
-            _0xfdf4f4.fillStyle = "#fff";
-            _0xfdf4f4.font = "bold " + Math.max(12, _0x4edbb9) + "px ubuntu";
-            _0xfdf4f4.textAlign = "center";
-            _0xfdf4f4.textBaseline = "middle";
-            _0xfdf4f4.fillText(_0x5987fa.mass, _0x175afd, _0x4f4e2b);
+            _0xfdf4f4.globalAlpha = 1;
+            _0xfdf4f4.restore();
           }
         } else if (_0x5987fa.isFood && _0x2cc0f3.foodGlow === "on") {
           _0xfdf4f4.fillStyle = _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
@@ -5649,7 +5678,7 @@
           _0xfdf4f4.shadowBlur = 0;
           _0xfdf4f4.shadowColor = 'transparent';
         } else {
-          _0xfdf4f4.fillStyle = _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
+          _0xfdf4f4.fillStyle = _0x2cc0f3.grayscaleInactive === "on" && _0x5987fa.isMine && _0x5987fa.cellType !== _0x90a1a7.typeID ? _0x2ab3a8.getGrayscale(_0x5987fa.colorObject, _0x30af86) : _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
           if (_0x5ab10a * _0x21653d < 1) {
             _0xfdf4f4.globalAlpha = _0x5ab10a * _0x21653d;
             _0xfdf4f4.fill();
@@ -5716,7 +5745,7 @@
             }
           }
         }
-        if (_0x21653d === 1 && (_0x5987fa.isMine && !_0x5c97e3 || !_0x5987fa.isMine && _0x7ae23d)) {
+        if (_0x21653d === 1 && !_0x5987fa.isVirus && (_0x5987fa.isMine && !_0x5c97e3 || !_0x5987fa.isMine && _0x7ae23d)) {
           const _0x2e6835 = _0x34f3bb.mass(_0x5987fa);
           if (_0x2e6835) {
             const _0x1c92d8 = _0x494dac === 'on' ? _0x5987fa.animRadius : _0x494dac === "stepped" ? 50 + 75 * (_0x5987fa.animRadius / 75 | 0) : _0x5987fa.radius;
@@ -5995,10 +6024,4 @@
       return window.atob(window.atob(window.atob(this.apiUrl)));
     }
   }.init()));
-  window.__cells = _0x14d4a3;
-  window.__food = _0x14d4a3.food;
-  window.__camera = _0xddb6d6;
-  window.__player = _0x90a1a7;
-  window.__world = _0x996564;
-  window.__myCells = _0x14d4a3.myCells;
 }(window, $, document);
