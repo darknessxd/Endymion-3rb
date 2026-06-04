@@ -6024,4 +6024,117 @@
       return window.atob(window.atob(window.atob(this.apiUrl)));
     }
   }.init()));
+  const PARTY_SERVER = 'wss://endymion-party.ssdarkness70.workers.dev';
+  class _0xpartyNet {
+    static init() {
+      this.ws = null;
+      this.connected = false;
+      this.roomCode = '';
+      this.myId = '';
+      this.posInterval = null;
+      this.reconnectTimer = null;
+      _0x14f7b2("#join-party").click(() => this.joinParty());
+      _0x14f7b2("#create-party").click(() => this.createParty());
+    }
+    static joinParty() {
+      const code = _0x14f7b2("#party-token").val().trim().toUpperCase();
+      if (!code) return _0x40f48a.alert("Party", "Enter a party code!");
+      this.roomCode = code;
+      this.connect();
+    }
+    static createParty() {
+      const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+      _0x14f7b2("#party-token").val(code);
+      this.roomCode = code;
+      this.connect();
+    }
+    static connect() {
+      if (this.ws) this.disconnect();
+      this.ws = new WebSocket(PARTY_SERVER + '/party/' + this.roomCode + '/ws');
+      this.ws.onopen = () => {
+        this.connected = true;
+        _0x40f48a.normal("Party", "Connected to room: " + this.roomCode);
+        this.ws.send(JSON.stringify({
+          type: 'join',
+          nickname: _0x90a1a7.nick || 'Player',
+          skin: _0x90a1a7.skin || '',
+          tag: _0x90a1a7.tag || '',
+          team: 1
+        }));
+        this.startPositionLoop();
+      };
+      this.ws.onmessage = (e) => {
+        try { this.handleMessage(JSON.parse(e.data)); } catch (err) {}
+      };
+      this.ws.onclose = () => {
+        this.connected = false;
+        this.stopPositionLoop();
+        _0x40f48a.alert("Party", "Disconnected");
+        this.reconnectTimer = setTimeout(() => { if (this.roomCode) this.connect(); }, 5000);
+      };
+      this.ws.onerror = () => {};
+    }
+    static disconnect() {
+      if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
+      this.stopPositionLoop();
+      if (this.ws) { this.ws.close(); this.ws = null; }
+      this.connected = false;
+      this.roomCode = '';
+      _0x12ac51.teamPlayers.clear();
+    }
+    static startPositionLoop() {
+      this.stopPositionLoop();
+      this.posInterval = setInterval(() => {
+        if (!this.connected || !this.ws || !_0x90a1a7.isAlive) return;
+        this.ws.send(JSON.stringify({
+          type: 'position',
+          x: ~~_0x90a1a7.x,
+          y: ~~_0x90a1a7.y,
+          mass: _0x90a1a7.mass
+        }));
+      }, 200);
+    }
+    static stopPositionLoop() {
+      if (this.posInterval) { clearInterval(this.posInterval); this.posInterval = null; }
+    }
+    static handleMessage(msg) {
+      switch (msg.type) {
+        case 'joined':
+          this.myId = msg.id;
+          break;
+        case 'player_join':
+        case 'player_update':
+          _0x12ac51.teamPlayers.set(msg.id, new _0xb33099(msg.id));
+          const p = _0x12ac51.teamPlayers.get(msg.id);
+          p.nick = msg.tag ? '[' + msg.tag + '] ' + msg.nickname : msg.nickname;
+          p.skin = msg.skin || '';
+          p.team = msg.team || 1;
+          p.isAlive = 1;
+          break;
+        case 'player_list':
+          _0x12ac51.teamPlayers.clear();
+          for (const pl of msg.players) {
+            if (pl.id === this.myId) continue;
+            _0x12ac51.teamPlayers.set(pl.id, new _0xb33099(pl.id));
+            const pp = _0x12ac51.teamPlayers.get(pl.id);
+            pp.nick = pl.tag ? '[' + pl.tag + '] ' + pl.nickname : pl.nickname;
+            pp.skin = pl.skin || '';
+            pp.team = pl.team || 1;
+            pp.isAlive = 1;
+          }
+          break;
+        case 'position':
+          const tp = _0x12ac51.teamPlayers.get(msg.id);
+          if (tp) { tp.x = msg.x; tp.y = msg.y; tp.mass = msg.mass || 0; }
+          break;
+        case 'leave':
+          _0x12ac51.teamPlayers["delete"](msg.id);
+          break;
+        case 'chat':
+          _0x40f48a.normal(msg.nickname || 'Party', msg.text);
+          break;
+      }
+    }
+  }
+  _0xpartyNet.init();
 }(window, $, document);
