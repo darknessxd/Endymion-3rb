@@ -5069,8 +5069,9 @@
       this.biggest = new _0xb33099(0);
     }
     static ["clear"]() {
-      this.teamPlayers.clear();
-      console.log("cleared");
+      for (const _key of this.teamPlayers.keys()) {
+        if (typeof _key === 'number') this.teamPlayers["delete"](_key);
+      }
     }
     static ['remove'](_0x3660b6) {
       this.teamPlayers["delete"](_0x3660b6);
@@ -5467,6 +5468,7 @@
       this.createRGBset();
       this.mouseTracker();
       this.cells();
+      this.partyCells();
       this.commands();
       _0x34f3bb.cleaner();
       this.ctx.restore();
@@ -5757,6 +5759,49 @@
               _0xfdf4f4.drawImage(_0x2e6835, _0x5987fa.animX - _0x1241cd.x - (_0x348dc3 >> 1), _0x5987fa.animY - _0x1241cd.y + _0x20bbfa, _0x348dc3, _0x418aca);
             }
           }
+        }
+      }
+    }
+    static ["partyCells"]() {
+      const _ctx = this.ctx;
+      const _viewAlpha = _0x480be4.cellTransparency / 100;
+      for (const _pp of _0x12ac51.teamPlayers.values()) {
+        if (!_pp.isAlive) continue;
+        _pp.animate();
+        const _pr = Math.sqrt(Math.max(1, _pp.mass)) * 4;
+        const _px = _pp.animX;
+        const _py = _pp.animY;
+        const _hasSkin = this.skinMap.has(_pp.worldID);
+        _ctx.beginPath();
+        _ctx.arc(_px, _py, _pr + 5, 0, this.pi2, true);
+        _ctx.closePath();
+        if (_hasSkin) {
+          const _ps = this.getCustomSkin(_pp.worldID);
+          if (_ps) {
+            _ctx.drawImage(_ps, _px - _pr - 5, _py - _pr - 5, 2 * (_pr + 5), 2 * (_pr + 5));
+          }
+        } else {
+          _ctx.globalAlpha = _viewAlpha;
+          _ctx.fillStyle = _pp.colorHex || '#555';
+          _ctx.fill();
+          _ctx.globalAlpha = 1;
+        }
+        _ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+        _ctx.lineWidth = 2;
+        _ctx.stroke();
+        if (_pp.nick) {
+          _ctx.fillStyle = '#fff';
+          _ctx.font = 'bold ' + Math.max(12, _pr * 0.3) + 'px Ubuntu';
+          _ctx.textAlign = 'center';
+          _ctx.textBaseline = 'middle';
+          _ctx.fillText(_pp.nick, _px, _py - _pr * 0.5);
+        }
+        if (_pp.mass > 0) {
+          _ctx.fillStyle = '#fff';
+          _ctx.font = Math.max(12, _pr * 0.3) + 'px Ubuntu';
+          _ctx.textAlign = 'center';
+          _ctx.textBaseline = 'middle';
+          _ctx.fillText(_pp.mass, _px, _py + _pr * 0.5);
         }
       }
     }
@@ -6082,7 +6127,9 @@
       if (this.ws) { this.ws.onclose = null; this.ws.close(); this.ws = null; }
       this.connected = false;
       this.roomCode = '';
-      _0x12ac51.teamPlayers.clear();
+      for (const _k of _0x12ac51.teamPlayers.keys()) {
+        if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
+      }
     }
     static startPositionLoop() {
       this.stopPositionLoop();
@@ -6114,7 +6161,9 @@
           p.isAlive = 1;
           break;
         case 'player_list':
-          _0x12ac51.teamPlayers.clear();
+          for (const _k of _0x12ac51.teamPlayers.keys()) {
+            if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
+          }
           for (const pl of msg.players) {
             if (pl.id === this.myId) continue;
             _0x12ac51.teamPlayers.set(pl.id, new _0xb33099(pl.id));
