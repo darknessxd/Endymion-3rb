@@ -5067,11 +5067,13 @@
       this.teamData = _0x5e31b7;
       this.biggestIsOn = false;
       this.biggest = new _0xb33099(0);
+      this.partyCells = new Map();
     }
     static ["clear"]() {
       for (const _key of this.teamPlayers.keys()) {
         if (typeof _key === 'number') this.teamPlayers["delete"](_key);
       }
+      this.partyCells.clear();
     }
     static ['remove'](_0x3660b6) {
       this.teamPlayers["delete"](_0x3660b6);
@@ -5765,43 +5767,48 @@
     static ["partyCells"]() {
       const _ctx = this.ctx;
       const _viewAlpha = _0x480be4.cellTransparency / 100;
-      for (const _pp of _0x12ac51.teamPlayers.values()) {
-        if (!_pp.isAlive) continue;
-        _pp.animate();
-        const _pr = Math.sqrt(Math.max(1, _pp.mass)) * 4;
-        const _px = _pp.animX;
-        const _py = _pp.animY;
+      for (const [_pid, _cells] of _0x12ac51.partyCells) {
+        const _pp = _0x12ac51.teamPlayers.get(_pid);
+        if (!_pp) continue;
         const _hasSkin = this.skinMap.has(_pp.worldID);
-        _ctx.beginPath();
-        _ctx.arc(_px, _py, _pr + 5, 0, this.pi2, true);
-        _ctx.closePath();
-        if (_hasSkin) {
-          const _ps = this.getCustomSkin(_pp.worldID);
-          if (_ps) {
-            _ctx.drawImage(_ps, _px - _pr - 5, _py - _pr - 5, 2 * (_pr + 5), 2 * (_pr + 5));
+        for (let _ci = 0; _ci < _cells.length; _ci++) {
+          const _c = _cells[_ci];
+          const _pr = _c.r;
+          const _px = _c.x;
+          const _py = _c.y;
+          _ctx.beginPath();
+          _ctx.arc(_px, _py, _pr + 5, 0, this.pi2, true);
+          _ctx.closePath();
+          if (_hasSkin) {
+            const _ps = this.getCustomSkin(_pp.worldID);
+            if (_ps) {
+              _ctx.drawImage(_ps, _px - _pr - 5, _py - _pr - 5, 2 * (_pr + 5), 2 * (_pr + 5));
+            }
+          } else {
+            _ctx.globalAlpha = _viewAlpha;
+            _ctx.fillStyle = _pp.colorHex || '#555';
+            _ctx.fill();
+            _ctx.globalAlpha = 1;
           }
-        } else {
-          _ctx.globalAlpha = _viewAlpha;
-          _ctx.fillStyle = _pp.colorHex || '#555';
-          _ctx.fill();
-          _ctx.globalAlpha = 1;
-        }
-        _ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-        _ctx.lineWidth = 2;
-        _ctx.stroke();
-        if (_pp.nick) {
-          _ctx.fillStyle = '#fff';
-          _ctx.font = 'bold ' + Math.max(12, _pr * 0.3) + 'px Ubuntu';
-          _ctx.textAlign = 'center';
-          _ctx.textBaseline = 'middle';
-          _ctx.fillText(_pp.nick, _px, _py - _pr * 0.5);
-        }
-        if (_pp.mass > 0) {
-          _ctx.fillStyle = '#fff';
-          _ctx.font = Math.max(12, _pr * 0.3) + 'px Ubuntu';
-          _ctx.textAlign = 'center';
-          _ctx.textBaseline = 'middle';
-          _ctx.fillText(_pp.mass, _px, _py + _pr * 0.5);
+          _ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+          _ctx.lineWidth = 2;
+          _ctx.stroke();
+          if (_ci === 0 && _pp.nick) {
+            const _nf = 'bold ' + Math.max(12, _pr * 0.3) + 'px Ubuntu';
+            _ctx.font = _nf;
+            _ctx.fillStyle = '#fff';
+            _ctx.textAlign = 'center';
+            _ctx.textBaseline = 'bottom';
+            _ctx.fillText(_pp.nick, _px, _py - _pr - 5);
+          }
+          if (_c.m > 0) {
+            const _mf = Math.max(12, _pr * 0.3) + 'px Ubuntu';
+            _ctx.font = _mf;
+            _ctx.fillStyle = '#fff';
+            _ctx.textAlign = 'center';
+            _ctx.textBaseline = 'middle';
+            _ctx.fillText(_c.m, _px, _py);
+          }
         }
       }
     }
@@ -6130,16 +6137,22 @@
       for (const _k of _0x12ac51.teamPlayers.keys()) {
         if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
       }
+      _0x12ac51.partyCells.clear();
     }
     static startPositionLoop() {
       this.stopPositionLoop();
       this.posInterval = setInterval(() => {
         if (!this.connected || !this.ws || !_0x90a1a7.isAlive) return;
+        const cells = [];
+        for (const c of _0x14d4a3.myCells.values()) {
+          cells.push({ x: ~~c.animX, y: ~~c.animY, r: ~~c.animRadius, m: c.staticMass });
+        }
+        for (const c of _0x14d4a3.myCells2.values()) {
+          cells.push({ x: ~~c.animX, y: ~~c.animY, r: ~~c.animRadius, m: c.staticMass });
+        }
         this.ws.send(JSON.stringify({
           type: 'position',
-          x: ~~_0x90a1a7.x,
-          y: ~~_0x90a1a7.y,
-          mass: _0x90a1a7.mass
+          cells: cells
         }));
       }, 200);
     }
@@ -6157,6 +6170,7 @@
           const p = _0x12ac51.teamPlayers.get(msg.id);
           p.nick = msg.tag ? '[' + msg.tag + '] ' + msg.nickname : msg.nickname;
           p.skin = msg.skin || '';
+          p.colorHex = '#' + (Math.abs(msg.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 0xffffff)).toString(16).padStart(6, '0');
           p.team = msg.team || 1;
           p.isAlive = 1;
           break;
@@ -6164,22 +6178,39 @@
           for (const _k of _0x12ac51.teamPlayers.keys()) {
             if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
           }
+          _0x12ac51.partyCells.clear();
           for (const pl of msg.players) {
             if (pl.id === this.myId) continue;
             _0x12ac51.teamPlayers.set(pl.id, new _0xb33099(pl.id));
             const pp = _0x12ac51.teamPlayers.get(pl.id);
             pp.nick = pl.tag ? '[' + pl.tag + '] ' + pl.nickname : pl.nickname;
             pp.skin = pl.skin || '';
+            pp.colorHex = '#' + (Math.abs(pl.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 0xffffff)).toString(16).padStart(6, '0');
             pp.team = pl.team || 1;
             pp.isAlive = 1;
           }
           break;
         case 'position':
-          const tp = _0x12ac51.teamPlayers.get(msg.id);
-          if (tp) { tp.x = msg.x; tp.y = msg.y; tp.mass = msg.mass || 0; }
+          _0x12ac51.partyCells["delete"](msg.id);
+          if (msg.cells) {
+            const arr = [];
+            let _tx = 0, _ty = 0, _tm = 0;
+            for (const c of msg.cells) {
+              arr.push({ x: c.x, y: c.y, r: c.r, m: c.m, id: msg.id });
+              _tx += c.x; _ty += c.y; _tm += c.m;
+            }
+            _0x12ac51.partyCells.set(msg.id, arr);
+            const tp = _0x12ac51.teamPlayers.get(msg.id);
+            if (tp) {
+              tp.x = _tx / arr.length;
+              tp.y = _ty / arr.length;
+              tp.mass = _tm;
+            }
+          }
           break;
         case 'leave':
           _0x12ac51.teamPlayers["delete"](msg.id);
+          _0x12ac51.partyCells["delete"](msg.id);
           break;
         case 'chat':
           _0x40f48a.normal(msg.nickname || 'Party', msg.text);
