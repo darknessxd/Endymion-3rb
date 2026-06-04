@@ -6049,6 +6049,7 @@
       this.connect();
     }
     static connect() {
+      if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
       if (this.ws) this.disconnect();
       this.ws = new WebSocket(PARTY_SERVER + '/party/' + this.roomCode + '/ws');
       this.ws.onopen = () => {
@@ -6067,6 +6068,7 @@
         try { this.handleMessage(JSON.parse(e.data)); } catch (err) {}
       };
       this.ws.onclose = () => {
+        this.ws = null;
         this.connected = false;
         this.stopPositionLoop();
         _0x40f48a.alert("Party", "Disconnected");
@@ -6077,7 +6079,7 @@
     static disconnect() {
       if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
       this.stopPositionLoop();
-      if (this.ws) { this.ws.close(); this.ws = null; }
+      if (this.ws) { this.ws.onclose = null; this.ws.close(); this.ws = null; }
       this.connected = false;
       this.roomCode = '';
       _0x12ac51.teamPlayers.clear();
