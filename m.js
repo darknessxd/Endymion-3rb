@@ -4675,6 +4675,13 @@
       if (86 === _0x6ab5d9 && 1 === _0x24de2f) {
         this.handleChat(_0x4f5972);
       }
+      if (200 === _0x6ab5d9) {
+        this.handlePartyData(_0x4f5972);
+      }
+    }
+    static ["handlePartyData"](_0x1001a4) {
+      const str = _0x1001a4.readUTF8string();
+      try { _0xpartyNet.handleMessage(JSON.parse(str)); } catch (e) {}
     }
     static ["handleChat"](_0x4be406) {
       var _0id = _0x4be406.readUInt32();
@@ -6077,88 +6084,51 @@
       return window.atob(window.atob(window.atob(this.apiUrl)));
     }
   }.init()));
-  const PARTY_SERVER = 'wss://endymion-party.ssdarkness70.workers.dev';
   class _0xpartyNet {
     static init() {
-      this.ws = null;
-      this.connected = false;
       this.roomCode = '';
       this.myId = '';
-      this.posInterval = null;
-      this.reconnectTimer = null;
+      this.connected = false;
       _0x14f7b2("#join-party").click(() => this.joinParty());
       _0x14f7b2("#create-party").click(() => this.createParty());
+    }
+    static send(type, data) {
+      const payload = Object.assign({type}, data);
+      const str = JSON.stringify(payload);
+      const enc = unescape(encodeURIComponent(str));
+      const buf = new ArrayBuffer(2 + enc.length);
+      const dv = new DataView(buf);
+      dv.setUint8(0, 200, true);
+      for (let i = 0; i < enc.length; i++) dv.setUint8(1 + i, enc.charCodeAt(i), true);
+      dv.setUint8(1 + enc.length, 0, true);
+      const tab = _0x90a1a7.typeID;
+      if (_0x18a8d1.chekConnection(tab)) _0x18a8d1.sendPacket(dv, tab);
     }
     static joinParty() {
       const code = _0x14f7b2("#party-token").val().trim().toUpperCase();
       if (!code) return _0x40f48a.alert("Party", "Enter a party code!");
       this.roomCode = code;
-      this.connect();
+      this.connected = true;
+      _0x40f48a.normal("Party", "Joining room: " + code);
+      this.send('join', { code, nickname: _0x90a1a7.nick || 'Player', skin: _0x90a1a7.skin || '', tag: _0x90a1a7.tag || '' });
     }
     static createParty() {
       const code = Math.random().toString(36).substring(2, 8).toUpperCase();
       _0x14f7b2("#party-token").val(code);
       this.roomCode = code;
-      this.connect();
+      this.connected = true;
+      _0x40f48a.normal("Party", "Created room: " + code);
+      this.send('join', { code, nickname: _0x90a1a7.nick || 'Player', skin: _0x90a1a7.skin || '', tag: _0x90a1a7.tag || '' });
     }
-    static connect() {
-      if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
-      if (this.ws) this.disconnect();
-      this.ws = new WebSocket(PARTY_SERVER + '/party/' + this.roomCode + '/ws');
-      this.ws.onopen = () => {
-        this.connected = true;
-        _0x40f48a.normal("Party", "Connected to room: " + this.roomCode);
-        this.ws.send(JSON.stringify({
-          type: 'join',
-          nickname: _0x90a1a7.nick || 'Player',
-          skin: _0x90a1a7.skin || '',
-          tag: _0x90a1a7.tag || '',
-          team: 1
-        }));
-        this.startPositionLoop();
-      };
-      this.ws.onmessage = (e) => {
-        try { this.handleMessage(JSON.parse(e.data)); } catch (err) {}
-      };
-      this.ws.onclose = () => {
-        this.ws = null;
-        this.connected = false;
-        this.stopPositionLoop();
-        _0x40f48a.alert("Party", "Disconnected");
-        this.reconnectTimer = setTimeout(() => { if (this.roomCode) this.connect(); }, 5000);
-      };
-      this.ws.onerror = () => {};
-    }
-    static disconnect() {
-      if (this.reconnectTimer) { clearTimeout(this.reconnectTimer); this.reconnectTimer = null; }
-      this.stopPositionLoop();
-      if (this.ws) { this.ws.onclose = null; this.ws.close(); this.ws = null; }
-      this.connected = false;
+    static leave() {
+      if (this.roomCode) this.send('leave', { code: this.roomCode });
       this.roomCode = '';
+      this.connected = false;
+      this.myId = '';
       for (const _k of _0x12ac51.teamPlayers.keys()) {
         if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
       }
       _0x12ac51.partyCells.clear();
-    }
-    static startPositionLoop() {
-      this.stopPositionLoop();
-      this.posInterval = setInterval(() => {
-        if (!this.connected || !this.ws || !_0x90a1a7.isAlive) return;
-        const cells = [];
-        for (const c of _0x14d4a3.myCells.values()) {
-          cells.push({ x: ~~c.animX, y: ~~c.animY, r: ~~c.animRadius, m: c.staticMass });
-        }
-        for (const c of _0x14d4a3.myCells2.values()) {
-          cells.push({ x: ~~c.animX, y: ~~c.animY, r: ~~c.animRadius, m: c.staticMass });
-        }
-        this.ws.send(JSON.stringify({
-          type: 'position',
-          cells: cells
-        }));
-      }, 200);
-    }
-    static stopPositionLoop() {
-      if (this.posInterval) { clearInterval(this.posInterval); this.posInterval = null; }
     }
     static handleMessage(msg) {
       switch (msg.type) {
@@ -6202,11 +6172,7 @@
             }
             _0x12ac51.partyCells.set(msg.id, arr);
             const tp = _0x12ac51.teamPlayers.get(msg.id);
-            if (tp) {
-              tp.x = _tx / arr.length;
-              tp.y = _ty / arr.length;
-              tp.mass = _tm;
-            }
+            if (tp) { tp.x = _tx / arr.length; tp.y = _ty / arr.length; tp.mass = _tm; }
           }
           break;
         case 'leave':
