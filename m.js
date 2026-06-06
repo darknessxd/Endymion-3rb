@@ -3713,10 +3713,10 @@
       this.timeStamp = _0xb45f1b.time;
     }
     get ['mapX']() {
-      return (this.animX + 8000) / 16000 * _0x5cda9b.size;
+      return (this.animX - _0x996564.left) / _0x996564.edge * _0x5cda9b.size;
     }
     get ["mapY"]() {
-      return (this.animY + 8000) / 16000 * _0x5cda9b.size;
+      return (this.animY - _0x996564.top) / _0x996564.edge * _0x5cda9b.size;
     }
   }
   class _0x996564 {
@@ -5770,7 +5770,8 @@
       for (const [_pid, _cells] of _0x12ac51.partyCells) {
         const _pp = _0x12ac51.teamPlayers.get(_pid);
         if (!_pp) continue;
-        const _hasSkin = this.skinMap.has(_pp.worldID);
+        const _wid = _pp.worldID;
+        const _hasSkin = this.skinMap.has(_wid);
         for (let _ci = 0; _ci < _cells.length; _ci++) {
           const _c = _cells[_ci];
           const _pr = _c.r;
