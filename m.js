@@ -6090,12 +6090,26 @@
       this._t = document.getElementById('party-token');
       this._c = document.getElementById('create-party');
       this._j = document.getElementById('join-party');
+      this._l = document.getElementById('party-leave');
+      this._d = document.getElementById('party-code-display');
 
-      console.log("Party init: t=" + !!this._t + " c=" + !!this._c + " j=" + !!this._j);
+      console.log("Party init: t=" + !!this._t + " c=" + !!this._c + " j=" + !!this._j + " l=" + !!this._l);
 
       if (this._c) this._c.addEventListener('click', () => { console.log("Party: Create clicked"); this.createParty(); });
       if (this._j) this._j.addEventListener('click', () => this.joinParty((this._t?.value || '').trim()));
       if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
+      if (this._l) this._l.addEventListener('click', () => this.leaveParty());
+    },
+
+    _updateUI() {
+      if (this._c) this._c.style.display = this._inParty ? 'none' : '';
+      if (this._j) this._j.style.display = this._inParty ? 'none' : '';
+      if (this._t) this._t.style.display = this._inParty ? 'none' : '';
+      if (this._l) this._l.style.display = this._inParty ? '' : 'none';
+      if (this._d) {
+        this._d.style.display = this._inParty && this._partyCode ? '' : 'none';
+        this._d.textContent = this._inParty ? 'Party: ' + this._partyCode : '';
+      }
     },
 
     hookWs(ws) {
@@ -6115,7 +6129,7 @@
     },
 
     createParty() {
-      if (!this._send([0x54, 0x00, 0x00])) {
+      if (!this._send([0x55, 0x00])) {
         _0x40f48a.alert("Party", "Failed - no connection");
         return;
       }
@@ -6125,18 +6139,21 @@
     joinParty(code) {
       if (!code) return;
       code = code.replace(/https?:\/\/(www\.)?3rb\.io\/?/i, '').replace(/^#+/, '#');
-      const buf = new Uint8Array(code.length + 4);
-      buf[0] = 0x54; buf[1] = 0x01; buf[2] = 0x00;
-      for (let i = 0; i < code.length; i++) buf[3 + i] = code.charCodeAt(i);
+      const enc = new TextEncoder();
+      const raw = enc.encode(code);
+      const buf = new Uint8Array(2 + raw.length);
+      buf[0] = 0x55; buf[1] = 0x01;
+      buf.set(raw, 2);
       this._send(Array.from(buf));
     },
 
     leaveParty() {
-      this._send([0x54, 0x02, 0x00]);
+      this._send([0x55, 0x02]);
       this._inParty = false;
       this._partyCode = '';
       this._members = {};
       this._cleanTeamPlayers();
+      this._updateUI();
       _0x40f48a.normal("Party", "Left party");
     },
 
@@ -6154,13 +6171,14 @@
       const op = v.getUint8(0);
 
       if (op === 0x55) {
-        let p = 3;
+        let p = 1;
         const c = [];
         while (p < v.byteLength && v.getUint8(p) !== 0) { c.push(String.fromCharCode(v.getUint8(p))); p++; }
         const code = c.join('');
         if (!code || code === 'error') { this.leaveParty(); return false; }
         this._inParty = true;
         this._partyCode = code;
+        this._updateUI();
         _0x40f48a.normal("Party", "Party code: " + code);
         return false;
       }
@@ -6202,7 +6220,9 @@
       if (op === 0x59) {
         this._inParty = false;
         this._members = {};
+        this._partyCode = '';
         this._cleanTeamPlayers();
+        this._updateUI();
         _0x40f48a.normal("Party", "Party disbanded");
         return true;
       }
