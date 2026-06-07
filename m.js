@@ -6184,6 +6184,8 @@
       }
 
       if (op === 0x57) {
+        const hexDump = Array.from(new Uint8Array(d)).slice(0, Math.min(d.byteLength, 200)).map(b => b.toString(16).padStart(2,'0')).join(' ');
+        console.log("RAW 0x57 packet hex (" + d.byteLength + " bytes): " + hexDump);
         let off = 1;
         const cnt = v.getUint16(off, true); off += 2;
         console.log("Party members count: " + cnt);
@@ -6196,18 +6198,20 @@
           while (off < v.byteLength && v.getUint8(off) !== 0) { nb.push(String.fromCharCode(v.getUint8(off))); off++; }
           off++;
           const name = nb.join('');
+          console.log("Member " + i + " name raw bytes at off " + off + ": '" + name + "' len=" + name.length);
           if (off + 3 > v.byteLength) break;
           const r = v.getUint8(off++);
           const g = v.getUint8(off++);
           const b = v.getUint8(off++);
           const col = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+          console.log("  color=" + col + " off before sz=" + off + " bytes=" + Array.from(new Uint8Array(d, off, 12)).map(x=>x.toString(16).padStart(2,'0')).join(' '));
           if (off + 12 > v.byteLength) break;
           const sz = v.getInt32(off, true); off += 4;
           const px = v.getInt32(off, true); off += 4;
           const py = v.getInt32(off, true); off += 4;
+          console.log("  sz=" + sz + " px=" + px + " py=" + py);
           nm[id] = { id, name, col };
           newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(sz) || 50 }]);
-          console.log("Party member: " + name + " id=" + id + " sz=" + sz + " pos=(" + px + "," + py + ")");
         }
         this._members = nm;
         _0x12ac51.partyCells = newPartyCells;
