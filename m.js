@@ -6097,13 +6097,12 @@
     },
 
     hookWs(ws) {
-      if (this._ws && this._ws !== ws && !this._ws2) {
-        this._ws2 = ws;
-      } else if (this._ws && this._ws !== ws) {
-        return;
-      } else if (!this._ws) {
-        this._ws = ws;
+      if (this._ws && this._ws !== ws) {
+        this._inParty = false;
+        this._partyCode = '';
+        this._members = {};
       }
+      this._ws = ws;
       const orig = ws.onmessage;
       ws.onmessage = (e) => {
         this._interceptMessage(e) || (orig && orig.call(ws, e));
@@ -6111,13 +6110,16 @@
     },
 
     _send(b) {
-      if (this._ws && this._ws.readyState === WebSocket.OPEN) { this._ws.send(new Uint8Array(b).buffer); return true; }
-      if (this._ws2 && this._ws2.readyState === WebSocket.OPEN) { this._ws2.send(new Uint8Array(b).buffer); return true; }
-      return false;
+      if (!this._ws || this._ws.readyState !== WebSocket.OPEN) return false;
+      this._ws.send(new Uint8Array(b).buffer);
+      return true;
     },
 
     createParty() {
-      this._send([0x54, 0x00, 0x00]);
+      if (!this._send([0x54, 0x00, 0x00])) {
+        _0x40f48a.alert("Party", "Failed - no connection");
+        return;
+      }
       _0x40f48a.normal("Party", "Creating party...");
     },
 
