@@ -6091,9 +6091,9 @@
       this._c = document.getElementById('create-party');
       this._j = document.getElementById('join-party');
 
-      _0x40f48a.normal("Party", "init: t=" + !!this._t + " c=" + !!this._c + " j=" + !!this._j);
+      console.log("Party init: t=" + !!this._t + " c=" + !!this._c + " j=" + !!this._j);
 
-      if (this._c) this._c.addEventListener('click', () => { _0x40f48a.normal("Party", "Create clicked"); this.createParty(); });
+      if (this._c) this._c.addEventListener('click', () => { console.log("Party: Create clicked"); this.createParty(); });
       if (this._j) this._j.addEventListener('click', () => this.joinParty((this._t?.value || '').trim()));
       if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
     },
