@@ -6188,6 +6188,7 @@
         const cnt = v.getUint16(off, true); off += 2;
         console.log("Party members count: " + cnt);
         const nm = {};
+        const newPartyCells = new Map();
         for (let i = 0; i < cnt; i++) {
           if (off + 4 > v.byteLength) break;
           const id = v.getUint32(off, true); off += 4;
@@ -6200,11 +6201,16 @@
           const g = v.getUint8(off++);
           const b = v.getUint8(off++);
           const col = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-          off += 12;
+          if (off + 12 > v.byteLength) break;
+          const size = v.getFloat32(off, true); off += 4;
+          const px = v.getInt32(off, true); off += 4;
+          const py = v.getInt32(off, true); off += 4;
           nm[id] = { id, name, col };
-          console.log("Party member: " + name + " id=" + id + " col=" + col);
+          newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(size) }]);
+          console.log("Party member: " + name + " id=" + id + " pos=(" + px + "," + py + ")");
         }
         this._members = nm;
+        _0x12ac51.partyCells = newPartyCells;
         for (const mid in nm) {
           if (!_0x12ac51.teamPlayers.has(mid)) {
             const p = new _0xb33099(mid);
