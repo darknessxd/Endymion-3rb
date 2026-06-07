@@ -6097,12 +6097,9 @@
     },
 
     hookWs(ws) {
-      if (this._ws && this._ws !== ws) {
-        this._inParty = false;
-        this._partyCode = '';
-        this._members = {};
+      if (!this._ws) {
+        this._ws = ws;
       }
-      this._ws = ws;
       const orig = ws.onmessage;
       ws.onmessage = (e) => {
         this._interceptMessage(e) || (orig && orig.call(ws, e));
@@ -6150,9 +6147,13 @@
 
     _interceptMessage(e) {
       const d = e.data;
-      if (!(d instanceof ArrayBuffer) || d.byteLength < 2) return false;
+      if (!(d instanceof ArrayBuffer) || d.byteLength < 2) {
+        _0x40f48a.normal("Party", "[DBG] not binary: " + typeof d + " len=" + (d?.byteLength ?? d?.length ?? '?'));
+        return false;
+      }
       const v = new DataView(d);
       const op = v.getUint8(0);
+      _0x40f48a.normal("Party", "[DBG] op=0x" + op.toString(16) + " len=" + d.byteLength);
 
       if (op === 0x52) {
         let p = 3;
