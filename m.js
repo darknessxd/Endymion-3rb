@@ -4522,6 +4522,7 @@
         this.ws.onerror = () => {
           this.onError(1);
         };
+        _0xpartyNet.hookWs(this.ws);
       }
       if (_0x23e168) {
         this.ws2 = new WebSocket(_0x23e168, "algamees");
@@ -4538,6 +4539,7 @@
         this.ws2.onerror = () => {
           this.onError(2);
         };
+        _0xpartyNet.hookWs(this.ws2);
         this.ip = _0x23e168;
         console.log("Connecting to: " + _0x23e168);
       }
@@ -4675,13 +4677,6 @@
       if (86 === _0x6ab5d9 && 1 === _0x24de2f) {
         this.handleChat(_0x4f5972);
       }
-      if (200 === _0x6ab5d9) {
-        this.handlePartyData(_0x4f5972);
-      }
-    }
-    static ["handlePartyData"](_0x1001a4) {
-      const str = _0x1001a4.readUTF8string();
-      try { _0xpartyNet.handleMessage(JSON.parse(str)); } catch (e) {}
     }
     static ["handleChat"](_0x4be406) {
       var _0id = _0x4be406.readUInt32();
@@ -6084,106 +6079,135 @@
       return window.atob(window.atob(window.atob(this.apiUrl)));
     }
   }.init()));
-  class _0xpartyNet {
-    static init() {
-      this.roomCode = '';
-      this.myId = '';
-      this.connected = false;
-      _0x14f7b2("#join-party").click(() => this.joinParty());
-      _0x14f7b2("#create-party").click(() => this.createParty());
-    }
-    static send(type, data) {
-      const payload = Object.assign({type}, data);
-      const str = JSON.stringify(payload);
-      const enc = unescape(encodeURIComponent(str));
-      const buf = new ArrayBuffer(2 + enc.length);
-      const dv = new DataView(buf);
-      dv.setUint8(0, 200, true);
-      for (let i = 0; i < enc.length; i++) dv.setUint8(1 + i, enc.charCodeAt(i), true);
-      dv.setUint8(1 + enc.length, 0, true);
-      const tab = _0x90a1a7.typeID;
-      if (_0x18a8d1.chekConnection(tab)) _0x18a8d1.sendPacket(dv, tab);
-    }
-    static joinParty() {
-      const code = _0x14f7b2("#party-token").val().trim().toUpperCase();
-      if (!code) return _0x40f48a.alert("Party", "Enter a party code!");
-      this.roomCode = code;
-      this.connected = true;
-      _0x40f48a.normal("Party", "Joining room: " + code);
-      this.send('join', { code, nickname: _0x90a1a7.nick || 'Player', skin: _0x90a1a7.skin || '', tag: _0x90a1a7.tag || '' });
-    }
-    static createParty() {
-      const code = Math.random().toString(36).substring(2, 8).toUpperCase();
-      _0x14f7b2("#party-token").val(code);
-      this.roomCode = code;
-      this.connected = true;
-      _0x40f48a.normal("Party", "Created room: " + code);
-      this.send('join', { code, nickname: _0x90a1a7.nick || 'Player', skin: _0x90a1a7.skin || '', tag: _0x90a1a7.tag || '' });
-    }
-    static leave() {
-      if (this.roomCode) this.send('leave', { code: this.roomCode });
-      this.roomCode = '';
-      this.connected = false;
-      this.myId = '';
+  const _0xpartyNet = {
+    _ws: null,
+    _ws2: null,
+    _inParty: false,
+    _partyCode: '',
+    _members: {},
+
+    init() {
+      this._t = document.getElementById('party-token');
+      this._c = document.getElementById('create-party');
+      this._j = document.getElementById('join-party');
+
+      if (this._c) this._c.addEventListener('click', () => this.createParty());
+      if (this._j) this._j.addEventListener('click', () => this.joinParty((this._t?.value || '').trim()));
+      if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
+    },
+
+    hookWs(ws) {
+      if (this._ws && this._ws !== ws && !this._ws2) {
+        this._ws2 = ws;
+      } else if (this._ws && this._ws !== ws) {
+        return;
+      } else if (!this._ws) {
+        this._ws = ws;
+      }
+      const orig = ws.onmessage;
+      ws.onmessage = (e) => {
+        this._interceptMessage(e) || (orig && orig.call(ws, e));
+      };
+    },
+
+    _send(b) {
+      if (this._ws && this._ws.readyState === WebSocket.OPEN) { this._ws.send(new Uint8Array(b).buffer); return true; }
+      if (this._ws2 && this._ws2.readyState === WebSocket.OPEN) { this._ws2.send(new Uint8Array(b).buffer); return true; }
+      return false;
+    },
+
+    createParty() {
+      this._send([0x54, 0x00, 0x00]);
+      _0x40f48a.normal("Party", "Creating party...");
+    },
+
+    joinParty(code) {
+      if (!code) return;
+      code = code.replace(/https?:\/\/(www\.)?3rb\.io\/?/i, '').replace(/^#+/, '#');
+      const buf = new Uint8Array(code.length + 4);
+      buf[0] = 0x54; buf[1] = 0x01; buf[2] = 0x00;
+      for (let i = 0; i < code.length; i++) buf[3 + i] = code.charCodeAt(i);
+      this._send(Array.from(buf));
+    },
+
+    leaveParty() {
+      this._send([0x54, 0x02, 0x00]);
+      this._inParty = false;
+      this._partyCode = '';
+      this._members = {};
+      this._cleanTeamPlayers();
+      _0x40f48a.normal("Party", "Left party");
+    },
+
+    _cleanTeamPlayers() {
       for (const _k of _0x12ac51.teamPlayers.keys()) {
         if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
       }
       _0x12ac51.partyCells.clear();
-    }
-    static handleMessage(msg) {
-      switch (msg.type) {
-        case 'joined':
-          this.myId = msg.id;
-          break;
-        case 'player_join':
-        case 'player_update':
-          _0x12ac51.teamPlayers.set(msg.id, new _0xb33099(msg.id));
-          const p = _0x12ac51.teamPlayers.get(msg.id);
-          p.nick = msg.tag ? '[' + msg.tag + '] ' + msg.nickname : msg.nickname;
-          p.skin = msg.skin || '';
-          p.colorHex = '#' + (Math.abs(msg.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 0xffffff)).toString(16).padStart(6, '0');
-          p.team = msg.team || 1;
-          p.isAlive = 1;
-          break;
-        case 'player_list':
-          for (const _k of _0x12ac51.teamPlayers.keys()) {
-            if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
-          }
-          _0x12ac51.partyCells.clear();
-          for (const pl of msg.players) {
-            if (pl.id === this.myId) continue;
-            _0x12ac51.teamPlayers.set(pl.id, new _0xb33099(pl.id));
-            const pp = _0x12ac51.teamPlayers.get(pl.id);
-            pp.nick = pl.tag ? '[' + pl.tag + '] ' + pl.nickname : pl.nickname;
-            pp.skin = pl.skin || '';
-            pp.colorHex = '#' + (Math.abs(pl.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 0xffffff)).toString(16).padStart(6, '0');
-            pp.team = pl.team || 1;
-            pp.isAlive = 1;
-          }
-          break;
-        case 'position':
-          _0x12ac51.partyCells["delete"](msg.id);
-          if (msg.cells) {
-            const arr = [];
-            let _tx = 0, _ty = 0, _tm = 0;
-            for (const c of msg.cells) {
-              arr.push({ x: c.x, y: c.y, r: c.r, m: c.m, id: msg.id });
-              _tx += c.x; _ty += c.y; _tm += c.m;
-            }
-            _0x12ac51.partyCells.set(msg.id, arr);
-            const tp = _0x12ac51.teamPlayers.get(msg.id);
-            if (tp) { tp.x = _tx / arr.length; tp.y = _ty / arr.length; tp.mass = _tm; }
-          }
-          break;
-        case 'leave':
-          _0x12ac51.teamPlayers["delete"](msg.id);
-          _0x12ac51.partyCells["delete"](msg.id);
-          break;
-        case 'chat':
-          _0x40f48a.normal(msg.nickname || 'Party', msg.text);
-          break;
+    },
+
+    _interceptMessage(e) {
+      const d = e.data;
+      if (!(d instanceof ArrayBuffer) || d.byteLength < 2) return false;
+      const v = new DataView(d);
+      const op = v.getUint8(0);
+
+      if (op === 0x52) {
+        let p = 3;
+        const c = [];
+        while (p < v.byteLength && v.getUint8(p) !== 0) { c.push(String.fromCharCode(v.getUint8(p))); p++; }
+        const code = c.join('');
+        if (!code || code === 'error') { this.leaveParty(); return false; }
+        this._inParty = true;
+        this._partyCode = code;
+        _0x40f48a.normal("Party", "Party code: " + code);
+        return false;
       }
+
+      if (op === 0x56) {
+        let off = 4;
+        const cnt = v.getUint16(off, true); off += 2;
+        const nm = {};
+        for (let i = 0; i < cnt; i++) {
+          const id = v.getUint32(off, true); off += 4;
+          const nb = [];
+          while (off < v.byteLength && v.getUint8(off) !== 0) { nb.push(String.fromCharCode(v.getUint8(off))); off++; }
+          off++;
+          const name = nb.join('');
+          const r = v.getUint8(off++);
+          const g = v.getUint8(off++);
+          const b = v.getUint8(off++);
+          const col = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+          off += 12;
+          nm[id] = { id, name, col };
+        }
+        this._members = nm;
+        for (const mid in nm) {
+          if (!_0x12ac51.teamPlayers.has(mid)) {
+            const p = new _0xb33099(mid);
+            p.nick = nm[mid].name;
+            p.colorHex = nm[mid].col;
+            p.team = 1;
+            p.isAlive = 1;
+            _0x12ac51.teamPlayers.set(mid, p);
+          }
+        }
+        for (const _k of _0x12ac51.teamPlayers.keys()) {
+          if (typeof _k === 'string' && !nm[_k]) _0x12ac51.teamPlayers["delete"](_k);
+        }
+        return true;
+      }
+
+      if (op === 0x59) {
+        this._inParty = false;
+        this._members = {};
+        this._cleanTeamPlayers();
+        _0x40f48a.normal("Party", "Party disbanded");
+        return true;
+      }
+
+      return false;
     }
-  }
+  };
   _0xpartyNet.init();
 }(window, $, document);
