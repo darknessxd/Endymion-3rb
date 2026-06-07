@@ -6183,22 +6183,26 @@
         return false;
       }
 
-      if (op === 0x56) {
-        let off = 4;
+      if (op === 0x57) {
+        let off = 1;
         const cnt = v.getUint16(off, true); off += 2;
+        console.log("Party members count: " + cnt);
         const nm = {};
         for (let i = 0; i < cnt; i++) {
+          if (off + 4 > v.byteLength) break;
           const id = v.getUint32(off, true); off += 4;
           const nb = [];
           while (off < v.byteLength && v.getUint8(off) !== 0) { nb.push(String.fromCharCode(v.getUint8(off))); off++; }
           off++;
           const name = nb.join('');
+          if (off + 3 > v.byteLength) break;
           const r = v.getUint8(off++);
           const g = v.getUint8(off++);
           const b = v.getUint8(off++);
           const col = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
           off += 12;
           nm[id] = { id, name, col };
+          console.log("Party member: " + name + " id=" + id + " col=" + col);
         }
         this._members = nm;
         for (const mid in nm) {
@@ -6214,6 +6218,14 @@
         for (const _k of _0x12ac51.teamPlayers.keys()) {
           if (typeof _k === 'string' && !nm[_k]) _0x12ac51.teamPlayers["delete"](_k);
         }
+        return true;
+      }
+
+      if (op === 0x58) {
+        let off = 1;
+        const removeId = v.getUint32(off, true);
+        _0x12ac51.teamPlayers.delete(String(removeId));
+        console.log("Party member removed: " + removeId);
         return true;
       }
 
