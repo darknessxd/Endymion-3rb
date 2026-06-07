@@ -6202,12 +6202,12 @@
           const b = v.getUint8(off++);
           const col = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
           if (off + 12 > v.byteLength) break;
-          const size = v.getFloat32(off, true); off += 4;
+          const sz = v.getInt32(off, true); off += 4;
           const px = v.getInt32(off, true); off += 4;
           const py = v.getInt32(off, true); off += 4;
           nm[id] = { id, name, col };
-          newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(size) }]);
-          console.log("Party member: " + name + " id=" + id + " pos=(" + px + "," + py + ")");
+          newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(sz) || 50 }]);
+          console.log("Party member: " + name + " id=" + id + " sz=" + sz + " pos=(" + px + "," + py + ")");
         }
         this._members = nm;
         _0x12ac51.partyCells = newPartyCells;
