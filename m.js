@@ -6086,6 +6086,7 @@
     _partyCode: '',
     _members: {},
     _pendingSkins: {},
+    _myId: null,
 
     init() {
       this._t = document.getElementById('party-token');
@@ -6136,13 +6137,9 @@
 
     _sendSkinUpdate(skinUrl, botIdx) {
       if (!this._inParty || !skinUrl) return;
-      const myNick = botIdx === 1 ? _0x90a1a7.nick : _0x90a1a7.nick2;
-      let myId = null;
-      for (const _key of Object.keys(this._members)) {
-        const m = this._members[_key];
-        if (m.name === myNick) { myId = m.id; break; }
-      }
-      if (myId == null) return;
+      const myId = this._myId != null ? this._myId : (_0x12ac51.selfID > 0 ? _0x12ac51.selfID : null);
+      if (myId == null) { console.log("Skin send skipped - no myId"); return; }
+      console.log("Sending skin for bot " + botIdx + " id=" + myId + " url=" + skinUrl);
       const enc = new TextEncoder();
       const raw = enc.encode(skinUrl);
       const buf = new Uint8Array(1 + 4 + raw.length + 1);
@@ -6234,6 +6231,16 @@
         }
         this._members = nm;
         _0x12ac51.partyCells = newPartyCells;
+        this._myId = null;
+        for (const _mk of Object.keys(nm)) {
+          const _mv = nm[_mk];
+          if (_mv.name === _0x90a1a7.nick || _mv.name === _0x90a1a7.nick2) {
+            this._myId = _mv.id;
+            console.log("Party myId found: " + this._myId);
+            break;
+          }
+        }
+        console.log("Party members:", Object.keys(nm).length, "selfID:", _0x12ac51.selfID, "myId:", this._myId);
         for (const mid in nm) {
           const nmd = nm[mid];
           let p = _0x12ac51.teamPlayers.get(mid);
@@ -6276,9 +6283,11 @@
         const sb = [];
         while (off < v.byteLength && v.getUint8(off) !== 0) { sb.push(String.fromCharCode(v.getUint8(off))); off++; }
         const sUrl = sb.join('');
+        console.log("Got party skin: id=" + sid + " url=" + sUrl);
         if (sUrl) {
           const tp = _0x12ac51.teamPlayers.get(String(sid));
-          if (tp) { tp.skin = sUrl; } else { this._pendingSkins[sid] = sUrl; }
+          if (tp) { tp.skin = sUrl; console.log("Applied skin to teamPlayer"); }
+          else { this._pendingSkins[sid] = sUrl; console.log("Stored pending skin"); }
         }
         return true;
       }
