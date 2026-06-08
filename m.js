@@ -4684,15 +4684,6 @@
       for (var _0i = 0; _0i < 7; _0i++) _0x4be406.readUInt8();
       var _0name = _0x4be406.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g, '').replace(/^\[.\]/, '');
       var _0msg = _0x4be406.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g, '');
-      if (_0msg && _0msg.indexOf('__SK__') === 0) {
-        try {
-          const _decoded = atob(_0msg.substring(6));
-          const _tp = _0x12ac51.teamPlayers.get(_0id);
-          if (_tp) _tp.skin = _decoded;
-          else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
-        } catch(_e) {}
-        return;
-      }
       if (_0msg) _0x40f48a.normal(_0name || 'Player', _0msg);
     }
     static ["worldUpdate"](_0x449cb9, _0x43ee07 = 1) {
@@ -5106,6 +5097,15 @@
       return _0x1486ac;
     }
     static ['chat'](_0x34245f, _0x164dbf, _0x3a86a2, _0x3d910f) {
+      if (_0x3a86a2 && _0x3a86a2.indexOf('__SK__') === 0) {
+        try {
+          const _decoded = atob(_0x3a86a2.substring(6));
+          const _tp = this.teamPlayers.get(_0x34245f);
+          if (_tp) _tp.skin = _decoded;
+          else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0x34245f)] = _decoded;
+        } catch(_e) {}
+        return;
+      }
       let _0x3f5768 = _0x3d910f || "Anonymous";
       if (_0x3d910f || _0x34245f !== this.selfID) {
         const _0x2e574e = this.teamPlayers.get(_0x34245f);
@@ -6158,11 +6158,11 @@
       if (!this._inParty) return;
       try {
         const s1 = _0x90a1a7.skin;
-        if (s1 && !s1.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s1));
+        if (s1 && !s1.includes("XXXXXXX")) _0x2d5cce.chat(1, "__SK__" + btoa(s1));
       } catch(e) {}
       try {
         const s2 = _0x90a1a7.skin2;
-        if (s2 && !s2.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s2));
+        if (s2 && !s2.includes("XXXXXXX")) _0x2d5cce.chat(1, "__SK__" + btoa(s2));
       } catch(e) {}
     },
 
@@ -6172,7 +6172,7 @@
 
     _sendSkinUpdate(skinUrl, botIdx) {
       if (!this._inParty || !skinUrl) return;
-      try { _0x302a2c.chat("__SK__" + btoa(skinUrl)); } catch(e) {}
+      try { _0x2d5cce.chat(1, "__SK__" + btoa(skinUrl)); } catch(e) {}
     },
 
     createParty() {
