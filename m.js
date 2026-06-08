@@ -4684,6 +4684,15 @@
       for (var _0i = 0; _0i < 7; _0i++) _0x4be406.readUInt8();
       var _0name = _0x4be406.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g, '').replace(/^\[.\]/, '');
       var _0msg = _0x4be406.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g, '');
+      if (_0msg && _0msg.indexOf('__SK__') === 0) {
+        try {
+          const _decoded = atob(_0msg.substring(6));
+          const _tp = _0x12ac51.teamPlayers.get(_0id);
+          if (_tp) _tp.skin = _decoded;
+          else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
+        } catch(_e) {}
+        return;
+      }
       if (_0msg) _0x40f48a.normal(_0name || 'Player', _0msg);
     }
     static ["worldUpdate"](_0x449cb9, _0x43ee07 = 1) {
@@ -6104,13 +6113,6 @@
       if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
       if (this._l) this._l.addEventListener('click', () => this.leaveParty());
 
-      window.addEventListener('storage', e => {
-        if (e.key && e.key.startsWith('party_skin_') && e.newValue && e.key !== 'party_skin_' + this._partyCode + '_' + this._myId) {
-          const sid = e.key.substring(e.key.lastIndexOf('_') + 1);
-          const tp = _0x12ac51.teamPlayers.get(sid);
-          if (tp && e.newValue) tp.skin = e.newValue;
-        }
-      });
     },
 
     _updateUI() {
@@ -6140,32 +6142,37 @@
       return true;
     },
 
+    _skinTimer: null,
+
+    startSkinBroadcast() {
+      this.stopSkinBroadcast();
+      this._sendSkinViaChat();
+      this._skinTimer = setInterval(() => this._sendSkinViaChat(), 15000);
+    },
+
+    stopSkinBroadcast() {
+      if (this._skinTimer) { clearInterval(this._skinTimer); this._skinTimer = null; }
+    },
+
+    _sendSkinViaChat() {
+      if (!this._inParty) return;
+      try {
+        const s1 = _0x90a1a7.skin;
+        if (s1 && !s1.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s1));
+      } catch(e) {}
+      try {
+        const s2 = _0x90a1a7.skin2;
+        if (s2 && !s2.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s2));
+      } catch(e) {}
+    },
+
     _broadcastCurrentSkins() {
-      const s1 = _0x90a1a7.skin;
-      if (s1 && !s1.includes("XXXXXXX")) this._sendSkinUpdate(s1, 1);
-      const s2 = _0x90a1a7.skin2;
-      if (s2 && !s2.includes("XXXXXXX")) this._sendSkinUpdate(s2, 2);
-      if (this._partyCode) {
-        for (let i = 0; i < localStorage.length; i++) {
-          const k = localStorage.key(i);
-          if (k && k.startsWith('party_skin_' + this._partyCode + '_')) {
-            const sid = k.replace('party_skin_' + this._partyCode + '_', '');
-            const tp = _0x12ac51.teamPlayers.get(sid);
-            if (tp && !tp.skin) tp.skin = localStorage.getItem(k);
-          }
-        }
-      }
+      this._sendSkinViaChat();
     },
 
     _sendSkinUpdate(skinUrl, botIdx) {
-      if (!this._inParty || !skinUrl || !this._partyCode) return;
-      const myId = this._myId != null ? this._myId : (_0x12ac51.selfID > 0 ? String(_0x12ac51.selfID) : null);
-      if (myId == null) return;
-      try { localStorage.setItem('party_skin_' + this._partyCode + '_' + myId, skinUrl); } catch(e) {}
-      try {
-        const tp = _0x12ac51.teamPlayers.get(String(myId));
-        if (tp) tp.skin = skinUrl;
-      } catch(e) {}
+      if (!this._inParty || !skinUrl) return;
+      try { _0x302a2c.chat("__SK__" + btoa(skinUrl)); } catch(e) {}
     },
 
     createParty() {
@@ -6188,6 +6195,7 @@
     },
 
     leaveParty() {
+      this.stopSkinBroadcast();
       this._send([0x55, 0x02]);
       this._inParty = false;
       this._partyCode = '';
@@ -6219,6 +6227,7 @@
         this._inParty = true;
         this._partyCode = code;
         this._updateUI();
+        this.startSkinBroadcast();
         _0x40f48a.normal("Party", "Party code: " + code);
         return false;
       }
@@ -6293,31 +6302,6 @@
         const removeId = v.getUint32(off, true);
         _0x12ac51.teamPlayers.delete(String(removeId));
 
-        return true;
-      }
-
-      if (op === 0x60) {
-        let off = 1;
-        const sid = v.getUint32(off, true); off += 4;
-        const sb = [];
-        while (off < v.byteLength && v.getUint8(off) !== 0) { sb.push(String.fromCharCode(v.getUint8(off))); off++; }
-        const sUrl = sb.join('');
-        if (sUrl) {
-          const tp = _0x12ac51.teamPlayers.get(String(sid));
-          if (tp) {
-            tp.skin = sUrl;
-            const _nickMatch = tp.nick;
-            const _searchCells = _0x12ac51.cells instanceof Map ? _0x12ac51.cells : new Map();
-            for (const [_cid, _c] of _searchCells) {
-              if (_c && _c.nick === _nickMatch) { _c.skin = sUrl; }
-            }
-            if (_0x12ac51.cells2 instanceof Map) {
-              for (const [_cid2, _c2] of _0x12ac51.cells2) {
-                if (_c2 && _c2.nick === _nickMatch) { _c2.skin = sUrl; }
-              }
-            }
-          } else { this._pendingSkins[sid] = sUrl; }
-        }
         return true;
       }
 
