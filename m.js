@@ -6093,9 +6093,7 @@
       this._l = document.getElementById('party-leave');
       this._d = document.getElementById('party-code-display');
 
-      console.log("Party init: t=" + !!this._t + " c=" + !!this._c + " j=" + !!this._j + " l=" + !!this._l);
-
-      if (this._c) this._c.addEventListener('click', () => { console.log("Party: Create clicked"); this.createParty(); });
+      if (this._c) this._c.addEventListener('click', () => this.createParty());
       if (this._j) this._j.addEventListener('click', () => this.joinParty((this._t?.value || '').trim()));
       if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
       if (this._l) this._l.addEventListener('click', () => this.leaveParty());
@@ -6184,11 +6182,8 @@
       }
 
       if (op === 0x57) {
-        const hexDump = Array.from(new Uint8Array(d)).slice(0, Math.min(d.byteLength, 200)).map(b => b.toString(16).padStart(2,'0')).join(' ');
-        console.log("RAW 0x57 packet hex (" + d.byteLength + " bytes): " + hexDump);
         let off = 1;
         const cnt = v.getUint16(off, true); off += 2;
-        console.log("Party members count: " + cnt);
         const nm = {};
         const newPartyCells = new Map();
         for (let i = 0; i < cnt; i++) {
@@ -6198,32 +6193,36 @@
           while (off < v.byteLength && v.getUint8(off) !== 0) { nb.push(String.fromCharCode(v.getUint8(off))); off++; }
           off++;
           const name = nb.join('');
-          console.log("Member " + i + " name raw bytes at off " + off + ": '" + name + "' len=" + name.length);
           if (off + 3 > v.byteLength) break;
           const r = v.getUint8(off++);
           const g = v.getUint8(off++);
           const b = v.getUint8(off++);
           const col = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-          console.log("  color=" + col + " off before sz=" + off + " bytes=" + Array.from(new Uint8Array(d, off, 12)).map(x=>x.toString(16).padStart(2,'0')).join(' '));
           if (off + 12 > v.byteLength) break;
           const sz = v.getInt32(off, true); off += 4;
           const px = v.getInt32(off, true); off += 4;
           const py = v.getInt32(off, true); off += 4;
-          console.log("  sz=" + sz + " px=" + px + " py=" + py);
-          nm[id] = { id, name, col };
+          nm[id] = { id, name, col, px, py };
           newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(sz) || 50 }]);
         }
         this._members = nm;
         _0x12ac51.partyCells = newPartyCells;
         for (const mid in nm) {
-          if (!_0x12ac51.teamPlayers.has(mid)) {
-            const p = new _0xb33099(mid);
-            p.nick = nm[mid].name;
-            p.colorHex = nm[mid].col;
+          const nmd = nm[mid];
+          let p = _0x12ac51.teamPlayers.get(mid);
+          if (!p) {
+            p = new _0xb33099(mid);
+            p.nick = nmd.name;
+            p.colorHex = nmd.col;
             p.team = 1;
             p.isAlive = 1;
             _0x12ac51.teamPlayers.set(mid, p);
           }
+          p.x = nmd.px;
+          p.y = nmd.py;
+          p.animX = nmd.px;
+          p.animY = nmd.py;
+          p.timeStamp = performance.now();
         }
         for (const _k of _0x12ac51.teamPlayers.keys()) {
           if (typeof _k === 'string' && !nm[_k]) _0x12ac51.teamPlayers["delete"](_k);
