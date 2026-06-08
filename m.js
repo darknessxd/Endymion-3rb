@@ -4675,7 +4675,7 @@
       } else if (65 === _0x6ab5d9) {
         this.borderUpdate(_0x4f5972, _0x24de2f);
       }
-      if (86 === _0x6ab5d9 && 1 === _0x24de2f) {
+      if (86 === _0x6ab5d9) {
         this.handleChat(_0x4f5972);
       }
     }
