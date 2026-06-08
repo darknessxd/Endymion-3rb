@@ -5472,7 +5472,6 @@
       this.createRGBset();
       this.mouseTracker();
       this.cells();
-      this.partyCells();
       this.commands();
       _0x34f3bb.cleaner();
       this.ctx.restore();
