@@ -4687,7 +4687,7 @@
       if (_0msg && _0msg.indexOf('__SK__') === 0) {
         try {
           const _decoded = atob(_0msg.substring(6));
-          const _tp = _0x12ac51.teamPlayers.get(_0id);
+          const _tp = _0x12ac51.teamPlayers.get(String(_0id));
           if (_tp) _tp.skin = _decoded;
           else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
         } catch(_e) {}
