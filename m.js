@@ -3619,7 +3619,7 @@
     static set ["skin"](_0x1a9370) {
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
       const _0x356638 = _0x386cbc.getRaindowFlag(_0x1a9370);
-      return "XXXXXXX" !== _0x5518a5 && _0x5518a5 ? (this.isRGB !== _0x356638 && (this.isRGB = _0x356638, _0x2d5cce.rgbMode()), this._skin = _0x5518a5, void _0x2d5cce.skin()) : void _0x40f48a.alert("Multibox", _0x59f59a.current.notif.invalidSkinUrl);
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
     }
     static get ['skin']() {
       return this._skin;
@@ -3628,6 +3628,7 @@
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
       if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) {
         this._skin2 = _0x5518a5;
+        try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 2); } catch(e){}
       }
     }
     static get ['skin2']() {
@@ -6084,6 +6085,7 @@
     _inParty: false,
     _partyCode: '',
     _members: {},
+    _pendingSkins: {},
 
     init() {
       this._t = document.getElementById('party-token');
@@ -6123,6 +6125,32 @@
       if (!this._ws || this._ws.readyState !== WebSocket.OPEN) return false;
       this._ws.send(new Uint8Array(b).buffer);
       return true;
+    },
+
+    _broadcastCurrentSkins() {
+      const s1 = _0x90a1a7.skin;
+      if (s1 && !s1.includes("XXXXXXX")) this._sendSkinUpdate(s1, 1);
+      const s2 = _0x90a1a7.skin2;
+      if (s2 && !s2.includes("XXXXXXX")) this._sendSkinUpdate(s2, 2);
+    },
+
+    _sendSkinUpdate(skinUrl, botIdx) {
+      if (!this._inParty || !skinUrl) return;
+      const myNick = botIdx === 1 ? _0x90a1a7.nick : _0x90a1a7.nick2;
+      let myId = null;
+      for (const _key of Object.keys(this._members)) {
+        const m = this._members[_key];
+        if (m.name === myNick) { myId = m.id; break; }
+      }
+      if (myId == null) return;
+      const enc = new TextEncoder();
+      const raw = enc.encode(skinUrl);
+      const buf = new Uint8Array(1 + 4 + raw.length + 1);
+      buf[0] = 0x60;
+      new DataView(buf.buffer).setUint32(1, myId, true);
+      buf.set(raw, 5);
+      buf[5 + raw.length] = 0;
+      this._send(Array.from(buf));
     },
 
     createParty() {
@@ -6226,6 +6254,11 @@
         for (const _k of _0x12ac51.teamPlayers.keys()) {
           if (typeof _k === 'string' && !nm[_k]) _0x12ac51.teamPlayers["delete"](_k);
         }
+        for (const _sid of Object.keys(this._pendingSkins)) {
+          const tp = _0x12ac51.teamPlayers.get(_sid);
+          if (tp) { tp.skin = this._pendingSkins[_sid]; delete this._pendingSkins[_sid]; }
+        }
+        this._broadcastCurrentSkins();
         return true;
       }
 
@@ -6234,6 +6267,19 @@
         const removeId = v.getUint32(off, true);
         _0x12ac51.teamPlayers.delete(String(removeId));
         console.log("Party member removed: " + removeId);
+        return true;
+      }
+
+      if (op === 0x60) {
+        let off = 1;
+        const sid = v.getUint32(off, true); off += 4;
+        const sb = [];
+        while (off < v.byteLength && v.getUint8(off) !== 0) { sb.push(String.fromCharCode(v.getUint8(off))); off++; }
+        const sUrl = sb.join('');
+        if (sUrl) {
+          const tp = _0x12ac51.teamPlayers.get(String(sid));
+          if (tp) { tp.skin = sUrl; } else { this._pendingSkins[sid] = sUrl; }
+        }
         return true;
       }
 
