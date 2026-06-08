@@ -4676,10 +4676,10 @@
         this.borderUpdate(_0x4f5972, _0x24de2f);
       }
       if (86 === _0x6ab5d9) {
-        this.handleChat(_0x4f5972);
+        this.handleChat(_0x4f5972, _0x24de2f);
       }
     }
-    static ["handleChat"](_0x4be406) {
+    static ["handleChat"](_0x4be406, _0x24de2f) {
       var _0id = _0x4be406.readUInt32();
       for (var _0i = 0; _0i < 7; _0i++) _0x4be406.readUInt8();
       var _0name = _0x4be406.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g, '').replace(/^\[.\]/, '');
@@ -4693,14 +4693,16 @@
         } catch(_e) {}
         return;
       }
-      if (_0msg && _0msg.indexOf('__PC__') === 0 && _0xpartyNet && !_0xpartyNet._inParty) {
-        try {
-          const _code = atob(_0msg.substring(6));
-          if (_code) _0xpartyNet._startAutoJoin(_code);
-        } catch(_e) {}
+      if (_0msg && _0msg.indexOf('__PC__') === 0 && _0xpartyNet) {
+        if (!_0xpartyNet._inParty) {
+          try {
+            const _code = atob(_0msg.substring(6));
+            if (_code) _0xpartyNet._startAutoJoin(_code);
+          } catch(_e) {}
+        }
         return;
       }
-      if (_0msg) _0x40f48a.normal(_0name || 'Player', _0msg);
+      if (_0msg && 1 === _0x24de2f) _0x40f48a.normal(_0name || 'Player', _0msg);
     }
     static ["worldUpdate"](_0x449cb9, _0x43ee07 = 1) {
       _0xb45f1b.refreshTime();
