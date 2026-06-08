@@ -6099,6 +6099,7 @@
     _partyCode: '',
     _members: {},
     _pendingSkins: {},
+    _savedSkins: new Map(),
     _myId: null,
 
     init() {
@@ -6196,6 +6197,8 @@
       for (const _k of _0x12ac51.teamPlayers.keys()) {
         if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
       }
+      this._savedSkins.clear();
+      this._pendingSkins = {};
       _0x12ac51.partyCells.clear();
     },
 
@@ -6270,7 +6273,20 @@
           p.timeStamp = performance.now();
         }
         for (const _k of _0x12ac51.teamPlayers.keys()) {
-          if (typeof _k === 'string' && !nm[_k]) _0x12ac51.teamPlayers["delete"](_k);
+          if (typeof _k === 'string' && !nm[_k]) {
+            const _oldTp = _0x12ac51.teamPlayers.get(_k);
+            if (_oldTp && _oldTp.skin) this._savedSkins.set(_k, _oldTp.skin);
+            _0x12ac51.teamPlayers["delete"](_k);
+          }
+        }
+        for (const _mid of _0x12ac51.teamPlayers.keys()) {
+          if (this._savedSkins.has(_mid)) {
+            const _tp = _0x12ac51.teamPlayers.get(_mid);
+            if (_tp && !_tp.skin) {
+              _tp.skin = this._savedSkins.get(_mid);
+            }
+            this._savedSkins.delete(_mid);
+          }
         }
         for (const _sid of Object.keys(this._pendingSkins)) {
           const tp = _0x12ac51.teamPlayers.get(_sid);
