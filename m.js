@@ -3619,7 +3619,7 @@
     static set ["skin"](_0x1a9370) {
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
       const _0x356638 = _0x386cbc.getRaindowFlag(_0x1a9370);
-      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); console.log('Skin setter: calling _sendSkinUpdate', _0x5518a5); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e) { console.log('Skin setter error:', e); } }
     }
     static get ['skin']() {
       return this._skin;
@@ -6134,6 +6134,7 @@
     },
 
     _broadcastCurrentSkins() {
+      console.log('_broadcastCurrentSkins called, _inParty:', this._inParty, '_myId:', this._myId, 'selfID:', _0x12ac51.selfID);
       const s1 = _0x90a1a7.skin;
       if (s1 && !s1.includes("XXXXXXX")) this._sendSkinUpdate(s1, 1);
       const s2 = _0x90a1a7.skin2;
@@ -6141,6 +6142,7 @@
     },
 
     _sendSkinUpdate(skinUrl, botIdx) {
+      console.log('_sendSkinUpdate ENTER:', {skinUrl, botIdx, _inParty: this._inParty, _myId: this._myId, selfID: _0x12ac51.selfID});
       if (!this._inParty || !skinUrl) return;
       const myId = this._myId != null ? this._myId : (_0x12ac51.selfID > 0 ? _0x12ac51.selfID : null);
       if (myId == null) return;
