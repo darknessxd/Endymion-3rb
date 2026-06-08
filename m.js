@@ -5830,14 +5830,12 @@
       } else if (this.arbSkin) {
         this.skinMap.set(_0x90a1a7.worldID2, "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + '.png');
       }
-      for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && !_0x5d3988.skin.includes("XXXXXXX")) {
-        this.skinMap.set(_0x5d3988.worldID, this.code2Url(_0x5d3988.skin));
-      }
-      if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c.skin && !_c.skin.includes("XXXXXXX")) {
-        this.skinMap.set(_c.worldID, this.code2Url(_c.skin));
-      }
-      if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2.skin && !_c2.skin.includes("XXXXXXX")) {
-        this.skinMap.set(_c2.worldID, this.code2Url(_c2.skin));
+      for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
+        const _tUrl = this.code2Url(_0x5d3988.skin);
+        this.skinMap.set(_0x5d3988.worldID, _tUrl);
+        const _tpNick = _0x5d3988.nick;
+        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c.worldID, _tUrl);
+        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c2.worldID, _tUrl);
       }
     }
     static ["createRGBset"]() {
