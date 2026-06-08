@@ -3619,7 +3619,7 @@
     static set ["skin"](_0x1a9370) {
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
       const _0x356638 = _0x386cbc.getRaindowFlag(_0x1a9370);
-      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); console.log('Skin setter: calling _sendSkinUpdate', _0x5518a5); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e) { console.log('Skin setter error:', e); } }
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
     }
     static get ['skin']() {
       return this._skin;
@@ -5833,10 +5833,9 @@
       for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
         const _tUrl = this.code2Url(_0x5d3988.skin);
         this.skinMap.set(_0x5d3988.worldID, _tUrl);
-        console.log('createSkinMap: added teamPlayer worldID', _0x5d3988.worldID, 'skin', _tUrl);
         const _tpNick = _0x5d3988.nick;
-        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) { this.skinMap.set(_c.worldID, _tUrl); console.log('createSkinMap: added cell worldID', _c.worldID, 'nick', _c.nick); }
-        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) { this.skinMap.set(_c2.worldID, _tUrl); console.log('createSkinMap: added cell2 worldID', _c2.worldID, 'nick', _c2.nick); }
+        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c.worldID, _tUrl);
+        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c2.worldID, _tUrl);
       }
     }
     static ["createRGBset"]() {
@@ -6104,6 +6103,14 @@
       if (this._j) this._j.addEventListener('click', () => this.joinParty((this._t?.value || '').trim()));
       if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
       if (this._l) this._l.addEventListener('click', () => this.leaveParty());
+
+      window.addEventListener('storage', e => {
+        if (e.key && e.key.startsWith('party_skin_') && e.newValue && e.key !== 'party_skin_' + this._partyCode + '_' + this._myId) {
+          const sid = e.key.substring(e.key.lastIndexOf('_') + 1);
+          const tp = _0x12ac51.teamPlayers.get(sid);
+          if (tp && e.newValue) tp.skin = e.newValue;
+        }
+      });
     },
 
     _updateUI() {
@@ -6134,27 +6141,31 @@
     },
 
     _broadcastCurrentSkins() {
-      console.log('_broadcastCurrentSkins called, _inParty:', this._inParty, '_myId:', this._myId, 'selfID:', _0x12ac51.selfID);
       const s1 = _0x90a1a7.skin;
       if (s1 && !s1.includes("XXXXXXX")) this._sendSkinUpdate(s1, 1);
       const s2 = _0x90a1a7.skin2;
       if (s2 && !s2.includes("XXXXXXX")) this._sendSkinUpdate(s2, 2);
+      if (this._partyCode) {
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k && k.startsWith('party_skin_' + this._partyCode + '_')) {
+            const sid = k.replace('party_skin_' + this._partyCode + '_', '');
+            const tp = _0x12ac51.teamPlayers.get(sid);
+            if (tp && !tp.skin) tp.skin = localStorage.getItem(k);
+          }
+        }
+      }
     },
 
     _sendSkinUpdate(skinUrl, botIdx) {
-      console.log('_sendSkinUpdate ENTER:', {skinUrl, botIdx, _inParty: this._inParty, _myId: this._myId, selfID: _0x12ac51.selfID});
-      if (!this._inParty || !skinUrl) return;
-      const myId = this._myId != null ? this._myId : (_0x12ac51.selfID > 0 ? _0x12ac51.selfID : null);
+      if (!this._inParty || !skinUrl || !this._partyCode) return;
+      const myId = this._myId != null ? this._myId : (_0x12ac51.selfID > 0 ? String(_0x12ac51.selfID) : null);
       if (myId == null) return;
-      console.log('Sending skin:', skinUrl);
-      const enc = new TextEncoder();
-      const raw = enc.encode(skinUrl);
-      const buf = new Uint8Array(1 + 4 + raw.length + 1);
-      buf[0] = 0x60;
-      new DataView(buf.buffer).setUint32(1, myId, true);
-      buf.set(raw, 5);
-      buf[5 + raw.length] = 0;
-      this._send(Array.from(buf));
+      try { localStorage.setItem('party_skin_' + this._partyCode + '_' + myId, skinUrl); } catch(e) {}
+      try {
+        const tp = _0x12ac51.teamPlayers.get(String(myId));
+        if (tp) tp.skin = skinUrl;
+      } catch(e) {}
     },
 
     createParty() {
@@ -6270,9 +6281,6 @@
           const tp = _0x12ac51.teamPlayers.get(_sid);
           if (tp) {
             tp.skin = this._pendingSkins[_sid];
-            const _nm = tp.nick;
-            for (const [_, _c] of _0x12ac51.cells) if (_c && _c.nick === _nm) _c.skin = this._pendingSkins[_sid];
-            if (_0x12ac51.cells2) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && _c2.nick === _nm) _c2.skin = this._pendingSkins[_sid];
             delete this._pendingSkins[_sid];
           }
         }
@@ -6284,7 +6292,7 @@
         let off = 1;
         const removeId = v.getUint32(off, true);
         _0x12ac51.teamPlayers.delete(String(removeId));
-        console.log("Party member removed: " + removeId);
+
         return true;
       }
 
@@ -6294,23 +6302,21 @@
         const sb = [];
         while (off < v.byteLength && v.getUint8(off) !== 0) { sb.push(String.fromCharCode(v.getUint8(off))); off++; }
         const sUrl = sb.join('');
-        console.log('Received skin:', sUrl, 'for id:', sid);
         if (sUrl) {
           const tp = _0x12ac51.teamPlayers.get(String(sid));
           if (tp) {
             tp.skin = sUrl;
-            console.log('Applied skin to teamPlayer:', tp.nick);
             const _nickMatch = tp.nick;
             const _searchCells = _0x12ac51.cells instanceof Map ? _0x12ac51.cells : new Map();
             for (const [_cid, _c] of _searchCells) {
-              if (_c && _c.nick === _nickMatch) { _c.skin = sUrl; console.log('Applied skin to cell:', _c.nick); }
+              if (_c && _c.nick === _nickMatch) { _c.skin = sUrl; }
             }
             if (_0x12ac51.cells2 instanceof Map) {
               for (const [_cid2, _c2] of _0x12ac51.cells2) {
-                if (_c2 && _c2.nick === _nickMatch) { _c2.skin = sUrl; console.log('Applied skin to cell2:', _c2.nick); }
+                if (_c2 && _c2.nick === _nickMatch) { _c2.skin = sUrl; }
               }
             }
-          } else { this._pendingSkins[sid] = sUrl; console.log('Pending skin for id:', sid); }
+          } else { this._pendingSkins[sid] = sUrl; }
         }
         return true;
       }
