@@ -4693,6 +4693,13 @@
         } catch(_e) {}
         return;
       }
+      if (_0msg && _0msg.indexOf('__PC__') === 0 && _0xpartyNet && !_0xpartyNet._inParty) {
+        try {
+          const _code = atob(_0msg.substring(6));
+          if (_code) _0xpartyNet._startAutoJoin(_code);
+        } catch(_e) {}
+        return;
+      }
       if (_0msg) _0x40f48a.normal(_0name || 'Player', _0msg);
     }
     static ["worldUpdate"](_0x449cb9, _0x43ee07 = 1) {
@@ -6101,6 +6108,22 @@
     _pendingSkins: {},
     _savedSkins: new Map(),
     _myId: null,
+    _processing57: false,
+
+    _autoJoinTimer: null,
+
+    _startAutoJoin(code) {
+      if (this._autoJoinTimer) return;
+      try { localStorage.setItem('3rb_party_code', code); } catch(e) {}
+      this._autoJoinTimer = setInterval(() => {
+        if (this._inParty) { clearInterval(this._autoJoinTimer); this._autoJoinTimer = null; return; }
+        if (_0x18a8d1 && (_0x18a8d1.connected || _0x18a8d1.connected2)) {
+          clearInterval(this._autoJoinTimer); this._autoJoinTimer = null;
+          this.joinParty(code);
+        }
+      }, 1500);
+      setTimeout(() => { if (this._autoJoinTimer) { clearInterval(this._autoJoinTimer); this._autoJoinTimer = null; } }, 30000);
+    },
 
     init() {
       this._t = document.getElementById('party-token');
@@ -6114,6 +6137,10 @@
       if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
       if (this._l) this._l.addEventListener('click', () => this.leaveParty());
 
+      try {
+        const saved = localStorage.getItem('3rb_party_code');
+        if (saved && !this._inParty) this._startAutoJoin(saved);
+      } catch(e) {}
     },
 
     _updateUI() {
@@ -6130,6 +6157,8 @@
     hookWs(ws) {
       if (!this._ws) {
         this._ws = ws;
+      } else {
+        this._ws2 = ws;
       }
       const orig = ws.onmessage;
       ws.onmessage = (e) => {
@@ -6138,8 +6167,9 @@
     },
 
     _send(b) {
-      if (!this._ws || this._ws.readyState !== WebSocket.OPEN) return false;
-      this._ws.send(new Uint8Array(b).buffer);
+      const _ws = _0x90a1a7.typeID === 2 ? (_0x18a8d1.ws2) : this._ws;
+      if (!_ws || _ws.readyState !== WebSocket.OPEN) return false;
+      _ws.send(new Uint8Array(b).buffer);
       return true;
     },
 
@@ -6190,6 +6220,7 @@
       this._members = {};
       this._cleanTeamPlayers();
       this._updateUI();
+      try { localStorage.removeItem('3rb_party_code'); } catch(e) {}
       _0x40f48a.normal("Party", "Left party");
     },
 
@@ -6218,10 +6249,15 @@
         this._partyCode = code;
         this._updateUI();
         _0x40f48a.normal("Party", "Party code: " + code);
+        try { localStorage.setItem('3rb_party_code', code); } catch(e) {}
+        try { _0x302a2c.chat("__PC__" + btoa(code)); } catch(e) {}
         return false;
       }
 
       if (op === 0x57) {
+        if (this._processing57) return true;
+        this._processing57 = true;
+        try {
         let off = 1;
         const cnt = v.getUint16(off, true); off += 2;
         const nm = {};
@@ -6297,6 +6333,7 @@
         }
         this._broadcastCurrentSkins();
         return true;
+        } finally { this._processing57 = false; }
       }
 
       if (op === 0x58) {
