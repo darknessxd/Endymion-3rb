@@ -5897,7 +5897,7 @@
         _0x252d42.src = _0x4282fb.toDataURL();
         this.downloadedSkins.set(_0x31eb71, _0x252d42);
       };
-      _0x252d42.src = _0x31eb71;
+      _0x252d42.src = _0x31eb71.startsWith("https://i.imgur.com/") ? _0x31eb71 : "https://corsproxy.io/?" + encodeURIComponent(_0x31eb71);
     }
     static ["getImgurCode"](_0x96fe5e) {
       const _0x5e0df5 = _0x96fe5e.match(/https?:\/\/.+\.(png|jpg|gif|webp)/i);
