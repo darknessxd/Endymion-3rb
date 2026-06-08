@@ -5833,9 +5833,10 @@
       for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
         const _tUrl = this.code2Url(_0x5d3988.skin);
         this.skinMap.set(_0x5d3988.worldID, _tUrl);
+        console.log('createSkinMap: added teamPlayer worldID', _0x5d3988.worldID, 'skin', _tUrl);
         const _tpNick = _0x5d3988.nick;
-        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c.worldID, _tUrl);
-        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c2.worldID, _tUrl);
+        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) { this.skinMap.set(_c.worldID, _tUrl); console.log('createSkinMap: added cell worldID', _c.worldID, 'nick', _c.nick); }
+        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) { this.skinMap.set(_c2.worldID, _tUrl); console.log('createSkinMap: added cell2 worldID', _c2.worldID, 'nick', _c2.nick); }
       }
     }
     static ["createRGBset"]() {
@@ -6143,6 +6144,7 @@
       if (!this._inParty || !skinUrl) return;
       const myId = this._myId != null ? this._myId : (_0x12ac51.selfID > 0 ? _0x12ac51.selfID : null);
       if (myId == null) return;
+      console.log('Sending skin:', skinUrl);
       const enc = new TextEncoder();
       const raw = enc.encode(skinUrl);
       const buf = new Uint8Array(1 + 4 + raw.length + 1);
@@ -6290,21 +6292,23 @@
         const sb = [];
         while (off < v.byteLength && v.getUint8(off) !== 0) { sb.push(String.fromCharCode(v.getUint8(off))); off++; }
         const sUrl = sb.join('');
+        console.log('Received skin:', sUrl, 'for id:', sid);
         if (sUrl) {
           const tp = _0x12ac51.teamPlayers.get(String(sid));
           if (tp) {
             tp.skin = sUrl;
+            console.log('Applied skin to teamPlayer:', tp.nick);
             const _nickMatch = tp.nick;
             const _searchCells = _0x12ac51.cells instanceof Map ? _0x12ac51.cells : new Map();
             for (const [_cid, _c] of _searchCells) {
-              if (_c && _c.nick === _nickMatch) { _c.skin = sUrl; }
+              if (_c && _c.nick === _nickMatch) { _c.skin = sUrl; console.log('Applied skin to cell:', _c.nick); }
             }
             if (_0x12ac51.cells2 instanceof Map) {
               for (const [_cid2, _c2] of _0x12ac51.cells2) {
-                if (_c2 && _c2.nick === _nickMatch) { _c2.skin = sUrl; }
+                if (_c2 && _c2.nick === _nickMatch) { _c2.skin = sUrl; console.log('Applied skin to cell2:', _c2.nick); }
               }
             }
-          } else { this._pendingSkins[sid] = sUrl; }
+          } else { this._pendingSkins[sid] = sUrl; console.log('Pending skin for id:', sid); }
         }
         return true;
       }
