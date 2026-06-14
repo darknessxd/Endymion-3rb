@@ -1635,7 +1635,7 @@
       this.teammateNameColor = _0x19d5af.get("theme", "teammateNameColor") || "#fff";
       this.backgroundImage = _0x19d5af.get("theme", "backgroundImage") || "";
       this.signalMarkerEnabled = _0x19d5af.get("theme", "signalMarkerEnabled") || "on";
-      this.signalMarkerSize = ~~_0x19d5af.get("theme", "signalMarkerSize") || 80;
+      this.signalMarkerSize = ~~_0x19d5af.get("theme", "signalMarkerSize") || 500;
       this.addPresets();
       this.setDomValues();
       this.addEvents();
@@ -5498,7 +5498,7 @@
       if (_0x480be4.signalMarkerEnabled !== 'off') {
         const _now = performance.now();
         const _pings = _0xpartyNet._pings;
-        const _maxR = _0x480be4.signalMarkerSize || 80;
+        const _maxR = _0x480be4.signalMarkerSize || 500;
         const _dotR = Math.max(3, _maxR * 0.06);
         for (let _i = _pings.length - 1; _i >= 0; _i--) {
           const _p = _pings[_i];
