@@ -5861,6 +5861,13 @@
       if (_0x90a1a7.isRGB) {
         this.rgbTeammates.add(_0x90a1a7.worldID);
       }
+      for (const _k of _0x12ac51.teamPlayers.keys()) {
+        if (typeof _k === 'string') {
+          const _n = _0x12ac51.teamPlayers.get(Number(_k));
+          const _s = _0x12ac51.teamPlayers.get(_k);
+          if (_n && _n.mass && _s) _s.mass = _n.mass;
+        }
+      }
       for (const _0x33940b of _0x12ac51.teamPlayers.values()) if (_0x33940b.isAlive && _0x33940b.isRGB) {
         this.rgbTeammates.add(_0x33940b.worldID);
       }
