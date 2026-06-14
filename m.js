@@ -5861,13 +5861,6 @@
       if (_0x90a1a7.isRGB) {
         this.rgbTeammates.add(_0x90a1a7.worldID);
       }
-      for (const _k of _0x12ac51.teamPlayers.keys()) {
-        if (typeof _k === 'string') {
-          const _n = _0x12ac51.teamPlayers.get(Number(_k));
-          const _s = _0x12ac51.teamPlayers.get(_k);
-          if (_n && _n.mass && _s) _s.mass = _n.mass;
-        }
-      }
       for (const _0x33940b of _0x12ac51.teamPlayers.values()) if (_0x33940b.isAlive && _0x33940b.isRGB) {
         this.rgbTeammates.add(_0x33940b.worldID);
       }
@@ -6287,7 +6280,7 @@
           const sz = v.getInt32(off, true); off += 4;
           const px = v.getInt32(off, true); off += 4;
           const py = v.getInt32(off, true); off += 4;
-          nm[id] = { id, name, col, px, py };
+          nm[id] = { id, name, col, px, py, sz };
           newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(sz) || 50 }]);
         }
         this._members = nm;
@@ -6309,10 +6302,12 @@
             p.colorHex = nmd.col;
             p.team = 1;
             p.isAlive = 1;
+            p.mass = Math.round(Math.abs(nmd.sz) ** 2 / 100) || 50;
             _0x12ac51.teamPlayers.set(mid, p);
           }
           p.x = nmd.px;
           p.y = nmd.py;
+          p.mass = Math.round(Math.abs(nmd.sz) ** 2 / 100) || 50;
           p.animX = nmd.px;
           p.animY = nmd.py;
           p.timeStamp = performance.now();
