@@ -1636,6 +1636,8 @@
       this.backgroundImage = _0x19d5af.get("theme", "backgroundImage") || "";
       this.signalMarkerEnabled = _0x19d5af.get("theme", "signalMarkerEnabled") || "on";
       this.signalMarkerSize = ~~_0x19d5af.get("theme", "signalMarkerSize") || 500;
+      this.signalMarkerUrl = _0x19d5af.get("theme", "signalMarkerUrl") || "https://i.imgur.com/RD7gHuK.png";
+      this._initSignalMarkerImage();
       this.addPresets();
       this.setDomValues();
       this.addEvents();
@@ -1682,6 +1684,12 @@
         this.maouCtx.drawImage(this.maouInner, -_0x5e3f1a, -_0x5e3f1a);
         this.maouCtx.restore();
       }, 40);
+    }
+    static ["_initSignalMarkerImage"]() {
+      this._signalMarkerImg = new Image();
+      this._signalMarkerImg.crossOrigin = "anonymous";
+      this._signalMarkerImg.onload = () => { this._signalMarkerReady = true; };
+      this._signalMarkerImg.src = this.signalMarkerUrl;
     }
     static ["setDomValues"]() {
       _0x14f7b2(".theme-options").each(function () {
@@ -1731,6 +1739,14 @@
         });
       });
       _0x14f7b2(".theme-close").click(() => this.close());
+      _0x14f7b2("input#signalMarkerUrl").each(function () {
+        const _0x7f3b2a = _0x14f7b2(this).attr('id');
+        _0x14f7b2(this).val(_0x480be4.signalMarkerUrl || '');
+        _0x14f7b2(this).on('input', function () {
+          _0x480be4.saveTheme('signalMarkerUrl', _0x14f7b2(this).val());
+          _0x480be4._initSignalMarkerImage();
+        });
+      });
       _0x14f7b2("input#backgroundImage, input#maouCircleUrl, input#multiboxShieldUrl, input#commanderImageUrl").each(function () {
         const _0x558bc6 = _0x14f7b2(this).attr('id');
         _0x14f7b2(this).val(_0x480be4[_0x558bc6] || '');
@@ -5499,7 +5515,8 @@
         const _now = performance.now();
         const _pings = _0xpartyNet._pings;
         const _maxR = _0x480be4.signalMarkerSize || 500;
-        const _dotR = Math.max(3, _maxR * 0.06);
+        const _img = _0x480be4._signalMarkerImg;
+        const _imgReady = _0x480be4._signalMarkerReady;
         for (let _i = _pings.length - 1; _i >= 0; _i--) {
           const _p = _pings[_i];
           const _dt = _now - _p.time;
@@ -5507,17 +5524,27 @@
           const _t = _dt / 2000;
           const _r = _maxR * 0.25 + _t * _maxR * 0.75;
           const _a = 1 - _t;
-          this.ctx.beginPath();
-          this.ctx.arc(_p.x, _p.y, _r, 0, this.pi2, false);
-          this.ctx.closePath();
-          this.ctx.strokeStyle = 'rgba(255,255,255,' + _a + ')';
-          this.ctx.lineWidth = Math.max(1, 3 - _t * 2);
-          this.ctx.stroke();
-          this.ctx.beginPath();
-          this.ctx.arc(_p.x, _p.y, _dotR, 0, this.pi2, false);
-          this.ctx.closePath();
-          this.ctx.fillStyle = 'rgba(255,255,255,' + _a + ')';
-          this.ctx.fill();
+          if (_imgReady && _img && _img.complete && _img.naturalWidth > 0) {
+            this.ctx.save();
+            this.ctx.globalAlpha = _a;
+            const _rot = _now * 0.002;
+            this.ctx.translate(_p.x, _p.y);
+            this.ctx.rotate(_rot);
+            this.ctx.drawImage(_img, -_r, -_r, _r * 2, _r * 2);
+            this.ctx.restore();
+          } else {
+            this.ctx.beginPath();
+            this.ctx.arc(_p.x, _p.y, _r, 0, this.pi2, false);
+            this.ctx.closePath();
+            this.ctx.strokeStyle = 'rgba(255,255,255,' + _a + ')';
+            this.ctx.lineWidth = Math.max(1, 3 - _t * 2);
+            this.ctx.stroke();
+            this.ctx.beginPath();
+            this.ctx.arc(_p.x, _p.y, _maxR * 0.06, 0, this.pi2, false);
+            this.ctx.closePath();
+            this.ctx.fillStyle = 'rgba(255,255,255,' + _a + ')';
+            this.ctx.fill();
+          }
         }
       }
       this.ctx.restore();
