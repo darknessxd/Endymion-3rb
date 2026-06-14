@@ -2722,6 +2722,29 @@
       } else {
         this.normalMinimap();
       }
+      const _now = performance.now();
+      const _pings = _0xpartyNet._pings;
+      for (let _i = _pings.length - 1; _i >= 0; _i--) {
+        const _p = _pings[_i];
+        const _dt = _now - _p.time;
+        if (_dt > 2000) { _pings.splice(_i, 1); continue; }
+        const _t = _dt / 2000;
+        const _mx = (8000 - _0x996564.offset.x + _p.x) * _0x145776;
+        const _my = (8000 - _0x996564.offset.y + _p.y) * _0x145776;
+        const _r = 20 + _t * 60;
+        const _a = 1 - _t;
+        _0x46ff1c.beginPath();
+        _0x46ff1c.arc(_mx, _my, _r, 0, this.pi2, false);
+        _0x46ff1c.closePath();
+        _0x46ff1c.strokeStyle = 'rgba(255,255,255,' + _a + ')';
+        _0x46ff1c.lineWidth = 3 - _t * 2;
+        _0x46ff1c.stroke();
+        _0x46ff1c.beginPath();
+        _0x46ff1c.arc(_mx, _my, 5, 0, this.pi2, false);
+        _0x46ff1c.closePath();
+        _0x46ff1c.fillStyle = 'rgba(255,255,255,' + _a + ')';
+        _0x46ff1c.fill();
+      }
     }
     static ["teamMinimap"]() {
       const _0x5db847 = this.ctx;
@@ -6111,8 +6134,24 @@
     _savedSkins: new Map(),
     _myId: null,
     _processing57: false,
+    _pings: [],
 
     _autoJoinTimer: null,
+
+    _addPing(x, y) {
+      this._pings.push({ x, y, time: performance.now() });
+      if (this._pings.length > 50) this._pings.splice(0, this._pings.length - 50);
+    },
+    _addAndSendPing(x, y) {
+      this._addPing(x, y);
+      if (this._inParty) {
+        const buf = new Uint8Array(9);
+        buf[0] = 0x61;
+        buf[1] = x & 0xff; buf[2] = (x >> 8) & 0xff; buf[3] = (x >> 16) & 0xff; buf[4] = (x >> 24) & 0xff;
+        buf[5] = y & 0xff; buf[6] = (y >> 8) & 0xff; buf[7] = (y >> 16) & 0xff; buf[8] = (y >> 24) & 0xff;
+        this._send(Array.from(buf));
+      }
+    },
 
     _startAutoJoin(code) {
       if (this._autoJoinTimer) return;
@@ -6356,6 +6395,13 @@
         return true;
       }
 
+      if (op === 0x61) {
+        if (v.byteLength >= 9) {
+          this._addPing(v.getInt32(1, true), v.getInt32(5, true));
+        }
+        return true;
+      }
+
       return false;
     }
   };
@@ -6369,4 +6415,19 @@
     if (_0xpartyNet) _0xpartyNet._startAutoJoin(code);
   };
   _0xpartyNet.init();
+  try {
+    const mm = _0x14f7b2("#minimap-nodes")[0];
+    if (mm) {
+      mm.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        const rect = this.getBoundingClientRect();
+        const cx = e.clientX - rect.left;
+        const cy = e.clientY - rect.top;
+        const sc = _0x480be4.minimapSize / _0x996564.edge;
+        const wx = Math.round(cx / sc - 8000 + _0x996564.offset.x);
+        const wy = Math.round(cy / sc - 8000 + _0x996564.offset.y);
+        _0xpartyNet._addAndSendPing(wx, wy);
+      });
+    }
+  } catch(e) {}
 }(window, $, document);
