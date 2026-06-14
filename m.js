@@ -2722,29 +2722,6 @@
       } else {
         this.normalMinimap();
       }
-      const _now = performance.now();
-      const _pings = _0xpartyNet._pings;
-      for (let _i = _pings.length - 1; _i >= 0; _i--) {
-        const _p = _pings[_i];
-        const _dt = _now - _p.time;
-        if (_dt > 2000) { _pings.splice(_i, 1); continue; }
-        const _t = _dt / 2000;
-        const _mx = (8000 - _0x996564.offset.x + _p.x) * _0x145776;
-        const _my = (8000 - _0x996564.offset.y + _p.y) * _0x145776;
-        const _r = 20 + _t * 60;
-        const _a = 1 - _t;
-        _0x46ff1c.beginPath();
-        _0x46ff1c.arc(_mx, _my, _r, 0, this.pi2, false);
-        _0x46ff1c.closePath();
-        _0x46ff1c.strokeStyle = 'rgba(255,255,255,' + _a + ')';
-        _0x46ff1c.lineWidth = 3 - _t * 2;
-        _0x46ff1c.stroke();
-        _0x46ff1c.beginPath();
-        _0x46ff1c.arc(_mx, _my, 5, 0, this.pi2, false);
-        _0x46ff1c.closePath();
-        _0x46ff1c.fillStyle = 'rgba(255,255,255,' + _a + ')';
-        _0x46ff1c.fill();
-      }
     }
     static ["teamMinimap"]() {
       const _0x5db847 = this.ctx;
@@ -5516,6 +5493,27 @@
       this.cells();
       this.commands();
       _0x34f3bb.cleaner();
+      const _now = performance.now();
+      const _pings = _0xpartyNet._pings;
+      for (let _i = _pings.length - 1; _i >= 0; _i--) {
+        const _p = _pings[_i];
+        const _dt = _now - _p.time;
+        if (_dt > 2000) { _pings.splice(_i, 1); continue; }
+        const _t = _dt / 2000;
+        const _r = 20 + _t * 60;
+        const _a = 1 - _t;
+        this.ctx.beginPath();
+        this.ctx.arc(_p.x, _p.y, _r, 0, this.pi2, false);
+        this.ctx.closePath();
+        this.ctx.strokeStyle = 'rgba(255,255,255,' + _a + ')';
+        this.ctx.lineWidth = 3 - _t * 2;
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.arc(_p.x, _p.y, 5, 0, this.pi2, false);
+        this.ctx.closePath();
+        this.ctx.fillStyle = 'rgba(255,255,255,' + _a + ')';
+        this.ctx.fill();
+      }
       this.ctx.restore();
     }
     static ["vanillaGrid"]() {
@@ -6416,17 +6414,12 @@
   };
   _0xpartyNet.init();
   try {
-    const mm = _0x14f7b2("#minimap-nodes")[0];
-    if (mm) {
-      mm.addEventListener('contextmenu', function(e) {
+    const cv = _0x24f9ab.getElementById("canvas");
+    if (cv) {
+      cv.addEventListener('contextmenu', function(e) {
         e.preventDefault();
-        const rect = this.getBoundingClientRect();
-        const cx = e.clientX - rect.left;
-        const cy = e.clientY - rect.top;
-        const sc = _0x480be4.minimapSize / _0x996564.edge;
-        const wx = Math.round(cx / sc - 8000 + _0x996564.offset.x);
-        const wy = Math.round(cy / sc - 8000 + _0x996564.offset.y);
-        _0x40f48a.normal("Ping", "X:" + wx + " Y:" + wy);
+        const wx = Math.round((e.clientX - (_0x1c478d.innerWidth >> 1)) / _0xddb6d6.viewport + _0xddb6d6.x);
+        const wy = Math.round((e.clientY - (_0x1c478d.innerHeight >> 1)) / _0xddb6d6.viewport + _0xddb6d6.y);
         _0xpartyNet._addAndSendPing(wx, wy);
       });
     }
