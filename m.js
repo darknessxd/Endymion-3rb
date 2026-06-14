@@ -5192,8 +5192,6 @@
           _0x5aa296.x = _0x3adb12.readInt16();
           _0x5aa296.y = _0x3adb12.readInt16();
           _0x5aa296.mass = _0x3adb12.readUInt32();
-          const _partyTp = _0x12ac51.teamPlayers.get(String(_0x4f2cf7));
-          if (_partyTp) _partyTp.mass = _0x5aa296.mass;
         }
         if (32 & _0x51b623) {
           _0x5aa296.isAlive = _0x3adb12.readUInt8();
@@ -6282,7 +6280,7 @@
           const sz = v.getInt32(off, true); off += 4;
           const px = v.getInt32(off, true); off += 4;
           const py = v.getInt32(off, true); off += 4;
-          nm[id] = { id, name, col, px, py, sz };
+          nm[id] = { id, name, col, px, py };
           newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(sz) || 50 }]);
         }
         this._members = nm;
@@ -6304,12 +6302,10 @@
             p.colorHex = nmd.col;
             p.team = 1;
             p.isAlive = 1;
-            p.mass = Math.round(Math.abs(nmd.sz) ** 2 / 100) || 50;
             _0x12ac51.teamPlayers.set(mid, p);
           }
           p.x = nmd.px;
           p.y = nmd.py;
-          p.mass = Math.round(Math.abs(nmd.sz) ** 2 / 100) || 50;
           p.animX = nmd.px;
           p.animY = nmd.py;
           p.timeStamp = performance.now();
