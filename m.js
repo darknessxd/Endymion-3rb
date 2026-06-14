@@ -839,10 +839,14 @@
           nick2: _0xprev.nick2 || '',
           skin2: _0xprev.skin2 || ''
         };
-        _0x90a1a7.skin = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x4b4ffa));
         _0x19d5af.set('profiles', "profile" + this.selected, _0x5d3148);
         this.updateMainSkin("https://3rb.io/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
         this.updatePreviewSkin(this.selected);
+        if (_0x431fed) {
+          _0x90a1a7._skin = "free/" + _0x431fed.replace(/free\/|.png/g, '');
+          _0x2d5cce.skin();
+          _0x90a1a7._skin = "XXXXXXX";
+        }
       }
     }
     static ["setSkin"](_0x10e480) {
