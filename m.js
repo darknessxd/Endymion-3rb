@@ -5192,6 +5192,8 @@
           _0x5aa296.x = _0x3adb12.readInt16();
           _0x5aa296.y = _0x3adb12.readInt16();
           _0x5aa296.mass = _0x3adb12.readUInt32();
+          const _partyTp = _0x12ac51.teamPlayers.get(String(_0x4f2cf7));
+          if (_partyTp) _partyTp.mass = _0x5aa296.mass;
         }
         if (32 & _0x51b623) {
           _0x5aa296.isAlive = _0x3adb12.readUInt8();
