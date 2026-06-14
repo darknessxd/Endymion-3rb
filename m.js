@@ -841,9 +841,8 @@
         };
         _0x90a1a7.skin = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x4b4ffa));
         _0x19d5af.set('profiles', "profile" + this.selected, _0x5d3148);
-        this.updateMainSkin("https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
+        this.updateMainSkin("https://3rb.io/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
         this.updatePreviewSkin(this.selected);
-        if (_0x431fed) try { _0xpartyNet._sendSkinUpdate(_0x90a1a7.skin, 1); } catch(e) {}
       }
     }
     static ["setSkin"](_0x10e480) {
@@ -875,13 +874,13 @@
     static ["updateMainSkin"](_0x55f338) {
       const _0x1f6a96 = _0x14f7b2('#skin').val();
       _0x55f338 = _0x55f338 || _0x14f7b2('#arbSkin').val();
-      const _0x2517b0 = !_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x1f6a96 || '')).includes("XXXXXXX") ? _0x1f6a96 : "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + _0x55f338.replace(/free\/|.png/g, '') + ".png";
+      const _0x2517b0 = !_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x1f6a96 || '')).includes("XXXXXXX") ? _0x1f6a96 : "https://3rb.io/res/skins/free/" + _0x55f338.replace(/free\/|.png/g, '') + ".png";
       _0x14f7b2(".skin-preview").css('background', "url(" + _0x2517b0 + ')');
     }
     static ["updatePreviewSkin"](_0x4207bd) {
       let _0x5cc1ac = _0x19d5af.get("profiles", "profile" + _0x4207bd);
       if (_0x5cc1ac) {
-        const _0x3d8c60 = !_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5cc1ac.skin || '')).includes("XXXXXXX") ? _0x5cc1ac.skin : _0x5cc1ac.arbSkin && "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + _0x5cc1ac.arbSkin.replace(/free\/|.png/g, '') + "png";
+        const _0x3d8c60 = !_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5cc1ac.skin || '')).includes("XXXXXXX") ? _0x5cc1ac.skin : _0x5cc1ac.arbSkin && "https://3rb.io/res/skins/free/" + _0x5cc1ac.arbSkin.replace(/free\/|.png/g, '') + "png";
         _0x14f7b2(".skin-selector[value=" + _0x4207bd + ']').css("background", "url(" + _0x3d8c60 + ')');
       }
     }
@@ -5842,18 +5841,18 @@
       this.arbSkin = _0x14f7b2("#arbSkin").val();
       this.skinMap.clear();
       this.arbSkinMap.clear();
-      const _isArb = (u) => u && u.includes("maamargasouma.workers.dev");
+      const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
       if (!_0x90a1a7.skin.includes("XXXXXXX")) {
         this.skinMap.set(_0x90a1a7.worldID, this.code2Url(_0x90a1a7.skin));
       } else if (this.arbSkin) {
-        this.arbSkinMap.set(_0x90a1a7.worldID, "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png");
+        this.arbSkinMap.set(_0x90a1a7.worldID, "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png");
       }
       if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) {
         this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0x90a1a7.skin2));
       } else if (!_0x90a1a7.skin.includes("XXXXXXX")) {
         this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0x90a1a7.skin));
       } else if (this.arbSkin) {
-        this.arbSkinMap.set(_0x90a1a7.worldID2, "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + '.png');
+        this.arbSkinMap.set(_0x90a1a7.worldID2, "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + '.png');
       }
       for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
         const _tUrl = this.code2Url(_0x5d3988.skin);
@@ -5903,7 +5902,7 @@
         _0x323825.src = _0x5753ba.toDataURL();
         this.downloadedSkins.set(_0x26f184, _0x323825);
       };
-      _0x323825.src = "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + _0x26f184.replace(/free\/|.png/g, '') + ".png";
+      _0x323825.src = "https://corsproxy.io/?" + encodeURIComponent("https://3rb.io/res/skins/free/" + _0x26f184.replace(/free\/|.png/g, '') + ".png");
     }
     static ["downloadSkin"](_0x31eb71) {
       this.downloadedSkins.set(_0x31eb71, false);
@@ -6184,22 +6183,14 @@
     },
 
     _sendSkinViaChat() {
-      const _toArbUrl = (n) => n ? "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + n.replace(/free\/|.png/g, '') + ".png" : null;
+      if (!this._inParty) return;
       try {
         const s1 = _0x90a1a7.skin;
-        if (s1 && !s1.includes("XXXXXXX")) {
-          _0x302a2c.chat("__SK__" + btoa(s1));
-        } else if (_0x90a1a7.arbSkin) {
-          _0x302a2c.chat("__SK__" + btoa(_toArbUrl(_0x90a1a7.arbSkin)));
-        }
+        if (s1 && !s1.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s1));
       } catch(e) {}
       try {
         const s2 = _0x90a1a7.skin2;
-        if (s2 && !s2.includes("XXXXXXX")) {
-          _0x302a2c.chat("__SK__" + btoa(s2));
-        } else if (_0x90a1a7.arbSkin) {
-          _0x302a2c.chat("__SK__" + btoa(_toArbUrl(_0x90a1a7.arbSkin)));
-        }
+        if (s2 && !s2.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s2));
       } catch(e) {}
     },
 
@@ -6208,13 +6199,8 @@
     },
 
     _sendSkinUpdate(skinUrl, botIdx) {
-      if (!skinUrl && !_0x90a1a7.arbSkin) return;
-      const _toArbUrl = (n) => n ? "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + n.replace(/free\/|.png/g, '') + ".png" : null;
-      if (skinUrl && !skinUrl.includes("XXXXXXX")) {
-        try { _0x302a2c.chat("__SK__" + btoa(skinUrl)); } catch(e) {}
-      } else if (_0x90a1a7.arbSkin) {
-        try { _0x302a2c.chat("__SK__" + btoa(_toArbUrl(_0x90a1a7.arbSkin))); } catch(e) {}
-      }
+      if (!this._inParty || !skinUrl || skinUrl.includes("XXXXXXX")) return;
+      try { _0x302a2c.chat("__SK__" + btoa(skinUrl)); } catch(e) {}
     },
 
     createParty() {
