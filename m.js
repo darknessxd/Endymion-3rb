@@ -1606,7 +1606,7 @@
       this.virusBorderColor = _0x19d5af.get('theme', "virusBorderColor") || "#c2c2c2";
       this.virusBorderWidth = ~~_0x19d5af.get("theme", "virusBorderWidth") || 10;
       this.commanderColor = _0x19d5af.get("theme", "commanderColor") || "#f5e35d";
-      this.commanderImageUrl = _0x19d5af.get("theme", "commanderImageUrl") || "";
+      this.commanderImageUrl = _0x19d5af.get("theme", "commanderImageUrl") || "https://i.imgur.com/RD7gHuK.png";
       this.backgroundColor = _0x19d5af.get("theme", "backgroundColor") || "#000000";
       this.indicatorSize = ~~_0x19d5af.get("theme", "indicatorSize") || 100;
       this.cursor = _0x19d5af.get("theme", "cursor") || 13;
@@ -1634,10 +1634,6 @@
       this.teammateColor = _0x19d5af.get("theme", "teammateColor") || "#555";
       this.teammateNameColor = _0x19d5af.get("theme", "teammateNameColor") || "#fff";
       this.backgroundImage = _0x19d5af.get("theme", "backgroundImage") || "";
-      this.signalMarkerEnabled = _0x19d5af.get("theme", "signalMarkerEnabled") || "on";
-      this.signalMarkerSize = ~~_0x19d5af.get("theme", "signalMarkerSize") || 500;
-      this.signalMarkerUrl = _0x19d5af.get("theme", "signalMarkerUrl") || "https://i.imgur.com/RD7gHuK.png";
-      this._initSignalMarkerImage();
       this.addPresets();
       this.setDomValues();
       this.addEvents();
@@ -1684,12 +1680,6 @@
         this.maouCtx.drawImage(this.maouInner, -_0x5e3f1a, -_0x5e3f1a);
         this.maouCtx.restore();
       }, 40);
-    }
-    static ["_initSignalMarkerImage"]() {
-      this._signalMarkerImg = new Image();
-      this._signalMarkerImg.crossOrigin = "anonymous";
-      this._signalMarkerImg.onload = () => { this._signalMarkerReady = true; };
-      this._signalMarkerImg.src = this.signalMarkerUrl;
     }
     static ["setDomValues"]() {
       _0x14f7b2(".theme-options").each(function () {
@@ -1739,14 +1729,6 @@
         });
       });
       _0x14f7b2(".theme-close").click(() => this.close());
-      _0x14f7b2("input#signalMarkerUrl").each(function () {
-        const _0x7f3b2a = _0x14f7b2(this).attr('id');
-        _0x14f7b2(this).val(_0x480be4.signalMarkerUrl || '');
-        _0x14f7b2(this).on('input', function () {
-          _0x480be4.saveTheme('signalMarkerUrl', _0x14f7b2(this).val());
-          _0x480be4._initSignalMarkerImage();
-        });
-      });
       _0x14f7b2("input#backgroundImage, input#maouCircleUrl, input#multiboxShieldUrl, input#commanderImageUrl").each(function () {
         const _0x558bc6 = _0x14f7b2(this).attr('id');
         _0x14f7b2(this).val(_0x480be4[_0x558bc6] || '');
@@ -4705,14 +4687,9 @@
       if (_0msg && _0msg.indexOf('__SK__') === 0) {
         try {
           const _decoded = atob(_0msg.substring(6));
-          if (_decoded.indexOf('###') === 0) {
-            const _parts = _decoded.substring(3).split(',');
-            if (_parts.length === 2 && _0xpartyNet) _0xpartyNet._addPing(parseInt(_parts[0], 10), parseInt(_parts[1], 10));
-          } else {
-            const _tp = _0x12ac51.teamPlayers.get(String(_0id));
-            if (_tp) _tp.skin = _decoded;
-            else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
-          }
+          const _tp = _0x12ac51.teamPlayers.get(String(_0id));
+          if (_tp) _tp.skin = _decoded;
+          else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
         } catch(_e) {}
         return;
       }
@@ -5516,42 +5493,6 @@
       this.cells();
       this.commands();
       _0x34f3bb.cleaner();
-      if (_0x480be4.signalMarkerEnabled !== 'off') {
-        const _now = performance.now();
-        const _pings = _0xpartyNet._pings;
-        const _maxR = _0x480be4.signalMarkerSize || 500;
-        const _img = _0x480be4._signalMarkerImg;
-        const _imgReady = _0x480be4._signalMarkerReady;
-        for (let _i = _pings.length - 1; _i >= 0; _i--) {
-          const _p = _pings[_i];
-          const _dt = _now - _p.time;
-          if (_dt > 2000) { _pings.splice(_i, 1); continue; }
-          const _t = _dt / 2000;
-          const _r = _maxR * 0.25 + _t * _maxR * 0.75;
-          const _a = 1 - _t;
-          if (_imgReady && _img && _img.complete && _img.naturalWidth > 0) {
-            this.ctx.save();
-            this.ctx.globalAlpha = _a;
-            const _rot = _now * 0.002;
-            this.ctx.translate(_p.x, _p.y);
-            this.ctx.rotate(_rot);
-            this.ctx.drawImage(_img, -_r, -_r, _r * 2, _r * 2);
-            this.ctx.restore();
-          } else {
-            this.ctx.beginPath();
-            this.ctx.arc(_p.x, _p.y, _r, 0, this.pi2, false);
-            this.ctx.closePath();
-            this.ctx.strokeStyle = 'rgba(255,255,255,' + _a + ')';
-            this.ctx.lineWidth = Math.max(1, 3 - _t * 2);
-            this.ctx.stroke();
-            this.ctx.beginPath();
-            this.ctx.arc(_p.x, _p.y, _maxR * 0.06, 0, this.pi2, false);
-            this.ctx.closePath();
-            this.ctx.fillStyle = 'rgba(255,255,255,' + _a + ')';
-            this.ctx.fill();
-          }
-        }
-      }
       this.ctx.restore();
     }
     static ["vanillaGrid"]() {
@@ -6170,20 +6111,8 @@
     _savedSkins: new Map(),
     _myId: null,
     _processing57: false,
-    _pings: [],
 
     _autoJoinTimer: null,
-
-    _addPing(x, y) {
-      this._pings.push({ x, y, time: performance.now() });
-      if (this._pings.length > 50) this._pings.splice(0, this._pings.length - 50);
-    },
-    _addAndSendPing(x, y) {
-      this._addPing(x, y);
-      if (this._inParty) {
-        try { _0x302a2c.chat("__SK__" + btoa("###" + x + "," + y)); } catch(e) {}
-      }
-    },
 
     _startAutoJoin(code) {
       if (this._autoJoinTimer) return;
@@ -6440,15 +6369,4 @@
     if (_0xpartyNet) _0xpartyNet._startAutoJoin(code);
   };
   _0xpartyNet.init();
-  try {
-    const cv = _0x24f9ab.getElementById("canvas");
-    if (cv) {
-      cv.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        const wx = Math.round((e.clientX - (_0x1c478d.innerWidth >> 1)) / _0xddb6d6.viewport + _0xddb6d6.x);
-        const wy = Math.round((e.clientY - (_0x1c478d.innerHeight >> 1)) / _0xddb6d6.viewport + _0xddb6d6.y);
-        _0xpartyNet._addAndSendPing(wx, wy);
-      });
-    }
-  } catch(e) {}
 }(window, $, document);
