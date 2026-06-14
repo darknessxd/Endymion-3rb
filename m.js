@@ -1634,6 +1634,8 @@
       this.teammateColor = _0x19d5af.get("theme", "teammateColor") || "#555";
       this.teammateNameColor = _0x19d5af.get("theme", "teammateNameColor") || "#fff";
       this.backgroundImage = _0x19d5af.get("theme", "backgroundImage") || "";
+      this.signalMarkerEnabled = _0x19d5af.get("theme", "signalMarkerEnabled") || "on";
+      this.signalMarkerSize = ~~_0x19d5af.get("theme", "signalMarkerSize") || 80;
       this.addPresets();
       this.setDomValues();
       this.addEvents();
@@ -5493,26 +5495,30 @@
       this.cells();
       this.commands();
       _0x34f3bb.cleaner();
-      const _now = performance.now();
-      const _pings = _0xpartyNet._pings;
-      for (let _i = _pings.length - 1; _i >= 0; _i--) {
-        const _p = _pings[_i];
-        const _dt = _now - _p.time;
-        if (_dt > 2000) { _pings.splice(_i, 1); continue; }
-        const _t = _dt / 2000;
-        const _r = 20 + _t * 60;
-        const _a = 1 - _t;
-        this.ctx.beginPath();
-        this.ctx.arc(_p.x, _p.y, _r, 0, this.pi2, false);
-        this.ctx.closePath();
-        this.ctx.strokeStyle = 'rgba(255,255,255,' + _a + ')';
-        this.ctx.lineWidth = 3 - _t * 2;
-        this.ctx.stroke();
-        this.ctx.beginPath();
-        this.ctx.arc(_p.x, _p.y, 5, 0, this.pi2, false);
-        this.ctx.closePath();
-        this.ctx.fillStyle = 'rgba(255,255,255,' + _a + ')';
-        this.ctx.fill();
+      if (_0x480be4.signalMarkerEnabled !== 'off') {
+        const _now = performance.now();
+        const _pings = _0xpartyNet._pings;
+        const _maxR = _0x480be4.signalMarkerSize || 80;
+        const _dotR = Math.max(3, _maxR * 0.06);
+        for (let _i = _pings.length - 1; _i >= 0; _i--) {
+          const _p = _pings[_i];
+          const _dt = _now - _p.time;
+          if (_dt > 2000) { _pings.splice(_i, 1); continue; }
+          const _t = _dt / 2000;
+          const _r = _maxR * 0.25 + _t * _maxR * 0.75;
+          const _a = 1 - _t;
+          this.ctx.beginPath();
+          this.ctx.arc(_p.x, _p.y, _r, 0, this.pi2, false);
+          this.ctx.closePath();
+          this.ctx.strokeStyle = 'rgba(255,255,255,' + _a + ')';
+          this.ctx.lineWidth = Math.max(1, 3 - _t * 2);
+          this.ctx.stroke();
+          this.ctx.beginPath();
+          this.ctx.arc(_p.x, _p.y, _dotR, 0, this.pi2, false);
+          this.ctx.closePath();
+          this.ctx.fillStyle = 'rgba(255,255,255,' + _a + ')';
+          this.ctx.fill();
+        }
       }
       this.ctx.restore();
     }
