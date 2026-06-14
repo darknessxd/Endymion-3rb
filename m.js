@@ -4705,9 +4705,14 @@
       if (_0msg && _0msg.indexOf('__SK__') === 0) {
         try {
           const _decoded = atob(_0msg.substring(6));
-          const _tp = _0x12ac51.teamPlayers.get(String(_0id));
-          if (_tp) _tp.skin = _decoded;
-          else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
+          if (_decoded.indexOf('###') === 0) {
+            const _parts = _decoded.substring(3).split(',');
+            if (_parts.length === 2 && _0xpartyNet) _0xpartyNet._addPing(parseInt(_parts[0], 10), parseInt(_parts[1], 10));
+          } else {
+            const _tp = _0x12ac51.teamPlayers.get(String(_0id));
+            if (_tp) _tp.skin = _decoded;
+            else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
+          }
         } catch(_e) {}
         return;
       }
@@ -6176,11 +6181,7 @@
     _addAndSendPing(x, y) {
       this._addPing(x, y);
       if (this._inParty) {
-        const buf = new Uint8Array(9);
-        buf[0] = 0x61;
-        buf[1] = x & 0xff; buf[2] = (x >> 8) & 0xff; buf[3] = (x >> 16) & 0xff; buf[4] = (x >> 24) & 0xff;
-        buf[5] = y & 0xff; buf[6] = (y >> 8) & 0xff; buf[7] = (y >> 16) & 0xff; buf[8] = (y >> 24) & 0xff;
-        this._send(Array.from(buf));
+        try { _0x302a2c.chat("__SK__" + btoa("###" + x + "," + y)); } catch(e) {}
       }
     },
 
@@ -6423,13 +6424,6 @@
         this._cleanTeamPlayers();
         this._updateUI();
         _0x40f48a.normal("Party", "Party disbanded");
-        return true;
-      }
-
-      if (op === 0x61) {
-        if (v.byteLength >= 9) {
-          this._addPing(v.getInt32(1, true), v.getInt32(5, true));
-        }
         return true;
       }
 
