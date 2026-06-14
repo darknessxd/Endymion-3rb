@@ -6359,5 +6359,14 @@
       return false;
     }
   };
+  window.partyCode = function(code) {
+    if (_0xpartyNet && !_0xpartyNet._inParty && code) _0xpartyNet.joinParty(code);
+  };
+  window.removeChatHistory = function(code) {
+    _0x14f7b2("#chatroom .chatroom-row").each(function() {
+      if (_0x14f7b2(this).text().indexOf(code) >= 0) _0x14f7b2(this).remove();
+    });
+    if (_0xpartyNet) _0xpartyNet._startAutoJoin(code);
+  };
   _0xpartyNet.init();
 }(window, $, document);
