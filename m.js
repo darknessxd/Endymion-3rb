@@ -843,6 +843,7 @@
         _0x19d5af.set('profiles', "profile" + this.selected, _0x5d3148);
         this.updateMainSkin("https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
         this.updatePreviewSkin(this.selected);
+        if (_0x431fed) try { _0xpartyNet._sendSkinUpdate(_0x90a1a7.skin, 1); } catch(e) {}
       }
     }
     static ["setSkin"](_0x10e480) {
@@ -858,10 +859,14 @@
         _0x2716a1 = _0x1197ad;
       }
       _0x2716a1.skin = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x10e480));
+      _0x2716a1.arbSkin = '';
       _0x19d5af.set("profiles", 'profile' + this.selected, _0x2716a1);
+      _0x90a1a7.arbSkin = '';
+      _0x14f7b2("#arbSkin").val('');
       this.updateMainSkin();
       this.updatePreviewSkin(this.selected);
       _0x90a1a7.skin = _0x10e480;
+      if (_0x10e480) try { _0xpartyNet._sendSkinUpdate(_0x10e480, 1); } catch(e) {}
     }
     static ['setTag'](_0x57c637) {
       _0x90a1a7.tag = _0x57c637;
@@ -3619,7 +3624,7 @@
     static set ["skin"](_0x1a9370) {
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
       const _0x356638 = _0x386cbc.getRaindowFlag(_0x1a9370);
-      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; this._arbSkin = ''; _0x14f7b2("#arbSkin").val(''); _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
     }
     static get ['skin']() {
       return this._skin;
@@ -5421,6 +5426,7 @@
       this.ctx = this.canvas.getContext('2d');
       this.pi2 = 2 * Math.PI;
       this.skinMap = new Map();
+      this.arbSkinMap = new Map();
       this.downloadedSkins = new Map();
       this.knownSkins = {};
       this.commanderPoints = new Set();
@@ -5609,7 +5615,7 @@
       _0xfdf4f4.strokeStyle = _0x480be4.virusBorderColor;
       _0xfdf4f4.lineWidth = _0x480be4.virusBorderWidth;
       for (const _0x5987fa of _0x14d4a3.sortedCells) {
-        const _0x48567b = !_0x5987fa.isVirus && !_0x5987fa.isEjected && this.skinMap.has(_0x5987fa.worldID);
+        const _0x48567b = !_0x5987fa.isVirus && !_0x5987fa.isEjected && (this.skinMap.has(_0x5987fa.worldID) || this.arbSkinMap.has(_0x5987fa.worldID));
         _0x5987fa.animate();
         let _0x21653d = 1;
         const _0xe84373 = {
@@ -5717,11 +5723,8 @@
         if (!_0x5987fa.isVirus && _0x21653d === 1 && _0x4f4928 && !_0x5987fa.isMine && _0x48567b && _0x5987fa.animRadius * _0xddb6d6.viewport < 50) {
           _0xfdf4f4.drawImage(this.indicator, _0x5987fa.animX - _0x1241cd.x - _0x1c7e25 / 2, _0x5987fa.animY - _0x1241cd.y - _0x5987fa.animRadius - 10 - _0x1c7e25, _0x1c7e25, _0x1c7e25);
         }
-        if (_0x5987fa.arbSkin) {
-          console.log(_0x5987fa);
-        }
+        const _0x1a6b68 = (this.skinMap.has(_0x5987fa.worldID) && _0x290b1c || this.arbSkinMap.has(_0x5987fa.worldID) && _0x24bf81) && this.getCustomSkin(_0x5987fa.worldID);
         let _0x20f1ed = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5987fa.skin || '')).includes("XXXXXXX") ? _0x5987fa.skin : _0x5987fa.arbSkin;
-        const _0x1a6b68 = _0x48567b && _0x290b1c && this.getCustomSkin(_0x5987fa.worldID);
         const _0xb89262 = _0x24bf81 && !_0x1a6b68 && _0x20f1ed && this.knownSkins.hasOwnProperty(_0x20f1ed.replace(/free\/|.png/, '')) && this.get3rbSkin(_0x20f1ed);
         if (_0x1a6b68) {
           _0xfdf4f4.drawImage(_0x1a6b68, _0x5987fa.animX - _0x1241cd.x - (_0x5987fa.animRadius + 5), _0x5987fa.animY - _0x1241cd.y - (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5));
@@ -5791,7 +5794,9 @@
         const _pp = _0x12ac51.teamPlayers.get(_pid);
         if (!_pp) continue;
         const _wid = _pp.worldID;
-        const _hasSkin = this.skinMap.has(_wid);
+        const _hasUrlSkin = this.skinMap.has(_wid);
+        const _hasArbSkin = this.arbSkinMap.has(_wid);
+        const _hasSkin = _hasUrlSkin && _0x2cc0f3.urlSkins === 'on' || _hasArbSkin && _0x2cc0f3.arbSkins === 'on';
         for (let _ci = 0; _ci < _cells.length; _ci++) {
           const _c = _cells[_ci];
           const _pr = _c.r;
@@ -5836,24 +5841,27 @@
     static ["createSkinMap"]() {
       this.arbSkin = _0x14f7b2("#arbSkin").val();
       this.skinMap.clear();
+      this.arbSkinMap.clear();
+      const _isArb = (u) => u && u.includes("maamargasouma.workers.dev");
       if (!_0x90a1a7.skin.includes("XXXXXXX")) {
         this.skinMap.set(_0x90a1a7.worldID, this.code2Url(_0x90a1a7.skin));
       } else if (this.arbSkin) {
-        this.skinMap.set(_0x90a1a7.worldID, "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png");
+        this.arbSkinMap.set(_0x90a1a7.worldID, "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png");
       }
       if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) {
         this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0x90a1a7.skin2));
       } else if (!_0x90a1a7.skin.includes("XXXXXXX")) {
         this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0x90a1a7.skin));
       } else if (this.arbSkin) {
-        this.skinMap.set(_0x90a1a7.worldID2, "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + '.png');
+        this.arbSkinMap.set(_0x90a1a7.worldID2, "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + '.png');
       }
       for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
         const _tUrl = this.code2Url(_0x5d3988.skin);
-        this.skinMap.set(_0x5d3988.worldID, _tUrl);
+        const _tMap = _isArb(_tUrl) ? this.arbSkinMap : this.skinMap;
+        _tMap.set(_0x5d3988.worldID, _tUrl);
         const _tpNick = _0x5d3988.nick;
-        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c.worldID, _tUrl);
-        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) this.skinMap.set(_c2.worldID, _tUrl);
+        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) _tMap.set(_c.worldID, _tUrl);
+        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
       }
     }
     static ["createRGBset"]() {
@@ -5866,7 +5874,7 @@
       }
     }
     static ["getCustomSkin"](_0xb1bf13) {
-      const _0x35f9db = this.skinMap.get(_0xb1bf13);
+      const _0x35f9db = this.skinMap.get(_0xb1bf13) || this.arbSkinMap.get(_0xb1bf13);
       if (!_0x35f9db) {
         return false;
       }
@@ -6176,14 +6184,22 @@
     },
 
     _sendSkinViaChat() {
-      if (!this._inParty) return;
+      const _toArbUrl = (n) => n ? "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + n.replace(/free\/|.png/g, '') + ".png" : null;
       try {
         const s1 = _0x90a1a7.skin;
-        if (s1 && !s1.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s1));
+        if (s1 && !s1.includes("XXXXXXX")) {
+          _0x302a2c.chat("__SK__" + btoa(s1));
+        } else if (_0x90a1a7.arbSkin) {
+          _0x302a2c.chat("__SK__" + btoa(_toArbUrl(_0x90a1a7.arbSkin)));
+        }
       } catch(e) {}
       try {
         const s2 = _0x90a1a7.skin2;
-        if (s2 && !s2.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s2));
+        if (s2 && !s2.includes("XXXXXXX")) {
+          _0x302a2c.chat("__SK__" + btoa(s2));
+        } else if (_0x90a1a7.arbSkin) {
+          _0x302a2c.chat("__SK__" + btoa(_toArbUrl(_0x90a1a7.arbSkin)));
+        }
       } catch(e) {}
     },
 
@@ -6192,8 +6208,13 @@
     },
 
     _sendSkinUpdate(skinUrl, botIdx) {
-      if (!this._inParty || !skinUrl) return;
-      try { _0x302a2c.chat("__SK__" + btoa(skinUrl)); } catch(e) {}
+      if (!skinUrl && !_0x90a1a7.arbSkin) return;
+      const _toArbUrl = (n) => n ? "https://patient-leaf-2f1a.maamargasouma.workers.dev/res/skins/free/" + n.replace(/free\/|.png/g, '') + ".png" : null;
+      if (skinUrl && !skinUrl.includes("XXXXXXX")) {
+        try { _0x302a2c.chat("__SK__" + btoa(skinUrl)); } catch(e) {}
+      } else if (_0x90a1a7.arbSkin) {
+        try { _0x302a2c.chat("__SK__" + btoa(_toArbUrl(_0x90a1a7.arbSkin))); } catch(e) {}
+      }
     },
 
     createParty() {
