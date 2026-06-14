@@ -6426,6 +6426,7 @@
         const sc = _0x480be4.minimapSize / _0x996564.edge;
         const wx = Math.round(cx / sc - 8000 + _0x996564.offset.x);
         const wy = Math.round(cy / sc - 8000 + _0x996564.offset.y);
+        _0x40f48a.normal("Ping", "X:" + wx + " Y:" + wy);
         _0xpartyNet._addAndSendPing(wx, wy);
       });
     }
