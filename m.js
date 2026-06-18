@@ -6122,7 +6122,6 @@
     _savedSkins: new Map(),
     _myId: null,
     _processing57: false,
-    _ws2Joined: false,
 
     _autoJoinTimer: null,
 
@@ -6209,11 +6208,10 @@
     },
 
     createParty() {
-      if (!this._ws || this._ws.readyState !== WebSocket.OPEN) {
+      if (!this._send([0x55, 0x00])) {
         _0x40f48a.alert("Party", "Failed - no connection");
         return;
       }
-      this._ws.send(new Uint8Array([0x55, 0x00]).buffer);
       _0x40f48a.normal("Party", "Creating party...");
     },
 
@@ -6225,27 +6223,16 @@
       const buf = new Uint8Array(2 + raw.length);
       buf[0] = 0x55; buf[1] = 0x01;
       buf.set(raw, 2);
-      const arr = Array.from(buf);
-      if (this._ws && this._ws.readyState === WebSocket.OPEN) {
-        this._ws.send(new Uint8Array(arr).buffer);
-      } else if (_0x18a8d1 && _0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) {
-        _0x18a8d1.ws2.send(new Uint8Array(arr).buffer);
-      }
+      this._send(Array.from(buf));
     },
 
     leaveParty() {
-      if (this._ws && this._ws.readyState === WebSocket.OPEN) {
-        this._ws.send(new Uint8Array([0x55, 0x02]).buffer);
-      }
-      if (_0x18a8d1 && _0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) {
-        _0x18a8d1.ws2.send(new Uint8Array([0x55, 0x02]).buffer);
-      }
+      this._send([0x55, 0x02]);
       this._inParty = false;
       this._partyCode = '';
       this._members = {};
       this._cleanTeamPlayers();
       this._updateUI();
-      this._ws2Joined = false;
       try { localStorage.removeItem('3rb_party_code'); } catch(e) {}
       _0x40f48a.normal("Party", "Left party");
     },
@@ -6270,7 +6257,6 @@
         const c = [];
         while (p < v.byteLength && v.getUint8(p) !== 0) { c.push(String.fromCharCode(v.getUint8(p))); p++; }
         const code = c.join('');
-        const wasInParty = this._inParty;
         if (!code || code === 'error') { this.leaveParty(); return false; }
         this._inParty = true;
         this._partyCode = code;
@@ -6278,15 +6264,6 @@
         _0x40f48a.normal("Party", "Party code: " + code);
         try { localStorage.setItem('3rb_party_code', code); } catch(e) {}
         try { _0x302a2c.chat("__PC__" + btoa(code)); } catch(e) {}
-        if (!wasInParty && code && !this._ws2Joined && _0x18a8d1 && _0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) {
-          this._ws2Joined = true;
-          const enc = new TextEncoder();
-          const raw = enc.encode(code);
-          const buf = new Uint8Array(2 + raw.length);
-          buf[0] = 0x55; buf[1] = 0x01;
-          buf.set(raw, 2);
-          _0x18a8d1.ws2.send(new Uint8Array(Array.from(buf)).buffer);
-        }
         return false;
       }
 
