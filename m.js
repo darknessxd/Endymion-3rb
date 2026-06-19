@@ -6002,7 +6002,7 @@
         _0x323825.src = _0x5753ba.toDataURL();
         this.downloadedSkins.set(_0x26f184, _0x323825);
       };
-      _0x323825.src = "https://corsproxy.io/?" + encodeURIComponent("https://3rb.io/res/skins/free/" + _0x26f184.replace(/free\/|.png/g, '') + ".png");
+      _0x323825.src = "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://3rb.io/res/skins/free/" + _0x26f184.replace(/free\/|.png/g, '') + ".png");
     }
     static ["downloadSkin"](_0x31eb71) {
       this.downloadedSkins.set(_0x31eb71, false);
