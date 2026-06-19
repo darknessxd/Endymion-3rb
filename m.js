@@ -5717,8 +5717,10 @@
         } else {
           _0xfdf4f4.fillStyle = _0x235e9c && _0x5987fa.isMine ? _0x5987fa.cellType === _0x90a1a7.typeID ? _0x355e3d : _0x15f66b : _0x2cc0f3.grayscaleInactive === "on" && _0x5987fa.isMine && _0x5987fa.cellType !== _0x90a1a7.typeID ? _0x2ab3a8.getGrayscale(_0x5987fa.colorObject, _0x30af86) : _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
           if (_0x112233 && _0x5987fa.isMine) {
-            _0xfdf4f4.shadowColor = "rgba(0,0,0,0.5)";
-            _0xfdf4f4.shadowBlur = 10;
+            _0xfdf4f4.shadowColor = "rgba(0,0,0,0.6)";
+            _0xfdf4f4.shadowBlur = 12;
+            _0xfdf4f4.shadowOffsetX = 4;
+            _0xfdf4f4.shadowOffsetY = 4;
           }
           if (_0x5ab10a * _0x21653d < 1) {
             _0xfdf4f4.globalAlpha = _0x5ab10a * _0x21653d;
@@ -5730,6 +5732,8 @@
           if (_0x112233 && _0x5987fa.isMine) {
             _0xfdf4f4.shadowBlur = 0;
             _0xfdf4f4.shadowColor = 'transparent';
+            _0xfdf4f4.shadowOffsetX = 0;
+            _0xfdf4f4.shadowOffsetY = 0;
           }
         }
         if (_0x5987fa.isEjected) {
