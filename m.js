@@ -849,7 +849,7 @@
         if (_0x431fed) {
           const _0xskn = "free/" + _0x431fed.replace(/free\/|.png/g, '');
           if (typeof setSkin === 'function') setSkin(_0xskn);
-          _0x90a1a7._skin = "XXXXXXX";
+          _0x90a1a7._skin = _0xskn;
         }
       }
     }
@@ -5941,15 +5941,20 @@
       this.skinMap.clear();
       this.arbSkinMap.clear();
       const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
-      if (!_0x90a1a7.skin.includes("XXXXXXX")) {
-        this.skinMap.set(_0x90a1a7.worldID, this.code2Url(_0x90a1a7.skin));
+      const _0mySkin = _0x90a1a7.skin;
+      if (_0mySkin.startsWith('free/')) {
+        this.arbSkinMap.set(_0x90a1a7.worldID, "https://3rb.io/res/skins/free/" + _0mySkin.replace('free/', '') + ".png");
+      } else if (!_0mySkin.includes("XXXXXXX")) {
+        this.skinMap.set(_0x90a1a7.worldID, this.code2Url(_0mySkin));
       } else if (this.arbSkin) {
         this.arbSkinMap.set(_0x90a1a7.worldID, "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png");
       }
       if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) {
         this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0x90a1a7.skin2));
-      } else if (!_0x90a1a7.skin.includes("XXXXXXX")) {
-        this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0x90a1a7.skin));
+      } else if (!_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+        this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0mySkin));
+      } else if (_0mySkin.startsWith('free/')) {
+        this.arbSkinMap.set(_0x90a1a7.worldID2, "https://3rb.io/res/skins/free/" + _0mySkin.replace('free/', '') + ".png");
       } else if (this.arbSkin) {
         this.arbSkinMap.set(_0x90a1a7.worldID2, "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + '.png');
       }
@@ -5987,7 +5992,6 @@
     static ["download3rbSkin"](_0x26f184) {
       this.downloadedSkins.set(_0x26f184, false);
       const _0x323825 = new Image();
-      _0x323825.crossOrigin = "anonymous";
       _0x323825.onload = () => {
         const _0x5753ba = _0x24f9ab.createElement("canvas");
         const _0x552ac8 = _0x5753ba.getContext('2d');
@@ -6002,12 +6006,12 @@
         _0x323825.src = _0x5753ba.toDataURL();
         this.downloadedSkins.set(_0x26f184, _0x323825);
       };
-      _0x323825.src = "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://3rb.io/res/skins/free/" + _0x26f184.replace(/free\/|.png/g, '') + ".png");
+      _0x323825.src = "https://3rb.io/res/skins/free/" + _0x26f184.replace(/free\/|.png/g, '') + ".png";
     }
     static ["downloadSkin"](_0x31eb71) {
       this.downloadedSkins.set(_0x31eb71, false);
       const _0x252d42 = new Image();
-      _0x252d42.crossOrigin = "anonymous";
+      if (!_0x31eb71.startsWith("https://3rb.io/")) _0x252d42.crossOrigin = "anonymous";
       _0x252d42.onload = () => {
         const _0x4282fb = _0x24f9ab.createElement("canvas");
         const _0x56a6bc = _0x4282fb.getContext('2d');
@@ -6022,7 +6026,7 @@
         _0x252d42.src = _0x4282fb.toDataURL();
         this.downloadedSkins.set(_0x31eb71, _0x252d42);
       };
-      _0x252d42.src = _0x31eb71.startsWith("https://i.imgur.com/") ? _0x31eb71 : "https://corsproxy.io/?" + encodeURIComponent(_0x31eb71);
+      _0x252d42.src = _0x31eb71;
     }
     static ["getImgurCode"](_0x96fe5e) {
       const _0x5e0df5 = _0x96fe5e.match(/https?:\/\/.+\.(png|jpg|gif|webp)/i);
