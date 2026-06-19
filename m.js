@@ -634,7 +634,7 @@
       this.div = _0x14f7b2("#inputs");
       this.addEvents();
       _0x22a8df.init();
-      _0x22a8df.initGallery();
+      _0x50f0c6.initGallery();
       _0x56ef98.init();
       _0x128142.init();
       _0x10ab3c.init();
@@ -860,40 +860,40 @@
           _0g.style.display = 'none';
         } else {
           _0g.style.display = 'block';
-          _0x22a8df.loadSkinGallery();
+          _0x50f0c6.loadSkinGallery();
         }
       });
     }
     static ["_skinList"]() {
-      return _0x22a8df._cachedList || (_0x22a8df._cachedList = []);
+      return _0x50f0c6._cachedList || (_0x50f0c6._cachedList = []);
     }
     static ["loadSkinGallery"]() {
-      const _0list = _0x22a8df._skinList();
-      if (_0list.length) { _0x22a8df.renderGalleryPage(0); return; }
+      const _0list = _0x50f0c6._skinList();
+      if (_0list.length) { _0x50f0c6.renderGalleryPage(0); return; }
       const _0url = "https://raw.githubusercontent.com/darknessxd/Endymion-3rb/main/skins.json";
       _0x14f7b2.get(_0url, function(_0data) {
-        _0x22a8df._cachedList = _0data;
-        _0x22a8df._gPage = 0;
-        _0x22a8df.renderGalleryPage(0);
+        _0x50f0c6._cachedList = _0data;
+        _0x50f0c6._gPage = 0;
+        _0x50f0c6.renderGalleryPage(0);
       }, "json").fail(function() {
         _0x14f7b2("#skinGalleryGrid").html("<span style='color:red'>Failed to load skins</span>");
       });
       _0x14f7b2("#skinGallerySearch").off("input").on("input", function() {
-        _0x22a8df._gPage = 0;
-        _0x22a8df.renderGalleryPage(0);
+        _0x50f0c6._gPage = 0;
+        _0x50f0c6.renderGalleryPage(0);
       });
       _0x14f7b2("#skinGalleryGrid").off("click").on("click", function(_0e) {
         const _0t = _0x14f7b2(_0e.target);
         if (_0t.hasClass("gallery-thumb")) {
-          _0x22a8df.galleryPick(_0t.attr("data-name"));
+          _0x50f0c6.galleryPick(_0t.attr("data-name"));
         } else if (_0t.hasClass("gallery-nav")) {
-          _0x22a8df._gPage = parseInt(_0t.attr("data-page"));
-          _0x22a8df.renderGalleryPage(_0x22a8df._gPage);
+          _0x50f0c6._gPage = parseInt(_0t.attr("data-page"));
+          _0x50f0c6.renderGalleryPage(_0x50f0c6._gPage);
         }
       });
     }
     static ["renderGalleryPage"](_0page) {
-      const _0list = _0x22a8df._skinList();
+      const _0list = _0x50f0c6._skinList();
       if (!_0list.length) return;
       const _0search = (_0x14f7b2("#skinGallerySearch").val() || "").toLowerCase();
       const _0filtered = _0search ? _0list.filter(function(_0n) { return _0n.toLowerCase().includes(_0search); }) : _0list;
@@ -917,7 +917,7 @@
     }
     static ["galleryPick"](_0name) {
       _0x14f7b2("#arbSkin").val(_0name);
-      _0x22a8df.setarbSkin();
+      _0x50f0c6.setarbSkin();
     }
     static ["setSkin"](_0x10e480) {
       let _0x2716a1 = _0x19d5af.get('profiles', "profile" + this.selected);
