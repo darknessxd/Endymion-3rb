@@ -431,6 +431,7 @@
       this.splitRings = _0x19d5af.get('settings', "splitRings") || "off";
       this.virusRange = _0x19d5af.get("settings", 'virusRange') || 'off';
       this.multiboxRing = _0x19d5af.get('settings', "multiboxRing") || 'on';
+      this.multiboxCellColor = _0x19d5af.get('settings', "multiboxCellColor") || 'on';
       this.commander = _0x19d5af.get('settings', 'commander') || 'on';
       this.targeting = _0x19d5af.get("settings", "targeting") || "off";
       this.chatType = _0x19d5af.get("settings", "chatType") || 'popup';
@@ -5606,6 +5607,7 @@
       const _0x24bf81 = _0x2cc0f3.arbSkins === 'on';
       const _0x4f4928 = _0x2cc0f3.teamIndicator === 'on';
       const _0x3060bb = _0x2cc0f3.multiboxRing === 'on';
+      const _0x235e9c = _0x2cc0f3.multiboxCellColor === 'on';
       const _0x1c7e25 = _0x480be4.indicatorSize;
       const _0x5ab10a = _0x480be4.cellTransparency / 100;
       const _0x1005b0 = _0x480be4.cellNickSize / 100;
@@ -5711,7 +5713,7 @@
           _0xfdf4f4.shadowBlur = 0;
           _0xfdf4f4.shadowColor = 'transparent';
         } else {
-          _0xfdf4f4.fillStyle = _0x2cc0f3.grayscaleInactive === "on" && _0x5987fa.isMine && _0x5987fa.cellType !== _0x90a1a7.typeID ? _0x2ab3a8.getGrayscale(_0x5987fa.colorObject, _0x30af86) : _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
+          _0xfdf4f4.fillStyle = _0x235e9c && _0x5987fa.isMine ? _0x5987fa.cellType === _0x90a1a7.typeID ? _0x355e3d : _0x15f66b : _0x2cc0f3.grayscaleInactive === "on" && _0x5987fa.isMine && _0x5987fa.cellType !== _0x90a1a7.typeID ? _0x2ab3a8.getGrayscale(_0x5987fa.colorObject, _0x30af86) : _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
           if (_0x5ab10a * _0x21653d < 1) {
             _0xfdf4f4.globalAlpha = _0x5ab10a * _0x21653d;
             _0xfdf4f4.fill();
