@@ -892,8 +892,9 @@
       });
       _0x14f7b2("#skinGalleryGrid").off("click").on("click", function(_0e) {
         const _0t = _0x14f7b2(_0e.target);
-        if (_0t.hasClass("gallery-thumb")) {
-          _0x50f0c6.galleryPick(_0t.attr("data-name"));
+        const _0img = _0t.is("img.gallery-thumb") ? _0t : _0t.find("img.gallery-thumb");
+        if (_0img.length) {
+          _0x50f0c6.galleryPick(_0img.attr("data-name"));
         } else if (_0t.hasClass("gallery-nav")) {
           _0x50f0c6._gPage = parseInt(_0t.attr("data-page"));
           _0x50f0c6.renderGalleryPage(_0x50f0c6._gPage);
@@ -909,16 +910,22 @@
       const _0start = _0page * _0perPage;
       const _0items = _0filtered.slice(_0start, _0start + _0perPage);
       const _0total = Math.ceil(_0filtered.length / _0perPage) || 1;
-      let _0html = '<div style="display:flex;flex-wrap:wrap;gap:2px;justify-content:center">';
+      const _0selected = (_0x14f7b2("#arbSkin").val() || '').replace(/free\/|.png/g, '');
+      let _0html = '<div class="gallery-grid">';
       for (let _0i = 0; _0i < _0items.length; _0i++) {
         const _0name = _0items[_0i].replace('.png', '');
-        _0html += '<img class="gallery-thumb" data-name="' + _0name + '" src="https://3rb.io/res/skins/free/' + _0name + '.png" style="width:60px;height:60px;cursor:pointer;border:2px solid transparent;border-radius:4px;object-fit:cover" title="' + _0name + '">';
+        const _0sel = _0name === _0selected ? ' selected' : '';
+        _0html += '<div class="gallery-item' + _0sel + '">';
+        _0html += '<img class="gallery-thumb" data-name="' + _0name + '" src="https://3rb.io/res/skins/free/' + _0name + '.png" title="' + _0name + '">';
+        _0html += '<span class="gallery-name">' + _0name + '</span></div>';
       }
       _0html += '</div>';
-      let _0nav = '<div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:6px">';
-      if (_0page > 0) _0nav += '<button class="gallery-nav" data-page="' + (_0page - 1) + '">Prev</button>';
-      _0nav += '<span style="color:#fff;font-size:12px">' + (_0page + 1) + '/' + _0total + '</span>';
-      if (_0page < _0total - 1) _0nav += '<button class="gallery-nav" data-page="' + (_0page + 1) + '">Next</button>';
+      let _0nav = '<div class="gallery-nav-wrap">';
+      _0nav += '<button class="gallery-nav" data-page="0"' + (_0page === 0 ? ' disabled' : '') + '>⏮</button>';
+      if (_0page > 0) _0nav += '<button class="gallery-nav" data-page="' + (_0page - 1) + '">◀</button>';
+      _0nav += '<span class="gallery-info">' + (_0page + 1) + ' / ' + _0total + '</span>';
+      if (_0page < _0total - 1) _0nav += '<button class="gallery-nav" data-page="' + (_0page + 1) + '">▶</button>';
+      _0nav += '<button class="gallery-nav" data-page="' + (_0total - 1) + '"' + (_0page >= _0total - 1 ? ' disabled' : '') + '>⏭</button>';
       _0nav += '</div>';
       _0html += _0nav;
       _0x14f7b2("#skinGalleryGrid").html(_0html);
@@ -926,6 +933,7 @@
     static ["galleryPick"](_0name) {
       _0x14f7b2("#arbSkin").val(_0name);
       _0x50f0c6.setarbSkin();
+      _0x50f0c6.renderGalleryPage(_0x50f0c6._gPage || 0);
     }
     static ["setSkin"](_0x10e480) {
       let _0x2716a1 = _0x19d5af.get('profiles', "profile" + this.selected);
