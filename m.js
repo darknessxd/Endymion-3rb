@@ -5942,21 +5942,17 @@
       this.arbSkinMap.clear();
       const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
       const _0mySkin = _0x90a1a7.skin;
-      if (_0mySkin.startsWith('free/')) {
-        this.arbSkinMap.set(_0x90a1a7.worldID, "https://3rb.io/res/skins/free/" + _0mySkin.replace('free/', '') + ".png");
-      } else if (!_0mySkin.includes("XXXXXXX")) {
-        this.skinMap.set(_0x90a1a7.worldID, this.code2Url(_0mySkin));
-      } else if (this.arbSkin) {
-        this.arbSkinMap.set(_0x90a1a7.worldID, "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png");
+      const _mkUrl = (_s) => _s.startsWith('free/') ? "https://3rb.io/res/skins/free/" + _s.replace('free/', '') + ".png" : null;
+      const _addMyCells = (_cells, _url) => { if (_cells instanceof Map) for (const [_, _c] of _cells) this.arbSkinMap.set(_c.worldID, _url); };
+      const _url1 = _0mySkin.startsWith('free/') ? _mkUrl(_0mySkin) : (!_0mySkin.includes("XXXXXXX") ? null : (this.arbSkin ? _mkUrl("free/" + this.arbSkin) : null));
+      if (_url1) _addMyCells(_0x14d4a3.myCells, _url1);
+      else if (!_0mySkin.includes("XXXXXXX")) {
+        for (const [_, _c] of _0x14d4a3.myCells) this.skinMap.set(_c.worldID, this.code2Url(_0mySkin));
       }
-      if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) {
-        this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0x90a1a7.skin2));
-      } else if (!_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
-        this.skinMap.set(_0x90a1a7.worldID2, this.code2Url(_0mySkin));
-      } else if (_0mySkin.startsWith('free/')) {
-        this.arbSkinMap.set(_0x90a1a7.worldID2, "https://3rb.io/res/skins/free/" + _0mySkin.replace('free/', '') + ".png");
-      } else if (this.arbSkin) {
-        this.arbSkinMap.set(_0x90a1a7.worldID2, "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + '.png');
+      const _url2 = _0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX") ? this.code2Url(_0x90a1a7.skin2) : (_url1 ? null : _mkUrl(_0mySkin));
+      if (_url2) {
+        const _tMap = _0mySkin.startsWith('free/') || _isArb(_url2) ? this.arbSkinMap : this.skinMap;
+        for (const [_, _c] of _0x14d4a3.myCells2) _tMap.set(_c.worldID, _url2);
       }
       for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
         const _isFreeSkin = _0x5d3988.skin.startsWith('free/');
