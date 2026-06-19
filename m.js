@@ -762,10 +762,14 @@
       });
       _0x14f7b2("#skin").blur(() => {
         let _0x145a78 = _0x14f7b2('#skin').val();
-        if (!_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x145a78 || '')).includes('XXXXXXX')) {
+        if (!_0x145a78) {
+          _0x90a1a7._skin = "XXXXXXX";
+          this.setarbSkin();
+        } else if (!_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x145a78 || '')).includes('XXXXXXX')) {
           return this.setSkin(_0x145a78);
+        } else {
+          this.setarbSkin();
         }
-        this.setarbSkin();
       });
       _0x14f7b2("#nick2").blur(() => {
         let _0xprofile2 = _0x19d5af.get('profiles', "profile" + this.selected);
@@ -5815,7 +5819,9 @@
         if (!_0x5987fa.isVirus && _0x21653d === 1 && _0x4f4928 && !_0x5987fa.isMine && _0x48567b && _0x5987fa.animRadius * _0xddb6d6.viewport < 50) {
           _0xfdf4f4.drawImage(this.indicator, _0x5987fa.animX - _0x1241cd.x - _0x1c7e25 / 2, _0x5987fa.animY - _0x1241cd.y - _0x5987fa.animRadius - 10 - _0x1c7e25, _0x1c7e25, _0x1c7e25);
         }
-        const _0x1a6b68 = (this.skinMap.has(_0x5987fa.worldID) && _0x290b1c || this.arbSkinMap.has(_0x5987fa.worldID) && _0x24bf81) && this.getCustomSkin(_0x5987fa.worldID);
+        const _0urlSkin = this.skinMap.has(_0x5987fa.worldID) && _0x290b1c && this.getCustomSkin(_0x5987fa.worldID, 'skinMap');
+        const _0arbSkin = this.arbSkinMap.has(_0x5987fa.worldID) && _0x24bf81 && this.getCustomSkin(_0x5987fa.worldID, 'arbSkinMap');
+        const _0x1a6b68 = _0urlSkin || _0arbSkin;
         let _0x20f1ed = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5987fa.skin || '')).includes("XXXXXXX") ? _0x5987fa.skin : _0x5987fa.arbSkin;
         const _0xb89262 = _0x24bf81 && !_0x1a6b68 && _0x20f1ed && (_0x20f1ed.startsWith('free/') || this.knownSkins.hasOwnProperty(_0x20f1ed.replace(/free\/|.png/g, ''))) && this.get3rbSkin(_0x20f1ed);
         if (_0x1a6b68) {
@@ -5898,7 +5904,7 @@
           _ctx.arc(_px, _py, _pr + 5, 0, this.pi2, true);
           _ctx.closePath();
           if (_hasSkin) {
-            const _ps = this.getCustomSkin(_pp.worldID);
+            const _ps = _hasUrlSkin && _0x2cc0f3.urlSkins === 'on' ? this.getCustomSkin(_pp.worldID, 'skinMap') : this.getCustomSkin(_pp.worldID, 'arbSkinMap');
             if (_ps) {
               _ctx.drawImage(_ps, _px - _pr - 5, _py - _pr - 5, 2 * (_pr + 5), 2 * (_pr + 5));
             }
@@ -5969,8 +5975,8 @@
         this.rgbTeammates.add(_0x33940b.worldID);
       }
     }
-    static ["getCustomSkin"](_0xb1bf13) {
-      const _0x35f9db = this.skinMap.get(_0xb1bf13) || this.arbSkinMap.get(_0xb1bf13);
+    static ["getCustomSkin"](_0xb1bf13, _0mapOnly) {
+      const _0x35f9db = _0mapOnly === 'arbSkinMap' ? this.arbSkinMap.get(_0xb1bf13) : _0mapOnly === 'skinMap' ? this.skinMap.get(_0xb1bf13) : this.skinMap.get(_0xb1bf13) || this.arbSkinMap.get(_0xb1bf13);
       if (!_0x35f9db) {
         return false;
       }
