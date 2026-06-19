@@ -831,27 +831,27 @@
     static ["setarbSkin"]() {
       var _0x431fed = _0x14f7b2("#arbSkin").val();
       _0x90a1a7.arbSkin = _0x431fed;
-      let _0x4b4ffa = _0x14f7b2("#skin").val();
-      if (_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x4b4ffa || '')).includes("XXXXXXX")) {
-        const _0xprev = _0x19d5af.get('profiles', "profile" + this.selected) || {};
-        const _0x5d3148 = {
-          "nick": "profile " + this.selected,
-          "skin": '',
-          "arbSkin": _0x431fed,
-          skin: _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x4b4ffa)),
-          "arbSkin": _0x431fed,
-          nick2: _0xprev.nick2 || '',
-          skin2: _0xprev.skin2 || ''
-        };
-        _0x19d5af.set('profiles', "profile" + this.selected, _0x5d3148);
-        this.updateMainSkin("https://3rb.io/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
-        this.updatePreviewSkin(this.selected);
-        if (_0x431fed) {
-          const _0xskn = "free/" + _0x431fed.replace(/free\/|.png/g, '');
-          _0x90a1a7._skin = _0xskn;
-          try { _0x2d5cce.skin(); } catch(e) {}
-          try { _0xpartyNet._sendSkinUpdate(_0xskn, 1); } catch(e) {}
-        }
+      const _0xprev = _0x19d5af.get('profiles', "profile" + this.selected) || {};
+      const _0x5d3148 = {
+        "nick": "profile " + this.selected,
+        "skin": "#",
+        "arbSkin": _0x431fed,
+        nick2: _0xprev.nick2 || '',
+        skin2: _0xprev.skin2 || ''
+      };
+      _0x19d5af.set('profiles', "profile" + this.selected, _0x5d3148);
+      this.updateMainSkin("https://3rb.io/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
+      this.updatePreviewSkin(this.selected);
+      if (_0x431fed) {
+        const _0xskn = "free/" + _0x431fed.replace(/free\/|.png/g, '');
+        try {
+          const _0buf = _0x302a2c["createView"](2 + _0xskn.length);
+          _0buf.setUint8(0, 4, true);
+          for (let _0i = 0; _0i < _0xskn.length; _0i++) _0buf.setUint8(_0i + 1, _0xskn.charCodeAt(_0i), true);
+          _0buf.setUint8(_0xskn.length + 1, 0, true);
+          _0x302a2c["sendPacket"](_0buf, _0x90a1a7.typeID);
+        } catch(e) {}
+        try { _0xpartyNet._sendSkinUpdate(_0xskn, 1); } catch(e) {}
       }
     }
     static ["initGallery"]() {
@@ -918,7 +918,6 @@
     }
     static ["galleryPick"](_0name) {
       _0x14f7b2("#arbSkin").val(_0name);
-      _0x14f7b2("#skin").val('');
       _0x50f0c6.setarbSkin();
     }
     static ["setSkin"](_0x10e480) {
@@ -926,7 +925,7 @@
       const _0x1197ad = {
         "nick": "profile " + this.selected,
         skin: "https://i.imgur.com/nRqSis7.png",
-        "arbSkin": '',
+        "arbSkin": _0x90a1a7._arbSkin || '',
         "nick2": '',
         "skin2": ''
       };
@@ -934,10 +933,7 @@
         _0x2716a1 = _0x1197ad;
       }
       _0x2716a1.skin = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x10e480));
-      _0x2716a1.arbSkin = '';
       _0x19d5af.set("profiles", 'profile' + this.selected, _0x2716a1);
-      _0x90a1a7.arbSkin = '';
-      _0x14f7b2("#arbSkin").val('');
       this.updateMainSkin();
       this.updatePreviewSkin(this.selected);
       _0x90a1a7.skin = _0x10e480;
@@ -3699,7 +3695,7 @@
     static set ["skin"](_0x1a9370) {
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
       const _0x356638 = _0x386cbc.getRaindowFlag(_0x1a9370);
-      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; this._arbSkin = ''; _0x14f7b2("#arbSkin").val(''); _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
     }
     static get ['skin']() {
       return this._skin;
@@ -5380,7 +5376,7 @@
       }
     }
     static ["skin"]() {
-      if (_0x1530af.connected) {
+      if (_0x18a8d1.connected || _0x18a8d1.connected2) {
         const _0x5e1baa = _0x90a1a7.skin;
         let _0x582581 = _0x5e1baa.length;
         const _0x15de34 = this.createView(2 + _0x5e1baa.length);
@@ -5388,7 +5384,7 @@
           _0x15de34.setUint8(_0x582581 + 1, _0x5e1baa.charCodeAt(_0x582581), true);
         }
         _0x15de34.setUint8(1 + _0x5e1baa.length, 0, true);
-        _0x1530af.send(_0x15de34.buffer);
+        _0x18a8d1.send(_0x15de34.buffer, _0x90a1a7.typeID);
       }
     }
     static ['ip']() {
@@ -5943,14 +5939,31 @@
       this.skinMap.clear();
       this.arbSkinMap.clear();
       const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
-      const _0mySkin = _0x90a1a7.skin;
       const _mkUrl = (_s) => _s.startsWith('free/') ? "https://3rb.io/res/skins/free/" + _s.replace('free/', '') + ".png" : null;
-      const _addMyCells = (_cells, _url) => { if (_cells instanceof Map) for (const [_, _c] of _cells) this.arbSkinMap.set(_c.worldID, _url); };
-      const _url1 = _0mySkin.startsWith('free/') ? _mkUrl(_0mySkin) : (!_0mySkin.includes("XXXXXXX") ? null : (this.arbSkin ? _mkUrl("free/" + this.arbSkin) : null));
-      if (_url1) _addMyCells(_0x14d4a3.myCells, _url1);
-      else if (!_0mySkin.includes("XXXXXXX")) {
-        for (const [_, _c] of _0x14d4a3.myCells) this.skinMap.set(_c.worldID, this.code2Url(_0mySkin));
+      const _addMyCells = (_cells, _url, _map) => { if (_cells instanceof Map) for (const [_, _c] of _cells) _map.set(_c.worldID, _url); };
+      const _0mySkin = _0x90a1a7.skin;
+      if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+        _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
       }
+      if (this.arbSkin) {
+        const _aurl = "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png";
+        _addMyCells(_0x14d4a3.myCells, _aurl, this.arbSkinMap);
+      }
+      if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) {
+        _addMyCells(_0x14d4a3.myCells2, this.code2Url(_0x90a1a7.skin2), this.skinMap);
+      } else if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+        _addMyCells(_0x14d4a3.myCells2, this.code2Url(_0mySkin), this.skinMap);
+      }
+      for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
+        const _isFreeSkin = _0x5d3988.skin.startsWith('free/');
+        const _tUrl = _isFreeSkin ? "https://3rb.io/res/skins/free/" + _0x5d3988.skin.replace('free/', '') + ".png" : this.code2Url(_0x5d3988.skin);
+        const _tMap = _isFreeSkin || _isArb(_tUrl) ? this.arbSkinMap : this.skinMap;
+        _tMap.set(_0x5d3988.worldID, _tUrl);
+        const _tpNick = _0x5d3988.nick;
+        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) _tMap.set(_c.worldID, _tUrl);
+        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
+      }
+    }
       const _url2 = _0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX") ? this.code2Url(_0x90a1a7.skin2) : (_url1 ? null : _mkUrl(_0mySkin));
       if (_url2) {
         const _tMap = _0mySkin.startsWith('free/') || _isArb(_url2) ? this.arbSkinMap : this.skinMap;
