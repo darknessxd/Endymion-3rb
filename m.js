@@ -831,15 +831,11 @@
     static ["setarbSkin"]() {
       var _0x431fed = _0x14f7b2("#arbSkin").val();
       _0x90a1a7.arbSkin = _0x431fed;
-      const _0xprev = _0x19d5af.get('profiles', "profile" + this.selected) || {};
-      const _0x5d3148 = {
-        "nick": "profile " + this.selected,
-        "skin": "#",
-        "arbSkin": _0x431fed,
-        nick2: _0xprev.nick2 || '',
-        skin2: _0xprev.skin2 || ''
-      };
-      _0x19d5af.set('profiles', "profile" + this.selected, _0x5d3148);
+      const _0prev = _0x19d5af.get('profiles', "profile" + this.selected) || {};
+      _0prev.arbSkin = _0x431fed;
+      _0prev.nick2 = _0prev.nick2 || '';
+      _0prev.skin2 = _0prev.skin2 || '';
+      _0x19d5af.set('profiles', "profile" + this.selected, _0prev);
       this.updateMainSkin("https://3rb.io/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
       this.updatePreviewSkin(this.selected);
       if (_0x431fed) {
