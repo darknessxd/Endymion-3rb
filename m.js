@@ -439,6 +439,7 @@
       this.virusMass = _0x19d5af.get("settings", "virusMass") || 'off';
       this.showMassInLB = _0x19d5af.get("settings", "showMassInLB") || 'off';
       this.cellShadow = _0x19d5af.get("settings", "cellShadow") || 'off';
+      this.cellGradient = _0x19d5af.get("settings", "cellGradient") || 'off';
       this.cellLuminous = _0x19d5af.get("settings", "cellLuminous") || 'off';
       this.multiboxShield = _0x19d5af.get("settings", "multiboxShield") || 'off';
       this.grayscaleInactive = _0x19d5af.get("settings", "grayscaleInactive") || 'off';
@@ -5610,6 +5611,7 @@
       const _0x3060bb = _0x2cc0f3.multiboxRing === 'on';
       const _0x235e9c = _0x2cc0f3.multiboxCellColor === 'on';
       const _0x112233 = _0x2cc0f3.cellShadow === 'on';
+      const _0x445566 = _0x2cc0f3.cellGradient === 'on';
       const _0x1c7e25 = _0x480be4.indicatorSize;
       const _0x5ab10a = _0x480be4.cellTransparency / 100;
       const _0x1005b0 = _0x480be4.cellNickSize / 100;
@@ -5731,6 +5733,20 @@
           if (_0x112233 && _0x5987fa.isMine) {
             _0xfdf4f4.restore();
           }
+        }
+        if (_0x445566 && !_0x5987fa.isVirus && !_0x5987fa.isEjected) {
+          const _0xgcx = _0x5987fa.animX - _0x1241cd.x;
+          const _0xgcy = _0x5987fa.animY - _0x1241cd.y;
+          const _0gcr = _0x5987fa.animRadius + 5;
+          const _0grad = _0xfdf4f4.createRadialGradient(_0xgcx, _0xgcy, _0gcr * 0.1, _0xgcx, _0xgcy, _0gcr);
+          _0grad.addColorStop(0, "rgba(0,0,0,0.35)");
+          _0grad.addColorStop(0.6, "rgba(0,0,0,0.1)");
+          _0grad.addColorStop(1, "rgba(0,0,0,0)");
+          _0xfdf4f4.fillStyle = _0grad;
+          _0xfdf4f4.beginPath();
+          _0xfdf4f4.arc(_0xgcx, _0xgcy, _0gcr, 0, this.pi2, true);
+          _0xfdf4f4.closePath();
+          _0xfdf4f4.fill();
         }
         if (_0x5987fa.isEjected) {
           continue;
