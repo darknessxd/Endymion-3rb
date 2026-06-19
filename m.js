@@ -5964,21 +5964,6 @@
         if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
       }
     }
-      const _url2 = _0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX") ? this.code2Url(_0x90a1a7.skin2) : (_url1 ? null : _mkUrl(_0mySkin));
-      if (_url2) {
-        const _tMap = _0mySkin.startsWith('free/') || _isArb(_url2) ? this.arbSkinMap : this.skinMap;
-        for (const [_, _c] of _0x14d4a3.myCells2) _tMap.set(_c.worldID, _url2);
-      }
-      for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
-        const _isFreeSkin = _0x5d3988.skin.startsWith('free/');
-        const _tUrl = _isFreeSkin ? "https://3rb.io/res/skins/free/" + _0x5d3988.skin.replace('free/', '') + ".png" : this.code2Url(_0x5d3988.skin);
-        const _tMap = _isFreeSkin || _isArb(_tUrl) ? this.arbSkinMap : this.skinMap;
-        _tMap.set(_0x5d3988.worldID, _tUrl);
-        const _tpNick = _0x5d3988.nick;
-        if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) _tMap.set(_c.worldID, _tUrl);
-        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
-      }
-    }
     static ["createRGBset"]() {
       this.rgbTeammates.clear();
       if (_0x90a1a7.isRGB) {
