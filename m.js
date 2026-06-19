@@ -5067,7 +5067,7 @@
           _0xisTab2 ? _0x90a1a7.nick2 = "Unnamed cell" : _0x90a1a7.nick = "Unnamed cell";
         }
         let _0x4a58df = unescape(encodeURIComponent(_0xisTab2 ? _0x90a1a7.nick2 : _0x90a1a7.nick));
-        let _0x1084d5 = unescape(encodeURIComponent("free/" + (_0xisTab2 ? _0x90a1a7.arbSkin : _0x2a0c5c.arbSkin)));
+        let _0x1084d5 = unescape(encodeURIComponent("free/" + _0x90a1a7.arbSkin));
         const _0x4208f8 = {
           'n': _0x4a58df
         };
