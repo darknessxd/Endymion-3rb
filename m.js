@@ -718,6 +718,7 @@
       _0x14f7b2("#skin2").val(_0x518ea9.skin2 || '');
       _0x14f7b2("#tag").val(this.tag);
       _0x14f7b2("#arbSkin").val(_0x518ea9.arbSkin);
+      _0x90a1a7.arbSkin = _0x518ea9.arbSkin || '';
       this.updateMainSkin();
       for (let _0x365a86 = 8; 0 < _0x365a86;) {
         this.updatePreviewSkin(_0x365a86);
@@ -809,6 +810,7 @@
       _0x90a1a7.nick2 = _0x4d475c.nick2 || '';
       _0x90a1a7.skin = _0x4d475c.skin;
       _0x90a1a7.skin2 = _0x4d475c.skin2 || '';
+      _0x90a1a7.arbSkin = _0x4d475c.arbSkin || '';
       _0x19d5af.set('profiles', "profile" + this.selected, _0x4d475c);
       this.updateMainSkin();
     }
@@ -834,7 +836,12 @@
     }
     static ["setarbSkin"]() {
       var _0x431fed = _0x14f7b2("#arbSkin").val();
-      _0x90a1a7.arbSkin = _0x431fed;
+      const _0isTab2 = _0x90a1a7.typeID === 2;
+      if (_0isTab2) {
+        _0x90a1a7.arbSkin2 = _0x431fed;
+      } else {
+        _0x90a1a7.arbSkin = _0x431fed;
+      }
       const _0prev = _0x19d5af.get('profiles', "profile" + this.selected) || {};
       _0prev.arbSkin = _0x431fed;
       _0prev.nick2 = _0prev.nick2 || '';
@@ -3523,6 +3530,7 @@
       this._nick = _0x14f7b2("#nick").val();
       this._nick2 = _0x14f7b2("#nick2").val();
       this._arbSkin = _0x14f7b2("#arbSkin").val();
+      this._arbSkin2 = '';
       this._skin = _0x386cbc.getImgurCode(_0x14f7b2("#skin").val());
       this._skin2 = _0x386cbc.getImgurCode(_0x14f7b2("#skin2").val());
       this.tag = _0x14f7b2("#tag").val();
@@ -3691,6 +3699,12 @@
     }
     static get ["arbSkin"]() {
       return this._arbSkin;
+    }
+    static set ["arbSkin2"](_0x591f79) {
+      this._arbSkin2 = _0x591f79;
+    }
+    static get ["arbSkin2"]() {
+      return this._arbSkin2;
     }
     static set ["skin"](_0x1a9370) {
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
@@ -5067,14 +5081,14 @@
           _0xisTab2 ? _0x90a1a7.nick2 = "Unnamed cell" : _0x90a1a7.nick = "Unnamed cell";
         }
         let _0x4a58df = unescape(encodeURIComponent(_0xisTab2 ? _0x90a1a7.nick2 : _0x90a1a7.nick));
-        let _0x1084d5 = unescape(encodeURIComponent("free/" + _0x90a1a7.arbSkin));
+        let _0x1084d5 = unescape(encodeURIComponent("free/" + (_0xisTab2 ? _0x90a1a7.arbSkin2 : _0x90a1a7.arbSkin)));
         const _0x4208f8 = {
           'n': _0x4a58df
         };
         if (_0xisTab2 && _0x90a1a7.skin2 && !String(_0x90a1a7.skin2).includes("XXXXXXX")) {
           _0x4208f8.s = unescape(encodeURIComponent(_0x90a1a7.skin2));
           _0x4208f8.w = '';
-        } else if (_0x90a1a7.arbSkin) {
+        } else if (_0xisTab2 ? _0x90a1a7.arbSkin2 : _0x90a1a7.arbSkin) {
           _0x4208f8.s = _0x1084d5;
           _0x4208f8.w = '';
         }
@@ -5937,7 +5951,6 @@
       }
     }
     static ["createSkinMap"]() {
-      this.arbSkin = _0x14f7b2("#arbSkin").val();
       this.skinMap.clear();
       this.arbSkinMap.clear();
       const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
@@ -5947,9 +5960,13 @@
       if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
         _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
       }
-      if (this.arbSkin) {
-        const _aurl = "https://3rb.io/res/skins/free/" + this.arbSkin.replace(/free\/|.png/g, '') + ".png";
+      if (_0x90a1a7.arbSkin) {
+        const _aurl = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin.replace(/free\/|.png/g, '') + ".png";
         _addMyCells(_0x14d4a3.myCells, _aurl, this.arbSkinMap);
+      }
+      if (_0x90a1a7.arbSkin2) {
+        const _aurl2 = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin2.replace(/free\/|.png/g, '') + ".png";
+        _addMyCells(_0x14d4a3.myCells2, _aurl2, this.arbSkinMap);
       }
       if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) {
         _addMyCells(_0x14d4a3.myCells2, this.code2Url(_0x90a1a7.skin2), this.skinMap);
