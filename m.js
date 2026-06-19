@@ -848,8 +848,9 @@
         this.updatePreviewSkin(this.selected);
         if (_0x431fed) {
           const _0xskn = "free/" + _0x431fed.replace(/free\/|.png/g, '');
-          if (typeof setSkin === 'function') setSkin(_0xskn);
           _0x90a1a7._skin = _0xskn;
+          try { _0x2d5cce.skin(); } catch(e) {}
+          try { _0xpartyNet._sendSkinUpdate(_0xskn, 1); } catch(e) {}
         }
       }
     }
@@ -917,6 +918,7 @@
     }
     static ["galleryPick"](_0name) {
       _0x14f7b2("#arbSkin").val(_0name);
+      _0x14f7b2("#skin").val('');
       _0x50f0c6.setarbSkin();
     }
     static ["setSkin"](_0x10e480) {
