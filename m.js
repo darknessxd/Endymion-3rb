@@ -439,6 +439,7 @@
       this.virusMass = _0x19d5af.get("settings", "virusMass") || 'off';
       this.showMassInLB = _0x19d5af.get("settings", "showMassInLB") || 'off';
       this.cellLuminous = _0x19d5af.get("settings", "cellLuminous") || 'off';
+      this.cellShadow = _0x19d5af.get("settings", "cellShadow") || 'on';
       this.multiboxShield = _0x19d5af.get("settings", "multiboxShield") || 'off';
       this.grayscaleInactive = _0x19d5af.get("settings", "grayscaleInactive") || 'off';
       this.antiAliasing = _0x19d5af.get("settings", "antiAliasing") || 'on';
@@ -5608,6 +5609,7 @@
       const _0x4f4928 = _0x2cc0f3.teamIndicator === 'on';
       const _0x3060bb = _0x2cc0f3.multiboxRing === 'on';
       const _0x235e9c = _0x2cc0f3.multiboxCellColor === 'on';
+      const _0x112233 = _0x2cc0f3.cellShadow === 'on';
       const _0x1c7e25 = _0x480be4.indicatorSize;
       const _0x5ab10a = _0x480be4.cellTransparency / 100;
       const _0x1005b0 = _0x480be4.cellNickSize / 100;
@@ -5714,12 +5716,20 @@
           _0xfdf4f4.shadowColor = 'transparent';
         } else {
           _0xfdf4f4.fillStyle = _0x235e9c && _0x5987fa.isMine ? _0x5987fa.cellType === _0x90a1a7.typeID ? _0x355e3d : _0x15f66b : _0x2cc0f3.grayscaleInactive === "on" && _0x5987fa.isMine && _0x5987fa.cellType !== _0x90a1a7.typeID ? _0x2ab3a8.getGrayscale(_0x5987fa.colorObject, _0x30af86) : _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
+          if (_0x112233 && _0x5987fa.isMine) {
+            _0xfdf4f4.shadowColor = "rgba(0,0,0,0.5)";
+            _0xfdf4f4.shadowBlur = 10;
+          }
           if (_0x5ab10a * _0x21653d < 1) {
             _0xfdf4f4.globalAlpha = _0x5ab10a * _0x21653d;
             _0xfdf4f4.fill();
             _0xfdf4f4.globalAlpha = 1;
           } else {
             _0xfdf4f4.fill();
+          }
+          if (_0x112233 && _0x5987fa.isMine) {
+            _0xfdf4f4.shadowBlur = 0;
+            _0xfdf4f4.shadowColor = 'transparent';
           }
         }
         if (_0x5987fa.isEjected) {
