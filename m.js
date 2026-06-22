@@ -3061,8 +3061,7 @@
       if (_0x245b10._resetTicking) {
         const _0x3ea1c9 = 5400000;
         const _0x15f4c3 = Date.now() - _0x245b10._resetLocalTick;
-        let _0x5f8b2a = _0x245b10._resetRemaining - _0x15f4c3;
-        while (_0x5f8b2a <= 0) _0x5f8b2a += _0x3ea1c9;
+        let _0x5f8b2a = _0x3ea1c9 - (_0x15f4c3 % _0x3ea1c9);
         const _0x37edd8 = Math.floor(_0x5f8b2a / 3600000);
         const _0x4d1be0 = Math.floor((_0x5f8b2a % 3600000) / 60000);
         const _0x4f9b19 = Math.floor((_0x5f8b2a % 60000) / 1000);
@@ -4804,6 +4803,10 @@
       if (254 === _0x6ab5d9) {
         this.handleServerTime(_0x4f5972);
       }
+      if (18 === _0x6ab5d9) {
+        this._resetLocalTick = Date.now();
+        this._resetTicking = true;
+      }
     }
     static ["handleChat"](_0x4be406, _0x24de2f) {
       var _0id = _0x4be406.readUInt32();
@@ -4963,15 +4966,7 @@
     }
     static ["handleServerTime"](_0x3bfd6e) {
       const _0x419bc4 = _0x3bfd6e.readUTF16String();
-      if (_0x419bc4) {
-        this._serverTime = new Date(_0x419bc4).getTime();
-        if (!this._resetTicking) {
-          const _0x3ea1c9 = 5400000;
-          this._resetRemaining = _0x3ea1c9 - (this._serverTime % _0x3ea1c9);
-          this._resetLocalTick = Date.now();
-          this._resetTicking = true;
-        }
-      }
+      if (_0x419bc4) this._serverTime = new Date(_0x419bc4).getTime();
     }
     static ["getMyCellId"](_0x5d6513, _0x5c4a06) {
       const _0x5d61ff = 1 === _0x5c4a06 ? _0x14d4a3.myCellsIDs : _0x14d4a3.myCellsIDs2;
