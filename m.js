@@ -3021,6 +3021,7 @@
       this.fpsCount = 0;
       this.lastUpdateTime = 0;
       this.div = _0x14f7b2('#stats-hud')[0];
+      this.div.style.fontSize = '12px';
       this.lockClosed = "<i class=\"fa fa-lock\"></i>";
       this.lockOpened = "<i class=\"fa fa-unlock-alt\"></i>";
       this.speedometer = "<i class=\"fa fa-tachometer\"></i>";
