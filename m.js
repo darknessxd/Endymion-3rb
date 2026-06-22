@@ -5874,7 +5874,6 @@
           _0xfdf4f4.shadowColor = 'transparent';
         } else {
           if (_0x112233 && _0x5987fa.isMine) {
-            _0xfdf4f4.save();
             _0xfdf4f4.shadowColor = "black";
             _0xfdf4f4.shadowBlur = 15;
           }
@@ -5887,10 +5886,10 @@
             _0xfdf4f4.fill();
           }
           if (_0x112233 && _0x5987fa.isMine) {
-            _0xfdf4f4.restore();
+            _0xfdf4f4.shadowBlur = 0;
           }
         }
-        if (_0x445566 && !_0x5987fa.isVirus && !_0x5987fa.isEjected) {
+        if (_0x445566 && !_0x5987fa.isVirus && !_0x5987fa.isEjected && _0x5987fa.animRadius > 25) {
           const _0xgcx = _0x5987fa.animX - _0x1241cd.x;
           const _0xgcy = _0x5987fa.animY - _0x1241cd.y;
           const _0gcr = _0x5987fa.animRadius + 5;
@@ -6028,6 +6027,9 @@
       }
     }
     static ["createSkinMap"]() {
+      const _0cs = (_0x14d4a3.myCells?.size || 0) + (_0x14d4a3.myCells2?.size || 0) + (_0x12ac51.teamPlayers?.size || 0);
+      if (_0cs === this._lastSkinSize) return;
+      this._lastSkinSize = _0cs;
       this.skinMap.clear();
       this.arbSkinMap.clear();
       const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
