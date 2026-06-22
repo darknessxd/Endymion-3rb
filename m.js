@@ -3028,7 +3028,7 @@
       }
       _0x5be063 += this.PIO + this.paused + this.zoomLock;
       this.div.innerHTML = _0x5be063;
-      if (this.timerDiv) this.timerDiv.textContent = this.resetTimer;
+      if (this.timerDiv) this.timerDiv.innerHTML = this.resetTimer;
     }
     static get ["zoomLock"]() {
       return 'on' === _0x2cc0f3.autoZoom ? this.lockClosed : this.lockOpened;
@@ -3069,7 +3069,9 @@
         const _0x37edd8 = Math.floor(_0x5f8b2a / 3600000);
         const _0x4d1be0 = Math.floor((_0x5f8b2a % 3600000) / 60000);
         const _0x4f9b19 = Math.floor((_0x5f8b2a % 60000) / 1000);
-        return 'Reset: ' + String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0') + '   ';
+        const _0timeStr = String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0');
+        if (_0x5f8b2a <= 300000) return 'Reset: <span style="color:#ff0000">' + _0timeStr + '</span>   ';
+        return 'Reset: ' + _0timeStr + '   ';
       }
       return '';
     }
