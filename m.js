@@ -3021,12 +3021,8 @@
       if (_0x90a1a7.isAlive) {
         _0x5be063 += this.score + this.n64 + this.STE + this.speed;
       }
-      _0x5be063 += this.PIO + this.paused + this.zoomLock;
+      _0x5be063 += this.resetTimer + this.PIO + this.paused + this.zoomLock;
       this.div.innerHTML = _0x5be063;
-      const _0x46292d = document.getElementById('resetTimerDisplay');
-      if (_0x46292d) {
-        _0x46292d.textContent = this.resetTimer;
-      }
     }
     static get ["zoomLock"]() {
       return 'on' === _0x2cc0f3.autoZoom ? this.lockClosed : this.lockOpened;
