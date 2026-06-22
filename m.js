@@ -3058,7 +3058,14 @@
       return "FPS: " + _0x29b3a1 + "   ";
     }
     static get ["resetTimer"]() {
-      return '';
+      if (!_0x245b10._lastResetLocal) return '';
+      const _0x33a1c4 = Date.now() - _0x245b10._lastResetLocal;
+      const _0x2d0fbe = 5400000 - _0x33a1c4;
+      if (_0x2d0fbe <= 0) return 'Reset: 00:00   ';
+      const _0x37edd8 = Math.floor(_0x2d0fbe / 3600000);
+      const _0x4d1be0 = Math.floor((_0x2d0fbe % 3600000) / 60000);
+      const _0x4f9b19 = Math.floor((_0x2d0fbe % 60000) / 1000);
+      return 'Reset: ' + String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0') + '   ';
     }
   }
   class _0x3a43e7 {
@@ -4563,6 +4570,18 @@
     ["endOfBuffer"]() {
       return this.index >= this.maxIndex;
     }
+    ["readUTF16String"]() {
+      let _0x340f0b = '';
+      while (this.index + 1 < this.maxIndex) {
+        const _0x563f73 = this.dataView.getUint8(this.index);
+        const _0x2ae0e0 = this.dataView.getUint8(this.index + 1);
+        if (_0x563f73 === 0 && _0x2ae0e0 === 0) break;
+        _0x340f0b += String.fromCharCode(_0x563f73);
+        this.index += 2;
+      }
+      this.index += 2;
+      return _0x340f0b;
+    }
   }
   class _0x18a8d1 {
     static ["init"]() {
@@ -4779,28 +4798,11 @@
       if (86 === _0x6ab5d9) {
         this.handleChat(_0x4f5972, _0x24de2f);
       }
-      if (_0x6ab5d9 !== 16 && _0x6ab5d9 !== 17 && _0x6ab5d9 !== 18 && _0x6ab5d9 !== 20 && _0x6ab5d9 !== 32 && _0x6ab5d9 !== 50 && _0x6ab5d9 !== 49 && _0x6ab5d9 !== 65 && _0x6ab5d9 !== 86) {
-        if (!this._loggedTypes) this._loggedTypes = {};
-        if (!this._loggedTypes[_0x6ab5d9]) {
-          this._loggedTypes[_0x6ab5d9] = true;
-          _0x40f48a.normal('PACKET', 'Unknown type: ' + _0x6ab5d9);
-        }
-        if (_0x6ab5d9 === 100 && !this._dumped100) {
-          this._dumped100 = true;
-          const _0x65f10d = [];
-          for (let _0x4d1c30 = _0x4f5972.index; _0x4d1c30 < _0x4f5972.maxIndex; _0x4d1c30++) {
-            _0x65f10d.push(_0x4f5972.dataView.getUint8(_0x4d1c30, true));
-          }
-          _0x40f48a.normal('PACKET 100', 'bytes: ' + _0x65f10d.join(','));
-        }
-        if (_0x6ab5d9 === 254 && !this._dumped254) {
-          this._dumped254 = true;
-          const _0x65f10d = [];
-          for (let _0x4d1c30 = _0x4f5972.index; _0x4d1c30 < _0x4f5972.maxIndex; _0x4d1c30++) {
-            _0x65f10d.push(_0x4f5972.dataView.getUint8(_0x4d1c30, true));
-          }
-          _0x40f48a.normal('PACKET 254', 'bytes: ' + _0x65f10d.join(','));
-        }
+      if (254 === _0x6ab5d9) {
+        this.handleServerTime(_0x4f5972);
+      }
+      if (18 === _0x6ab5d9) {
+        this._lastResetLocal = Date.now();
       }
     }
     static ["handleChat"](_0x4be406, _0x24de2f) {
@@ -4958,6 +4960,10 @@
         _0x14d4a3.myCellsIDs2.clear();
         _0x14d4a3.myCells2.clear();
       }
+    }
+    static ["handleServerTime"](_0x3bfd6e) {
+      const _0x419bc4 = _0x3bfd6e.readUTF16String();
+      if (_0x419bc4) this._serverTime = new Date(_0x419bc4).getTime();
     }
     static ["getMyCellId"](_0x5d6513, _0x5c4a06) {
       const _0x5d61ff = 1 === _0x5c4a06 ? _0x14d4a3.myCellsIDs : _0x14d4a3.myCellsIDs2;
