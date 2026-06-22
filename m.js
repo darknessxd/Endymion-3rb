@@ -3058,14 +3058,45 @@
       return "FPS: " + _0x29b3a1 + "   ";
     }
     static get ["resetTimer"]() {
-      if (!_0x245b10._lastResetLocal) return '';
-      const _0x33a1c4 = Date.now() - _0x245b10._lastResetLocal;
-      const _0x2d0fbe = 5400000 - _0x33a1c4;
-      if (_0x2d0fbe <= 0) return 'Reset: 00:00   ';
-      const _0x37edd8 = Math.floor(_0x2d0fbe / 3600000);
-      const _0x4d1be0 = Math.floor((_0x2d0fbe % 3600000) / 60000);
-      const _0x4f9b19 = Math.floor((_0x2d0fbe % 60000) / 1000);
-      return 'Reset: ' + String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0') + '   ';
+      if (_0x245b10._worldExtra) {
+        const _0x2d0fbe = _0x245b10._worldExtra;
+        if (_0x2d0fbe > 0 && _0x2d0fbe <= 5400000) {
+          const _0x37edd8 = Math.floor(_0x2d0fbe / 3600000);
+          const _0x4d1be0 = Math.floor((_0x2d0fbe % 3600000) / 60000);
+          const _0x4f9b19 = Math.floor((_0x2d0fbe % 60000) / 1000);
+          return 'Reset: ' + String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0') + '   ';
+        }
+      }
+      if (_0x245b10._lastResetLocal) {
+        const _0x33a1c4 = Date.now() - _0x245b10._lastResetLocal;
+        const _0x2d0fbe = 5400000 - _0x33a1c4;
+        if (_0x2d0fbe <= 0) return 'Reset: 00:00   ';
+        const _0x37edd8 = Math.floor(_0x2d0fbe / 3600000);
+        const _0x4d1be0 = Math.floor((_0x2d0fbe % 3600000) / 60000);
+        const _0x4f9b19 = Math.floor((_0x2d0fbe % 60000) / 1000);
+        return 'Reset: ' + String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0') + '   ';
+      }
+      if (_0x245b10._serverTime) {
+        try {
+          const _0x4432f0 = localStorage.getItem('_3rbReset');
+          if (_0x4432f0) {
+            const _0x4c0e66 = parseInt(_0x4432f0, 10);
+            const _0x4a4ad8 = _0x245b10._serverTime - _0x4c0e66;
+            if (_0x4a4ad8 > 0 && _0x4a4ad8 < 10800000) {
+              const _0x2d0fbe = 5400000 - (_0x4a4ad8 % 5400000);
+              if (_0x2d0fbe > 0 && _0x2d0fbe <= 5400000) {
+                const _0x37edd8 = Math.floor(_0x2d0fbe / 3600000);
+                const _0x4d1be0 = Math.floor((_0x2d0fbe % 3600000) / 60000);
+                const _0x4f9b19 = Math.floor((_0x2d0fbe % 60000) / 1000);
+                return 'Reset: ' + String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0') + '   ';
+              }
+            }
+          }
+        } catch(_0x2b47a6) {}
+        const _0x3abc12 = new Date(_0x245b10._serverTime);
+        return 'Server: ' + String(_0x3abc12.getUTCHours()).padStart(2, '0') + ':' + String(_0x3abc12.getUTCMinutes()).padStart(2, '0') + ':' + String(_0x3abc12.getUTCSeconds()).padStart(2, '0') + '   ';
+      }
+      return '';
     }
   }
   class _0x3a43e7 {
@@ -4802,7 +4833,15 @@
         this.handleServerTime(_0x4f5972);
       }
       if (18 === _0x6ab5d9) {
-        this._lastResetLocal = Date.now();
+        this._worldExtra = null;
+        if (this._resetReady && this._serverTime) {
+          this._lastResetLocal = Date.now();
+          try { localStorage.setItem('_3rbReset', String(this._serverTime)); } catch(_0x5fc601) {}
+        }
+        this._resetReady = true;
+      }
+      if (254 === _0x6ab5d9) {
+        this.handleServerTime(_0x4f5972);
       }
     }
     static ["handleChat"](_0x4be406, _0x24de2f) {
@@ -4930,6 +4969,12 @@
       for (_0xbdb90c = 0; _0xbdb90c < _0x9e119e; _0xbdb90c++) {
         _0x468d84 = _0x449cb9.readUInt32();
         _0x14d4a3.removeCell(_0x468d84, _0x43ee07);
+      }
+      if (!_0x449cb9.endOfBuffer()) {
+        const _0x685319 = _0x449cb9.maxIndex - _0x449cb9.index;
+        if (_0x685319 >= 4) {
+          this._worldExtra = _0x449cb9.readUInt32();
+        }
       }
     }
     static ["checkIsFood"](_0x451fee) {
