@@ -3059,7 +3059,7 @@
     }
     static get ["resetTimer"]() {
       if (_0x245b10._resetTicking) {
-        const _0x3ea1c9 = 5400000;
+        const _0x3ea1c9 = 7200000;
         const _0x15f4c3 = Date.now() - _0x245b10._resetLocalTick;
         let _0x5f8b2a = _0x3ea1c9 - (_0x15f4c3 % _0x3ea1c9);
         const _0x37edd8 = Math.floor(_0x5f8b2a / 3600000);
