@@ -4780,7 +4780,11 @@
         this.handleChat(_0x4f5972, _0x24de2f);
       }
       if (_0x6ab5d9 !== 16 && _0x6ab5d9 !== 17 && _0x6ab5d9 !== 18 && _0x6ab5d9 !== 20 && _0x6ab5d9 !== 32 && _0x6ab5d9 !== 50 && _0x6ab5d9 !== 49 && _0x6ab5d9 !== 65 && _0x6ab5d9 !== 86) {
-        console.log('Unknown packet type:', _0x6ab5d9);
+        if (!this._loggedTypes) this._loggedTypes = {};
+        if (!this._loggedTypes[_0x6ab5d9]) {
+          this._loggedTypes[_0x6ab5d9] = true;
+          _0x40f48a.normal('PACKET', 'Unknown type: ' + _0x6ab5d9);
+        }
       }
     }
     static ["handleChat"](_0x4be406, _0x24de2f) {
