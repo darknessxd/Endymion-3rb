@@ -4785,6 +4785,22 @@
           this._loggedTypes[_0x6ab5d9] = true;
           _0x40f48a.normal('PACKET', 'Unknown type: ' + _0x6ab5d9);
         }
+        if (_0x6ab5d9 === 100 && !this._dumped100) {
+          this._dumped100 = true;
+          const _0x65f10d = [];
+          for (let _0x4d1c30 = _0x4f5972.index; _0x4d1c30 < _0x4f5972.maxIndex; _0x4d1c30++) {
+            _0x65f10d.push(_0x4f5972.dataView.getUint8(_0x4d1c30, true));
+          }
+          _0x40f48a.normal('PACKET 100', 'bytes: ' + _0x65f10d.join(','));
+        }
+        if (_0x6ab5d9 === 254 && !this._dumped254) {
+          this._dumped254 = true;
+          const _0x65f10d = [];
+          for (let _0x4d1c30 = _0x4f5972.index; _0x4d1c30 < _0x4f5972.maxIndex; _0x4d1c30++) {
+            _0x65f10d.push(_0x4f5972.dataView.getUint8(_0x4d1c30, true));
+          }
+          _0x40f48a.normal('PACKET 254', 'bytes: ' + _0x65f10d.join(','));
+        }
       }
     }
     static ["handleChat"](_0x4be406, _0x24de2f) {
