@@ -3007,6 +3007,11 @@
       this.lockOpened = "<i class=\"fa fa-unlock-alt\"></i>";
       this.speedometer = "<i class=\"fa fa-tachometer\"></i>";
       this.iconPause = "<i class=\"fa fa-pause-circle\"></i>";
+      const _0timer = document.createElement('div');
+      _0timer.id = 'hud-reset-timer';
+      _0timer.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);bottom:100%;color:#fff;font-family:ubuntu;font-size:12px;font-weight:600;white-space:nowrap;text-shadow:0 0 3px #000;z-index:10;pointer-events:none;margin-bottom:2px;';
+      _0x14f7b2('#minimap-hud')[0].appendChild(_0timer);
+      this.timerDiv = _0timer;
     }
     static ["update"]() {
       this.fpsCount++;
@@ -3021,8 +3026,9 @@
       if (_0x90a1a7.isAlive) {
         _0x5be063 += this.score + this.n64 + this.STE + this.speed;
       }
-      _0x5be063 += this.resetTimer + this.PIO + this.paused + this.zoomLock;
+      _0x5be063 += this.PIO + this.paused + this.zoomLock;
       this.div.innerHTML = _0x5be063;
+      if (this.timerDiv) this.timerDiv.textContent = this.resetTimer;
     }
     static get ["zoomLock"]() {
       return 'on' === _0x2cc0f3.autoZoom ? this.lockClosed : this.lockOpened;
