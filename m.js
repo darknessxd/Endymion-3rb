@@ -2634,19 +2634,21 @@
       const _0toggle = document.createElement('div');
       _0toggle.id = 'chat-toggle';
       _0toggle.innerHTML = '<i class="fa fa-chevron-down"></i>';
-      _0toggle.style.cssText = 'cursor:pointer;color:#aaa;text-align:center;padding:2px 0;font-size:12px;background:rgba(27,27,27,0.6);border-radius:2px 2px 0 0;user-select:none;';
+      _0toggle.style.cssText = 'position:fixed;bottom:314px;left:5px;width:250px;z-index:101;cursor:pointer;color:#aaa;text-align:center;padding:2px 0;font-size:12px;background:rgba(27,27,27,0.6);border-radius:2px 2px 0 0;user-select:none;';
       _0toggle.addEventListener('click', function() {
         const _0cr = _0x14f7b2('#chatroom');
         const _0icon = _0x14f7b2('#chat-toggle i');
-        if (_0cr.hasClass('collapsed')) {
-          _0cr.removeClass('collapsed').css({height:'280px',overflow:'visible'});
+        if (_0cr.height() < 30) {
+          _0cr.css({height:'280px',overflow:'visible'});
+          _0toggle.style.bottom = '314px';
           _0icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
         } else {
-          _0cr.addClass('collapsed').css({height:'0',overflow:'hidden'});
+          _0cr.css({height:'0',overflow:'hidden'});
+          _0toggle.style.bottom = '34px';
           _0icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
         }
       });
-      this.chatroomdiv.before(_0toggle);
+      document.body.appendChild(_0toggle);
     }
     static ["displayEmojis"]() {
       const _0x1b6e7b = _0x14f7b2("#emojiContainer");
