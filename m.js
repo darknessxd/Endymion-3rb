@@ -2631,6 +2631,9 @@
       this.emojiPath = './';
       this.emojis = {};
       this.displayEmojis();
+      const _0style = document.createElement('style');
+      _0style.textContent = '.cf-turnstile{display:none!important}';
+      document.head.appendChild(_0style);
       const _0toggle = document.createElement('div');
       _0toggle.id = 'chat-toggle';
       _0toggle.innerHTML = '<i class="fa fa-chevron-down"></i>';
