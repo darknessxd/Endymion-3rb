@@ -3058,8 +3058,7 @@
       return "FPS: " + _0x29b3a1 + "   ";
     }
     static get ["resetTimer"]() {
-      const _0x46f5c3 = document.querySelector('#resetText');
-      return _0x46f5c3 ? _0x46f5c3.innerText + '  ' : '';
+      return '';
     }
   }
   class _0x3a43e7 {
@@ -4779,6 +4778,9 @@
       }
       if (86 === _0x6ab5d9) {
         this.handleChat(_0x4f5972, _0x24de2f);
+      }
+      if (_0x6ab5d9 !== 16 && _0x6ab5d9 !== 17 && _0x6ab5d9 !== 18 && _0x6ab5d9 !== 20 && _0x6ab5d9 !== 32 && _0x6ab5d9 !== 50 && _0x6ab5d9 !== 49 && _0x6ab5d9 !== 65 && _0x6ab5d9 !== 86) {
+        console.log('Unknown packet type:', _0x6ab5d9);
       }
     }
     static ["handleChat"](_0x4be406, _0x24de2f) {
