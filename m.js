@@ -3021,7 +3021,7 @@
       if (_0x90a1a7.isAlive) {
         _0x5be063 += this.score + this.n64 + this.STE + this.speed;
       }
-      _0x5be063 += this.PIO + this.paused + this.zoomLock;
+      _0x5be063 += this.resetTimer + this.PIO + this.paused + this.zoomLock;
       this.div.innerHTML = _0x5be063;
     }
     static get ["zoomLock"]() {
@@ -3056,6 +3056,10 @@
       const _0x29b3a1 = this.fpsCount;
       this.fpsCount = 0;
       return "FPS: " + _0x29b3a1 + "   ";
+    }
+    static get ["resetTimer"]() {
+      const _0x46f5c3 = document.querySelector('#resetText');
+      return _0x46f5c3 ? _0x46f5c3.innerText + '  ' : '';
     }
   }
   class _0x3a43e7 {
