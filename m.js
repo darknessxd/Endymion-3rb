@@ -6510,7 +6510,11 @@
             break;
           }
         }
+        if (this._myId !== null) {
+          _0x12ac51.teamPlayers.delete(String(this._myId));
+        }
         for (const mid in nm) {
+          if (mid == this._myId) continue;
           const nmd = nm[mid];
           let p = _0x12ac51.teamPlayers.get(mid);
           if (!p) {
