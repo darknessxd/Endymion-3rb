@@ -6065,7 +6065,7 @@
         _tMap.set(_0x5d3988.worldID, _tUrl);
         const _tpNick = _0x5d3988.nick;
         if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) _tMap.set(_c.worldID, _tUrl);
-        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
+        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
       }
     }
     static ["createRGBset"]() {
@@ -6133,9 +6133,8 @@
       _0x252d42.src = _0x31eb71;
     }
     static ["getImgurCode"](_0x96fe5e) {
-      if (!_0x96fe5e) return "XXXXXXX";
-      const _0x5e0df5 = _0x96fe5e.match(/https?:\/\/.+/i);
-      return _0x5e0df5 ? _0x5e0df5[0] : _0x96fe5e;
+      const _0x5e0df5 = _0x96fe5e.match(/https?:\/\/.+\.(png|jpg|gif|webp)/i);
+      return null === _0x5e0df5 ? "XXXXXXX" : _0x5e0df5[0];
     }
     static ["getRaindowFlag"](_0x4a64ed) {
       return null !== _0x4a64ed.match(/#hue\s??=\s??auto\s??,\s??blend\s??=\s??auto/i);
