@@ -6399,6 +6399,8 @@
     },
 
     createParty() {
+      this._inParty = false;
+      this._partyCode = '';
       if (!this._send([0x55, 0x00])) {
         _0x40f48a.alert("Party", "Failed - no connection");
         return;
@@ -6445,6 +6447,7 @@
       const op = v.getUint8(0);
 
       if (op === 0x55) {
+        if (this._inParty) return true;
         let p = 1;
         const c = [];
         while (p < v.byteLength && v.getUint8(p) !== 0) { c.push(String.fromCharCode(v.getUint8(p))); p++; }
@@ -6467,7 +6470,7 @@
             _0x18a8d1.ws2.send(new Uint8Array(_buf2).buffer);
           }
         } catch(e) {}
-        return false;
+        return true;
       }
 
       if (op === 0x57) {
