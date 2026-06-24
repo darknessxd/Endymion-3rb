@@ -4944,7 +4944,7 @@
         _0x26f542 = !!(32 & _0x8aab7f);
         if (_0xe4d42a) {
           _0xabb49d.skin = _0x449cb9.readEscapedUTF8string();
-          if (_0xabb49d.skin.split('/')[1] !== "undefined") {
+          if (_0xabb49d.skin.split('/')[1] !== "undefined" && !_0xabb49d.skin.startsWith('http')) {
             _0x386cbc.get3rbSkin(_0xabb49d.skin);
           }
         }
@@ -5164,6 +5164,9 @@
         };
         if (_0xisTab2 && _0x90a1a7.skin2 && !String(_0x90a1a7.skin2).includes("XXXXXXX")) {
           _0x4208f8.s = unescape(encodeURIComponent(_0x90a1a7.skin2));
+          _0x4208f8.w = '';
+        } else if (!_0xisTab2 && _0x90a1a7.skin && !String(_0x90a1a7.skin).includes("XXXXXXX")) {
+          _0x4208f8.s = unescape(encodeURIComponent(_0x90a1a7.skin));
           _0x4208f8.w = '';
         } else if (_0xisTab2 ? _0x90a1a7.arbSkin2 : _0x90a1a7.arbSkin) {
           _0x4208f8.s = _0x1084d5;
@@ -5909,9 +5912,17 @@
         if (!_0x5987fa.isVirus && _0x21653d === 1 && _0x4f4928 && !_0x5987fa.isMine && _0x48567b && _0x5987fa.animRadius * _0xddb6d6.viewport < 50) {
           _0xfdf4f4.drawImage(this.indicator, _0x5987fa.animX - _0x1241cd.x - _0x1c7e25 / 2, _0x5987fa.animY - _0x1241cd.y - _0x5987fa.animRadius - 10 - _0x1c7e25, _0x1c7e25, _0x1c7e25);
         }
-        const _0urlSkin = this.skinMap.has(_0x5987fa.worldID) && _0x290b1c && this.getCustomSkin(_0x5987fa.worldID, 'skinMap');
+        let _0urlSkin = this.skinMap.has(_0x5987fa.worldID) && _0x290b1c && this.getCustomSkin(_0x5987fa.worldID, 'skinMap');
         const _0arbSkin = this.arbSkinMap.has(_0x5987fa.worldID) && _0x24bf81 && this.getCustomSkin(_0x5987fa.worldID, 'arbSkinMap');
-        const _0x1a6b68 = _0urlSkin || _0arbSkin;
+        let _0x1a6b68 = _0urlSkin || _0arbSkin;
+        if (!_0x1a6b68 && _0x290b1c) {
+          const _cellUrl = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5987fa.skin || ''));
+          if (_cellUrl && !_cellUrl.includes("XXXXXXX") && !_cellUrl.startsWith('free/')) {
+            const _cached = this.downloadedSkins.get(_cellUrl);
+            if (_cached) { _0x1a6b68 = _cached; _0urlSkin = _cached; }
+            else if (undefined === _cached) this.downloadSkin(_cellUrl);
+          }
+        }
         let _0x20f1ed = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5987fa.skin || '')).includes("XXXXXXX") ? _0x5987fa.skin : _0x5987fa.arbSkin;
         const _0xb89262 = _0x24bf81 && !_0x1a6b68 && _0x20f1ed && (_0x20f1ed.startsWith('free/') || this.knownSkins.hasOwnProperty(_0x20f1ed.replace(/free\/|.png/g, ''))) && this.get3rbSkin(_0x20f1ed);
         if (_0x1a6b68 || _0xb89262) {
@@ -6065,7 +6076,7 @@
         _tMap.set(_0x5d3988.worldID, _tUrl);
         const _tpNick = _0x5d3988.nick;
         if (_0x12ac51.cells instanceof Map) for (const [_, _c] of _0x12ac51.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) _tMap.set(_c.worldID, _tUrl);
-        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && !_c2.isMine && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
+        if (_0x12ac51.cells2 instanceof Map) for (const [_, _c2] of _0x12ac51.cells2) if (_c2 && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
       }
     }
     static ["createRGBset"]() {
