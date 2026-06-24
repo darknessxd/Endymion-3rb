@@ -6502,7 +6502,8 @@
           const px = v.getInt32(off, true); off += 4;
           const py = v.getInt32(off, true); off += 4;
           nm[id] = { id, name, col, px, py };
-          newPartyCells.set(id.toString(), [{ x: px, y: py, r: Math.abs(sz) || 50 }]);
+          const _r = Math.max(10, Math.sqrt(Math.abs(sz)) * 10);
+          newPartyCells.set(id.toString(), [{ x: px, y: py, r: _r }]);
         }
         this._members = nm;
         _0x12ac51.partyCells = newPartyCells;
