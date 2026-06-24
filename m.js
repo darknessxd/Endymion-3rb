@@ -5914,10 +5914,12 @@
         const _0x1a6b68 = _0urlSkin || _0arbSkin;
         let _0x20f1ed = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5987fa.skin || '')).includes("XXXXXXX") ? _0x5987fa.skin : _0x5987fa.arbSkin;
         const _0xb89262 = _0x24bf81 && !_0x1a6b68 && _0x20f1ed && (_0x20f1ed.startsWith('free/') || this.knownSkins.hasOwnProperty(_0x20f1ed.replace(/free\/|.png/g, ''))) && this.get3rbSkin(_0x20f1ed);
-        if (_0x1a6b68) {
-          _0xfdf4f4.drawImage(_0x1a6b68, _0x5987fa.animX - _0x1241cd.x - (_0x5987fa.animRadius + 5), _0x5987fa.animY - _0x1241cd.y - (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5));
-        } else if (_0xb89262) {
-          _0xfdf4f4.drawImage(_0xb89262, _0x5987fa.animX - _0x1241cd.x - (_0x5987fa.animRadius + 5), _0x5987fa.animY - _0x1241cd.y - (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5));
+        if (_0x1a6b68 || _0xb89262) {
+          _0xfdf4f4.save();
+          _0xfdf4f4.clip();
+          if (_0x1a6b68) _0xfdf4f4.drawImage(_0x1a6b68, _0x5987fa.animX - _0x1241cd.x - (_0x5987fa.animRadius + 5), _0x5987fa.animY - _0x1241cd.y - (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5));
+          else if (_0xb89262) _0xfdf4f4.drawImage(_0xb89262, _0x5987fa.animX - _0x1241cd.x - (_0x5987fa.animRadius + 5), _0x5987fa.animY - _0x1241cd.y - (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5));
+          _0xfdf4f4.restore();
         }
         if (_0x5987fa.isMine && _0x3060bb) {
           const _0x27d8ff = _0x5987fa.animRadius * _0x26462b / 100;
@@ -5996,7 +5998,10 @@
           if (_hasSkin) {
             const _ps = _hasUrlSkin && _0x2cc0f3.urlSkins === 'on' ? this.getCustomSkin(_pp.worldID, 'skinMap') : this.getCustomSkin(_pp.worldID, 'arbSkinMap');
             if (_ps) {
+              _ctx.save();
+              _ctx.clip();
               _ctx.drawImage(_ps, _px - _pr - 5, _py - _pr - 5, 2 * (_pr + 5), 2 * (_pr + 5));
+              _ctx.restore();
             }
           } else {
             _ctx.globalAlpha = _viewAlpha;
@@ -6106,21 +6111,25 @@
     static ["downloadSkin"](_0x31eb71) {
       this.downloadedSkins.set(_0x31eb71, false);
       const _0x252d42 = new Image();
-      if (!_0x31eb71.startsWith("https://3rb.io/")) _0x252d42.crossOrigin = "anonymous";
       _0x252d42.onload = () => {
-        const _0x4282fb = _0x24f9ab.createElement("canvas");
-        const _0x56a6bc = _0x4282fb.getContext('2d');
-        _0x4282fb.width = 512;
-        _0x4282fb.height = 512;
-        _0x56a6bc.beginPath();
-        _0x56a6bc.arc(256, 256, 256, 0, this.pi2, true);
-        _0x56a6bc.closePath();
-        _0x56a6bc.clip();
-        _0x56a6bc.drawImage(_0x252d42, 0, 0, 512, 512);
-        _0x252d42.onload = null;
-        _0x252d42.src = _0x4282fb.toDataURL();
-        this.downloadedSkins.set(_0x31eb71, _0x252d42);
+        try {
+          const _0x4282fb = _0x24f9ab.createElement("canvas");
+          const _0x56a6bc = _0x4282fb.getContext('2d');
+          _0x4282fb.width = 512;
+          _0x4282fb.height = 512;
+          _0x56a6bc.beginPath();
+          _0x56a6bc.arc(256, 256, 256, 0, this.pi2, true);
+          _0x56a6bc.closePath();
+          _0x56a6bc.clip();
+          _0x56a6bc.drawImage(_0x252d42, 0, 0, 512, 512);
+          this.downloadedSkins.set(_0x31eb71, _0x252d42);
+          _0x252d42.src = _0x4282fb.toDataURL();
+          _0x252d42.onload = null;
+        } catch(_e) {
+          this.downloadedSkins.set(_0x31eb71, _0x252d42);
+        }
       };
+      _0x252d42.onerror = () => { this.downloadedSkins.set(_0x31eb71, false); };
       _0x252d42.src = _0x31eb71;
     }
     static ["getImgurCode"](_0x96fe5e) {
@@ -6562,7 +6571,15 @@
         for (const _tpk of _0x12ac51.teamPlayers.keys()) {
           const _tp = _0x12ac51.teamPlayers.get(_tpk);
           if (_tp && !_tp.skin) {
-            const _shared = this._sharedSkins[_tp.nick];
+            let _shared = this._sharedSkins[_tp.nick];
+            if (!_shared) {
+              for (const _sn of Object.keys(this._sharedSkins)) {
+                if (_sn.toLowerCase() === _tp.nick.toLowerCase()) {
+                  _shared = this._sharedSkins[_sn];
+                  break;
+                }
+              }
+            }
             if (_shared && !_shared.includes("XXXXXXX")) {
               _tp.skin = _shared;
               this._skinMapDirty = true;
