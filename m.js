@@ -6500,7 +6500,7 @@
           const sz = v.getInt32(off, true); off += 4;
           const px = v.getInt32(off, true); off += 4;
           const py = v.getInt32(off, true); off += 4;
-          nm[id] = { id, name, col, px, py };
+          nm[id] = { id, name, col, px, py, sz };
           const _r = Math.max(10, Math.sqrt(Math.abs(sz)) * 10);
           newPartyCells.set(id.toString(), [{ x: px, y: py, r: _r }]);
         }
@@ -6529,6 +6529,7 @@
             p.isAlive = 1;
             _0x12ac51.teamPlayers.set(mid, p);
           }
+          p.mass = nmd.sz;
           p.x = nmd.px;
           p.y = nmd.py;
           p.animX = nmd.px;
