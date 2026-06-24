@@ -6042,21 +6042,10 @@
       const _mkUrl = (_s) => _s.startsWith('free/') ? "https://3rb.io/res/skins/free/" + _s.replace('free/', '') + ".png" : null;
       const _addMyCells = (_cells, _url, _map) => { if (_cells instanceof Map) for (const [_, _c] of _cells) _map.set(_c.worldID, _url); };
       const _0mySkin = _0x90a1a7.skin;
-      if (_0x90a1a7.typeID === 2) {
-        if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX") && !_0x90a1a7.skin2.startsWith('free/')) {
-          _addMyCells(_0x14d4a3.myCells, this.code2Url(_0x90a1a7.skin2), this.skinMap);
-        } else if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
-          _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
-        }
-      } else if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+      if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
         _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
       }
-      if (_0x90a1a7.typeID === 2) {
-        if (_0x90a1a7.arbSkin2) {
-          const _aurl2 = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin2.replace(/free\/|.png/g, '') + ".png";
-          _addMyCells(_0x14d4a3.myCells, _aurl2, this.arbSkinMap);
-        }
-      } else if (_0x90a1a7.arbSkin) {
+      if (_0x90a1a7.arbSkin) {
         const _aurl = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin.replace(/free\/|.png/g, '') + ".png";
         _addMyCells(_0x14d4a3.myCells, _aurl, this.arbSkinMap);
       }
