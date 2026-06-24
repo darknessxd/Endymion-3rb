@@ -6313,6 +6313,7 @@
     _partyCode: '',
     _members: {},
     _pendingSkins: {},
+    _sharedSkins: {},
     _savedSkins: new Map(),
     _myId: null,
     _processing57: false,
@@ -6380,25 +6381,21 @@
       return true;
     },
 
-    _sendSkinViaChat() {
+    _broadcastCurrentSkins() {
       if (!this._inParty) return;
       try {
         const s1 = _0x90a1a7.skin;
-        if (s1 && !s1.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s1));
+        if (s1 && !s1.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick] = s1;
       } catch(e) {}
       try {
         const s2 = _0x90a1a7.skin2;
-        if (s2 && !s2.includes("XXXXXXX")) _0x302a2c.chat("__SK__" + btoa(s2));
+        if (s2 && !s2.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick2] = s2;
       } catch(e) {}
-    },
-
-    _broadcastCurrentSkins() {
-      this._sendSkinViaChat();
     },
 
     _sendSkinUpdate(skinUrl, botIdx) {
       if (!this._inParty || !skinUrl || skinUrl.includes("XXXXXXX")) return;
-      try { _0x302a2c.chat("__SK__" + btoa(skinUrl)); } catch(e) {}
+      this._sharedSkins[botIdx === 2 ? _0x90a1a7.nick2 : _0x90a1a7.nick] = skinUrl;
     },
 
     createParty() {
@@ -6437,6 +6434,7 @@
       }
       this._savedSkins.clear();
       this._pendingSkins = {};
+      this._sharedSkins = {};
       _0x12ac51.partyCells.clear();
     },
 
@@ -6457,7 +6455,18 @@
         this._updateUI();
         _0x40f48a.normal("Party", "Party code: " + code);
         try { localStorage.setItem('3rb_party_code', code); } catch(e) {}
-        try { _0x302a2c.chat("__PC__" + btoa(code)); } catch(e) {}
+        try { if (_0x90a1a7.skin && !_0x90a1a7.skin.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick] = _0x90a1a7.skin; } catch(e) {}
+        try { if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick2] = _0x90a1a7.skin2; } catch(e) {}
+        try {
+          const _enc2 = new TextEncoder();
+          const _raw2 = _enc2.encode(code);
+          const _buf2 = new Uint8Array(2 + _raw2.length);
+          _buf2[0] = 0x55; _buf2[1] = 0x01;
+          _buf2.set(_raw2, 2);
+          if (_0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) {
+            _0x18a8d1.ws2.send(new Uint8Array(_buf2).buffer);
+          }
+        } catch(e) {}
         return false;
       }
 
@@ -6536,6 +6545,15 @@
           if (tp) {
             tp.skin = this._pendingSkins[_sid];
             delete this._pendingSkins[_sid];
+          }
+        }
+        for (const _tpk of _0x12ac51.teamPlayers.keys()) {
+          const _tp = _0x12ac51.teamPlayers.get(_tpk);
+          if (_tp && !_tp.skin) {
+            const _shared = this._sharedSkins[_tp.nick];
+            if (_shared && !_shared.includes("XXXXXXX")) {
+              _tp.skin = _shared;
+            }
           }
         }
         this._broadcastCurrentSkins();
