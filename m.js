@@ -6042,10 +6042,21 @@
       const _mkUrl = (_s) => _s.startsWith('free/') ? "https://3rb.io/res/skins/free/" + _s.replace('free/', '') + ".png" : null;
       const _addMyCells = (_cells, _url, _map) => { if (_cells instanceof Map) for (const [_, _c] of _cells) _map.set(_c.worldID, _url); };
       const _0mySkin = _0x90a1a7.skin;
-      if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+      if (_0x90a1a7.typeID === 2) {
+        if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX") && !_0x90a1a7.skin2.startsWith('free/')) {
+          _addMyCells(_0x14d4a3.myCells, this.code2Url(_0x90a1a7.skin2), this.skinMap);
+        } else if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+          _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
+        }
+      } else if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
         _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
       }
-      if (_0x90a1a7.arbSkin) {
+      if (_0x90a1a7.typeID === 2) {
+        if (_0x90a1a7.arbSkin2) {
+          const _aurl2 = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin2.replace(/free\/|.png/g, '') + ".png";
+          _addMyCells(_0x14d4a3.myCells, _aurl2, this.arbSkinMap);
+        }
+      } else if (_0x90a1a7.arbSkin) {
         const _aurl = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin.replace(/free\/|.png/g, '') + ".png";
         _addMyCells(_0x14d4a3.myCells, _aurl, this.arbSkinMap);
       }
@@ -6133,8 +6144,9 @@
       _0x252d42.src = _0x31eb71;
     }
     static ["getImgurCode"](_0x96fe5e) {
-      const _0x5e0df5 = _0x96fe5e.match(/https?:\/\/.+\.(png|jpg|gif|webp)/i);
-      return null === _0x5e0df5 ? "XXXXXXX" : _0x5e0df5[0];
+      if (!_0x96fe5e) return "XXXXXXX";
+      const _0x5e0df5 = _0x96fe5e.match(/https?:\/\/.+/i);
+      return _0x5e0df5 ? _0x5e0df5[0] : _0x96fe5e;
     }
     static ["getRaindowFlag"](_0x4a64ed) {
       return null !== _0x4a64ed.match(/#hue\s??=\s??auto\s??,\s??blend\s??=\s??auto/i);
