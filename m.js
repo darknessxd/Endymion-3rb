@@ -6028,8 +6028,9 @@
     }
     static ["createSkinMap"]() {
       const _0cs = (_0x14d4a3.myCells?.size || 0) + (_0x14d4a3.myCells2?.size || 0) + (_0x12ac51.teamPlayers?.size || 0);
-      if (_0cs === this._lastSkinSize) return;
+      if (_0cs === this._lastSkinSize && !(_0xpartyNet && _0xpartyNet._skinMapDirty)) return;
       this._lastSkinSize = _0cs;
+      if (_0xpartyNet) _0xpartyNet._skinMapDirty = false;
       this.skinMap.clear();
       this.arbSkinMap.clear();
       const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
@@ -6314,6 +6315,7 @@
     _members: {},
     _pendingSkins: {},
     _sharedSkins: {},
+    _skinMapDirty: false,
     _savedSkins: new Map(),
     _myId: null,
     _processing57: false,
@@ -6437,6 +6439,7 @@
       this._savedSkins.clear();
       this._pendingSkins = {};
       this._sharedSkins = {};
+      this._skinMapDirty = true;
       _0x12ac51.partyCells.clear();
     },
 
@@ -6560,6 +6563,7 @@
             const _shared = this._sharedSkins[_tp.nick];
             if (_shared && !_shared.includes("XXXXXXX")) {
               _tp.skin = _shared;
+              this._skinMapDirty = true;
             }
           }
         }
