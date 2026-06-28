@@ -808,7 +808,7 @@
       _0x14f7b2("#arbSkin").val(_0x4d475c.arbSkin);
       _0x90a1a7.nick = '' === _0x4d475c.nick ? "Unnamed Cell" : _0x4d475c.nick;
       _0x90a1a7.nick2 = _0x4d475c.nick2 || '';
-      _0x90a1a7.skin = _0x4d475c.skin;
+      _0x90a1a7.skin = _0x4d475c.arbSkin ? '' : _0x4d475c.skin;
       _0x90a1a7.skin2 = _0x4d475c.skin2 || '';
       _0x90a1a7.arbSkin = _0x4d475c.arbSkin || '';
       _0x19d5af.set('profiles', "profile" + this.selected, _0x4d475c);
@@ -837,6 +837,8 @@
     static ["setarbSkin"]() {
       var _0x431fed = _0x14f7b2("#arbSkin").val();
       const _0isTab2 = _0x90a1a7.typeID === 2;
+      _0x90a1a7.skin = '';
+      _0x90a1a7.skin2 = '';
       if (_0isTab2) {
         _0x90a1a7.arbSkin2 = _0x431fed;
       } else {
@@ -953,6 +955,14 @@
       this.updatePreviewSkin(this.selected);
       _0x90a1a7.skin = _0x10e480;
       if (_0x10e480) try { _0xpartyNet._sendSkinUpdate(_0x10e480, 1); } catch(e) {}
+      try {
+        const _0sk = _0x386cbc.getImgurCode(_0x10e480);
+        const _0buf2 = _0x302a2c["createView"](2 + _0sk.length);
+        _0buf2.setUint8(0, 4, true);
+        for (let _0i = 0; _0i < _0sk.length; _0i++) _0buf2.setUint8(_0i + 1, _0sk.charCodeAt(_0i), true);
+        _0buf2.setUint8(_0sk.length + 1, 0, true);
+        _0x302a2c["sendPacket"](_0buf2, _0x90a1a7.typeID);
+      } catch(e) {}
     }
     static ['setTag'](_0x57c637) {
       _0x90a1a7.tag = _0x57c637;
@@ -2780,7 +2790,7 @@
       this.ctx = this.canvas.getContext('2d');
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = "bottom";
-      this.ctx.font = "500 12px ubuntu";
+      this.ctx.font = "500 12px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif";
       this.ctx.lineWidth = 2;
       this.selector = 0;
     }
@@ -6446,6 +6456,7 @@
       this._inParty = false;
       this._partyCode = '';
       this._members = {};
+      this._leaveTime = Date.now();
       this._cleanTeamPlayers();
       this._updateUI();
       try { localStorage.removeItem('3rb_party_code'); } catch(e) {}
@@ -6471,6 +6482,7 @@
 
       if (op === 0x55) {
         if (this._inParty) return true;
+        if (this._leaveTime && Date.now() - this._leaveTime < 3000) return true;
         let p = 1;
         const c = [];
         while (p < v.byteLength && v.getUint8(p) !== 0) { c.push(String.fromCharCode(v.getUint8(p))); p++; }
@@ -6497,6 +6509,7 @@
       }
 
       if (op === 0x57) {
+        if (!this._inParty) return true;
         if (this._processing57) return true;
         this._processing57 = true;
         try {
@@ -6508,9 +6521,9 @@
           if (off + 4 > v.byteLength) break;
           const id = v.getUint32(off, true); off += 4;
           const nb = [];
-          while (off < v.byteLength && v.getUint8(off) !== 0) { nb.push(String.fromCharCode(v.getUint8(off))); off++; }
+          while (off < v.byteLength && v.getUint8(off) !== 0) { nb.push(v.getUint8(off)); off++; }
           off++;
-          const name = nb.join('');
+          const name = new TextDecoder().decode(new Uint8Array(nb));
           if (off + 3 > v.byteLength) break;
           const r = v.getUint8(off++);
           const g = v.getUint8(off++);
@@ -6529,7 +6542,7 @@
         this._myId = null;
         for (const _mk of Object.keys(nm)) {
           const _mv = nm[_mk];
-          if (_mv.name === _0x90a1a7.nick || _mv.name === _0x90a1a7.nick2) {
+          if (_mv.name === _0x90a1a7.nick) {
             this._myId = _mv.id;
             break;
           }
@@ -6552,9 +6565,10 @@
           p.mass = nmd.sz;
           p.x = nmd.px;
           p.y = nmd.py;
-          p.animX = nmd.px;
-          p.animY = nmd.py;
-          p.timeStamp = performance.now();
+          if (Math.abs(p.animX - nmd.px) > 2000 || Math.abs(p.animY - nmd.py) > 2000) {
+            p.animX = nmd.px;
+            p.animY = nmd.py;
+          }
         }
         for (const _k of _0x12ac51.teamPlayers.keys()) {
           if (typeof _k === 'string' && !nm[_k]) {
