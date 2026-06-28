@@ -6188,6 +6188,9 @@
               _0x5b9c43.save();
               _0x5b9c43.rotate(_0x1d25a8 * 3);
               _0x5b9c43.drawImage(this._ceImage, -_0x5c9d41, -_0x5c9d41, _0x5c9d41 * 2, _0x5c9d41 * 2);
+              _0x5b9c43.globalAlpha = 0.5;
+              _0x5b9c43.fillStyle = _0x480be4.commanderColor;
+              _0x5b9c43.fillRect(-_0x5c9d41, -_0x5c9d41, _0x5c9d41 * 2, _0x5c9d41 * 2);
               _0x5b9c43.restore();
             } else if (_0x480be4._maouReady) {
               _0x5b9c43.save();
