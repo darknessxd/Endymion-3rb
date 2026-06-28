@@ -836,14 +836,10 @@
     }
     static ["setarbSkin"]() {
       var _0x431fed = _0x14f7b2("#arbSkin").val();
-      const _0isTab2 = _0x90a1a7.typeID === 2;
       _0x90a1a7._skin = '';
       _0x90a1a7._skin2 = '';
-      if (_0isTab2) {
-        _0x90a1a7.arbSkin2 = _0x431fed;
-      } else {
-        _0x90a1a7.arbSkin = _0x431fed;
-      }
+      _0x90a1a7.arbSkin = _0x431fed;
+      _0x90a1a7.arbSkin2 = _0x431fed;
       const _0prev = _0x19d5af.get('profiles', "profile" + this.selected) || {};
       _0prev.arbSkin = _0x431fed;
       _0prev.nick2 = _0prev.nick2 || '';
@@ -853,14 +849,19 @@
       this.updatePreviewSkin(this.selected);
       if (_0x431fed) {
         const _0xskn = "free/" + _0x431fed.replace(/free\/|.png/g, '');
-        try {
-          const _0buf = _0x302a2c["createView"](2 + _0xskn.length);
-          _0buf.setUint8(0, 4, true);
-          for (let _0i = 0; _0i < _0xskn.length; _0i++) _0buf.setUint8(_0i + 1, _0xskn.charCodeAt(_0i), true);
-          _0buf.setUint8(_0xskn.length + 1, 0, true);
-          _0x302a2c["sendPacket"](_0buf, _0x90a1a7.typeID);
-        } catch(e) {}
+        const _0xsendSkin = (_0id) => {
+          try {
+            const _0buf = _0x302a2c["createView"](2 + _0xskn.length);
+            _0buf.setUint8(0, 4, true);
+            for (let _0i = 0; _0i < _0xskn.length; _0i++) _0buf.setUint8(_0i + 1, _0xskn.charCodeAt(_0i), true);
+            _0buf.setUint8(_0xskn.length + 1, 0, true);
+            _0x302a2c["sendPacket"](_0buf, _0id);
+          } catch(e) {}
+        };
+        _0xsendSkin(1);
+        _0xsendSkin(2);
         try { _0xpartyNet._sendSkinUpdate(_0xskn, 1); } catch(e) {}
+        try { _0xpartyNet._sendSkinUpdate(_0xskn, 2); } catch(e) {}
       }
     }
     static ["initGallery"]() {
