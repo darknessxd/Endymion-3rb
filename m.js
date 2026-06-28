@@ -2850,6 +2850,7 @@
       const _0x5db847 = this.ctx;
       _0x5db847.textAlign = "center";
       _0x5db847.textBaseline = "bottom";
+      _0x5db847.font = "8px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif";
       for (const _0x3f6db4 of _0x12ac51.teamPlayers.values()) if (_0x3f6db4.isAlive && (!this.selector || this.selector === _0x3f6db4.team)) {
         _0x3f6db4.animate();
         const _0x37e58c = _0x3f6db4.mapX;
@@ -2859,7 +2860,7 @@
         _0x5db847.closePath();
         if (0 < _0x3f6db4.nick.length) {
           _0x5db847.fillStyle = _0x480be4.teammateNameColor || "#fff";
-          _0x5db847.fillText(_0x3f6db4.nick, _0x37e58c, _0x5936f8 - 6);
+          _0x5db847.fillText(_0x3f6db4.nick, _0x37e58c, _0x5936f8 - 5);
         }
         _0x5db847.fillStyle = 1 === _0x3f6db4.team ? _0x480be4.team1color : _0x480be4.team2color;
         _0x5db847.fill();
@@ -2870,6 +2871,7 @@
       const _0x121e2c = this.ctx;
       _0x121e2c.textAlign = "center";
       _0x121e2c.textBaseline = "bottom";
+      _0x121e2c.font = "8px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif";
       _0x121e2c.beginPath();
       for (const _0x477434 of _0x12ac51.teamPlayers.values()) if (_0x477434.isAlive) {
         _0x477434.animate();
@@ -2879,7 +2881,7 @@
         _0x121e2c.arc(_0x15a5b7, _0x119d6b, 5, 0, this.pi2, false);
         if (0 < _0x477434.nick.length) {
           _0x121e2c.fillStyle = _0x480be4.teammateNameColor || "#fff";
-          _0x121e2c.fillText(_0x477434.nick, _0x15a5b7, _0x119d6b - 6);
+          _0x121e2c.fillText(_0x477434.nick, _0x15a5b7, _0x119d6b - 5);
         }
       }
       _0x121e2c.closePath();
