@@ -808,9 +808,9 @@
       _0x14f7b2("#arbSkin").val(_0x4d475c.arbSkin);
       _0x90a1a7.nick = '' === _0x4d475c.nick ? "Unnamed Cell" : _0x4d475c.nick;
       _0x90a1a7.nick2 = _0x4d475c.nick2 || '';
-      _0x90a1a7.skin = _0x4d475c.arbSkin ? '' : _0x4d475c.skin;
-      _0x90a1a7.skin2 = _0x4d475c.skin2 || '';
-      _0x90a1a7.arbSkin = _0x4d475c.arbSkin || '';
+      _0x90a1a7._skin = _0x4d475c.arbSkin ? '' : _0x4d475c.skin;
+      _0x90a1a7._skin2 = _0x4d475c.skin2 || '';
+      _0x90a1a7._arbSkin = _0x4d475c.arbSkin || '';
       _0x19d5af.set('profiles', "profile" + this.selected, _0x4d475c);
       this.updateMainSkin();
     }
@@ -837,8 +837,8 @@
     static ["setarbSkin"]() {
       var _0x431fed = _0x14f7b2("#arbSkin").val();
       const _0isTab2 = _0x90a1a7.typeID === 2;
-      _0x90a1a7.skin = '';
-      _0x90a1a7.skin2 = '';
+      _0x90a1a7._skin = '';
+      _0x90a1a7._skin2 = '';
       if (_0isTab2) {
         _0x90a1a7.arbSkin2 = _0x431fed;
       } else {
@@ -6562,21 +6562,24 @@
             p.isAlive = 1;
             _0x12ac51.teamPlayers.set(mid, p);
           }
-          p.mass = nmd.sz;
-          p.x = nmd.px;
-          p.y = nmd.py;
-          if (Math.abs(p.animX - nmd.px) > 2000 || Math.abs(p.animY - nmd.py) > 2000) {
-            p.animX = nmd.px;
-            p.animY = nmd.py;
-          }
-        }
-        for (const _k of _0x12ac51.teamPlayers.keys()) {
-          if (typeof _k === 'string' && !nm[_k]) {
-            const _oldTp = _0x12ac51.teamPlayers.get(_k);
-            if (_oldTp && _oldTp.skin) this._savedSkins.set(_k, _oldTp.skin);
-            _0x12ac51.teamPlayers["delete"](_k);
-          }
-        }
+           p.isAlive = 1;
+           p.mass = nmd.sz;
+           p.x = nmd.px;
+           p.y = nmd.py;
+           if (Math.abs(p.animX - nmd.px) > 2000 || Math.abs(p.animY - nmd.py) > 2000) {
+             p.animX = nmd.px;
+             p.animY = nmd.py;
+           }
+         }
+         const _botNicks = [_0x90a1a7.nick, _0x90a1a7.nick2].filter(Boolean);
+         for (const _k of _0x12ac51.teamPlayers.keys()) {
+           if (typeof _k === 'string' && !nm[_k]) {
+             const _tp = _0x12ac51.teamPlayers.get(_k);
+             if (_tp && _botNicks.includes(_tp.nick)) continue;
+             if (_tp && _tp.skin) this._savedSkins.set(_k, _tp.skin);
+             _0x12ac51.teamPlayers["delete"](_k);
+           }
+         }
         for (const _mid of _0x12ac51.teamPlayers.keys()) {
           if (this._savedSkins.has(_mid)) {
             const _tp = _0x12ac51.teamPlayers.get(_mid);
