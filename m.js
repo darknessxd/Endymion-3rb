@@ -2987,8 +2987,17 @@
           if (_s && !_s.includes('XXXXXXX')) _avSrc = _0x386cbc.code2Url(_s);
         }
       }
-      const _avHtml = _avSrc ? '<div class="tl-player-avatar" style="background-image:url(' + _avSrc + ')"></div>' : '<div class="tl-player-avatar" style="background:' + _avColor + '"></div>';
-      this.html += "<div class=\"tl-player\"><div class=\"tl-player-mass\">" + _0x4d2819.mass + "</div>" + _avHtml + "<div class=\"tl-player-nick\">" + this.cleanNick(_0x4d2819.nick) + "</div><div class=\"tl-player-massbar\"><div class=\"tl-player-massbar-inner\" style=\"width: " + (0 | _0x240f85) + "%;\"></div></div></div>";
+      if (!_avSrc && _0x4d2819.worldID) {
+        const _m = _0x386cbc.skinMap.get(_0x4d2819.worldID) || _0x386cbc.arbSkinMap.get(_0x4d2819.worldID);
+        if (_m && !_m.includes('XXXXXXX')) {
+          if (_m.startsWith('http')) _avSrc = _m;
+          else _avSrc = _0x386cbc.code2Url(_m);
+        }
+      }
+      const _avTag = _avSrc
+        ? '<img class="tl-player-avatar" src="' + _avSrc + '">'
+        : '<span class="tl-player-avatar" style="background:' + _avColor + '"></span>';
+      this.html += "<div class=\"tl-player\"><div class=\"tl-player-mass\">" + _0x4d2819.mass + "</div><div class=\"tl-player-nick\">" + _avTag + this.cleanNick(_0x4d2819.nick) + "</div><div class=\"tl-player-massbar\"><div class=\"tl-player-massbar-inner\" style=\"width: " + (0 | _0x240f85) + "%;\"></div></div></div>";
     }
     static ["updateVs"]() {
       const _0x141b95 = _0x12ac51.teamData;
