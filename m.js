@@ -2970,7 +2970,25 @@
     }
     static ["addPlayer"](_0x4d2819) {
       const _0x240f85 = 100 * _0x4d2819.mass / this.totalmass;
-      this.html += "<div class=\"tl-player\"><div class=\"tl-player-mass\">" + _0x4d2819.mass + "</div><div class=\"tl-player-nick\">" + this.cleanNick(_0x4d2819.nick) + "</div><div class=\"tl-player-massbar\"><div class=\"tl-player-massbar-inner\" style=\"width: " + (0 | _0x240f85) + "%;\"></div></div></div>";
+      let _avSrc = '';
+      let _avColor = _0x4d2819.colorHex || '#555';
+      if (_0x4d2819 === _0x90a1a7) {
+        const _s = _0x386cbc.getImgurCode(_0x90a1a7._skin || '');
+        if (_s && !_s.includes('XXXXXXX')) _avSrc = _0x386cbc.code2Url(_s);
+        else if (_0x90a1a7._arbSkin) _avSrc = 'https://3rb.io/res/skins/free/' + _0x90a1a7._arbSkin.replace(/^free\/|\.png$/g, '') + '.png';
+      } else if (_0x4d2819.nick === _0x90a1a7.nick2) {
+        const _s = _0x386cbc.getImgurCode(_0x90a1a7._skin2 || '');
+        if (_s && !_s.includes('XXXXXXX')) _avSrc = _0x386cbc.code2Url(_s);
+      } else if (_0x4d2819.skin && !_0x4d2819.skin.includes('XXXXXXX')) {
+        if (_0x4d2819.skin.startsWith('http')) _avSrc = _0x4d2819.skin;
+        else if (_0x4d2819.skin.startsWith('free/')) _avSrc = 'https://3rb.io/res/skins/free/' + _0x4d2819.skin.replace(/^free\/|\.png$/g, '') + '.png';
+        else {
+          const _s = _0x386cbc.getImgurCode(_0x4d2819.skin);
+          if (_s && !_s.includes('XXXXXXX')) _avSrc = _0x386cbc.code2Url(_s);
+        }
+      }
+      const _avHtml = _avSrc ? '<div class="tl-player-avatar" style="background-image:url(' + _avSrc + ')"></div>' : '<div class="tl-player-avatar" style="background:' + _avColor + '"></div>';
+      this.html += "<div class=\"tl-player\"><div class=\"tl-player-mass\">" + _0x4d2819.mass + "</div>" + _avHtml + "<div class=\"tl-player-nick\">" + this.cleanNick(_0x4d2819.nick) + "</div><div class=\"tl-player-massbar\"><div class=\"tl-player-massbar-inner\" style=\"width: " + (0 | _0x240f85) + "%;\"></div></div></div>";
     }
     static ["updateVs"]() {
       const _0x141b95 = _0x12ac51.teamData;
