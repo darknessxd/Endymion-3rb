@@ -5925,8 +5925,16 @@
         if (_0x5987fa.isEjected) {
           continue;
         }
-        if (!_0x5987fa.isVirus && _0x21653d === 1 && _0x4f4928 && !_0x5987fa.isMine && _0x48567b && _0x5987fa.animRadius * _0xddb6d6.viewport < 50) {
-          _0xfdf4f4.drawImage(this.indicator, _0x5987fa.animX - _0x1241cd.x - _0x1c7e25 / 2, _0x5987fa.animY - _0x1241cd.y - _0x5987fa.animRadius - 10 - _0x1c7e25, _0x1c7e25, _0x1c7e25);
+        if (_0x4f4928 && _0x5987fa.isMine && _0x5987fa.cellType === _0x90a1a7.typeID && _0x21653d > 0) {
+          _0xfdf4f4.save();
+          _0xfdf4f4.textAlign = "center";
+          _0xfdf4f4.textBaseline = "bottom";
+          _0xfdf4f4.font = "600 " + (_0x1c7e25 * 2) + "px sans-serif";
+          _0xfdf4f4.fillStyle = "rgba(255,255,255,1)";
+          const _0indX = _0x5987fa.animX - _0x1241cd.x;
+          const _0indY = _0x5987fa.animY - _0x1241cd.y - _0x5987fa.animRadius - 5;
+          _0xfdf4f4.fillText("\u25BC", _0indX, _0indY + _0x1c7e25 / 2);
+          _0xfdf4f4.restore();
         }
         let _0urlSkin = this.skinMap.has(_0x5987fa.worldID) && _0x290b1c && this.getCustomSkin(_0x5987fa.worldID, 'skinMap');
         const _0arbSkin = this.arbSkinMap.has(_0x5987fa.worldID) && _0x24bf81 && this.getCustomSkin(_0x5987fa.worldID, 'arbSkinMap');
@@ -6071,11 +6079,19 @@
       const _addForeignSkin = (_cells, _selfNicks) => {
         if (!(_cells instanceof Map)) return;
         for (const [_, _c] of _cells) {
-          if (!_c || _c.isMine || !_c.skin || _c.skin.includes("XXXXXXX")) continue;
+          if (!_c || _c.isMine) continue;
           if (_selfNicks && _c.nick && (_selfNicks.includes(_c.nick) || _selfNicks.some(n => _c.nick.indexOf(n) >= 0))) continue;
           if (this.skinMap.has(_c.worldID) || this.arbSkinMap.has(_c.worldID)) continue;
-          const _isFree = _c.skin.startsWith('free/') || _c.skin.includes("3rb.io/res/skins/free");
-          const _url = _isFree ? "https://3rb.io/res/skins/free/" + _c.skin.replace(/^free\//, '').replace(/\.png$/, '') + ".png" : this.code2Url(_c.skin);
+          let _skinStr = _c.skin;
+          if (!_skinStr || _skinStr.includes("XXXXXXX")) {
+            if (_c.nick && this.hasSkinInNick(_c.nick)) {
+              _skinStr = this._decSkin(_c.nick);
+              if (!_skinStr || _skinStr.includes("XXXXXXX")) _skinStr = null;
+            }
+          }
+          if (!_skinStr) continue;
+          const _isFree = _skinStr.startsWith('free/') || _skinStr.includes("3rb.io/res/skins/free");
+          const _url = _isFree ? "https://3rb.io/res/skins/free/" + _skinStr.replace(/^free\//, '').replace(/\.png$/, '') + ".png" : this.code2Url(_skinStr);
           (_isFree ? this.arbSkinMap : this.skinMap).set(_c.worldID, _url);
         }
       };
@@ -6106,6 +6122,30 @@
         if (_0x14d4a3.cells2 instanceof Map) for (const [_, _c2] of _0x14d4a3.cells2) if (_c2 && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
       }
       const _selfNicks = [_0x90a1a7.nick, _0x90a1a7.nick2].filter(Boolean);
+      if (_0xpartyNet && _0xpartyNet._sharedSkins) {
+        for (const _sn in _0xpartyNet._sharedSkins) {
+          if (!_sn || _selfNicks.includes(_sn)) continue;
+          const _su = _0xpartyNet._sharedSkins[_sn];
+          if (!_su || _su.includes("XXXXXXX")) continue;
+          const _sfree = _su.startsWith('free/') || _su.includes("3rb.io/res/skins/free");
+          const _surl = _sfree ? "https://3rb.io/res/skins/free/" + _su.replace(/^free\//, '').replace(/\.png$/, '') + ".png" : this.code2Url(_su);
+          const _smap = _sfree || _isArb(_surl) ? this.arbSkinMap : this.skinMap;
+          for (const [_, _c] of _0x14d4a3.cells) {
+            if (_c && !_c.isMine && _c.nick && (_c.nick === _sn || _c.nick.indexOf(_sn) >= 0)) {
+              if (!_smap.has(_c.worldID) && !(_smap === this.arbSkinMap ? this.skinMap : this.arbSkinMap).has(_c.worldID)) {
+                _smap.set(_c.worldID, _surl);
+              }
+            }
+          }
+          for (const [_, _c2] of _0x14d4a3.cells2) {
+            if (_c2 && _c2.nick && (_c2.nick === _sn || _c2.nick.indexOf(_sn) >= 0)) {
+              if (!_smap.has(_c2.worldID) && !(_smap === this.arbSkinMap ? this.skinMap : this.arbSkinMap).has(_c2.worldID)) {
+                _smap.set(_c2.worldID, _surl);
+              }
+            }
+          }
+        }
+      }
       _addForeignSkin(_0x14d4a3.cells, _selfNicks);
       _addForeignSkin(_0x14d4a3.cells2, _selfNicks);
     }
@@ -6182,6 +6222,36 @@
     }
     static ["code2Url"](_0x4e8aaa) {
       return _0x4e8aaa.startsWith("http") ? _0x4e8aaa : "https://i.imgur.com/" + _0x4e8aaa + '.png';
+    }
+    static ["_SKIN_CHARS"]() { return '\u200B\u200C\u200D\u2060\u2061\u2062\u2063\u2064\u206A\u206B\u206C\u206D\u206E\u206F\uFEFF\u180E'; }
+    static ["_SKIN_PREFIX"]() { return '\u200B\u200C\u200D'; }
+    static ["_encSkin"](_0url) {
+      const _c = this._SKIN_CHARS();
+      let _r = this._SKIN_PREFIX();
+      for (let _i = 0; _i < Math.min(_0url.length, 64); _i++) {
+        const _b = _0url.charCodeAt(_i);
+        _r += _c[(_b >> 4) & 15] + _c[_b & 15];
+      }
+      return _r;
+    }
+    static ["_decSkin"](_0str) {
+      const _p = this._SKIN_PREFIX();
+      const _c = this._SKIN_CHARS();
+      const _idx = _0str.indexOf(_p);
+      if (_idx < 0) return null;
+      const _enc = _0str.slice(_idx + _p.length);
+      if (_enc.length < 2) return null;
+      const _bytes = [];
+      for (let _i = 0; _i + 1 < _enc.length; _i += 2) {
+        const _hi = _c.indexOf(_enc[_i]);
+        const _lo = _c.indexOf(_enc[_i + 1]);
+        if (_hi < 0 || _lo < 0) break;
+        _bytes.push((_hi << 4) | _lo);
+      }
+      return new TextDecoder().decode(new Uint8Array(_bytes));
+    }
+    static ["hasSkinInNick"](_0nick) {
+      return _0nick && _0nick.indexOf(this._SKIN_PREFIX()) >= 0;
     }
     static ["commands"]() {
       const _0x5b9c43 = this.ctx;
@@ -6677,19 +6747,6 @@
     },
 
     _sendSkinPacket(skinUrl, nick) {
-      if (!this._inParty || !skinUrl || !nick || skinUrl.includes("XXXXXXX")) return;
-      const _nameEnc = new TextEncoder().encode(nick);
-      const _skinEnc = new TextEncoder().encode(skinUrl);
-      const _buf = new Uint8Array(2 + _nameEnc.length + 1 + _skinEnc.length + 1);
-      let _pos = 0;
-      _buf[_pos++] = 0x55;
-      _buf[_pos++] = 0x03;
-      _buf.set(_nameEnc, _pos); _pos += _nameEnc.length;
-      _buf[_pos++] = 0;
-      _buf.set(_skinEnc, _pos); _pos += _skinEnc.length;
-      _buf[_pos++] = 0;
-      if (this._ws && this._ws.readyState === WebSocket.OPEN) this._ws.send(_buf.buffer);
-      if (_0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) _0x18a8d1.ws2.send(_buf.buffer);
     }
   };
   window.partyCode = function(code) {
