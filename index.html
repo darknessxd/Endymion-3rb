@@ -620,12 +620,15 @@
         .gallery-nav.active-page { background:#e94560; color:#fff; border-color:#e94560; font-weight:bold; }
         .gallery-info { font-size:11px; color:#666; text-align:center; margin-top:4px; }
         #skinGalleryWrap { display:none; }
+        .skin-preview-wrap { width:90px;height:90px;border-radius:50%;background:#484b52;margin:8px auto;position:relative }
+        .skin-preview-wrap:hover { transform:scale(1.05) }
+        .skin-preview { width:76px;height:76px;border-radius:50%;margin:7px;background:#d0d0d0;background-size:cover;box-shadow:inset 0 0 20px #969696;position:absolute }
 
     </style>
     <div id="loading-screen"></div>
     <div id="huds">
         <div id="leaderboard-hud">
-            <div id="leaderboard-head" data="html.leaderboard.title">Multibox V1</div>
+            <div id="leaderboard-head" data="html.leaderboard.title">MultiboxV1</div>
             <div id="leaderboard-positions"></div>
             <div id="leaderboard-chart">
                 <div class="chart-bar red"></div>
@@ -820,6 +823,9 @@
                 <div class="skin-selector six" value="6"></div>
                 <div class="skin-selector seven" value="7"></div>
                 <div class="skin-selector eight" value="8"></div>
+            </div>
+            <div class="skin-preview-wrap">
+                <div class="skin-preview"></div>
             </div>
             <div class="inputs-box">
                 <div style="display:flex;gap:4px;margin-bottom:4px">
