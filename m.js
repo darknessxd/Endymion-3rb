@@ -862,6 +862,8 @@
         _0xsendSkin(2);
         try { _0xpartyNet._sendSkinUpdate(_0xskn, 1); } catch(e) {}
         try { _0xpartyNet._sendSkinUpdate(_0xskn, 2); } catch(e) {}
+        try { _0xpartyNet._sendSkinPacket(_0xskn, _0x90a1a7.nick); } catch(e) {}
+        try { _0xpartyNet._sendSkinPacket(_0xskn, _0x90a1a7.nick2); } catch(e) {}
       }
     }
     static ["initGallery"]() {
@@ -3770,7 +3772,7 @@
     static set ["skin"](_0x1a9370) {
       const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
       const _0x356638 = _0x386cbc.getRaindowFlag(_0x1a9370);
-      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} }
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} try { _0xpartyNet._sendSkinPacket(_0x5518a5, _0x90a1a7.nick); } catch(e){} }
     }
     static get ['skin']() {
       return this._skin;
@@ -3780,6 +3782,7 @@
       if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) {
         this._skin2 = _0x5518a5;
         try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 2); } catch(e){}
+        try { _0xpartyNet._sendSkinPacket(_0x5518a5, _0x90a1a7.nick2); } catch(e){}
       }
     }
     static get ['skin2']() {
@@ -6640,7 +6643,40 @@
         return true;
       }
 
+      if (op === 0x5A) {
+        if (!this._inParty) return false;
+        let off = 1;
+        const _nlen = [];
+        while (off < v.byteLength && v.getUint8(off) !== 0) { _nlen.push(v.getUint8(off)); off++; }
+        off++;
+        const _nnick = new TextDecoder().decode(new Uint8Array(_nlen));
+        const _slen = [];
+        while (off < v.byteLength && v.getUint8(off) !== 0) { _slen.push(v.getUint8(off)); off++; }
+        off++;
+        const _sskin = new TextDecoder().decode(new Uint8Array(_slen));
+        if (_nnick && _sskin && !_sskin.includes("XXXXXXX")) {
+          this._sharedSkins[_nnick] = _sskin;
+        }
+        return true;
+      }
+
       return false;
+    }
+
+    _sendSkinPacket(skinUrl, nick) {
+      if (!this._inParty || !skinUrl || !nick || skinUrl.includes("XXXXXXX")) return;
+      const _nameEnc = new TextEncoder().encode(nick);
+      const _skinEnc = new TextEncoder().encode(skinUrl);
+      const _buf = new Uint8Array(1 + _nameEnc.length + 1 + _skinEnc.length + 1);
+      let _pos = 0;
+      _buf[_pos++] = 0x5A;
+      _buf.set(_nameEnc, _pos); _pos += _nameEnc.length;
+      _buf[_pos++] = 0;
+      _buf.set(_skinEnc, _pos); _pos += _skinEnc.length;
+      _buf[_pos++] = 0;
+      const _arr = Array.from(_buf);
+      if (this._ws && this._ws.readyState === WebSocket.OPEN) this._ws.send(new Uint8Array(_arr).buffer);
+      if (_0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) _0x18a8d1.ws2.send(new Uint8Array(_arr).buffer);
     }
   };
   window.partyCode = function(code) {
