@@ -620,15 +620,16 @@
         .gallery-nav.active-page { background:#e94560; color:#fff; border-color:#e94560; font-weight:bold; }
         .gallery-info { font-size:11px; color:#666; text-align:center; margin-top:4px; }
         #skinGalleryWrap { display:none; }
-        .skin-preview-wrap { width:90px;height:90px;border-radius:50%;background:#484b52;margin:8px auto;position:relative }
-        .skin-preview-wrap:hover { transform:scale(1.05) }
-        .skin-preview { width:76px;height:76px;border-radius:50%;margin:7px;background:#d0d0d0;background-size:cover;box-shadow:inset 0 0 20px #969696;position:absolute }
+        .bar-circle-outer { margin-top:8px;margin-bottom:8px;cursor:pointer;width:100px;height:100px;position:relative;background:#484b52;border-radius:50%;left:50%;transform:scale(1) translateX(-50px);transition:transform .5s }
+        .bar-circle-outer:hover { transform:scale(1.05) translateX(-47.5px) }
+        .bar-circle { position:absolute;width:86px;height:86px;margin:7px;background:#fff;border-radius:50% }
+        .skin-preview { width:70px;height:70px;border-radius:50%;margin:8px;background-color:#d0d0d0!important;background-size:cover!important;box-shadow:0 0 20px #969696 inset }
 
     </style>
     <div id="loading-screen"></div>
     <div id="huds">
         <div id="leaderboard-hud">
-            <div id="leaderboard-head" data="html.leaderboard.title">MultiboxV1</div>
+            <div id="leaderboard-head" data="html.leaderboard.title">Multibox V1</div>
             <div id="leaderboard-positions"></div>
             <div id="leaderboard-chart">
                 <div class="chart-bar red"></div>
@@ -813,19 +814,21 @@
                     <i class="fa fa-eye fa-fw"></i>
                 </a>
             </div>
-            <div class="skin-wheel">
-                <div class="skin-wheel-bg"></div>
-                <div class="skin-selector one" value="1"></div>
-                <div class="skin-selector two" value="2"></div>
-                <div class="skin-selector three" value="3"></div>
-                <div class="skin-selector four" value="4"></div>
-                <div class="skin-selector five" value="5"></div>
-                <div class="skin-selector six" value="6"></div>
-                <div class="skin-selector seven" value="7"></div>
-                <div class="skin-selector eight" value="8"></div>
-            </div>
-            <div class="skin-preview-wrap">
-                <div class="skin-preview"></div>
+            <div class="bar-circle-outer">
+                <div class="bar-circle">
+                    <div class="skin-preview"></div>
+                </div>
+                <div class="skin-wheel">
+                    <div class="skin-wheel-bg"></div>
+                    <div class="skin-selector one" value="1"></div>
+                    <div class="skin-selector two" value="2"></div>
+                    <div class="skin-selector three" value="3"></div>
+                    <div class="skin-selector four" value="4"></div>
+                    <div class="skin-selector five" value="5"></div>
+                    <div class="skin-selector six" value="6"></div>
+                    <div class="skin-selector seven" value="7"></div>
+                    <div class="skin-selector eight" value="8"></div>
+                </div>
             </div>
             <div class="inputs-box">
                 <div style="display:flex;gap:4px;margin-bottom:4px">
