@@ -6661,7 +6661,7 @@
       }
 
       return false;
-    }
+    },
 
     _sendSkinPacket(skinUrl, nick) {
       if (!this._inParty || !skinUrl || !nick || skinUrl.includes("XXXXXXX")) return;
