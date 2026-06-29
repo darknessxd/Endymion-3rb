@@ -869,7 +869,8 @@
     static ["initGallery"]() {
       _0x14f7b2("#galleryToggle").click(function() {
         const _0g = document.getElementById('skinGalleryWrap');
-        if (_0g.style.display === 'block') {
+        const _0v = window.getComputedStyle(_0g).display;
+        if (_0v === 'block') {
           _0g.style.display = 'none';
         } else {
           _0g.style.display = 'block';
@@ -939,6 +940,7 @@
       _0x14f7b2("#arbSkin").val(_0name);
       _0x50f0c6.setarbSkin();
       _0x50f0c6.renderGalleryPage(_0x50f0c6._gPage || 0);
+      document.getElementById('skinGalleryWrap').style.display = 'none';
     }
     static ["setSkin"](_0x10e480) {
       let _0x2716a1 = _0x19d5af.get('profiles', "profile" + this.selected);
@@ -6389,7 +6391,17 @@
       this.time = Date.now();
     }
   }
-  _0x1c478d.onload = () => (_0x14f7b2("#loading-screen").html("<div class=\"ls-title\">3rb.io Multibox</div><div class=\"ls-spinner\"><span id=\"ls-icon\"><i class=\"fa fa-solid fa-circle-notch fa-spin\"></i></span><span style=\"display:block;\" id=\"ls-message\">Loading...</span></div>"), 49 > _0xb45f1b.browserVersion() ? (_0x14f7b2("#ls-icon").html("<i class=\"fa fa-chrome\" aria-hidden=\"true\"></i>"), void _0x14f7b2("#ls-message").text(" Only Chrome version 49 or higher are supported.")) : (_0x59f59a.init(), _0xb45f1b.init(), class {
+  _0x1c478d.onload = () => {
+    var _0xlsCSS = document.createElement('style');
+    _0xlsCSS.textContent = '#loading-screen{z-index:200;position:fixed;left:0;top:0;right:0;bottom:0;background-color:#1a1a2e;opacity:1;background-image:url(https://i.imgur.com/nmBQBiv.jpeg);background-position:bottom;background-size:cover;background-repeat:no-repeat;transition:opacity 1s}#loading-screen .maou-circle-container{width:512px;height:512px;position:fixed;top:calc(50% - 256px);left:calc(50% - 256px);transform:scale(1);transition:all .75s}#loading-screen .maou-circle-container:hover{transform:scale(1.1)}#loading-screen .maou-circle-container .maou-circle{width:512px;height:512px;position:absolute}#loading-screen .maou-circle-container .maou-circle.p1{background:url(https://i.imgur.com/wfSDaIH.png);animation:spinRight 32s linear infinite,fadeIn 6s}#loading-screen .maou-circle-container .maou-circle.p2{background:url(https://i.imgur.com/blWRiUv.png);animation:spinLeft 20s linear infinite,fadeIn 6s}#loading-screen .maou-circle-container .maou-circle.p3{background:url(https://i.imgur.com/GRjA1gJ.png);animation:spinRight 16s linear infinite,fadeIn 6s}#loading-screen .message{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);font-family:raleway;font-size:25px;color:#fff;text-align:center;animation:fadeIn 1s;opacity:1;transition:opacity 1s}@keyframes spinRight{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes spinLeft{0%{transform:rotate(0)}100%{transform:rotate(-360deg)}}@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}';
+    document.head.appendChild(_0xlsCSS);
+    _0x14f7b2("#loading-screen").html('<div class="maou-circle-container"><div class="maou-circle p1"></div><div class="maou-circle p2"></div><div class="maou-circle p3"></div></div><div class="message">Loading...</div>');
+    if (49 > _0xb45f1b.browserVersion()) {
+      _0x14f7b2("#loading-screen .message").text(" Only Chrome version 49 or higher are supported.");
+    } else {
+      _0x59f59a.init();
+      _0xb45f1b.init();
+      (class {
     static ["init"]() {
       this.apiUrl = '';
       this.codeChecked = false;
@@ -6426,7 +6438,9 @@
     static ["getApiUrl"]() {
       return window.atob(window.atob(window.atob(this.apiUrl)));
     }
-  }.init()));
+    }).init();
+    }
+  };
   const _0xpartyNet = {
     _ws: null,
     _ws2: null,
