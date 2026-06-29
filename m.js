@@ -2742,6 +2742,11 @@
       const _0x3fd098 = _0x9dd250.getHours() + ':' + _0x9dd250.getMinutes();
       this.chatroomdiv.append("<div class=\"chatroom-row\"><span class=\"chattime\">" + _0x3fd098 + "</span> " + _0x5d23c7 + " <span class=\"nick\">" + _0x577c0f + "</span> <span class=\"message\">" + this.putEmojis(this.cleanMessage(_0x3e358a)) + "</span></div>");
       this.chatroomdiv.scrollTop(this.chatroomdiv[0].scrollHeight);
+      this.chatroomdiv.addClass('chat-active');
+      clearTimeout(this._chatTimer);
+      this._chatTimer = setTimeout(() => {
+        _0x14f7b2('#chatroom').removeClass('chat-active');
+      }, 10000);
     }
   }
   class _0xa916b {
