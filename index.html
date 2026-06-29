@@ -624,6 +624,74 @@
         .bar-circle { position:absolute;width:86px;height:86px;margin:7px;background:#fff;border-radius:50% }
         .skin-preview { width:70px;height:70px;border-radius:50%;margin:8px;background-color:#d0d0d0!important;background-size:cover!important;box-shadow:0 0 20px #969696 inset }
 
+        #chatroom {
+            background: linear-gradient(180deg, rgba(20,20,35,0.55) 0%, rgba(15,15,30,0.85) 100%);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 6px 6px 0 0;
+            scroll-behavior: smooth;
+        }
+        #chatroom::-webkit-scrollbar { width: 4px; }
+        #chatroom::-webkit-scrollbar-track { background: transparent; }
+        #chatroom::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+        #chatroom::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+        .chatroom-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+            padding: 4px 8px;
+            margin: 2px 6px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.4;
+            word-break: break-word;
+            transition: background 0.2s;
+        }
+        .chatroom-row:hover { background: rgba(255,255,255,0.1); }
+        .chatroom-row .chattime {
+            color: rgba(255,255,255,0.3);
+            font-size: 10px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .chatroom-row .nick {
+            color: #8ab4f8;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        .chatroom-row .message {
+            color: rgba(255,255,255,0.85);
+            flex: 1;
+        }
+        #message-hud {
+            background: linear-gradient(180deg, rgba(20,20,35,0.7) 0%, rgba(15,15,30,0.9) 100%);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        }
+        #message {
+            background: rgba(255,255,255,0.08) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            border-radius: 6px !important;
+            color: #eee !important;
+            padding: 6px 10px !important;
+            font-size: 13px !important;
+            outline: none !important;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        #message:focus {
+            border-color: rgba(138,180,248,0.5) !important;
+            box-shadow: 0 0 8px rgba(138,180,248,0.15) !important;
+        }
+        #message::placeholder { color: rgba(255,255,255,0.3); }
+        #emojiContainer img {
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        #emojiContainer img:hover { transform: scale(1.25); }
     </style>
     <div id="loading-screen"></div>
     <div id="huds">
