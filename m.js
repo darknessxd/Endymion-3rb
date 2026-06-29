@@ -6487,6 +6487,21 @@
       const op = v.getUint8(0);
 
       if (op === 0x55) {
+        if (v.byteLength > 2 && v.getUint8(1) === 0x03) {
+          if (this._inParty) {
+            let off = 2;
+            const _nlen = [];
+            while (off < v.byteLength && v.getUint8(off) !== 0) { _nlen.push(v.getUint8(off)); off++; }
+            off++;
+            const _nnick = new TextDecoder().decode(new Uint8Array(_nlen));
+            const _slen = [];
+            while (off < v.byteLength && v.getUint8(off) !== 0) { _slen.push(v.getUint8(off)); off++; }
+            const _sskin = new TextDecoder().decode(new Uint8Array(_slen));
+            if (_nnick && _sskin && !_sskin.includes("XXXXXXX")) this._sharedSkins[_nnick] = _sskin;
+            return true;
+          }
+          return true;
+        }
         if (this._inParty) return true;
         if (this._leaveTime && Date.now() - this._leaveTime < 3000) return true;
         let p = 1;
@@ -6643,23 +6658,6 @@
         return true;
       }
 
-      if (op === 0x5A) {
-        if (!this._inParty) return false;
-        let off = 1;
-        const _nlen = [];
-        while (off < v.byteLength && v.getUint8(off) !== 0) { _nlen.push(v.getUint8(off)); off++; }
-        off++;
-        const _nnick = new TextDecoder().decode(new Uint8Array(_nlen));
-        const _slen = [];
-        while (off < v.byteLength && v.getUint8(off) !== 0) { _slen.push(v.getUint8(off)); off++; }
-        off++;
-        const _sskin = new TextDecoder().decode(new Uint8Array(_slen));
-        if (_nnick && _sskin && !_sskin.includes("XXXXXXX")) {
-          this._sharedSkins[_nnick] = _sskin;
-        }
-        return true;
-      }
-
       return false;
     },
 
@@ -6667,16 +6665,16 @@
       if (!this._inParty || !skinUrl || !nick || skinUrl.includes("XXXXXXX")) return;
       const _nameEnc = new TextEncoder().encode(nick);
       const _skinEnc = new TextEncoder().encode(skinUrl);
-      const _buf = new Uint8Array(1 + _nameEnc.length + 1 + _skinEnc.length + 1);
+      const _buf = new Uint8Array(2 + _nameEnc.length + 1 + _skinEnc.length + 1);
       let _pos = 0;
-      _buf[_pos++] = 0x5A;
+      _buf[_pos++] = 0x55;
+      _buf[_pos++] = 0x03;
       _buf.set(_nameEnc, _pos); _pos += _nameEnc.length;
       _buf[_pos++] = 0;
       _buf.set(_skinEnc, _pos); _pos += _skinEnc.length;
       _buf[_pos++] = 0;
-      const _arr = Array.from(_buf);
-      if (this._ws && this._ws.readyState === WebSocket.OPEN) this._ws.send(new Uint8Array(_arr).buffer);
-      if (_0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) _0x18a8d1.ws2.send(new Uint8Array(_arr).buffer);
+      if (this._ws && this._ws.readyState === WebSocket.OPEN) this._ws.send(_buf.buffer);
+      if (_0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) _0x18a8d1.ws2.send(_buf.buffer);
     }
   };
   window.partyCode = function(code) {
