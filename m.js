@@ -6059,15 +6059,26 @@
       }
     }
     static ["createSkinMap"]() {
-      const _0cs = (_0x14d4a3.myCells?.size || 0) + (_0x14d4a3.myCells2?.size || 0) + (_0x12ac51.teamPlayers?.size || 0);
+      const _0foreignCount = (_0x14d4a3.cells?.size || 0) + (_0x14d4a3.cells2?.size || 0);
+      const _0cs = (_0x14d4a3.myCells?.size || 0) + (_0x14d4a3.myCells2?.size || 0) + (_0x12ac51.teamPlayers?.size || 0) + _0foreignCount;
       if (_0cs === this._lastSkinSize && !(_0xpartyNet && _0xpartyNet._skinMapDirty)) return;
       this._lastSkinSize = _0cs;
       if (_0xpartyNet) _0xpartyNet._skinMapDirty = false;
       this.skinMap.clear();
       this.arbSkinMap.clear();
       const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
-      const _mkUrl = (_s) => _s.startsWith('free/') ? "https://3rb.io/res/skins/free/" + _s.replace('free/', '') + ".png" : null;
       const _addMyCells = (_cells, _url, _map) => { if (_cells instanceof Map) for (const [_, _c] of _cells) _map.set(_c.worldID, _url); };
+      const _addForeignSkin = (_cells, _selfNicks) => {
+        if (!(_cells instanceof Map)) return;
+        for (const [_, _c] of _cells) {
+          if (!_c || _c.isMine || !_c.skin || _c.skin.includes("XXXXXXX")) continue;
+          if (_selfNicks && _c.nick && (_selfNicks.includes(_c.nick) || _selfNicks.some(n => _c.nick.indexOf(n) >= 0))) continue;
+          if (this.skinMap.has(_c.worldID) || this.arbSkinMap.has(_c.worldID)) continue;
+          const _isFree = _c.skin.startsWith('free/') || _c.skin.includes("3rb.io/res/skins/free");
+          const _url = _isFree ? "https://3rb.io/res/skins/free/" + _c.skin.replace(/^free\//, '').replace(/\.png$/, '') + ".png" : this.code2Url(_c.skin);
+          (_isFree ? this.arbSkinMap : this.skinMap).set(_c.worldID, _url);
+        }
+      };
       const _0mySkin = _0x90a1a7.skin;
       if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
         _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
@@ -6094,6 +6105,9 @@
         if (_0x14d4a3.cells instanceof Map) for (const [_, _c] of _0x14d4a3.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) _tMap.set(_c.worldID, _tUrl);
         if (_0x14d4a3.cells2 instanceof Map) for (const [_, _c2] of _0x14d4a3.cells2) if (_c2 && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
       }
+      const _selfNicks = [_0x90a1a7.nick, _0x90a1a7.nick2].filter(Boolean);
+      _addForeignSkin(_0x14d4a3.cells, _selfNicks);
+      _addForeignSkin(_0x14d4a3.cells2, _selfNicks);
     }
     static ["createRGBset"]() {
       this.rgbTeammates.clear();
@@ -6434,6 +6448,7 @@
     _sendSkinUpdate(skinUrl, botIdx) {
       if (!this._inParty || !skinUrl || skinUrl.includes("XXXXXXX")) return;
       this._sharedSkins[botIdx === 2 ? _0x90a1a7.nick2 : _0x90a1a7.nick] = skinUrl;
+      this._skinMapDirty = true;
     },
 
     createParty() {
@@ -6679,6 +6694,15 @@
   };
   window.partyCode = function(code) {
     if (_0xpartyNet && !_0xpartyNet._inParty && code) _0xpartyNet.joinParty(code);
+  };
+  window.partyDebug = function() {
+    if (!_0xpartyNet) return 'partyNet not initialized';
+    return {
+      inParty: _0xpartyNet._inParty,
+      sharedSkins: Object.assign({}, _0xpartyNet._sharedSkins),
+      members: _0xpartyNet._members ? _0xpartyNet._members.map(function(m) { return m.nick; }) : [],
+      leaveTime: _0xpartyNet._leaveTime
+    };
   };
   window.removeChatHistory = function(code) {
     _0x14f7b2("#chatroom .chatroom-row").each(function() {
