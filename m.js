@@ -867,7 +867,8 @@
       }
     }
     static ["initGallery"]() {
-      _0x14f7b2("#galleryToggle").click(function() {
+      _0x14f7b2("#galleryToggle").click(function(_0e) {
+        _0e.stopPropagation();
         const _0g = document.getElementById('skinGalleryWrap');
         const _0v = window.getComputedStyle(_0g).display;
         if (_0v === 'block') {
@@ -875,6 +876,12 @@
         } else {
           _0g.style.display = 'block';
           _0x50f0c6.loadSkinGallery();
+        }
+      });
+      document.addEventListener('click', function(_0e) {
+        const _0g = document.getElementById('skinGalleryWrap');
+        if (_0g.style.display === 'block' && !_0e.target.closest('#skinGalleryWrap') && _0e.target.id !== 'galleryToggle') {
+          _0g.style.display = 'none';
         }
       });
     }
