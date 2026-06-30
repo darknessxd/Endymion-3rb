@@ -1,1 +1,6835 @@
-!function(t,e,i){const s=function(){let t=!0;return function(e,i){const s=t?function(){if(i){const t=i.apply(e,arguments);return i=null,t}}:function(){};return t=!1,s}}();s(this,function(){const t=function(){let t;try{t=Function('return (function() {}.constructor("return this")( ));')()}catch(e){t=window}return t}(),e=t.console=t.console||{},i=["log","warn","info","error","exception","table","trace"];for(let t=0;t<i.length;t++){const o=s.constructor.prototype.bind(s),a=i[t],n=e[a]||o;o.__proto__=s.bind(s),o.toString=n.toString.bind(n),e[a]=o}})();class o{static init(){this.prefix="MX-",this.oldPrefix="MX-",this.reset()}static get(t,e){const i=JSON.parse(localStorage.getItem(this.prefix+t));return null!==i&&void 0!==i[e]&&i[e]}static set(t,e,i){let s=JSON.parse(localStorage.getItem(this.prefix+t));null===s&&(s={}),s[e]=i,localStorage.setItem(this.prefix+t,JSON.stringify(s))}static reset(){if(!this.get("extras","resetted")){for(const t in localStorage)t.substring(0,5)===this.oldPrefix&&localStorage.removeItem(t);this.set("extras","resetted",!0)}}}class a{constructor(e){this.event=e,this.maxFps=30,this.lastFrameTime=0,t.requestAnimationFrame(t=>{this.run(t)})}run(e){t.requestAnimationFrame(t=>{this.run(t)}),this.updateRafTime(e),this.event()}updateRafTime(t){const e=t-this.lastFrameTime;this.lastFrameTime=t,.05>Math.abs(33.333333333333336-e)?this.maxFps=30:.05>Math.abs(16.666666666666668-e)?this.maxFps=60:.05>Math.abs(13.333333333333334-e)?this.maxFps=75:.05>Math.abs(10-e)?this.maxFps=100:.05>Math.abs(8.333333333333334-e)?this.maxFps=120:.05>Math.abs(6.944444444444445-e)&&(this.maxFps=144)}get rafLoopTime(){return 1e3/this.maxFps}}class n{static init(){this.default="EN",this.supported=["EN","JA","ZH","KO","ES"]}static change(){const t=e("[data]");for(let i=0;i<t.length;i++)this.update(e(t[i]))}static update(e){const i=e.attr("data").split(".");let s=t["lang_"+this.selected]||t.lang_EN;const o=i[0],a=i[1],n=i[2];s[a]&&s[a][n]||(s=t["lang_"+this.default]),"html"===o?e.html(s[a][n]):"placeholder"===o&&e.attr(o,s[a][n])}static get selected(){return l.language}static get current(){return t["lang_"+this.selected]}static get browser(){const e=t.navigator.language.toUpperCase(),i=e.indexOf("-")?e.split("-")[0]:e;return 0<=this.supported.indexOf(i)?i:this.default}}const r={mainMenu:{btn_settings:"Settings",btn_play:"Play",btn_spectate:"Spectate",btn_inputs:"Inputs",btn_theme:"Theme",input_tag1:"Tag",input_tag2:"Tag 2",input_nick:"Nick",input_3rbSkin:"3rb.io Skin",input_skinUrl:"Skin URL (imgur)",select_ffa:"FFA",select_party:"Party",select_teams:"Teams",select_experimental:"Experimental",input_token:"Party token",btn_join:"Join",btn_create:"Create"},notif:{cantPlay2Tag:"You can't play in double tag mode.",MXNetConn:"Connected to Networks.",MXNetDisconn:"Disconnected from networks.",invalidSkinUrl:"Invalid skin URL",login_lastSession:"Logged in from last session data.",sdk_error:"SDK not loaded",alreadyLoggedIn:"Already logged in.",login_success:"Logged in",login_error:"Login error!",logout:"Logged out",nickChangeInGame:"You can't change nick while in game.",targeting_on:"Click a cell to begin targeting it. See instructions in mouse settings menu.",targeting_off:"Targeting is turned off. Turn it on in settings menu in order to use it.",target_unnamed:"Cannot target unnamed cells.",MXSkin_noAcc:"Account does not exist."},leaderboard:{title:"Multibox"},huds:{enterChatMsg:"Enter chat message...",teamlist_title:"Team Players",score:"Score",num1position:"#1 position",paused:"Paused",targeting_bigCellVp:"BIGGEST CELL VIEWPORT",targeting_followVp:"VIEWPORT FOLLOWING MOUSE",targeting_totalMass:"TOTAL MASS",targeting_players:"TARGETING PLAYERS"},settingMenu:{language:"Language",CellAnimation:"Animation delay",zoomSpeed:"Zoom speed",cameraSpeed:"Camera speed [2 default]",eatAnimation:"Cell eat [sucking] animation",autoZoom:"Auto zoom",cellTextAnimation:"Cell text animation",autoHideText:"Auto hide text",hideOwnNick:"Hide own nick",hideOwnMass:"Hide own mass",cellNick:"Cell nick",cellMass:"Cell mass",nickShadow:"Nick shadow",massShadow:"Mass shadow",urlSkins:"URL skins",arbSkins:"3rb.io skins",food:"Food",vanillaGrid:"Vanilla grid",bgSectors:"Background sectors",cursorLine:"Cursor lines",opponentRings:"Opponent rings",splitRings:"Split rings",virusRange:"Viruses range",teamIndicator:"Teammate indicator",commander:"Commander",chatType:"Chat type",virusMass:"Virus mass",showMassInLB:"Show mass in leaderboard",cellLuminous:"Cell Luminous",multiboxShield:"Multibox Shield",grayscaleInactive:"Grayscale Inactive",antiAliasing:"Anti-aliasing",virusRing:"Virus Ring",foodGlow:"Food Glow",targeting:"Cell Targeting [Spectate mode]",opt_on:"On",opt_off:"Off",opt_stepped:"Stepped",opt_linear:"Linear",opt_shortened:"Shortened",opt_full:"Full",opt_nick:"Nick",opt_mass:"Mass",opt_both:"Nick + Mass",opt_perf:"Performance",opt_normal:"Normal",opt_urlSkin:"Url skins",opt_MXSkin:"3rb.io skins",opt_allSkin:"All skins",opt_singleClr:"Mono colored",opt_rainbow:"Rainbow",opt_onlyLines:"Only lines",opt_snowflakes:"Snowflakes",opt_chatroom:"Chatroom",opt_popup:"Pop up chat",opt_fill:"Fill",opt_text:"Text"},hkMenu:{title:"Hotkeys",toggleMenuKey:"Toggle main menu",feedKey:"Feed",macroFeedKey:"Macro feed",splitKey:"Split",doubleSplitKey:"Double split",split16Key:"Split 64",stopKey:"Stop cell movement",chatKey:"Toggle chat",privateChatKey:"Toggle private chat",freeSpectateKey:"Toggle spectate mode",toggleSplitRings:"Toggle split rings",toggleOpponentRings:"Toggle opponent rings",toggleNick:"Toggle cell nick",toggleMass:"Toggle cell mass",toggleSkin:"Toggle skin",toggleCustomSkin:"Toggle Custom Skin",toggleFood:"Toggle food",toggleMaouCircle:"Toggle Maou circle",respawnKey:"Quick respawn",multiboxTab:"Multibox switch",command0Key:"Command 0",command1Key:"Command 1",command2Key:"Command 2",command3Key:"Command 3",command4Key:"Command 4",command5Key:"Command 5",command6Key:"Command 6",command7Key:"Command 7",command8Key:"Command 8",command9Key:"Command 9",zoom1key:"Zoom level 1",zoom2key:"Zoom level 2",zoom3key:"Zoom level 3",zoom4key:"Zoom level 4",zoom5key:"Zoom level 5"},mouseMenu:{title:"Mouse",feed:"Feed",macroFeed:"Macro feed",split:"Split",doubleSplit:"Double split",split16:"Split 64",commander:"Commander",off:"Off",lmb:"Left click",rmb:"Right click",scroll:"Middle click",targeting_h1:"Targeting",targeting_txt1:"Lock target 1",targeting_txt2:"Lock target 2",targeting_txt3:"Middle click or Toggle spectate key",targeting_txt4:"Toggle top cell mode to follow mouse mode",targeting_txt5:"Toggle targeting mode to follow mouse mode",targeting_txt6:"Toggle follow mouse mode to top cell mode"},commandsMenu:{title:"Commands",command0:"Fuck!",command1:"Feed Me!",command2:"Split into me!",command3:"Need backup at %sector%!",command4:"Enemy spotted at %sector%!",command5:"Need a teammate!",command6:"Tank the virus!",command7:"Eat the virus!",command8:"Let's bait!",command9:"Fake tricksplit!"},themeMenu:{selectedPreset:"Theme preset",cursor:"Cursor",lbSize:"Leaderboard size",chatFontSize:"Chat font size",minimapSize:"Minimap size",skinBorder:"Skin border",rainbowBorder:"Rainbow border",virusGlow:"Virus glow",virusGlowDistance:"Virus glow distance",virusGlowColor:"Virus glow color",foodGlow:"Food glow",maouCircle:"Maou circle",cellTransparency:"Cell transparency",lightenCellColor:"Lighten cell color",borderColor:"Border color",borderWidth:"Border width",gridColor:"Grid color",gridTextColor:"Grid text color",gridTextSize:"Grid text size",gridTextFont:"Grid text font",gridWidth:"Grid width",nickColor:"Nick color",nickStrokeColor:"Nick stroke color",cellNickSize:"Nick size",nickFont:"Nick font",massColor:"Mass color",massStrokeColor:"Mass stroke color",cellMassSize:"Mass size",massFont:"Mass font",foodColor:"Food color",foodSize:"Food size",virusColor:"Virus color",virusBorderColor:"Virus border color",virusBorderWidth:"virus border width",virusDecor:"Virus Decoration",backgroundColor:"Background color",commanderColor:"Commander color",commanderImageUrl:"Commander image URL",indicatorSize:"Teammate indicator size",team1color:"Team 1 color [Double Tag Mode]",team2color:"Team 2 color [Double Tag Mode]",borderOpacity:"Border Opacity",borderGlowSize:"Border glow size",borderGlowStrength:"Border glow strength",borderGlowColor:"Border glow color",cursorLineColor:"Cursor Line Color",leaderboardTitleColor:"Leaderboard title color",customLeaderboardHead:"Custom Leaderboard Head",globalRotationSpeed:"Global Rotation Speed",maouCircleUrl:"Maou Circle Skin URL",multiboxShieldUrl:"Multibox Shield URL",virusGlowSize:"Virus glow size",virusGlowStrength:"Virus glow strength",virusRingWidth:"Virus Ring Width",virusRingColor:"Virus Ring Color",virusGearColor:"Virus Gear Color",foodGlowSize:"Food Glow Size",foodGlowStrength:"Food Glow Strength",foodGlowColor:"Food Glow Color",ghostColor:"Ghost cell color [minimap]",selfColor:"Self cell color [minimap]",selfViewportColor:"Self viewport color [minimap]",selfViewportAlpha:"Self viewport alpha",topViewportColor:"Top viewport color [minimap]",topViewportAlpha:"Top viewport alpha",teammateColor:"Teammate cells color [minimap]",teammateNameColor:"Teammate name color [minimap]",backgroundImage:"Background Image URL",on:"On",off:"Off"}};t.lang_EN=r;class l{static init(){this.isOpened=!1,this.div=e("#settings"),this.language=o.get("settings","language")||n.browser,this.CellAnimation=~~o.get("settings","CellAnimation")||140,this.eatAnimation=o.get("settings","eatAnimation")||"on",this.zoomSpeed=~~o.get("settings","zoomSpeed")||92,this.cameraSpeed=~~o.get("settings","cameraSpeed")||2,this.autoZoom=o.get("settings","autoZoom")||"off",this.cellTextAnimation=o.get("settings","cellTextAnimation")||"on",this.autoHideText=o.get("settings","autoHideText")||"on",this.cellNick=o.get("settings","cellNick")||"on",this.nickShadow=o.get("settings","nickShadow")||"off",this.cellMass=o.get("settings","cellMass")||"shortened",this.massShadow=o.get("settings","massShadow")||"off",this.hideOwnNick=o.get("settings","hideOwnNick")||"on",this.hideOwnMass=o.get("settings","hideOwnMass")||"off",this.urlSkins=o.get("settings","urlSkins")||"on",this.arbSkins=o.get("settings","arbSkins")||"on",this.food=o.get("settings","food")||"monoColored",this.bgSectors=o.get("settings","bgSectors")||"normal",this.vanillaGrid=o.get("settings","vanillaGrid")||"off",this.cursorLine=o.get("settings","cursorLine")||"off",this.teamIndicator=o.get("settings","teamIndicator")||"on",this.opponentRings=o.get("settings","opponentRings")||"off",this.splitRings=o.get("settings","splitRings")||"off",this.virusRange=o.get("settings","virusRange")||"off",this.multiboxRing=o.get("settings","multiboxRing")||"on",this.multiboxCellColor=o.get("settings","multiboxCellColor")||"on",this.commander=o.get("settings","commander")||"on",this.targeting=o.get("settings","targeting")||"off",this.chatType=o.get("settings","chatType")||"popup",this.multiboxMode=o.get("settings","multiboxMode")||"on",this.virusMass=o.get("settings","virusMass")||"off",this.showMassInLB=o.get("settings","showMassInLB")||"off",this.cellShadow=o.get("settings","cellShadow")||"off",this.cellGradient=o.get("settings","cellGradient")||"off",this.cellLuminous=o.get("settings","cellLuminous")||"off",this.multiboxShield=o.get("settings","multiboxShield")||"off",this.grayscaleInactive=o.get("settings","grayscaleInactive")||"off",this.antiAliasing=o.get("settings","antiAliasing")||"on",this.virusRing=o.get("settings","virusRing")||"off",this.foodGlow=o.get("settings","foodGlow")||"off",this.setDomValues(),this.addEvents()}static setDomValues(){e(".settings-options").each(function(){const t=e(this).attr("type");"range"===t?l.handleRange(this,2):"options"===t&&l.handleOptions(this,2)}),this.toggleChatroom(),this.changeLanguage()}static addEvents(){e(".settings-container").perfectScrollbar(),e(".settings-container .fa-chevron-left").each(function(){e(this).click(()=>{const t=e(this).parent(),i=e(t).attr("type");"options"===i?l.handleOptions(t,0):"range"===i&&l.handleRange(t,0)})}),e(".settings-container span.outer").each(function(){e(this).click(t=>{const i=e(this).parent();l.handleRange(i,3,t.offsetX)})}),e(".settings-container .fa-chevron-right").each(function(){e(this).click(()=>{const t=e(this).parent(),i=e(t).attr("type");"options"===i?l.handleOptions(t,1):"range"===i&&l.handleRange(t,1)})}),e(".settings-close").click(()=>this.close())}static toggle(){this.isOpened?this.close():this.open()}static close(){this.isOpened=!1,this.div.fadeOut(250)}static open(){this.isOpened=!0,this.div.fadeIn(250)}static handleOptions(t,i){const s=e(t).attr("name"),o=e(t).find("b"),a=o.length;let n=a,r=0;for(;n--;){let t=o[n];"active"===e(t).attr("class")&&(r=n)}if(1===i){const t=r+1<a?r+1:0;e(o[r]).removeAttr("class"),e(o[t]).attr("class","active");const i=e(o[t]).attr("value");this.saveSettings(s,i)}else if(0===i){const t=0<r?r-1:a-1;e(o[r]).removeAttr("class"),e(o[t]).attr("class","active");const i=e(o[t]).attr("value");this.saveSettings(s,i)}else if(2===i){let t;e(o[r]).removeAttr("class");for(let i=a;i--;)if(t=o[i],e(t).attr("value")===this[s]){e(t).attr("class","active");break}}}static handleRange(t,i,s=0){const o=e(t).attr("name"),a=e(t).find("span"),n=a[0],r=a[1],l=e(a[2]),c=~~e(n).attr("min"),h=~~e(n).attr("max"),d=~~e(n).attr("step"),m=~~e(n).attr("value");if(1===i&&m+d<=h){const t=d+m;e(n).attr("value",t),e(r).css("width",~~(100*(t-c)/(h-c))+"px"),l.text("["+t+"]"),this.saveSettings(o,~~t)}else if(0===i&&m-d>=c){const t=m-d;e(n).attr("value",t),e(r).css("width",~~(100*(t-c)/(h-c))+"px"),l.text("["+t+"]"),this.saveSettings(o,~~t)}else if(2===i){const t=this[o];e(n).attr("value",t),e(r).css("width",~~(100*(t-c)/(h-c))+"px"),l.text("["+t+"]")}else if(3===i){let t=0|s/100*(h-c);t=(0|t/d)*d;const i=100*((t+=c)-c)/(h-c);e(n).attr("value",t),e(r).css("width",~~i+"px"),l.text("["+t+"]"),this.saveSettings(o,~~t)}}static saveSettings(t,e){this[t]=e,"multiboxMode"===t&&k.alert("Multibox","Please rejoin the server!"),"chatType"===t&&this.toggleChatroom(),"language"===t&&this.changeLanguage(),"nickShadow"===t&&X.nickCaches.clear(),"massShadow"===t&&X.massCaches.clear(),o.set("settings",t,e),"custom"!==u.selectedPreset&&(u.selectedPreset="custom",o.set("theme","selectedPreset","custom"),u.setDomValues())}static changeLanguage(){n.change(),g.refresh()}static toggleChatroom(){"chatroom"===this.chatType?e("#chatroom").show():e("#chatroom").hide()}}class c{static init(){this.isOpened=!1,this.target="hotkeys",this.div=e("#inputs"),this.addEvents(),p.init(),h.initGallery(),d.init(),m.init(),g.init()}static toggle(){this.isOpened?this.close():this.open()}static close(){this.isOpened=!1,this.div.fadeOut(250)}static open(){this.isOpened=!0,this.div.fadeIn(250)}static addEvents(){e(".inputs-tab").each(function(){e(this).click(()=>{const t=e(this).attr("target");"#hotkeys"===t?(e("#hotkeys").addClass("active"),e("#commands").removeClass("active"),e("#mouse").removeClass("active"),e('.inputs-tab[target="#hotkeys"]').addClass("active"),e('.inputs-tab[target="#mouse"]').removeClass("active"),e('.inputs-tab[target="#commands"]').removeClass("active"),c.target="hotkeys"):"#mouse"===t?(e("#mouse").addClass("active"),e("#hotkeys").removeClass("active"),e("#commands").removeClass("active"),e('.inputs-tab[target="#hotkeys"]').removeClass("active"),e('.inputs-tab[target="#commands"]').removeClass("active"),e('.inputs-tab[target="#mouse"]').addClass("active"),c.target="mouse"):"#commands"===t&&(e("#commands").addClass("active"),e("#hotkeys").removeClass("active"),e("#mouse").removeClass("active"),e('.inputs-tab[target="#commands"]').addClass("active"),e('.inputs-tab[target="#hotkeys"]').removeClass("active"),e('.inputs-tab[target="#mouse"]').removeClass("active"),c.target="commands")})}),e(".inputs-tab.close").click(()=>{this.close()})}}class h{static init(){this.selected=~~o.get("profiles","selected")||1,this.wheelIsOpened=!1,this.tag=o.get("profiles","tag")||"",this.arbSkin=o.get("profiles","arbSkin")||"",this.setDomValues(),this.addEvents()}static setDomValues(){let t=o.get("profiles","profile"+this.selected);const i={nick:"profile "+this.selected,skin:"https://i.imgur.com/nRqSis7.png",arbSkin:"",nick2:"",skin2:""};t||(t=i),o.set("profiles","profile"+this.selected,t),e("#nick").val(t.nick),e("#nick2").val(t.nick2||""),e("#skin").val(t.skin),e("#skin2").val(t.skin2||""),e("#tag").val(this.tag),e("#arbSkin").val(t.arbSkin),_.arbSkin=t.arbSkin||"",this.updateMainSkin();for(let t=8;0<t;)this.updatePreviewSkin(t),t--}static addEvents(){e(".bar-circle-outer").click(()=>{if(this.wheelIsOpened)return e(".skin-wheel").fadeOut(250),this.wheelIsOpened=!1;e(".skin-wheel").fadeIn(250),this.wheelIsOpened=!0}),e(".skin-selector").each(function(){e(this).click(()=>{const t=~~e(this).attr("value");h.switch(t),e(".skin-wheel").fadeOut(250)})}),e(".menu-blur").click(()=>{this.wheelIsOpened&&(e(".skin-wheel").fadeOut(250),this.wheelIsOpened=!1)}),e("#tag").blur(()=>{this.setTag(e("#tag").val()),j.spectator(!0)}),e("#tag2").blur(()=>{this.setTag(e("#tag").val()),j.spectator(!0)}),e("#nick").blur(()=>{this.setNick(e("#nick").val())}),e("#arbSkin").blur(()=>{this.setarbSkin()}),e("#skin").blur(()=>{let t=e("#skin").val();if(t){if(!H.code2Url(H.getImgurCode(t||"")).includes("XXXXXXX"))return this.setSkin(t);this.setarbSkin()}else _._skin="XXXXXXX",this.setarbSkin()}),e("#nick2").blur(()=>{let t=o.get("profiles","profile"+this.selected);t||(t={}),t.nick2=e("#nick2").val(),o.set("profiles","profile"+this.selected,t),_.nick2=t.nick2||""}),e("#skin2").blur(()=>{let t=o.get("profiles","profile"+this.selected);t||(t={}),t.skin2=e("#skin2").val(),o.set("profiles","profile"+this.selected,t),_.skin2=e("#skin2").val()})}static switch(t){this.selected=~~t,o.set("profiles","selected",t);let i=o.get("profiles","profile"+t);const s={nick:"profile "+this.selected,skin:"https://i.imgur.com/nRqSis7.png",arbSkin:"",nick2:"",skin2:""};i||(i=s),e("#nick").val(i.nick),e("#nick2").val(i.nick2||""),e("#skin").val(i.skin),e("#skin2").val(i.skin2||""),e("#arbSkin").val(i.arbSkin),_.nick=""===i.nick?"Unnamed Cell":i.nick,_.nick2=i.nick2||"",_._skin=i.arbSkin?"":i.skin,_._skin2=i.skin2||"",_._arbSkin=i.arbSkin||"",o.set("profiles","profile"+this.selected,i),this.updateMainSkin()}static setNick(t){_.isAlive&&(e("#nick").val(_.nick),k.alert("Multibox",n.current.notif.nickChangeInGame));let i=o.get("profiles","profile"+this.selected);const s={nick:"profile "+this.selected,skin:"https://i.imgur.com/nRqSis7.png",arbSkin:"",nick2:"",skin2:""};i||(i=s),i.nick=t,o.set("profiles","profile"+this.selected,i),_.nick=""===t?"Unnamed Cell":t}static setarbSkin(){var t=e("#arbSkin").val();_._skin="",_._skin2="",_.arbSkin=t,_.arbSkin2=t;const i=o.get("profiles","profile"+this.selected)||{};if(i.arbSkin=t,i.nick2=i.nick2||"",i.skin2=i.skin2||"",o.set("profiles","profile"+this.selected,i),this.updateMainSkin("https://3rb.io/res/skins/free/"+t.replace(/free\/|.png/g,"")+".png"),this.updatePreviewSkin(this.selected),t){const e="free/"+t.replace(/free\/|.png/g,""),i=t=>{try{const i=B.createView(2+e.length);i.setUint8(0,4,!0);for(let t=0;t<e.length;t++)i.setUint8(t+1,e.charCodeAt(t),!0);i.setUint8(e.length+1,0,!0),B.sendPacket(i,t)}catch(t){}};i(1),i(2);try{Z._sendSkinUpdate(e,1)}catch(t){}try{Z._sendSkinUpdate(e,2)}catch(t){}try{Z._sendSkinPacket(e,_.nick)}catch(t){}try{Z._sendSkinPacket(e,_.nick2)}catch(t){}}}static initGallery(){e("#galleryToggle").click(function(t){t.stopPropagation();const e=document.getElementById("skinGalleryWrap");"block"===window.getComputedStyle(e).display?e.style.display="none":(e.style.display="block",h.loadSkinGallery())}),document.addEventListener("click",function(t){const e=document.getElementById("skinGalleryWrap");"block"!==e.style.display||t.target.closest("#skinGalleryWrap")||"galleryToggle"===t.target.id||(e.style.display="none")})}static _skinList(){return h._cachedList||(h._cachedList=[])}static loadSkinGallery(){if(h._skinList().length)return void h.renderGalleryPage(0);e.get("https://raw.githubusercontent.com/darknessxd/Endymion-3rb/main/skins.json",function(t){h._cachedList=t,h._gPage=0,h.renderGalleryPage(0)},"json").fail(function(){e("#skinGalleryGrid").html("<span style='color:red'>Failed to load skins</span>")}),e("#skinGallerySearch").off("input").on("input",function(){h._gPage=0,h.renderGalleryPage(0)}),e("#skinGalleryGrid").off("click").on("click",function(t){const i=e(t.target),s=i.is("img.gallery-thumb")?i:i.find("img.gallery-thumb");s.length?h.galleryPick(s.attr("data-name")):i.hasClass("gallery-nav")&&(h._gPage=parseInt(i.attr("data-page")),h.renderGalleryPage(h._gPage))})}static renderGalleryPage(t){const i=h._skinList();if(!i.length)return;const s=(e("#skinGallerySearch").val()||"").toLowerCase(),o=s?i.filter(function(t){return t.toLowerCase().includes(s)}):i,a=30*t,n=o.slice(a,a+30),r=Math.ceil(o.length/30)||1,l=(e("#arbSkin").val()||"").replace(/free\/|.png/g,"");let c='<div class="gallery-grid">';for(let t=0;t<n.length;t++){const e=n[t].replace(".png","");c+='<div class="gallery-item'+(e===l?" selected":"")+'">',c+='<img class="gallery-thumb" data-name="'+e+'" src="https://3rb.io/res/skins/free/'+e+'.png" title="'+e+'">',c+='<span class="gallery-name">'+e+"</span></div>"}c+="</div>";let d='<div class="gallery-nav-wrap">';d+='<button class="gallery-nav" data-page="0"'+(0===t?" disabled":"")+">⏮</button>",t>0&&(d+='<button class="gallery-nav" data-page="'+(t-1)+'">◀</button>'),d+='<span class="gallery-info">'+(t+1)+" / "+r+"</span>",t<r-1&&(d+='<button class="gallery-nav" data-page="'+(t+1)+'">▶</button>'),d+='<button class="gallery-nav" data-page="'+(r-1)+'"'+(t>=r-1?" disabled":"")+">⏭</button>",d+="</div>",c+=d,e("#skinGalleryGrid").html(c)}static galleryPick(t){e("#arbSkin").val(t),h.setarbSkin(),h.renderGalleryPage(h._gPage||0),document.getElementById("skinGalleryWrap").style.display="none"}static setSkin(t){let e=o.get("profiles","profile"+this.selected);const i={nick:"profile "+this.selected,skin:"https://i.imgur.com/nRqSis7.png",arbSkin:_._arbSkin||"",nick2:"",skin2:""};if(e||(e=i),e.skin=H.code2Url(H.getImgurCode(t)),o.set("profiles","profile"+this.selected,e),this.updateMainSkin(),this.updatePreviewSkin(this.selected),_.skin=t,t)try{Z._sendSkinUpdate(t,1)}catch(t){}try{const e=H.getImgurCode(t),i=B.createView(2+e.length);i.setUint8(0,4,!0);for(let t=0;t<e.length;t++)i.setUint8(t+1,e.charCodeAt(t),!0);i.setUint8(e.length+1,0,!0),B.sendPacket(i,_.typeID)}catch(t){}}static setTag(t){_.tag=t,o.set("profiles","tag",t)}static updateMainSkin(t){const i=e("#skin").val();t=t||e("#arbSkin").val();const s=H.code2Url(H.getImgurCode(i||"")).includes("XXXXXXX")?"https://3rb.io/res/skins/free/"+t.replace(/free\/|.png/g,"")+".png":i;e(".skin-preview").css("background","url("+s+")")}static updatePreviewSkin(t){let i=o.get("profiles","profile"+t);if(i){const s=H.code2Url(H.getImgurCode(i.skin||"")).includes("XXXXXXX")?i.arbSkin&&"https://3rb.io/res/skins/free/"+i.arbSkin.replace(/free\/|.png/g,"")+"png":i.skin;e(".skin-selector[value="+t+"]").css("background","url("+s+")")}}}class d{static init(){this.toggleMenuKey=o.get("hotkeys","toggleMenuKey")||"ESC",this.feedKey=o.get("hotkeys","feedKey")||"W",this.macroFeedKey=o.get("hotkeys","macroFeedKey")||"E",this.splitKey=o.get("hotkeys","splitKey")||"SPACE",this.doubleSplitKey=o.get("hotkeys","doubleSplitKey")||"R",this.split16Key=o.get("hotkeys","split16Key")||"G",this.stopKey=o.get("hotkeys","stopKey")||"S",this.chatKey=o.get("hotkeys","chatKey")||"ENTER",this.privateChatKey=o.get("hotkeys","privateChatKey")||"ALT+0",this.freeSpectateKey=o.get("hotkeys","freeSpectateKey")||"Q",this.toggleSplitRings=o.get("hotkeys","toggleSplitRings")||"U",this.toggleOpponentRings=o.get("hotkeys","toggleOpponentRings")||"I",this.toggleNick=o.get("hotkeys","toggleNick")||"N",this.toggleMass=o.get("hotkeys","toggleMass")||"M",this.toggleBGsectors=o.get("hotkeys","toggleBGsectors")||"B",this.toggleFood=o.get("hotkeys","toggleFood")||"F",this.toggleSkin=o.get("hotkeys","toggleSkin")||"A",this.toggleCustomSkin=o.get("hotkeys","toggleCustomSkin")||"X",this.respawnKey=o.get("hotkeys","respawnKey")||"TILDE",this.multiboxTab=o.get("hotkeys","multiboxTab")||"TAB",this.togglemultiboxRing=o.get("hotkeys","togglemultiboxRing")||"L",this.toggleMaouCircle=o.get("hotkeys","toggleMaouCircle")||"K",this.command0Key=o.get("hotkeys","command0Key")||"0",this.command1Key=o.get("hotkeys","command1Key")||"1",this.command2Key=o.get("hotkeys","command2Key")||"2",this.command3Key=o.get("hotkeys","command3Key")||"3",this.command4Key=o.get("hotkeys","command4Key")||"4",this.command5Key=o.get("hotkeys","command5Key")||"5",this.command6Key=o.get("hotkeys","command6Key")||"6",this.command7Key=o.get("hotkeys","command7Key")||"7",this.command8Key=o.get("hotkeys","command8Key")||"8",this.command9Key=o.get("hotkeys","command9Key")||"9",this.zoom1key=o.get("hotkeys","zoom1key")||"ALT+1",this.zoom2key=o.get("hotkeys","zoom2key")||"ALT+2",this.zoom3key=o.get("hotkeys","zoom3key")||"ALT+3",this.zoom4key=o.get("hotkeys","zoom4key")||"ALT+4",this.zoom5key=o.get("hotkeys","zoom5key")||"ALT+5",this.pressedKeys=new Map,this.setDomKeys(),this.addEvents()}static setDomKeys(){e("#hotkeys .row").each(function(){const t=e(this).attr("name"),i=e(this).find(".key")[0];e(i).val(d[t])})}static addEvents(){e("#hotkeys").perfectScrollbar(),e("#hotkeys .row .key").each(function(){e(this).keydown(t=>{t.preventDefault();const i=e(this).parent();d.setKey(i,t,this)})}),i.addEventListener("keydown",t=>this.onKeyDown(t)),i.addEventListener("keyup",t=>this.onKeyUp(t))}static onKeyDown(t){9===t.keyCode&&t.preventDefault();const e=this.getKey(t);if(e&&!this.pressedKeys.has(e)&&(this.pressedKeys.set(e,!0),!c.isOpened||"hotkeys"!==c.target)){if(e===this.chatKey)return void p.chat(1);if(e===this.privateChatKey)return void p.chat(2);if(!b.isFocused){if(e===this.toggleMenuKey)return void x.toggle();if(!x.isOpened)return t.preventDefault(),e!==this.freeSpectateKey||_.isAlive?e===this.respawnKey?void p.respawn():e===this.macroFeedKey?void p.macroFeed(!0):e===this.feedKey?void p.feed():e===this.splitKey?void p.split():e===this.doubleSplitKey?void p.doubleSplit():e===this.split16Key?void p.split16():e===this.multiboxTab?void p.multiboxTab():e===this.stopKey?void p.stopMovementToggle():e===this.toggleSplitRings?void p.toggleSplitRings():e===this.toggleOpponentRings?void p.toggleOpponentRings():e===this.toggleNick?void p.toggleCellNick():e===this.toggleMass?void p.toggleCellMass():e===this.toggleBGsectors?void p.toggleBGsectors():e===this.toggleFood?void p.toggleGameFood():e===this.toggleSkin?void p.toggleSkin():e===this.toggleCustomSkin?void p.toggleCustomSkin():e===this.togglemultiboxRing?void p.togglemultiboxRing():e===this.toggleMaouCircle?void p.toggleMaouCircle():e===this.command0Key?void p.command(0):e===this.command1Key?void p.command(1):e===this.command2Key?void p.command(2):e===this.command3Key?void p.command(3):e===this.command4Key?void p.command(4):e===this.command5Key?void p.command(5):e===this.command6Key?void p.command(6):e===this.command7Key?void p.command(7):e===this.command8Key?void p.command(8):e===this.command9Key?void p.command(9):e===this.zoom1key?void p.setZoom(.5):e===this.zoom2key?void p.setZoom(.25):e===this.zoom3key?void p.setZoom(.125):e===this.zoom4key?void p.setZoom(.075):e===this.zoom5key?void p.setZoom(.05):void 0:void p.toggleSpectate()}}}static onKeyUp(t){const e=this.getKey(t);e&&(this.pressedKeys.delete(e),e===this.macroFeedKey)&&p.macroFeed(!1)}static setKey(t,i,s){let a=this.getKey(i),n=e(t).attr("name");!1!==a&&("freeSpectateKey"!==n&&this.alreadyBinded(a),"DEL"===a&&(a=""),e(s).val(a),this[n]=a,o.set("hotkeys",n,a))}static alreadyBinded(t){let i=!1;t===this.toggleMenuKey?i="toggleMenuKey":t===this.feedKey?i="feedKey":t===this.macroFeedKey?i="macroFeedKey":t===this.splitKey?i="splitKey":t===this.doubleSplitKey?i="doubleSplitKey":t===this.split16Key?i="split16Key":t===this.stopKey?i="stopKey":t===this.chatKey?i="chatKey":t===this.privateChatKey?i="privateChatKey":t===this.toggleSplitRings?i="toggleSplitRings":t===this.toggleOpponentRings?i="toggleOpponentRings":t===this.toggleNick?i="toggleNick":t===this.toggleMass?i="toggleMass":t===this.toggleBGsectors?i="toggleBGsectors":t===this.toggleFood?i="toggleFood":t===this.toggleSkin?i="toggleSkin":t===this.toggleCustomSkin?i="toggleCustomSkin":t===this.togglemultiboxRing?i="togglemultiboxRing":t===this.toggleMaouCircle?i="toggleMaouCircle":t===this.respawnKey?i="respawnKey":t===this.command0Key?i="command0Key":t===this.command1Key?i="command1Key":t===this.command2Key?i="command2Key":t===this.command3Key?i="command3Key":t===this.command4Key?i="command4Key":t===this.command5Key?i="command5Key":t===this.command6Key?i="command6Key":t===this.command7Key?i="command7Key":t===this.command8Key?i="command8Key":t===this.command9Key?i="command9Key":t===this.zoom1key?i="zoom1key":t===this.zoom2key?i="zoom2key":t===this.zoom3key?i="zoom3key":t===this.zoom4key?i="zoom4key":t===this.zoom5key&&(i="zoom5key"),i&&(this[i]="",o.set("hotkeys",i,""),e("#hotkeys .row[name="+i+"] input").val(""))}static isValidKey(t){const e=t.keyCode||t.which;return 64<e&&91>e||47<e&&58>e||13===e||27===e||32===e||16===e||46===e||192===e||9===e}static getKey(t){if(!this.isValidKey(t))return!1;const e=t.keyCode||t.which;let i=!1,s=!1;return t.ctrlKey?i="CTRL+":t.altKey&&(i="ALT+"),64<e&&91>e?s=String.fromCharCode(e):47<e&&58>e?s=""+(e-48):i||(13===e?s="ENTER":27===e?s="ESC":32===e?s="SPACE":16===e?s="SHIFT":9===e?s="TAB":46===e?s="DEL":192===e&&(s="TILDE")),!!s&&(i?i+s:s)}}class m{static init(){this.leftClick=o.get("mouse","leftClick")||"off",this.middleClick=o.get("mouse","middleClick")||"commander",this.rightClick=o.get("mouse","rightClick")||"off",this.x=0,this.y=0,this.canvas=i.getElementById("canvas"),this.canvasX=0,this.canvasY=0,this.setDomValues(),this.addEvents()}static send(){const t=2===_.typeID?U.position:{x:0,y:0};return this.canvasX=(this.x-this.canvas.width/2)/A.viewport+A.x+t.x,this.canvasY=(this.y-this.canvas.height/2)/A.viewport+A.y+t.y,A.isSpectating&&V.isTurnedOn?void B.mouse(0|V.center.x,0|V.center.y):_.movementPaused?void B.mouse(0|_.x,0|_.y):void B.mouse(0|this.canvasX,0|this.canvasY)}static setDomValues(){e(".mouse-options").each(function(){const t=e(this).attr("type");"range"===t?m.handleRange(this,2):"options"===t&&m.handleOptions(this,2)})}static addEvents(){e("#mouse").perfectScrollbar(),e("#mouse .fa-chevron-left").each(function(){e(this).click(()=>{const t=e(this).parent(),i=e(t).attr("type");"options"===i?m.handleOptions(t,0):"range"===i&&m.handleRange(t,0)})}),e("#mouse .fa-chevron-right").each(function(){e(this).click(()=>{const t=e(this).parent(),i=e(t).attr("type");"options"===i?m.handleOptions(t,1):"range"===i&&m.handleRange(t,1)})}),this.canvas.addEventListener("mousemove",t=>{this.x=t.clientX,this.y=t.clientY}),this.canvas.addEventListener("mousedown",t=>{this.onMouseClick(t)}),this.canvas.addEventListener("mouseup",t=>{this.onMouseRelease(t)}),this.canvas.addEventListener("wheel",t=>{this.onMouseWheel(t)}),this.canvas.addEventListener("contextmenu",t=>{t.preventDefault()})}static onMouseWheel(t){let e=A.targetViewport;0>t.wheelDelta?e*=l.zoomSpeed/100:e/=l.zoomSpeed/100,e=2<e?2:.02>e?.02:e,A.targetViewport=e}static onMouseClick(e){let i=!1;switch(e.which){case 1:i="leftClick";break;case 2:i="middleClick";break;case 3:i="rightClick"}if(i){if(A.isSpectating&&"on"===l.targeting){const s=(e.clientX-(t.innerWidth>>1))/A.viewport+A.x,o=(e.clientY-(t.innerHeight>>1))/A.viewport+A.y;return void("leftClick"===i?V.lockTarget(s,o,1):"middleClick"===i?V.reset():"rightClick"==i&&V.lockTarget(s,o,2))}const s=this[i];return"off"===s?void 0:"feed"===s?void p.feed():"macroFeed"===s?void p.macroFeed(!0):"split"===s?void p.split():"doubleSplit"===s?void p.doubleSplit():"split16"===s?void p.split16():"commander"===s?void j.commander():void 0}}static onMouseRelease(t){let e=!1;switch(t.which){case 1:e="leftClick";break;case 2:e="middleClick";break;case 3:e="rightClick"}e&&"macroFeed"===this[e]&&p.macroFeed(!1)}static handleOptions(t,i){const s=e(t).attr("name"),o=e(t).find("b"),a=o.length;let n=a,r=0;for(;n--;){let t=o[n];"active"===e(t).attr("class")&&(r=n)}if(1===i){const t=r+1<a?r+1:0;e(o[r]).removeAttr("class"),e(o[t]).attr("class","active");const i=e(o[t]).attr("value");this.saveMouseOptions(s,i)}else if(0===i){const t=0<r?r-1:a-1;e(o[r]).removeAttr("class"),e(o[t]).attr("class","active");const i=e(o[t]).attr("value");this.saveMouseOptions(s,i)}else if(2===i){let t;e(o[r]).removeAttr("class");for(let i=a;i--;)if(t=o[i],e(t).attr("value")===this[s]){e(t).attr("class","active");break}}}static handleRange(t,i){const s=e(t).attr("name"),o=e(t).find("span"),a=o[0],n=o[1],r=~~e(a).attr("min"),l=~~e(a).attr("max"),c=~~e(a).attr("step"),h=~~e(a).attr("value");if(1===i&&h+c<=l){const t=c+h;e(a).attr("value",t),e(n).css("width",~~(100*(t-r)/(l-r))+"px"),this.saveMouseOptions(s,t)}else if(0===i&&h-c>=r){const t=h-c;e(a).attr("value",t),e(n).css("width",~~(100*(t-r)/(l-r))+"px"),this.saveMouseOptions(s,t)}else if(2===i){const t=this[s];e(a).attr("value",t),e(n).css("width",~~(100*(t-r)/(l-r))+"px")}}static saveMouseOptions(t,e){this[t]=e,o.set("mouse",t,e)}}class g{static init(){this.load(),this.setDomValues(),this.addEvents()}static load(){this.command1=o.get("commands","command1")||n.current.commandsMenu.command1,this.command2=o.get("commands","command2")||n.current.commandsMenu.command2,this.command3=o.get("commands","command3")||n.current.commandsMenu.command3,this.command4=o.get("commands","command4")||n.current.commandsMenu.command4,this.command5=o.get("commands","command5")||n.current.commandsMenu.command5,this.command6=o.get("commands","command6")||n.current.commandsMenu.command6,this.command7=o.get("commands","command7")||n.current.commandsMenu.command7,this.command8=o.get("commands","command8")||n.current.commandsMenu.command8,this.command9=o.get("commands","command9")||n.current.commandsMenu.command9,this.command0=o.get("commands","command0")||n.current.commandsMenu.command0}static addEvents(){let t;e("#commands").perfectScrollbar();for(let i=10;i--;)t="command"+i,e("#"+t).blur(()=>{this.setCommand(t,e("#"+t).val())})}static setCommand(t,e){this[t]=e,o.set("commands",t,e)}static setDomValues(){let t;for(let i=10;i--;)t="command"+i,e("#"+t).val(this[t])}static refresh(){this.load(),this.setDomValues()}}class p{static init(){this.ejectInterval=!1}static stopMovementToggle(){_.movementPaused=!_.movementPaused}static feed(){m.send(),B.eject()}static macroFeed(t){if(t){if(this.ejectInterval)return;this.feed(),this.ejectInterval=setInterval(()=>{this.feed()},25)}else this.ejectInterval&&(clearInterval(this.ejectInterval),this.ejectInterval=!1)}static split(){m.send(),B.split()}static doubleSplit(){this.split(),setTimeout(()=>{this.split()},40)}static split16(){this.split(),setTimeout(()=>{this.split()},40),setTimeout(()=>{this.split()},60),setTimeout(()=>{this.split()},80),setTimeout(()=>{this.split()},100),setTimeout(()=>{this.split()},120),setTimeout(()=>{this.split()},140)}static toggleSpectate(){return V.isTurnedOn?(V.reset(),V.target1.turnedOn=!1,V.target2.turnedOn=!1,void w.mouseViewport()):(B.freeSpectate(),A.freeSpectate?w.mouseViewport():w.topViewport(),V.target1.turnedOn=!1,void(V.target2.turnedOn=!1))}static chat(t){b.enter(t)}static command(t){let e=g["command"+t];if(0<=e.indexOf("%sector%")){const t=U.getLocation(A.x,A.y);e=e.replace("%sector%",t)}B.chat(e),j.chat(2,e)}static setZoom(t){A.targetViewport=t}static toggleCellNick(){const t=o.get("settings","cellNick");l.cellNick="off"===l.cellNick?"off"!==t&&t||"on":"off"}static toggleCellMass(){const t=o.get("settings","cellMass");l.cellMass="off"===l.cellMass?"off"!==t&&t||"shortened":"off"}static toggleGameFood(){const t=o.get("settings","food");l.food="off"===l.food?"off"!==t&&t||"monoColored":"off"}static toggleBGsectors(){const t=o.get("settings","bgSectors");l.bgSectors="off"===l.bgSectors?"off"!==t&&t||"normal":"off"}static toggleSkin(){const t=o.get("settings","arbSkins");l.arbSkins="off"===l.arbSkins?"off"!==t&&t||"on":"off"}static toggleCustomSkin(){const t=o.get("settings","urlSkins");l.urlSkins="off"===l.urlSkins?"off"!==t&&t||"on":"off"}static toggleSplitRings(){const t=o.get("settings","splitRings");l.splitRings="off"===l.splitRings?"off"!==t&&t||"on":"off"}static toggleOpponentRings(){const t=o.get("settings","opponentRings");l.opponentRings="off"===l.opponentRings?"off"!==t&&t||"on":"off"}static togglemultiboxRing(){const t=o.get("settings","multiboxRing");l.multiboxRing="off"===l.multiboxRing?"off"!==t&&t||"on":"off"}static toggleMaouCircle(){const t=o.get("theme","maouCircle");u.maouCircle="off"===u.maouCircle?"off"!==t&&t||"on":"off"}static respawn(){const t=setInterval(()=>{G.connected&&(B.spawn(),clearInterval(t))},100)}static multiboxTab(){1===_.typeID?(_.typeID=2,_._isAlive2||B.spawn()):(_.typeID=1,_._isAlive||B.spawn())}}class f{static init(){this.addEvents(),this.setServers()}static addEvents(){e("#servers").change(()=>{let t=e("#servers").val();""!=t&&this.joinServer(t)})}static fetchServerinfo(){let t,e=new XMLHttpRequest;e.open("GET","https://3rb.io/php/Servers.php",!1),e.send();try{t=JSON.parse(e.responseText)}catch(e){t=null}return t}static getServers(){try{var t=[],e=[],i=this.fetchServerinfo(),{ip:s,modes:o}=i;Object.keys(o).forEach(i=>{var{total:a,max:n,servers:[{port:r}]}=o[i];t[i]={ip:"wss://"+s+":"+r+"/V5",gamemode:i,max_players:n,current_players:a},e[i]="wss://"+s+":"+r+"/V5"})}catch(t){throw k.warn("Multibox","Unexpected error occured while parsing servers info."),t}return[e,t]}static setServers(){let[t,i]=this.getServers(),s="",o=null,a=null;Object.keys(t).forEach((e,o)=>{a=e.replace(/[^a-zA-Z0-9 ]/g,""),s=null!=i[e]?s+'<option id="ffa'+parseInt(o+1)+'" value="'+t[e]+'">'+a+" ["+i[e].current_players+"/"+i[e].max_players+"]</option>":s+'<option id="ffa'+parseInt(o+1)+'" value="'+t[e]+'">'+e+"</option>"}),o=Math.floor(t.length*Math.random())+1,e("#servers").html(s),e("#opt_ffa"+o).prop("selected",!0),e(document).ready(function(){f.joinServer(e("#servers").val())})}static joinServer(t){G.connect(t)}}class u{static init(){this.isOpened=!1,this.div=e("#theme"),this.selectedPreset=o.get("theme","selectedPreset")||"custom",this.skinBorder=~~o.get("theme","skinBorder")||100,this.lbSize=~~o.get("theme","lbSize")||110,this.minimapSize=~~o.get("theme","minimapSize")||200,this.chatFontSize=~~o.get("theme","chatFontSize")||14,this.cellTransparency=~~o.get("theme","cellTransparency")||100,this.lightenCellColor=~~o.get("theme","lightenCellColor")||100,this.borderWidth=~~o.get("theme","borderWidth")||60,this.borderColor=o.get("theme","borderColor")||"#ffffff",this.rainbowBorder=o.get("theme","rainbowBorder")||"off",this._rainbowHue=0,this.virusGlow=o.get("theme","virusGlow")||"off",this.virusGlowDistance=~~o.get("theme","virusGlowDistance")||50,this.virusGlowColor=o.get("theme","virusGlowColor")||"#00bcff",this.foodGlowColor=o.get("theme","foodGlowColor")||"#00ff00",this.foodGlowSize=~~o.get("theme","foodGlowSize")||20,this.foodGlowStrength=~~o.get("theme","foodGlowStrength")||1,this.maouCircle=o.get("theme","maouCircle")||"off",this.team1color=o.get("theme","team1color")||"#aeaeae",this.team2color=o.get("theme","team2color")||"#ff171f",this.multiboxActive=o.get("theme","multiboxActive")||"#ff61f8",this.multiboxInactive=o.get("theme","multiboxInactive")||"#fff",this.multiboxRingWidth=~~o.get("theme","multiboxRingWidth")||10,this.nickColor=o.get("theme","nickColor")||"#fff",this.nickStrokeColor=o.get("theme","nickStrokeColor")||"#000",this.cellNickSize=~~o.get("theme","cellNickSize")||120,this.nickFont=o.get("theme","nickFont")||"ubuntu",this.massColor=o.get("theme","massColor")||"#fff",this.massStrokeColor=o.get("theme","massStrokeColor")||"#000",this.cellMassSize=~~o.get("theme","cellMassSize")||150,this.massFont=o.get("theme","massFont")||"ubuntu",this.gridWidth=~~o.get("theme","gridWidth")||100,this.gridColor=o.get("theme","gridColor")||"#111",this.gridTextColor=o.get("theme","gridTextColor")||"#111",this.gridTextSize=o.get("theme","gridTextSize")||1500,this.gridTextFont=o.get("theme","gridTextFont")||"ubuntu",this.foodSize=~~o.get("theme","foodSize")||1,this.foodColor=o.get("theme","foodColor")||"#6111ff",this.virusColor=o.get("theme","virusColor")||"#8f8f8f",this.virusBorderColor=o.get("theme","virusBorderColor")||"#c2c2c2",this.virusBorderWidth=~~o.get("theme","virusBorderWidth")||10,this.commanderColor=o.get("theme","commanderColor")||"#f5e35d",this.commanderImageUrl=o.get("theme","commanderImageUrl")||"https://i.imgur.com/RD7gHuK.png",this.backgroundColor=o.get("theme","backgroundColor")||"#000000",this.indicatorSize=~~o.get("theme","indicatorSize")||100,this.cursor=o.get("theme","cursor")||13,this.borderOpacity=~~o.get("theme","borderOpacity")||10,this.borderGlowSize=~~o.get("theme","borderGlowSize")||10,this.borderGlowStrength=~~o.get("theme","borderGlowStrength")||5,this.borderGlowColor=o.get("theme","borderGlowColor")||"#ffffff",this.cursorLineColor=o.get("theme","cursorLineColor")||"#ff0000",this.leaderboardTitleColor=o.get("theme","leaderboardTitleColor")||"#ffffff",this.customLeaderboardHead=o.get("theme","customLeaderboardHead")||"off",this.globalRotationSpeed=~~o.get("theme","globalRotationSpeed")||5,this.maouCircleUrl=o.get("theme","maouCircleUrl")||"",this.multiboxShieldUrl=o.get("theme","multiboxShieldUrl")||"",this.virusGlowSize=~~o.get("theme","virusGlowSize")||50,this.virusGlowStrength=~~o.get("theme","virusGlowStrength")||5,this.virusRingWidth=~~o.get("theme","virusRingWidth")||10,this.virusRingColor=o.get("theme","virusRingColor")||"#ffffff",this.virusGearColor=o.get("theme","virusGearColor")||"#ff0066",this.ghostColor=o.get("theme","ghostColor")||"#aaa",this.selfColor=o.get("theme","selfColor")||"#fff",this.selfViewportColor=o.get("theme","selfViewportColor")||"#fff",this.selfViewportAlpha=~~o.get("theme","selfViewportAlpha")||5,this.topViewportColor=o.get("theme","topViewportColor")||"#fff",this.topViewportAlpha=~~o.get("theme","topViewportAlpha")||5,this.teammateColor=o.get("theme","teammateColor")||"#555",this.teammateNameColor=o.get("theme","teammateNameColor")||"#fff",this.backgroundImage=o.get("theme","backgroundImage")||"",this.addPresets(),this.setDomValues(),this.addEvents(),this.setLeaderboardTitle(),this.setBackgroundImage(this.backgroundImage),this._initMaouCircle(),this._initMultiboxShield()}static _initMultiboxShield(){this._shieldReady=!1,this.shieldImage=new Image,this.shieldImage.crossOrigin="anonymous",this.shieldImage.onload=()=>{this._shieldReady=!0},this.shieldImage.src=this.multiboxShieldUrl&&this.multiboxShieldUrl.length>0?this.multiboxShieldUrl:"https://raw.githubusercontent.com/darknessxd/3rbio-multibox/main/hslo_ring.png"}static _initMaouCircle(){this.maouRotation=0,this._maouReady=!1,this.maouCanvas=document.createElement("canvas"),this.maouCanvas.width=this.maouCanvas.height=513,this.maouCtx=this.maouCanvas.getContext("2d"),this.maouOuter=new Image,this.maouInner=new Image,this.maouOuter.crossOrigin="anonymous",this.maouInner.crossOrigin="anonymous";const t=this.maouCircleUrl&&this.maouCircleUrl.length>0?this.maouCircleUrl:"https://raw.githubusercontent.com/darknessxd/3rbio-multibox/main/";this.maouOuter.onload=()=>{this._maouReady=!0},this.maouInner.onload=()=>{this.maouOuter.complete&&(this._maouReady=!0)},this.maouOuter.src=t+"hslo_ring.png",this.maouInner.src=t+"maou_inner.png",setInterval(()=>{if("on"!==this.maouCircle||!this._maouReady)return;this.maouRotation=(this.maouRotation+(this.globalRotationSpeed||1))%360;this.maouCtx.save(),this.maouCtx.setTransform(1,0,0,-1,257,257),this.maouCtx.clearRect(-256.5,-256.5,513,513);const t=this.maouRotation*Math.PI/180;this.maouCtx.rotate(t),this.maouCtx.drawImage(this.maouOuter,-256.5,-256.5),this.maouCtx.rotate(2*-t),this.maouCtx.drawImage(this.maouInner,-256.5,-256.5),this.maouCtx.restore()},40)}static setDomValues(){e(".theme-options").each(function(){const t=e(this).attr("type");"range"===t?u.handleRange(this,2):"options"===t?u.handleOptions(this,2):"colorpicker"===t&&u.initColorpicker(this)}),this.setChatFontSize(this.chatFontSize),this.setBackground(this.backgroundColor),this.setLeaderboard(this.lbSize),this.setMinimap(this.minimapSize),this.setCursor(this.cursor)}static addEvents(){e(".theme-container").perfectScrollbar(),e(".theme-container .fa-chevron-left").each(function(){e(this).click(()=>{const t=e(this).parent(),i=e(t).attr("type");"options"===i?u.handleOptions(t,0):"range"===i&&u.handleRange(t,0)})}),e(".theme-container span.outer").each(function(){e(this).click(t=>{const i=e(this).parent();u.handleRange(i,3,t.offsetX)})}),e(".theme-container .fa-chevron-right").each(function(){e(this).click(()=>{const t=e(this).parent(),i=e(t).attr("type");"options"===i?u.handleOptions(t,1):"range"===i&&u.handleRange(t,1)})}),e(".theme-close").click(()=>this.close()),e("input#backgroundImage, input#maouCircleUrl, input#multiboxShieldUrl, input#commanderImageUrl").each(function(){const t=e(this).attr("id");e(this).val(u[t]||""),e(this).on("input",function(){const i=e(this).val();u.saveTheme(t,i),"commanderImageUrl"===t&&H._loadCeImage(i)})})}static toggle(){this.isOpened?this.close():this.open()}static close(){this.isOpened=!1,this.div.fadeOut(250)}static open(){this.isOpened=!0,this.div.fadeIn(250)}static handleOptions(t,i){const s=e(t).attr("name"),o=e(t).find("b"),a=o.length;let n=a,r=0;for(;n--;){let t=o[n];"active"===e(t).attr("class")&&(r=n)}if(1===i){const t=r+1<a?r+1:0;e(o[r]).removeAttr("class"),e(o[t]).attr("class","active");const i=e(o[t]).attr("value");this.saveTheme(s,i)}else if(0===i){const t=0<r?r-1:a-1;e(o[r]).removeAttr("class"),e(o[t]).attr("class","active");const i=e(o[t]).attr("value");this.saveTheme(s,i)}else if(2===i){let t;e(o[r]).removeAttr("class");for(let i=a;i--;)if(t=o[i],e(t).attr("value")===this[s]){e(t).attr("class","active");break}}}static handleRange(t,i,s=0){const o=e(t).attr("name"),a=e(t).find("span"),n=a[0],r=a[1],l=e(a[2]),c=~~e(n).attr("min"),h=~~e(n).attr("max"),d=~~e(n).attr("step"),m=~~e(n).attr("value");if(1===i&&m+d<=h){const t=d+m;e(n).attr("value",t),e(r).css("width",~~(100*(t-c)/(h-c))+"px"),l.text("["+t+"]"),this.saveTheme(o,~~t)}else if(0===i&&m-d>=c){const t=m-d;e(n).attr("value",t),e(r).css("width",~~(100*(t-c)/(h-c))+"px"),l.text("["+t+"]"),this.saveTheme(o,~~t)}else if(2===i){const t=this[o];e(n).attr("value",t),e(r).css("width",~~(100*(t-c)/(h-c))+"px"),l.text("["+t+"]")}else if(3===i){let t=0|s/100*(h-c);t=(0|t/d)*d;const i=100*((t+=c)-c)/(h-c);e(n).attr("value",t),e(r).css("width",~~i+"px"),l.text("["+t+"]"),this.saveTheme(o,~~t)}}static initColorpicker(t){const i=e(t).find("input"),s=i.attr("id"),o=this[s];e(i).val(o);const a=!!~~i.attr("opacity");e("#"+s).minicolors({opacity:a,position:"bottom right",change:t=>{this.saveTheme(s,t)}})}static saveTheme(t,e){this[t]=e,"selectedPreset"===t?this.selectPreset(e):"custom"!==this.selectedPreset&&(this.selectedPreset="custom",o.set("theme","selectedPreset","custom"),this.setDomValues()),"backgroundColor"===t&&this.setBackground(e),"chatFontSize"===t&&this.setChatFontSize(e),"lbSize"===t&&this.setLeaderboard(e),"minimapSize"===t&&this.setMinimap(e),"cursor"===t&&this.setCursor(e),"massFont"===t&&X.setMassCtxFont(),"nickFont"===t&&X.setNickCtxFont(),"massStrokeColor"===t&&X.massCaches.clear(),"nickStrokeColor"===t&&X.nickCaches.clear(),"massColor"===t&&X.massCaches.clear(),"nickColor"===t&&X.nickCaches.clear(),"leaderboardTitleColor"!==t&&"customLeaderboardHead"!==t||this.setLeaderboardTitle(),"backgroundImage"===t&&this.setBackgroundImage(e),o.set("theme",t,e)}static setBackground(t){e("body").css("background",t)}static setChatFontSize(t){e("#notifications").css("font-size",t+"px")}static setLeaderboard(t){const i=t/100;e("#leaderboard-head").css("font-size",(0|24*i)+"px"),e("#leaderboard-positions").css("font-size",(0|13*i)+"px")}static setMinimap(t){v.initted&&(v.size=t,v.canvas.width=t,v.canvas.height=t),e("#minimap-hud, .minimap-grid").css({width:t+"px",height:t+"px"}),e(".minimap-row").css({width:t+"px",height:(0|t/5)+"px"}),e(".minimap-sector").css({width:(0|t/5)+"px",height:(0|t/5)+"px","font-size":(0|15*t/200)+"px","padding-top":(0|11*t/200)+"px"}),e(".minimap-head").css("bottom",t+9+"px")}static setCursor(t){}static setLeaderboardTitle(){const t=this.customLeaderboardHead,i="off"===t?"DarknessV1":t;e("#leaderboard-head").css("color",this.leaderboardTitleColor),e("#leaderboard-head span").text(i)}static setBackgroundImage(t){H._loadBgImage(t)}static selectPreset(t){const e=this.presets[t];if("custom"!==t&&e){for(const t in e.theme)e.theme.hasOwnProperty(t)&&void 0!==this[t]&&(this[t]=e.theme[t],o.set("theme",t,this[t]));this.setDomValues();for(const t in e.settings)e.settings.hasOwnProperty(t)&&void 0!==l[t]&&(l[t]=e.settings[t],o.set("settings",t,l[t]));l.setDomValues()}}static addPresets(){const t={Multibox:{author:"Cyper",theme:{skinBorder:100,lbSize:100,minimapSize:200,chatFontSize:14,cellTransparency:100,lightenCellColor:100,borderWidth:40,borderColor:"#fff",team1color:"#aeaeae",team2color:"#fff700",nickColor:"#fff",nickStrokeColor:"#000",cellNickSize:120,nickFont:"ubuntu",massColor:"#fff",massStrokeColor:"#000",cellMassSize:160,massFont:"ubuntu",gridWidth:40,gridColor:"#1a1a1a",gridTextColor:"#1a1a1a",gridTextSize:1200,gridTextFont:"ubuntu",foodSize:1,foodColor:"#ffffff",virusColor:"#000",virusBorderColor:"#d4d6dd",virusBorderWidth:14,commanderColor:"#0849d4",backgroundColor:"#000",indicatorSize:100,cursor:7,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:160,eatAnimation:"on",cellTextAnimation:"on",cellMass:"shortened",food:"monoColored",bgSectors:"normal",vanillaGrid:"off"}},"Agarplus v2":{author:"Acydwarp",theme:{skinBorder:100,lbSize:110,minimapSize:200,chatFontSize:18,cellTransparency:100,lightenCellColor:100,borderWidth:40,borderColor:"#ffffff",team1color:"#aeaeae",team2color:"#fff700",nickColor:"#fff",nickStrokeColor:"#000",cellNickSize:140,nickFont:"ubuntu",massColor:"#fff",massStrokeColor:"#000",cellMassSize:140,massFont:"ubuntu",gridWidth:100,gridColor:"#1a1a1a",gridTextColor:"#1a1a1a",gridTextSize:1700,gridTextFont:"ubuntu",foodSize:5,foodColor:"#0849d4",virusColor:"#808080",virusBorderColor:"#9e9e9e",virusBorderWidth:10,commanderColor:"#0849d4",backgroundColor:"#000000",indicatorSize:100,cursor:1,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:120,eatAnimation:"on",cellTextAnimation:"on",cellMass:"full",food:"monoColored",bgSectors:"normal",vanillaGrid:"off"}},HKG:{author:"Num Jai",theme:{skinBorder:100,lbSize:110,minimapSize:200,chatFontSize:18,cellTransparency:100,lightenCellColor:100,borderWidth:60,borderColor:"#ffffff",team1color:"#aeaeae",team2color:"#fff700",nickColor:"#fff",nickStrokeColor:"#000",cellNickSize:130,nickFont:"sans-serif",massColor:"#fff",massStrokeColor:"#000",cellMassSize:130,massFont:"sans-serif",gridWidth:100,gridColor:"#1a1a1a",gridTextColor:"#1a1a1a",gridTextSize:1700,gridTextFont:"ubuntu",foodSize:5,foodColor:"#6111ff",virusColor:"#808080",virusBorderColor:"#9e9e9e",virusBorderWidth:10,commanderColor:"#0849d4",backgroundColor:"#000000",indicatorSize:100,cursor:1,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:120,eatAnimation:"on",cellTextAnimation:"off",cellMass:"full",food:"monoColored",bgSectors:"off",vanillaGrid:"off"}},"Ogario v4":{author:"Szymy",theme:{skinBorder:100,lbSize:100,minimapSize:240,chatFontSize:18,cellTransparency:100,lightenCellColor:90,borderWidth:40,borderColor:"#01d9cc",team1color:"#aeaeae",team2color:"#fff700",nickColor:"#fff",nickStrokeColor:"#000",cellNickSize:120,nickFont:"ubuntu",massColor:"#fff",massStrokeColor:"#000",cellMassSize:160,massFont:"ubuntu",gridWidth:40,gridColor:"#00243e",gridTextColor:"#00243e",gridTextSize:1200,gridTextFont:"ubuntu",foodSize:5,foodColor:"#5000ff",virusColor:"#002f52",virusBorderColor:"#00b9e8",virusBorderWidth:14,commanderColor:"#0849d4",backgroundColor:"#000a11",indicatorSize:100,cursor:1,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:140,eatAnimation:"on",cellTextAnimation:"on",cellMass:"shortened",food:"monoColored",bgSectors:"normal",vanillaGrid:"off"}},Yin:{author:"DaChong",theme:{skinBorder:100,lbSize:130,minimapSize:200,chatFontSize:18,cellTransparency:100,lightenCellColor:100,borderWidth:10,borderColor:"#116111",team1color:"#aeaeae",team2color:"#fff700",nickColor:"#fff",nickStrokeColor:"#000",cellNickSize:100,nickFont:"ubuntu",massColor:"#fff",massStrokeColor:"#000",cellMassSize:100,massFont:"ubuntu",gridWidth:10,gridColor:"#333333",gridTextColor:"#333333",gridTextSize:1700,gridTextFont:"ubuntu",foodSize:1,foodColor:"#555",virusColor:"#6fff00",virusBorderColor:"#55b304",virusBorderWidth:14,commanderColor:"#00fff7",backgroundColor:"#000000",indicatorSize:100,cursor:1,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:120,eatAnimation:"on",cellTextAnimation:"on",cellMass:"full",food:"rainbow",bgSectors:"normal",vanillaGrid:"off"}},VNDOT:{author:"KSCC",theme:{skinBorder:100,lbSize:100,minimapSize:200,chatFontSize:18,cellTransparency:100,lightenCellColor:100,borderWidth:10,borderColor:"#333333",team1color:"#aeaeae",team2color:"#fff700",nickColor:"#fff",nickStrokeColor:"#000",cellNickSize:110,nickFont:"ubuntu",massColor:"#fff",massStrokeColor:"#000",cellMassSize:110,massFont:"ubuntu",gridWidth:10,gridColor:"#333333",gridTextColor:"#444444",gridTextSize:1200,gridTextFont:"ubuntu",foodSize:1,foodColor:"#4b6efa",virusColor:"#6fff00",virusBorderColor:"#55b304",virusBorderWidth:14,commanderColor:"#00fff7",backgroundColor:"#111",indicatorSize:100,cursor:1,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:120,eatAnimation:"on",cellTextAnimation:"stepped",cellMass:"shortened",food:"monoColored",bgSectors:"normal",vanillaGrid:"off"}},OZYDOT:{author:"Eric",theme:{skinBorder:100,lbSize:100,minimapSize:200,chatFontSize:14,cellTransparency:100,lightenCellColor:100,borderWidth:20,borderColor:"#666666",team1color:"#aeaeae",team2color:"#fff700",nickColor:"#fff",nickStrokeColor:"#000",cellNickSize:110,nickFont:"ubuntu",massColor:"#fff",massStrokeColor:"#444",cellMassSize:140,massFont:"oswald",gridWidth:100,gridColor:"#222222",gridTextColor:"#222222",gridTextSize:1400,gridTextFont:"sans-serif",foodSize:1,foodColor:"#c9d3f5",virusColor:"#e0e0e0",virusBorderColor:"#9c9c9c",virusBorderWidth:10,commanderColor:"#ffffff",backgroundColor:"#000000",indicatorSize:100,cursor:1,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:120,eatAnimation:"on",cellTextAnimation:"on",cellMass:"full",food:"monoColored",bgSectors:"normal",vanillaGrid:"off"}},Pastels:{author:"2coolife",theme:{skinBorder:90,lbSize:100,minimapSize:180,chatFontSize:14,cellTransparency:100,lightenCellColor:100,borderWidth:40,borderColor:"#f5d25f",team1color:"#aeaeae",team2color:"#ff006f",nickColor:"#fff",nickStrokeColor:"#000000",cellNickSize:110,nickFont:"ubuntu",massColor:"#fff",massStrokeColor:"#000000",cellMassSize:120,massFont:"ubuntu",gridWidth:10,gridColor:"#fa676c",gridTextColor:"#333333",gridTextSize:1300,gridTextFont:"oswald",foodSize:1,foodColor:"#555555",virusColor:"#7a4ba3",virusBorderColor:"#ead2fa",virusBorderWidth:14,commanderColor:"#ff006f",backgroundColor:"#222222",indicatorSize:100,cursor:1,borderOpacity:10,borderGlowSize:10,borderGlowStrength:5,borderGlowColor:"#ffffff",cursorLineColor:"#ff0000",leaderboardTitleColor:"#ffffff",customLeaderboardHead:"off",globalRotationSpeed:5,maouCircleUrl:"",multiboxShieldUrl:"",virusGlowSize:50,virusGlowStrength:5,ghostColor:"#aaa",selfColor:"#fff",selfViewportColor:"#fff",selfViewportAlpha:5,topViewportColor:"#fff",topViewportAlpha:5,teammateColor:"#555",teammateNameColor:"#fff",backgroundImage:""},settings:{CellAnimation:140,eatAnimation:"on",cellTextAnimation:"on",cellMass:"shortened",food:"monoColored",bgSectors:"normal",vanillaGrid:"off"}}};this.presets=t}}class k{static init(){this.div=e("#notifications"),this.duration=1e4,this.animDuration=500,this.iconChat='<i class="fa fa-comment"></i>',this.iconAlert='<i class="fa fa-exclamation-circle"></i>',this.iconBell='<i class="fa fa-bell"></i>',this.warningIcon='<i class="fa-solid fa-triangle-exclamation"></i>',this.chatroomdiv=e("#chatroom"),this.emojiPath="./",this.emojis={},this.displayEmojis();const t=document.createElement("style");t.textContent=".cf-turnstile{display:none!important}",document.head.appendChild(t);const i=document.createElement("div");i.id="chat-toggle",i.innerHTML='<i class="fa fa-chevron-down"></i>',i.style.cssText="position:fixed;bottom:314px;left:5px;width:250px;z-index:101;cursor:pointer;color:#aaa;text-align:center;padding:2px 0;font-size:12px;background:rgba(27,27,27,0.6);border-radius:2px 2px 0 0;user-select:none;",i.addEventListener("click",function(){const t=e("#chatroom"),s=e("#chat-toggle i");t.height()<30?(t.css({height:"280px",overflow:"visible"}),i.style.bottom="314px",s.removeClass("fa-chevron-up").addClass("fa-chevron-down")):(t.css({height:"0",overflow:"hidden"}),i.style.bottom="34px",s.removeClass("fa-chevron-down").addClass("fa-chevron-up"))}),document.body.appendChild(i)}static displayEmojis(){const t=e("#emojiContainer");for(const i in this.emojis){const s=e('<img src="'+(this.emojiPath+this.emojis[i])+'" class="emojiPreview">');s.click(()=>{const t=e("#message"),s=t.val();t.val(s+" "+i),b.input.focus()}),t.append(s)}}static normal(t,e){if(this.chatroom(t,e,this.iconChat),"chatroom"!==l.chatType){const i='<div><div class="normal">'+this.iconChat+'<span class="nick">'+t+'</span><span class="message">'+this.putEmojis(this.cleanMessage(e))+"</span></div></div>";this.append(i)}}static command(t,e){if(this.chatroom(t,e,this.iconAlert),"chatroom"!==l.chatType){const i='<div><div class="command">'+this.iconAlert+'<span class="nick">'+t+'</span><span class="message">'+this.cleanMessage(e)+"</span></div></div>";this.append(i)}}static warn(t,e){if(this.chatroom(t,e,this.warningIcon),"chatroom"!==l.chatType){const i='<div><div class="alert">'+this.warningIcon+'<span class="nick">'+t+'</span><span class="message">'+this.cleanMessage(e)+"</span></div></div>";this.append(i)}}static alert(t,e){if(this.chatroom(t,e,this.iconBell),"chatroom"!==l.chatType){const i='<div><div class="alert" style="direction: ltr;">'+this.iconBell+'<span class="nick">'+t+'</span><span class="message">'+this.cleanMessage(e)+"</span></div></div>";this.append(i)}}static append(t){const i=e(t);i.slideUp(0),i.appendTo(this.div),i.slideDown(this.animDuration),setTimeout(()=>{i.slideUp(this.animDuration,()=>{i.remove()})},this.duration)}static cleanMessage(t){return t}static putEmojis(t){for(const e in this.emojis){const i=new RegExp(e,"g");t=t.replace(i,'<img src="'+(this.emojiPath+this.emojis[e])+'">')}return t}static chatroom(t,i,s){const o=new Date,a=o.getHours()+":"+o.getMinutes();this.chatroomdiv.append('<div class="chatroom-row"><span class="chattime">'+a+"</span> "+s+' <span class="nick">'+t+'</span> <span class="message">'+this.putEmojis(this.cleanMessage(i))+"</span></div>"),this.chatroomdiv.scrollTop(this.chatroomdiv[0].scrollHeight),this.chatroomdiv.addClass("chat-active"),clearTimeout(this._chatTimer),this._chatTimer=setTimeout(()=>{e("#chatroom").removeClass("chat-active")},1e4)}}class y{static init(){this.list=new Set,this.div=e("#leaderboard-positions")[0],this.teamLB=e("#leaderboard-chart"),this.teamLBvisible=!1,this.barsCss=i.createElement("style"),i.head.append(this.barsCss)}static add(t,e,i,s,o,a){const n={nick:t,position:e,isSelf:i,account:o,isFriend:s,mass:a||0};this.list.add(n)}static team(t,e,i){this.teamLBvisible||(this.teamLB.show(),this.div.innerHTML="",this.teamLBvisible=!0),this.barsCss.innerText=".chart-bar.red { width: "+(0|150*t)+"px } .chart-bar.green { width: "+(0|150*e)+"px } .chart-bar.blue { width: "+(0|150*i)+"px }"}static clear(){this.list.clear()}static update(){this.teamLBvisible&&(this.teamLB.hide(),this.teamLBvisible=!1);let t="";for(const e of this.list.values()){const i="on"===l.showMassInLB&&e.mass>0?' <span class="lb-mass">'+e.mass+"</span>":"";t+='<span style="direction: rtl;"><strong>'+e.position+"  </strong>"+this.cleanNick(e.nick)+i+"</span>"}this.div.innerHTML=t}static cleanNick(t){return t.replace(/</g,"(").replace(/>/g,")").substring(0,15)}}class v{static init(){this.initted=!0,this.canvas=e("#minimap-nodes")[0],this.size=u.minimapSize,this.canvas.width=this.size,this.canvas.height=this.size,this.pi2=2*Math.PI,this.ctx=this.canvas.getContext("2d"),this.ctx.textAlign="center",this.ctx.textBaseline="bottom",this.ctx.font="500 12px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif",this.ctx.lineWidth=2,this.selector=0}static run(){const t=this.ctx,e=this.size/U.edge,i=A.viewBounds;t.clearRect(0,0,this.size,this.size);const s=u.selfViewportAlpha/10;if(t.globalAlpha=s,t.fillStyle=u.selfViewportColor||"#fff",t.fillRect(0|(i.left-U.offset.x+8e3)*e,0|(i.top-U.offset.y+8e3)*e,0|(i.right-i.left)*e,0|(i.bottom-i.top)*e),t.globalAlpha=1,N.biggestIsOn&&(!A.isSpectating||A.freeSpectate)){N.biggest.animate();const e=N.biggest.mapX,i=N.biggest.mapY,s=u.topViewportAlpha/10;t.beginPath(),t.arc(e,i,7,0,this.pi2,!1),t.closePath(),t.fillStyle=u.topViewportColor||"#fff",t.globalAlpha=s,t.fill(),t.globalAlpha=1,t.stroke(),t.fillText(n.current.huds.num1position||"#1 position",e,i-8)}t.strokeStyle=u.ghostColor||"#666";const o=(8e3-U.offset.x+_.deathLocation.x)*e,a=(8e3-U.offset.y+_.deathLocation.y)*e;t.beginPath(),t.moveTo(o-4,a-4),t.lineTo(o+4,a+4),t.moveTo(o-4,a+4),t.lineTo(o+4,a-4),t.closePath(),t.stroke(),t.strokeStyle="rgba(51, 51, 51, 0.5)";const r=(8e3-U.offset.x+A.x)*e,l=(8e3-U.offset.y+A.y)*e,c=_.isAlive?4:7;t.beginPath(),t.arc(r,l,c,0,this.pi2,!1),t.closePath(),t.fillStyle=u.selfColor||"#fff",t.fill(),t.stroke(),N.isSpectator?this.teamMinimap():this.normalMinimap()}static teamMinimap(){const t=this.ctx;t.textAlign="center",t.textBaseline="bottom",t.font="8px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif";for(const e of N.teamPlayers.values())if(e.isAlive&&(!this.selector||this.selector===e.team)){e.animate();const i=e.mapX,s=e.mapY;t.beginPath(),t.arc(i,s,5,0,this.pi2,!1),t.closePath(),0<e.nick.length&&(t.fillStyle=u.teammateNameColor||"#fff",t.fillText(e.nick,i,s-5)),t.fillStyle=1===e.team?u.team1color:u.team2color,t.fill(),t.stroke()}}static normalMinimap(){const t=this.ctx;t.textAlign="center",t.textBaseline="bottom",t.font="8px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif",t.beginPath();for(const e of N.teamPlayers.values())if(e.isAlive){e.animate();const i=e.mapX,s=e.mapY;t.moveTo(i+5,s),t.arc(i,s,5,0,this.pi2,!1),0<e.nick.length&&(t.fillStyle=u.teammateNameColor||"#fff",t.fillText(e.nick,i,s-5))}t.closePath(),t.fillStyle=u.teammateColor||"#555",t.fill()}}class C{static init(){this.lastUpdateTime=0,this.totalmass=0,this.alive=0,this.spectate=0,this.html="",this.temporaryArray=[],this.div={positions:e("#teamlist-positions")[0],alive:e("#teamlist-alive span")[0],spectate:e("#teamlist-spectate span")[0],totalmass:e("#teamlist-totalmass span")[0]},this.divTeam1={alive:e("#teamlist-alive1 span")[0],spectate:e("#teamlist-spectate1 span")[0],totalmass:e("#teamlist-totalmass1 span")[0]},this.divTeam2={alive:e("#teamlist-alive2 span")[0],spectate:e("#teamlist-spectate2 span")[0],totalmass:e("#teamlist-totalmass2 span")[0]},this.teamVsBar=e(".team-vs-bar-inner"),this.teamVsBarStyle=i.getElementsByClassName("team-vs-bar")[0].style,this.teamVsBarInnerStyle=i.getElementsByClassName("team-vs-bar-inner")[0].style}static update(){1e3<Y.time-this.lastUpdateTime&&(this.lastUpdateTime=Y.time,N.isSpectator&&this.updateVs(),this.generateList(),this.div.positions.innerHTML=this.html,this.div.alive.innerHTML=this.alive,this.div.spectate.innerHTML=this.spectate,this.div.totalmass.innerHTML=this.totalmass,this.reset())}static generateList(){N.teamPlayers.forEach(t=>{t.isAlive?(this.totalmass+=t.mass,this.temporaryArray.push(t),this.alive++):this.spectate++}),this.temporaryArray.sort((t,e)=>e.mass-t.mass),this.temporaryArray.splice(5),N.isSpectator||(_.isAlive?(this.totalmass+=_.mass,this.temporaryArray.push(_),this.alive++):this.spectate++);for(let t=0;t<this.temporaryArray.length;t++){const e=this.temporaryArray[t];this.addPlayer(e)}}static addPlayer(t){const e=100*t.mass/this.totalmass;let i="",s=t.colorHex||"#555";if(t===_){const t=H.getImgurCode(_._skin||"");t&&!t.includes("XXXXXXX")?i=H.code2Url(t):_._arbSkin&&(i="https://3rb.io/res/skins/free/"+_._arbSkin.replace(/^free\/|\.png$/g,"")+".png")}else if(t.nick===_.nick2){const t=H.getImgurCode(_._skin2||"");t&&!t.includes("XXXXXXX")&&(i=H.code2Url(t))}else if(t.skin&&!t.skin.includes("XXXXXXX"))if(t.skin.startsWith("http"))i=t.skin;else if(t.skin.startsWith("free/"))i="https://3rb.io/res/skins/free/"+t.skin.replace(/^free\/|\.png$/g,"")+".png";else{const e=H.getImgurCode(t.skin);e&&!e.includes("XXXXXXX")&&(i=H.code2Url(e))}if(!i&&t.worldID){const e=H.skinMap.get(t.worldID)||H.arbSkinMap.get(t.worldID);e&&!e.includes("XXXXXXX")&&(i=e.startsWith("http")?e:H.code2Url(e))}const o=i?'<img class="tl-player-avatar" src="'+i+'">':'<span class="tl-player-avatar" style="background:'+s+'"></span>';this.html+='<div class="tl-player"><div class="tl-player-mass">'+t.mass+'</div><div class="tl-player-nick">'+o+this.cleanNick(t.nick)+'</div><div class="tl-player-massbar"><div class="tl-player-massbar-inner" style="width: '+(0|e)+'%;"></div></div></div>'}static updateVs(){const t=N.teamData;let e=t[1].totalMass/(t[1].totalMass+t[2].totalMass)*100;0===t[1].totalMass&&0===t[2].totalMass&&(e=50),this.teamVsBar.css("width",(0|e)+"%"),this.divTeam1.alive.innerHTML=t[1].alive,this.divTeam1.spectate.innerHTML=t[1].spectate,this.divTeam1.totalmass.innerHTML=t[1].totalMass,this.divTeam2.alive.innerHTML=t[2].alive,this.divTeam2.spectate.innerHTML=t[2].spectate,this.divTeam2.totalmass.innerHTML=t[2].totalMass,this.teamVsBarStyle.background=u.team2color,this.teamVsBarInnerStyle.background=u.team1color}static reset(){this.totalmass=0,this.alive=0,this.spectate=0,this.temporaryArray=[],this.html=""}static cleanNick(t){return t.replace(/</g,"(").replace(/>/g,")")}}class b{static init(){this.containerType=null,this.container=e("#message-hud"),this.input=e("#message"),this.isOpened=!1,this.isFocused=!1,this.input.blur(()=>{this.isFocused=!1}),this.input.focus(()=>{this.isFocused=!0}),this.chatroom=e("#chatroom"),this.chatroom.perfectScrollbar()}static enter(t){if(this.isOpened)if(this.isFocused){this.containerType=this.input.attr("type");let t=this.input.val();0<t.length&&100<t.length&&(t=t.substring(0,100)),1==this.containerType?B.chat(t):2==this.containerType&&j.chat(1,t),this.input.val(""),this.input.blur(),this.container.hide(),this.isOpened=!1}else this.input.focus();else this.container.show(),this.isOpened=!0,this.input.focus(),this.input.attr("type",t)}}class S{static init(){this.fpsCount=0,this.lastUpdateTime=0,this.div=e("#stats-hud")[0],this.div.style.fontSize="12px",this.lockClosed='<i class="fa fa-lock"></i>',this.lockOpened='<i class="fa fa-unlock-alt"></i>',this.speedometer='<i class="fa fa-tachometer"></i>',this.iconPause='<i class="fa fa-pause-circle"></i>';const t=document.createElement("div");t.id="hud-reset-timer",t.style.cssText="position:absolute;left:50%;transform:translateX(-50%);bottom:100%;color:#fff;font-family:ubuntu;font-size:12px;font-weight:600;white-space:nowrap;text-shadow:0 0 3px #000;z-index:10;pointer-events:none;margin-bottom:2px;",e("#minimap-hud")[0].appendChild(t),this.timerDiv=t}static update(){this.fpsCount++,1e3<Y.time-this.lastUpdateTime&&(this.lastUpdateTime=Y.time,this.refresh())}static refresh(){let t="";t+=this.fps,_.isAlive&&(t+=this.score+this.n64+this.STE+this.speed),t+=this.PIO+this.paused+this.zoomLock,this.div.innerHTML=t,this.timerDiv&&(this.timerDiv.innerHTML=this.resetTimer)}static get zoomLock(){return"on"===l.autoZoom?this.lockClosed:this.lockOpened}static get score(){return(n.current.huds.score||"Score")+": "+_.score+"   "}static get n64(){return"["+_.pieceCount+"/64] "}static get STE(){const t=_.biggestPieceMass;return 35<t?"STE: "+(0|t*(1e3>t?.35:.38))+"   ":""}static get speed(){return _.animSpeed+=(_.speed-_.animSpeed)/3,_.speed=0,this.speedometer+" "+(0|_.animSpeed)+"px/s   "}static get PIO(){const t=G.packetCount.in,e=G.packetCount.out;return G.packetCount.in=0,G.packetCount.out=0,"PIO: "+t+"|"+e+" "}static get paused(){return _.movementPaused?"["+this.iconPause+" "+(n.current.huds.paused||"Paused")+"]   ":""}static get fps(){const t=this.fpsCount;return this.fpsCount=0,"FPS: "+t+"   "}static get resetTimer(){if(E._restartTime){let t=Math.max(0,E._restartTime-Date.now());const e=Math.floor(t/36e5),i=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3),o=String(e).padStart(2,"0")+":"+String(i).padStart(2,"0")+":"+String(s).padStart(2,"0");return t<=3e5?'Reset: <span style="color:#ff0000">'+o+"</span>   ":"Reset: "+o+"   "}return""}}class w{static init(){this.container=e("#targeting-hud"),this.DIVno1viewport=e("#targeting-no-1"),this.DIVmouse=e("#targeting-mouse"),this.DIVplayers=e("#targeting-players"),this.DIVtotalMass=e("#targeting-playersMass span.mass")[0],this.DIVplayer1={nick:e("#targeting-player1 span.nick")[0],mass:e("#targeting-player1 span.mass")[0]},this.DIVplayer2={nick:e("#targeting-player2 span.nick")[0],mass:e("#targeting-player2 span.mass")[0]},this.lastTime=Y.time}static update(){if(!(1e3>Y.time-this.lastTime)&&(this.lastTime=Y.time,A.freeSpectate&&V.isTurnedOn)){let t=0;V.target1.turnedOn?(this.DIVplayer1.nick.innerHTML=V.target1.nick,this.DIVplayer1.mass.innerHTML=V.target1.outOfView?"OUT OF VIEW":V.target1.mass,t+=V.target1.outOfView?0:V.target1.mass):(this.DIVplayer1.nick.innerHTML="Target 1",this.DIVplayer1.mass.innerHTML="NOT SELECTED"),V.target2.turnedOn?(this.DIVplayer2.nick.innerHTML=V.target2.nick,this.DIVplayer2.mass.innerHTML=V.target2.outOfView?"OUT OF VIEW":V.target2.mass,t+=V.target2.outOfView?0:V.target2.mass):(this.DIVplayer2.nick.innerHTML="Target 2",this.DIVplayer2.mass.innerHTML="NOT SELECTED"),this.DIVtotalMass.innerHTML=t}}static show(){this.container.show()}static hide(){this.container.hide()}static topViewport(){this.DIVno1viewport.show(),this.DIVmouse.hide(),this.DIVplayers.hide(),e("#spectate-mode-top").addClass("active"),e("#spectate-mode-mouse").removeClass("active"),e("#spectate-mode-target").removeClass("active")}static mouseViewport(){this.DIVmouse.show(),this.DIVno1viewport.hide(),this.DIVplayers.hide(),e("#spectate-mode-top").removeClass("active"),e("#spectate-mode-mouse").addClass("active"),e("#spectate-mode-target").removeClass("active")}static targetMode(){this.DIVplayers.show(),this.DIVmouse.hide(),this.DIVno1viewport.hide(),e("#spectate-mode-top").removeClass("active"),e("#spectate-mode-mouse").removeClass("active"),e("#spectate-mode-target").addClass("active")}}class x{static init(){k.init(),l.init(),c.init(),h.init(),f.init(),u.init(),y.init(),v.init(),C.init(),b.init(),S.init(),w.init(),this.isOpened=!0,this.gMode=":party",this.div=e("#menu-overlay"),this.streammode=!o.get("extras","streammode"),this.toggleStreammode(),this.buttons()}static buttons(){e("#button-settings").click(()=>{this.closeSubMenus(),l.toggle()}),e("#button-play").click(()=>{this.play()}),e("#button-spectate").click(()=>{B.spectate(),this.close()}),e("#button-inputs").click(()=>{this.closeSubMenus(),c.toggle()}),e("#button-theme").click(()=>{this.closeSubMenus(),u.toggle()}),e("#normal-tag").click(()=>{this.normalTag()}),e("#minimap-show-1").click(()=>{e("#minimap-show-"+v.selector).removeClass("active"),e("#minimap-show-1").addClass("active"),v.selector=1}),e("#minimap-show-2").click(()=>{e("#minimap-show-"+v.selector).removeClass("active"),e("#minimap-show-2").addClass("active"),v.selector=2}),e("#minimap-show-0").click(()=>{e("#minimap-show-"+v.selector).removeClass("active"),e("#minimap-show-0").addClass("active"),v.selector=0}),e("#streamMode").click(()=>{this.toggleStreammode()}),e("#spectate-mode-top").click(()=>{this.spectateModeTop()}),e("#spectate-mode-mouse").click(()=>{this.spectateModeMouse()}),e("#spectate-mode-target").click(()=>{this.spectateModeTarget()}),o.get("extras","openedChangelog")||e("#changelog").addClass("active"),e("#changelog").click(()=>{o.set("extras","openedChangelog",!0),e("#changelog").removeClass("active")})}static doubleTag(){e("#double-tag").addClass("active-tag"),e("#normal-tag").removeClass("active-tag"),e("#tag2").show(),e("#nick").css("width","189px"),e("#teams-vs").show(),e("#info-tp").hide(),N.isSpectator=!0,j.spectator(!0),e(".minimap-button").each(function(){e(this).show()})}static normalTag(){e("#normal-tag").addClass("active-tag"),e("#double-tag").removeClass("active-tag"),e("#tag2").hide(),e("#nick").css("width","45px"),e("#teams-vs").hide(),e("#info-tp").show(),j.spectator(!1),N.isSpectator=!1,e(".minimap-button").each(function(){e(this).hide()})}static play(){this.close(),B.spawn()}static closeSubMenus(){c.close(),l.close(),u.close()}static toggle(){this.isOpened?this.close():this.open()}static close(){this.isOpened=!1,this.div.fadeOut(250),e("#leaderboard-hud").css("top","-2px"),e("#teamlist-hud").css("top","10px"),e(".menu-bar").slideUp(250),e("#targeting-hud").css("top","0px")}static open(){this.isOpened=!0,this.div.fadeIn(250),e("#leaderboard-hud").css("top","-2px"),e("#teamlist-hud").css("top","10px"),e(".menu-bar").slideDown(250),e("#targeting-hud").css("top","0px")}static toggleStreammode(){this.streammode?(e("#nick, #tag, #tag2").removeClass("input-hidden"),e("#streamMode").html('<i class="fa fa-eye fa-fw"></i>'),this.streammode=!1,o.set("extras","streammode",this.streammode)):(e("#nick, #tag, #tag2").addClass("input-hidden"),e("#streamMode").html('<i class="fa fa-eye-slash fa-fw"></i>'),this.streammode=!0,o.set("extras","streammode",this.streammode))}static spectateModeTop(){!_.isAlive&&A.isSpectating&&A.freeSpectate&&(w.topViewport(),B.freeSpectate())}static spectateModeMouse(){_.isAlive||!A.isSpectating||A.freeSpectate&&!V.isTurnedOn||(V.isTurnedOn?(V.target1.turnedOn=!1,V.target2.turnedOn=!1,w.mouseViewport()):(B.freeSpectate(),w.mouseViewport()))}static spectateModeTarget(){"on"===l.targeting?k.command("Multibox",n.current.notif.targeting_on):k.command("Multibox",n.current.notif.targeting_off)}}class I{static init(){this.cells=new Map,this.cells2=new Map,this.myCellsIDs=new Set,this.myCellsIDs2=new Set,this.myCells=new Map,this.myCells2=new Map,this.sortedCells=[],this.food=[],this.cellsPositions={left:0,top:0,right:0,bottom:0}}static update(){this.positions(),this.food=[],this.sortedCells=[],this.cells.forEach((t,e)=>{this.cellsPos(t),t.fadeStartTime&&1<(Y.time-t.fadeStartTime)/l.CellAnimation?this.cells.delete(e):this.isInView(t)&&t.worldID!==_.worldID2&&(t.isFood?this.food.push(t):this.sortedCells.push(t))}),this.cells2.forEach((t,e)=>{t.fadeStartTime&&1<(Y.time-t.fadeStartTime)/l.CellAnimation?this.cells2.delete(e):!this.isInView(t)||!t.isMine&&this.check(t)||(t.isFood?this.food.push(t):this.sortedCells.push(t))}),this.sortedCells.sort((t,e)=>{const i=t.animRadius,s=e.animRadius;return i===s?e.id-t.id:i-s})}static getCell(t,e){return(1===e?this.cells:this.cells2).get(t)||this.addCell(t,e)}static addCell(t,e){const i=1===e?this.cells:this.cells2,s=new M(t,e);return i.set(t,s),this.myCellCheck(t,s,e),s}static myCellCheck(t,e,i){const s=1===i?this.myCellsIDs:this.myCellsIDs2,o=1===i?this.myCells:this.myCells2;s.has(t)&&(o.set(t,e),s.delete(t),e.isMine=!0,e.nick=_.nick)}static eatCell(t,e,i){const s=1===i?this.cells:this.cells2,o=1===i?this.myCells:this.myCells2,a=s.get(e),n=s.get(t);a&&n&&(a.x=n.x,a.y=n.y,a.radius=a.animRadius,a.fadeStartTime=Y.time,a.lastUpdateTime=Y.time,a.isMine&&o.delete(e),s.delete(e),a.isFood||s.set(e+":removed",a))}static removeCell(t,e){const i=1===e?this.cells:this.cells2,s=1===e?this.myCells:this.myCells2,o=i.get(t);o&&(o.isMine&&s.delete(t),i.delete(t),o.isFood||"on"!==l.eatAnimation||(o.fadeStartTime=Y.time,i.set(t+":removed",o)))}static isInView(t){const e=2===t.cellType?U.position:{x:0,y:0},i=A.viewBounds;return!(t.animX-e.x+t.animRadius<i.left||t.animX-e.x-t.animRadius>i.right||t.animY-e.y+t.animRadius<i.top||t.animY-e.y-t.animRadius>i.bottom)}static positions(){I.cells.forEach((t,e)=>{this.cellsPositions.left=t.x,this.cellsPositions.right=t.x,this.cellsPositions.top=t.y,this.cellsPositions.bottom=t.y})}static cellsPos(t){this.cellsPositions.left>t.x+t.radius&&(this.cellsPositions.left=t.x+t.radius),this.cellsPositions.right<t.x-t.radius&&(this.cellsPositions.right=t.x-t.radius),this.cellsPositions.top>t.y+t.radius&&(this.cellsPositions.top=t.y+t.radius),this.cellsPositions.bottom<t.y-t.radius&&(this.cellsPositions.bottom=t.y-t.radius)}static check(t){const e=U.position,i=t.x-e.x,s=t.y-e.y,o=this.cellsPositions;return!(i+t.radius<o.left||i-t.radius>o.right||s+t.radius<o.top||s-t.radius>o.bottom)}}class M{constructor(t,e){this.id=t,this.x=0,this.y=0,this.radius=0,this.colorObject={r:0,g:0,b:0},this.colorHex="#555",this.skin="",this.skinCode=0,this._nick="",this.isMine=!1,this.isFood=!1,this.isEjected=!1,this.isVirus=!1,this.isFriend=!1,this.account="",this.cellType=e,this.animX=0,this.animY=0,this.animRadius=0,this.lastUpdateTime=0,this.fadeStartTime=0}set nick(t){if(!t)return;this._nick=t;const e=t.indexOf("");if(0<=e&&t.length>=e+1){const i=t.charCodeAt(e+1);12e3<i&&(this.skinCode=i)}}get nick(){return this._nick}get mass(){return 0|this.animRadius*this.animRadius/100}get staticMass(){return 0|this.radius*this.radius/100}setColor(t,e,i){this.colorObject.r=t,this.colorObject.g=e,this.colorObject.b=i,this.colorHex="#"+(16777216+(t<<16)+(e<<8)+i).toString(16).slice(1)}animate(){let t=(Y.time-this.lastUpdateTime)/l.CellAnimation;t=0>t?0:1<t?1:t,this.animX=t*(this.x-this.animX)+this.animX,this.animY=t*(this.y-this.animY)+this.animY,this.animRadius=t*(this.radius-this.animRadius)+this.animRadius,this.lastUpdateTime=Y.time}get worldID(){let t=this._nick.substring(this._nick.indexOf("}")+1);return t=t.replace("%*^",""),":party"===x.gMode?t+this.colorHex:t}get isUnnamed(){return 1>this._nick.substring(this._nick.indexOf("}")+1).length}}class _{static init(){this._nick=e("#nick").val(),this._nick2=e("#nick2").val(),this._arbSkin=e("#arbSkin").val(),this._arbSkin2="",this._skin=H.getImgurCode(e("#skin").val()),this._skin2=H.getImgurCode(e("#skin2").val()),this.tag=e("#tag").val(),this._colorObject={r:0,g:0,b:0},this.colorHex="#000",this.colorHex2="#000",this._isAlive=!1,this._isAlive2=!1,this.isRGB=!1,this.x=0,this.y=0,this.speed=0,this.animSpeed=0,this.mass=0,this.biggestPieceMass=0,this.score=0,this.movementPaused=!1,this.deathLocation={x:100,y:100},this.type=1}static update(){0<this.pieceCount1?this.playing():this.dead(),0<this.pieceCount2?this.playing2():this.dead2(),this.updateData()}static playing(){if(!this._isAlive){this._isAlive=!0,this._isAlive2||j.aliveStatus(2);for(const t of I.myCells.values()){this.colorObject=t.colorObject,this.colorHex=t.colorHex;break}if("on"===l.commander)for(const t of I.myCells.values()){H.commanderPoints.add({x:t.animX,y:t.animY,time:Y.time});break}}}static playing2(){if(!this._isAlive2){this._isAlive2=!0,this._isAlive||j.aliveStatus(1);for(const t of I.myCells2.values()){this.colorHex2=t.colorHex;break}if("on"===l.commander)for(const t of I.myCells2.values()){H.commanderPoints.add({x:t.animX,y:t.animY,time:Y.time});break}}}static updateData(){if(this.isAlive){let e=0,i=0,s=0;if(this.mass=0,this.biggestPieceMass=0,this._isAlive)for(const t of I.myCells.values())t.animate(),e+=t.animX/this.pieceCount,i+=t.animY/this.pieceCount,s+=t.animRadius,this.mass+=t.staticMass,this.biggestPieceMass<t.staticMass&&(this.biggestPieceMass=t.staticMass);if(this._isAlive2){const t=U.position;for(const o of I.myCells2.values())o.animate(),e+=(o.animX-t.x)/this.pieceCount,i+=(o.animY-t.y)/this.pieceCount,s+=o.animRadius,this.mass+=o.staticMass,this.biggestPieceMass<o.staticMass&&(this.biggestPieceMass=o.staticMass)}if(!this.movementPaused){const t=this.x-e,s=this.y-i,o=Math.sqrt(t*t+s*s);this.speed+=o,this.x=e,this.y=i}this.score<this.mass&&(this.score=this.mass);const o=Math.pow(Math.min(64/s,1),.4),a=Math.max(t.innerWidth/1920,t.innerHeight/1080);A.autoZoomViewport=o*a}}static dead(){this._isAlive&&(this._isAlive=!1,this._isAlive2?(this.type=2,B.spectate(1)):this.setInfo())}static dead2(){this._isAlive2&&(this._isAlive2=!1,this._isAlive?(this.type=1,B.spectate(2)):this.setInfo())}static setInfo(){this.score=0,this.mass=0,this.biggestPieceMass=0,this.movementPaused=!1,this.deathLocation.x=this.x,this.deathLocation.y=this.y,this.type=1,x.open()}static set nick(t){this._nick=t,j.nick()}static get nick(){return this._nick?this._nick.substring(0,15):""}static set nick2(t){this._nick2=t}static get nick2(){return this._nick2?this._nick2.substring(0,15):""}static set arbSkin(t){this._arbSkin=t}static get arbSkin(){return this._arbSkin}static set arbSkin2(t){this._arbSkin2=t}static get arbSkin2(){return this._arbSkin2}static set skin(t){const e=H.getImgurCode(t);H.getRaindowFlag(t);if("XXXXXXX"!==e&&e){this._skin=e,j.skin();try{Z._sendSkinUpdate(e,1)}catch(t){}try{Z._sendSkinPacket(e,_.nick)}catch(t){}}}static get skin(){return this._skin}static set skin2(t){const e=H.getImgurCode(t);if("XXXXXXX"!==e&&e){this._skin2=e;try{Z._sendSkinUpdate(e,2)}catch(t){}try{Z._sendSkinPacket(e,_.nick2)}catch(t){}}}static get skin2(){return this._skin2||""}static set colorObject(t){this._colorObject.r=t.r,this._colorObject.g=t.g,this._colorObject.b=t.b,j.color()}static get colorObject(){return this._colorObject}static set isAlive(t){this._isAlive=t,j.aliveStatus(t)}static get isAlive(){return this._isAlive||this._isAlive2}static get worldID(){let t=this._nick.substring(this._nick.indexOf("}")+1);return t=t.replace("%*^",""),":party"===x.gMode?t+this.colorHex:t}static get worldID2(){const t=this._nick2||this._nick;let e=t.substring(t.indexOf("}")+1);return e=e.replace("%*^",""),":party"===x.gMode?e+this.colorHex2:e}static get location(){return U.getLocation(this.x,this.y)}static get pieceCount1(){return I.myCells.size}static get pieceCount2(){return I.myCells2.size}static get pieceCount(){return this.pieceCount1+this.pieceCount2}static set typeID(t){this.type=t}static get typeID(){return this.type}}class T{constructor(t){this.id=t,this.isNew=2,this.x=90,this.y=90,this.isAlive=0,this.mass=0,this.nick="",this.skin="",this.colorHex="#000",this.isRGB=!1,this.animX=90,this.animY=90,this.timeStamp=Y.time,this.team=1}get worldID(){let t=this.nick.substring(this.nick.indexOf("}")+1);return t=t.replace("%*^",""),":party"===x.gMode?t+this.colorHex:t}get location(){return U.getLocation(this.x+U.offset.x,this.y+U.offset.y)}animate(){let t=(Y.time-this.timeStamp)/1e3;t=1<t?1:0>t?0:t,this.animX+=(this.x-this.animX)*t,this.animY+=(this.y-this.animY)*t,this.timeStamp=Y.time}get mapX(){return(this.animX-U.left)/U.edge*v.size}get mapY(){return(this.animY-U.top)/U.edge*v.size}}class U{static init(){this.left=-8e3,this.top=-8e3,this.right=8e3,this.bottom=8e3,this.edge=16e3,this.botOffset={left:-8e3,top:-8e3},this.offset={x:0,y:0},this.center={x:0,y:0},this.offset2={x:0,y:0},this.center2={x:0,y:0},this.focusedAtCenter=!1}static update(t,e,i,s){this.left=t,this.top=e,this.right=i,this.edge=this.right-this.left+u.borderWidth,this.bottom=s,this.offset.x=8e3+t,this.offset.y=8e3+e,this.center.x=i+t>>1,this.center.y=s+e>>1,this.focusedAtCenter||(A.x=this.center.x,A.y=this.center.y,this.focusedAtCenter=!0)}static update2(t,e,i,s){this.offset2.x=8e3+t,this.offset2.y=8e3+e,this.botOffset.left=t,this.botOffset.top=e}static getLocation(t,e){let i=0|(t-this.left)/3199,s=0|(e-this.top)/3199;return i=0>i?0:4<i?4:i,s=0>s?0:4<s?4:s,String.fromCharCode(65+s)+(i+1)}static get position(){return this.center2.x=this.offset2.x-this.offset.x,this.center2.y=this.offset2.y-this.offset.y,this.center2}}class A{static init(){this.x=0,this.y=0,this.targetViewport=1,this.autoZoomViewport=1,this.viewport=1,this.viewBounds={left:-960,right:960,top:-540,bottom:540},this.spectatePoint={x:0,y:0},this._isSpectating=!1,this._freeSpectate=!1,V.init()}static get isSpectating(){return this._isSpectating}static get freeSpectate(){return this._freeSpectate}static set isSpectating(t){this._isSpectating=t,!_.isAlive&&t?w.show():w.hide()}static set freeSpectate(t){this._freeSpectate=t,t?w.mouseViewport():w.topViewport()}static update(){this.isSpectating&&V.update(),this.move(),this.updateView()}static move(){_.isAlive?(this.x+=(_.x-this.x)/l.cameraSpeed,this.y+=(_.y-this.y)/l.cameraSpeed):this.isSpectating&&(this.x=(29*this.x+this.spectatePoint.x)/30,this.y=(29*this.y+this.spectatePoint.y)/30)}static updateView(){let t=this.targetViewport;"on"===l.autoZoom&&(t*=this.autoZoomViewport),this.viewport+=(t-this.viewport)/8;const e=H.canvas.width/2/this.viewport,i=H.canvas.height/2/this.viewport;this.viewBounds.left=Math.max(-e+this.x,U.left),this.viewBounds.right=Math.min(e+this.x,U.right),this.viewBounds.top=Math.max(-i+this.y,U.top),this.viewBounds.bottom=Math.min(i+this.y,U.bottom)}}const X=new class{constructor(){this.nickCaches=new Map,this.massCaches=new Map,this.maxCacheLife=1e3,this.massUpdateInterval=500,this.nickShadowCtx=this.newShadowContext(),this.massShadowCtx=this.newShadowContext(),this.canvasPool=[]}nick(t){if(t.isUnnamed||this.isSmall(t))return!1;let e=t.nick.substring(t.nick.indexOf("}")+1)||"";const i=this.nickCaches.get(e)||this.newNickCache(e);i.lastUsedAt=Y.time;const s=50>this.getScreenRadius(t.animRadius)?0:1,o=i.level[s];if(o)return o;const a=this.getNewCanvas(),n=a.getContext("2d"),r=50*(s+1)*u.cellNickSize/100;if(a.height=0|1.2*r,a.width=0|1.2*this.getNickWidth(e,r),n.font="700 "+(0|r)+"px "+u.nickFont,n.textBaseline="middle",n.textAlign="center","normal"===l.nickShadow)n.strokeStyle=u.nickStrokeColor,n.lineWidth=6*(s+1),n.strokeText(e,a.width>>1,a.height>>1);else if("performance"===l.nickShadow){n.fillStyle=u.nickStrokeColor,n.globalAlpha=.75;const t=0|a.width/1.2,e=0|a.height/1.2;n.fillRect(a.width-t>>1,a.height-e>>1,t,e),n.globalAlpha=1}return n.fillStyle=u.nickColor,n.fillText(e,a.width>>1,a.height>>1),i.level[s]=a,a}newNickCache(t){const e=new R;return this.nickCaches.set(t,e),e}getNickWidth(t,e){return this.nickShadowCtx.measureText(t).width*e/50}setNickCtxFont(){this.nickCaches.clear(),this.nickShadowCtx.font="700 50px "+u.nickFont}mass(t){if(!t.isVirus&&this.isSmall(t))return!1;const e=this.massCaches.get(t.id)||this.newMassCache(t.id),i="shortened"===l.cellMass&&999<t.staticMass?(0|t.staticMass/100)/10+"k":t.staticMass,s=this.getScreenRadius(t.radius),o=i!==e.lastMass,a=Y.time-e.lastRenderTime>this.massUpdateInterval,n=1.2<s/e.lastScreenRadius||o&&a;if(e.lastUsedAt=Y.time,!n&&e.canvas)return e.canvas;e.canvas||(e.canvas=this.getNewCanvas());const r=e.canvas,c=r.getContext("2d"),h=0|s/2*(u.cellMassSize/100);if(r.height=0|1.2*h,r.width=0|1.2*this.getMassWidth(i,h),c.font="700 "+h+"px "+u.massFont,c.textBaseline="middle",c.textAlign="center","normal"===l.massShadow)c.strokeStyle=u.massStrokeColor,c.lineWidth=6*h/50,c.strokeText(i,r.width>>1,r.height>>1);else if("performance"===l.massShadow){c.fillStyle=u.massStrokeColor,c.globalAlpha=.75;const t=0|r.width/1.2,e=0|r.height/1.2;c.fillRect(r.width-t>>1,r.height-e>>1,t,e),c.globalAlpha=1}return c.fillStyle=u.massColor,c.fillText(i,r.width>>1,r.height>>1),e.lastMass=i,e.lastScreenRadius=s,e.lastRenderTime=Y.time+e.timeShift,r}newMassCache(t){const e=new P;return this.massCaches.set(t,e),e}getMassWidth(t,e){return this.massShadowCtx.measureText(t).width*e/50}setMassCtxFont(){this.massCaches.clear(),this.massShadowCtx.font="700 50px "+u.massFont}getScreenRadius(t){return t*A.viewport}isSmall(t){return"on"===l.autoHideText&&20>this.getScreenRadius(t.animRadius)}getNewCanvas(){return this.canvasPool.shift()||i.createElement("canvas")}newShadowContext(){const t=i.createElement("canvas").getContext("2d");return t.font="700 50px ubuntu",t}cleaner(){this.nickCaches.forEach((t,e)=>{if(Y.time-t.lastUsedAt>this.maxCacheLife){if(this.nickCaches.delete(e),50<=this.canvasPool.length)return;const i=t.level[0],s=t.level[1];i&&(this.resetCanvas(i),this.canvasPool.push(i)),s&&(this.resetCanvas(s),this.canvasPool.push(s))}}),this.massCaches.forEach((t,e)=>{if(Y.time-t.lastUsedAt>this.maxCacheLife){if(this.massCaches.delete(e),50<=this.canvasPool.length)return;const i=t.canvas;i&&(this.resetCanvas(i),this.canvasPool.push(i))}})}resetCanvas(t){t.width=0}};class P{constructor(){this.lastUsedAt=Y.time,this.timeShift=0|Math.random()*X.massUpdateInterval,this.lastMass=0,this.lastScreenRadius=0,this.lastRenderTime=Y.time,this.canvas=null}}class R{constructor(){this.lastUsedAt=Y.time,this.level=[null,null]}}class O{static render(){"off"!==l.food&&("monoColored"===l.food?this.monoColored():"rainbow"===l.food&&this.rainbow())}static monoColored(){const t=H.ctx,e=u.foodSize;let i=I.food.length;for(t.fillStyle=u.foodColor,t.beginPath();i--;){const s={x:0,y:0},o=I.food[i],a=2===o.cellType?U.position:s,n=o.animRadius+e;t.moveTo(o.animX-a.x+n,o.animY-a.y),t.arc(o.animX-a.x,o.animY-a.y,n,0,H.pi2,!0)}t.closePath(),t.fill()}static rainbow(){let t=H.ctx,e=u.foodSize;for(let i=I.food.length;i--;){const s={x:0,y:0},o=I.food[i],a=2===o.cellType?U.position:s,n=o.animRadius+e;t.fillStyle=o.colorHex,2>n*A.viewport?t.fillRect(o.animX-a.x-n,o.animY-a.y-n,2*n,2*n):(t.beginPath(),t.arc(o.animX-a.x,o.animY-a.y,n,0,H.pi2,!0),t.closePath(),t.fill())}}}class z{static init(){this.left=0,this.top=0,this.sectorEdge=0,this.edge=0,this.halfSectorEdge=0,this.letters=["A","B","C","D","E"],this.visible=new Set}static render(){const t=l.bgSectors;if("off"!==t){const e=H.ctx,i=u.gridWidth>>1;this.edge=U.edge-u.gridWidth,this.left=U.left+i,this.top=U.top+i,this.sectorEdge=0|this.edge/5,this.halfSectorEdge=0|this.edge/10,e.lineWidth=u.gridWidth,e.strokeStyle=u.gridColor,this.sectors(),"onlyLines"!==t&&(e.textAlign="center",e.textBaseline="middle",e.fillStyle=u.gridTextColor,this.updateViewSectors(),"snowflakes"===t?this.snowflakes():this.normal())}}static sectors(){const t=H.ctx;A.viewBounds,t.beginPath(),t.rect(this.left+this.sectorEdge,this.top,this.sectorEdge,this.edge),t.rect(this.left+3*this.sectorEdge,this.top,this.sectorEdge,this.edge),t.rect(this.left,this.top+this.sectorEdge,this.edge,this.sectorEdge),t.rect(this.left,this.top+3*this.sectorEdge,this.edge,this.sectorEdge),t.rect(this.left,this.top,this.edge,this.edge),t.closePath(),t.stroke()}static updateViewSectors(){const t=this.visible;t.clear();const e=A.viewBounds,i=0|(e.left-200-U.left)/this.sectorEdge,s=0|(e.top-200-U.top)/this.sectorEdge,o=5-(0|(U.right-e.right-200)/this.sectorEdge)-i,a=5-(0|(U.bottom-e.bottom-200)/this.sectorEdge)-s;for(let e=0;e<o;e++)for(let o=0;o<a;o++)t.add(this.letters[s+o]+(i+e+1))}static normal(){const t=H.ctx;t.font="400 "+u.gridTextSize+"px "+u.gridTextFont;for(let e=0;5>e;e++){const i=this.top+this.halfSectorEdge+e*this.sectorEdge;for(let s=0;5>s;s++){const o=this.letters[e]+(s+1);if(this.visible.has(o)){const e=this.left+this.halfSectorEdge+s*this.sectorEdge;t.fillText(o,e,i)}}}}static snowflakes(){const t=H.ctx;t.font="400 "+u.gridTextSize+"px Ubuntu";for(let e=0;5>e;e++){const i=this.top+this.halfSectorEdge+e*this.sectorEdge;for(let s=0;5>s;s++){const o=this.letters[e]+(s+1);if(this.visible.has(o)){const e=this.left+this.halfSectorEdge+s*this.sectorEdge;t.fillText("❆",e,i)}}}}}class V{static init(){const t={turnedOn:!1,nick:"",worldID:"",mass:0,cellCount:0,position:{x:0,y:0},outOfView:!1},e={turnedOn:!1,nick:"",worldID:"",mass:0,cellCount:0,position:{x:0,y:0},outOfView:!1};this.target1=t,this.target2=e,this.center={x:0,y:0}}static update(){if(this.target1.turnedOn||this.target2.turnedOn){const t=this.target1,e=this.target2;t.mass=0,t.position.x=0,t.position.y=0,t.cellCount=0,e.mass=0,e.position.x=0,e.position.y=0,e.cellCount=0,I.cells.forEach(i=>{t.turnedOn&&t.worldID===i.worldID?(t.position.x+=i.animX,t.position.y+=i.animY,t.mass+=i.mass,t.cellCount++):e.turnedOn&&e.worldID===i.worldID&&(e.position.x+=i.animX,e.position.y+=i.animY,e.mass+=i.mass,e.cellCount++)}),t.mass|=0,e.mass|=0;let i=0,s=0,o=0;t.turnedOn&&(0<t.cellCount?(t.position.x/=t.cellCount,t.position.y/=t.cellCount,t.outOfView=!1,s+=t.position.x,o+=t.position.y,i++):t.outOfView=!0),e.turnedOn&&(0<e.cellCount?(e.position.x/=e.cellCount,e.position.y/=e.cellCount,e.outOfView=!1,s+=e.position.x,o+=e.position.y,i++):e.outOfView=!0),0<i&&(this.center.x=0|s/i,this.center.y=0|o/i)}}static lockTarget(t,e,i){A.freeSpectate||p.toggleSpectate();let s=199996164,o=!1;if(I.cells.forEach(i=>{if(!(i.isFood||i.isVirus||i.isEjected)){const a=this.getDistanceSquare(t,e,i.animX,i.animY);a<s&&(s=a,o=i)}}),o)if(o.isUnnamed)k.alert("Multibox",n.current.notif.target_unnamed);else{const t=this[1===i?"target1":"target2"];t.turnedOn=!0,t.nick=o.nick,t.worldID=o.worldID,t.outOfView=!1,w.targetMode()}}static getDistanceSquare(t,e,i,s){const o=i-t,a=s-e;return o*o+a*a}static reset(){this.isTurnedOn||p.toggleSpectate(),A.freeSpectate?w.mouseViewport():w.topViewport(),this.target1.turnedOn=!1,this.target2.turnedOn=!1}static getMass(t){return t*t/100}static get isTurnedOn(){return this.target1.turnedOn||this.target2.turnedOn}}class D{static init(){this.r=0,this.g=0,this.b=0,this.targetR=0,this.targetG=0,this.targetB=0,this.color="#000000",this.lastTime=0}static update(){this.r+=(this.targetR-this.r)/80,this.g+=(this.targetG-this.g)/80,this.b+=(this.targetB-this.b)/80,this.color="#"+(16777216+(this.r<<16)+(this.g<<8)+(0|this.b)).toString(16).slice(1);const t=Math.min(Y.time-this.lastTime-2e3,33);0>t||(this.lastTime=Y.time+t,this.newTargetRGB())}static newTargetRGB(){let t=[255,7,0|255*Math.random()];t.sort(()=>.5-Math.random()),this.targetR=t[0],this.targetG=t[1],this.targetB=t[2]}static getColor(t,e){return"rgb("+(0|t.r*e)+","+(0|t.g*e)+","+(0|t.b*e)+")"}static getGrayscale(t,e){var i=0|.299*t.r*e+.587*t.g*e+.114*t.b*e;return"rgb("+i+","+i+","+i+")"}}class L{constructor(t){this.dataView=t,this.index=0,this.maxIndex=t.byteLength}readUInt8(){const t=this.dataView.getUint8(this.index,!0);return this.index++,t}readInt8(){const t=this.dataView.getInt8(this.index,!0);return this.index++,t}readUInt16(){const t=this.dataView.getUint16(this.index,!0);return this.index+=2,t}readInt16(){const t=this.dataView.getInt16(this.index,!0);return this.index+=2,t}readUInt32(){const t=this.dataView.getUint32(this.index,!0);return this.index+=4,t}readInt32(){const t=this.dataView.getInt32(this.index,!0);return this.index+=4,t}readFloat32(){const t=this.dataView.getFloat32(this.index,!0);return this.index+=4,t}readFloat64(){const t=this.dataView.getFloat64(this.index,!0);return this.index+=8,t}readUTF8string(){let t,e="";for(;0!==(t=this.readUInt8())&&!this.endOfBuffer();)e+=String.fromCharCode(t);return e}readStringZeroUtf8(){let t="",e=0;for(var i=this.index;i<this.dataView.byteLength&&this.dataView.getUint8(i,!0);i++)e++;return t+=(new TextDecoder).decode(new Uint8Array(this.dataView.buffer,this.index,e)),this.index+=e+1,t}readEscapedUTF8string(){const t=this.readUTF8string();return decodeURIComponent(escape(t))}decompress(){const t=new Uint8Array(this.dataView.buffer),e=this.readUInt32(),i=new Uint8Array(e);LZ4.decodeBlock(t.slice(5),i),this.dataView=new DataView(i.buffer),this.index=0,this.maxIndex=this.dataView.byteLength}endOfBuffer(){return this.index>=this.maxIndex}readUTF16String(){let t="";for(;this.index+1<this.maxIndex;){const e=this.dataView.getUint8(this.index),i=this.dataView.getUint8(this.index+1);if(0===e&&0===i)break;t+=String.fromCharCode(e),this.index+=2}return this.index+=2,t}}class G{static init(){this.ip=null,this.ws=null,this.connected=!1,this.ws2=null,this.connected2=!1,this.packetCount={in:0,out:0},U.init()}static async getToken(t){return new Promise((i,s)=>{t<=1&&k.warn("Multibox","Solving captcha, please wait.."),window.turnstile&&window.turnstile.render(".cf-turnstile",{sitekey:"0x4AAAAAABwAtcdv_5-aS9cf",callback:(s,o)=>o||s?(e("#loading-screen")&&e("#loading-screen").fadeOut(500)&&e("#loading-screen").remove(),B.handleDisabledProperty(!1),k.warn("Multibox","Captcha has been solved successfully for Tab "+t),i(s)):k.warn("Multibox","Unexpected response from turnstile API."),"expired-callback":s,"error-callback":s})})}static connect(t,e){if("string"!=typeof t)return k.warn("Multibox","Server IP is invalid");t&&(this.disconnect(),this.resetData(),this.ws=new WebSocket(t,"algamees"),this.ws.binaryType="arraybuffer",this.ws.onopen=()=>{this.onOpen(1)},this.ws.onmessage=t=>{this.onMessage(t,1)},this.ws.onclose=()=>{this.onClose(1)},this.ws.onerror=()=>{this.onError(1)},Z.hookWs(this.ws)),t&&(this.ws2=new WebSocket(t,"algamees"),this.ws2.binaryType="arraybuffer",this.ws2.onopen=()=>{this.onOpen(2)},this.ws2.onmessage=t=>{this.onMessage(t,2)},this.ws2.onclose=()=>{this.onClose(2)},this.ws2.onerror=()=>{this.onError(2)},Z.hookWs(this.ws2),this.ip=t,console.log("Connecting to: "+t))}static disconnect(){this.ws&&this.ws.close&&(this.ws.close(),this.ws.onopen=null,this.ws.onmessage=null,this.ws.onclose=null,this.ws.onerror=null),this.ws2&&this.ws2.close&&(this.ws2.close(),this.ws2.onopen=null,this.ws2.onmessage=null,this.ws2.onclose=null,this.ws2.onerror=null),this.ws=null,this.connected=!1,this.ws2=null,this.connected2=!1,this.ip=null}static resetData(){I.cells.clear(),I.myCellsIDs.clear(),I.myCells.clear(),I.cells2.clear(),I.myCellsIDs2.clear(),I.myCells2.clear(),_._isAlive=!1,_._isAlive2=!1}static send(t,e){this.packetCount.out++,1===e&&this.wsOpen?this.ws.send(t):2===e&&this.ws2Open&&this.ws2.send(t)}static onOpen(t){j.ip(),F.init(),B.init(t),k.alert("Multibox","Tab "+t+" connected")}static onMessage(t,e){this.packetCount.in++,E.getBuffer(t,e)}static onClose(t){this.wsOpen||this.ws2Open||x.open(),1===t?this.connected=!1:this.connected2=!1,E.clearCells(t),k.alert("Multibox","Tab "+t+" disconnected"),console.log("Websocket "+t+" closed")}static onError(t){this.wsOpen||this.ws2Open||x.open(),1===t?this.connected=!1:this.connected2=!1,console.log("Websocket "+t+" errored out!")}static get wsOpen(){return this.ws&&this.ws.readyState===this.ws.OPEN}static get ws2Open(){return this.ws2&&this.ws2.readyState===this.ws2.OPEN}}class F{static init(){this.messages=new Map,this.spammers=[]}static checkSpam(t,e){if(-1!==this.spammers.indexOf(t))return!0;if(this.messages.has(t)){const i=this.messages.get(t);if(i==e&&e.length>=30||i.length>=30&&e.length>=30)return this.spammers.push(t),k.alert("Multibox","Spammer Catched -> "+t),!0}else e.length>=30&&this.messages.set(t,e);return this.messages.size>=10&&this.messages.clear(),!1}}class E{static getBuffer(t,e){const i=new DataView(t.data);this.parse(i,e)}static parse(t,e){const i=new L(t),s=i.readUInt8();16===s?this.worldUpdate(i,e):17===s?this.getSpectateData(i):18===s?this.clearCells(e):20===s?this.clearMyCells(e):32===s?this.getMyCellId(i,e):50===s&&1===e?this.getLeaderboard(i):49===s&&1===e?this.getLeaderboardFFA(i):65===s&&this.borderUpdate(i,e),86===s&&this.handleChat(i,e),254===s&&this.handleServerTime(i)}static handleChat(t,e){for(var i=t.readUInt32(),s=0;s<7;s++)t.readUInt8();var o=t.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g,"").replace(/^\[.\]/,""),a=t.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g,"");if(a&&0===a.indexOf("__SK__"))try{const t=atob(a.substring(6)),e=N.teamPlayers.get(String(i));e?e.skin=t:Z&&Z._pendingSkins&&(Z._pendingSkins[String(i)]=t)}catch(t){}else if(a&&0===a.indexOf("__PC__")&&Z){if(!Z._inParty)try{const t=atob(a.substring(6));t&&Z._startAutoJoin(t)}catch(t){}}else a&&1===e&&k.normal(o||"Player",a)}static worldUpdate(t,e=1){Y.refreshTime();for(var i=!1,s=null,o=null,a=void 0,n=void 0,r=void 0,c=void 0,h=void 0,d=void 0,m=void 0,g=void 0,p=void 0,f=void 0,u="on"===l.eatAnimation,k=t.readUInt16(),y=0;y<k;y++){a=t.readUInt32(),n=t.readUInt32(),u&&I.eatCell(a,n,e)}for(;0!==(r=t.readUInt32());)(s=I.getCell(r,e)).isFood=this.checkIsFood(s),c=t.readInt32(),h=t.readInt32(),d=t.readUInt16(),s.init?(s.animate(),s.x=s.animX,s.y=s.animY,s.radius=s.animRadius):(s.animX=s.x=c,s.animY=s.y=h,s.radius=s.animRadius=d,s.lastUpdateTime=Y.time,s.init=!0),s.x=c,s.y=h,s.radius=d,s.lastUpdateTime=Y.time,p=!!(1&(o=t.readUInt8())),g=!!(4&o),m=!!(8&o),f=!!(128&o),!!(64&o)&&t.readInt32(),2&o&&s.setColor(t.readUInt8(),t.readUInt8(),t.readUInt8()),i=!!(32&o),g&&(s.skin=t.readEscapedUTF8string(),"undefined"===s.skin.split("/")[1]||s.skin.startsWith("http")||H.get3rbSkin(s.skin)),s.nick=m?t.readEscapedUTF8string():null,s.bNick=f?t.readEscapedUTF8string():null,s.isVirus=p,s.isEjected=i;for(k=t.readUInt16(),y=0;y<k;y++)n=t.readUInt32(),I.removeCell(n,e)}static checkIsFood(t){return t.isUnnamed&&0!=t.nodeType&&!t.isMine&&!t.isEjected&&t.radius<100}static getSpectateData(t){A.spectatePoint.x=t.readFloat32(),A.spectatePoint.y=t.readFloat32(),A.autoZoomViewport=t.readFloat32()}static clearCells(t){console.log("Reseting World..."),1===t?(I.cells.clear(),I.myCellsIDs.clear(),I.myCells.clear()):(I.cells2.clear(),I.myCellsIDs2.clear(),I.myCells2.clear())}static clearMyCells(t){1===t?(I.myCellsIDs.clear(),I.myCells.clear()):(I.myCellsIDs2.clear(),I.myCells2.clear())}static handleServerTime(t){const e=t.readUTF16String();if(e){let t;e.indexOf("[console]")>-1?t=e.split("[console]")[1]:-1===e.indexOf("[]")&&(t=e),t&&(this._restartTime=new Date(t).getTime())}}static getMyCellId(t,e){const i=1===e?I.myCellsIDs:I.myCellsIDs2,s=t.readUInt32();i.add(s)}static getLeaderboard(t){let e,i;y.clear();let s=t.readUInt16();for(e=0;e<s;e++)i=(i=t.readStringZeroUtf8())||"unnamed cell",y.add(i,e+1,!1,!1,!1);y.update()}static getLeaderboardFFA(t){let e,i,s,o;y.clear();let a=t.readUInt16();for(e=0;e<a;e++)i=t.readUInt16(),s=t.readUInt32(),o=t.readStringZeroUtf8()||"unnamed cell",y.add(o,i||1,!1,!1,!1,s);y.update()}static getLeaderboardTeam(t){let e;y.clear();let i=t.readUInt32(),s=[];for(e=0;e<=i&&!t.endOfBuffer();e++)s.push(t.readFloat32());y.team(s[0],s[1],s[2])}static borderUpdate(t,e){const i=0|t.readFloat64(),s=0|t.readFloat64(),o=0|t.readFloat64(),a=0|t.readFloat64();1===e?U.update(i,s,o,a):U.update2(i,s,o,a)}static bytesToColor(t,e,i){return"#"+("00"+(~~t).toString(16)).slice(-2)+("00"+(~~e).toString(16)).slice(-2)+("00"+(~~i).toString(16)).slice(-2)}}class B{static init(t){clearInterval(this.pingInterval),this.handleDisabledProperty(!0),this.handshake1(t),this.handshake2(t),this.initPingLoop(t),this.accountPacketSent=!1,A.isSpectating=!1,A.freeSpectate=!1,console.log("Connected to: "+G.ip),1===t?G.connected=!0:G.connected2=!0}static handleDisabledProperty(t){document.querySelector("#button-play").disabled=t,document.querySelector("#button-spectate").disabled=t}static createView(t){return new DataView(new ArrayBuffer(t))}static chekConnection(t){return 1===t&&G.connected||2===t&&G.connected2}static sendPacket(t,e){G.send(t.buffer,e)}static initPingLoop(t){this.pingInterval=setInterval(()=>{G.send(new Uint8Array([100]).buffer,t)},1e3)}static handshake1(t){const e=new Uint8Array([255,0,0]);G.send(e,t)}static async handshake2(t){if(!G.connected||!G.connected2){var e=await G.getToken(t),i=new DataView(new ArrayBuffer(e.length+3)),s=0;i.setUint8(s++,123),i.setUint8(s++,6),e.split("").forEach(t=>i.setUint8(s++,t.charCodeAt(0))),i.setUint8(s++,0),G.send(i.buffer,t)}}static mouse(t,e){const i=_.typeID;if(this.chekConnection(i)){const s=this.createView(17);s.setUint8(0,16,!0),s.setFloat64(1,Math.fround(~~t),!0),s.setFloat64(9,Math.fround(~~e),!0),this.sendPacket(s,i)}}static chat(t){const e=_.typeID;if(this.chekConnection(e)){const i=unescape(encodeURIComponent(t)),s=this.createView(6+i.length);s.setUint8(0,86),s.setUint8(1,255),s.setUint8(2,255),s.setUint8(3,255),s.setUint8(4,255);for(let t=i.length;t--;)s.setUint8(t+5,i.charCodeAt(t),!0);s.setUint8(5+i.length,0,!0),this.sendPacket(s,e)}}static spectate(t){const e=t||1;if(this.chekConnection(e)||!_.isAlive&&!A.isSpectating||t){const t=this.createView(1);t.setUint8(0,1,!0),this.sendPacket(t,e),A.isSpectating=!0,_.isAlive||(A.targetViewport=.1)}}static spawn(){const t=_.typeID;if(this.chekConnection(t)&&(!_._isAlive&&1===t||!_._isAlive2&&2===t)){A.isSpectating=!1;const e=2===t;""===(e?_.nick2:_.nick)&&(e?_.nick2="Unnamed cell":_.nick="Unnamed cell");let i=unescape(encodeURIComponent(e?_.nick2:_.nick)),s=unescape(encodeURIComponent("free/"+(e?_.arbSkin2:_.arbSkin)));const o={n:i};e&&_.skin2&&!String(_.skin2).includes("XXXXXXX")?(o.s=unescape(encodeURIComponent(_.skin2)),o.w=""):e||!_.skin||String(_.skin).includes("XXXXXXX")?(e?_.arbSkin2:_.arbSkin)&&(o.s=s,o.w=""):(o.s=unescape(encodeURIComponent(_.skin)),o.w="");const a=JSON.stringify(o),n=a.length,r=this.createView(2+n);r.setUint8(0,0,!0);for(let t=0;t<n;t++)r.setUint8(t+1,a.charCodeAt(t),!0);r.setUint8(n+1,0,!0),this.sendPacket(r,t)}}static split(){const t=_.typeID;if(this.chekConnection(t)){const e=this.createView(1);e.setUint8(0,17,!0),this.sendPacket(e,t)}}static eject(){const t=_.typeID;if(this.chekConnection(t)){const e=this.createView(1);e.setUint8(0,21,!0),this.sendPacket(e,t)}}static freeSpectate(){if(this.chekConnection(1)){A.freeSpectate=!A.freeSpectate;const t=this.createView(1);t.setUint8(0,18,!0),this.sendPacket(t,1)}}}class K{static init(){this.ip="",this.ws=null,this.connected=!1,this.connect()}static connect(){}static send(t){this.ws.send(t)}static onOpen(){j.init()}static onMessage(t){W.parse(t)}static onClose(){this.connected=!1,console.log("Disconnected from networks.")}static onError(){this.connected=!1,console.log("Connection to networks errored out!")}}class N{static init(){const t={1:{totalMass:0,alive:0,spectate:0},2:{totalMass:0,alive:0,spectate:0}};K.init(),this.teamPlayers=new Map,this.selfID=-1,this.isSpectator=!1,this.teamAlternator=!0,this.teamData=t,this.biggestIsOn=!1,this.biggest=new T(0),this.partyCells=new Map}static clear(){for(const t of this.teamPlayers.keys())"number"==typeof t&&this.teamPlayers.delete(t);this.partyCells.clear()}static remove(t){this.teamPlayers.delete(t)}static getPlayer(t){if(t===this.selfID)return{};let e=this.teamPlayers.get(t);return void 0===e&&(e=this.newPlayer(t)),e}static newPlayer(t){const e=new T(t);return this.teamPlayers.set(t,e),e}static chat(t,e,i,s){let o=s||"Anonymous";if(s||t!==this.selfID){const e=this.teamPlayers.get(t);void 0!==e&&(o=e.nick)}else o=_.nick;1===e||3===e?k.normal(o,i):2==e&&k.command(o,i)}}class W{static parse(t){const e=new DataView(t.data),i=new L(e),s=i.readUInt8();1===s?this.update(i):2===s?this.chat(i):3===s?this.commander(i):4===s?this.selfID(i):5===s&&this.prePlayers(i)}static update(t){_.isAlive&&!N.isSpectator&&j.positionMass(),_.isAlive||!A.isSpectating||A.freeSpectate||j.biggest();const e=N.teamAlternator?1:2,i=N.teamData[e];i.totalMass=0,i.alive=0,i.spectate=0;let s=t.readUInt8();for(;s--;){const e=t.readUInt32();N.remove(e)}for(s=t.readUInt8();s--;){const s=t.readUInt32(),o=N.getPlayer(s),a=t.readUInt8();if(1&a){const e=t.readEscapedUTF8string();2===o.isNew?(k.alert(e,"joined the chatroom."),o.isNew=1):1===o.isNew&&k.alert(o.nick,"changed name to "+e),o.nick=e}if(2&a){const e=t.readUInt8(),i=t.readUInt8(),s=t.readUInt8();o.colorHex="#"+(16777216+(e<<16)+(i<<8)+s).toString(16).slice(1)}4&a&&(o.skin=t.readUTF8string()),16&a&&(o.x=t.readInt16(),o.y=t.readInt16(),o.mass=t.readUInt32()),32&a&&(o.isAlive=t.readUInt8()),64&a&&(o.isRGB=t.readUInt8()),o.team=e,o.isAlive?(i.totalMass+=o.mass,i.alive++):i.spectate++}const o=t.readUInt8();N.biggestIsOn=o,o&&(N.biggest.x=t.readInt16(),N.biggest.y=t.readInt16())}static prePlayers(t){N.clear();for(let e=t.readUInt8();e--;){const e=t.readUInt32(),i=N.newPlayer(e);i.nick=t.readEscapedUTF8string();const s=t.readUInt8(),o=t.readUInt8(),a=t.readUInt8();i.colorHex="#"+(16777216+(s<<16)+(o<<8)+a).toString(16).slice(1),i.skin=t.readUTF8string(),i.x=t.readInt16(),i.y=t.readInt16(),i.mass=t.readUInt32(),i.isAlive=t.readUInt8(),i.isRGB=t.readUInt8()}}static chat(t){const e=t.readUInt32(),i=t.readUInt8(),s=t.readEscapedUTF8string();if(3===i){const t=s.split("");N.chat(e,i,t[1],t[0])}else N.chat(e,i,s)}static commander(t){const e={x:t.readInt16()+U.offset.x,y:t.readInt16()+U.offset.y,time:Y.time};H.commanderPoints.add(e)}static selfID(t){const e=t.readUInt32();N.selfID=e}}class j{static init(){console.log("Connected to Networks."),K.connected=!0,this.nick(),this.skin(),this.tag(),this.color(),this.ip(),this.aliveStatus(),this.rgbMode(),N.isSpectator&&this.spectator(!0)}static createView(t){return new DataView(new ArrayBuffer(t))}static nick(){if(K.connected){const t=unescape(encodeURIComponent(_.nick));let e=t.length;const i=this.createView(2+t.length);for(i.setUint8(0,1,!0);e--;)i.setUint8(e+1,t.charCodeAt(e),!0);i.setUint8(1+t.length,0,!0),K.send(i.buffer)}}static color(){if(K.connected){const t=this.createView(4);t.setUint8(0,2,!0),t.setUint8(1,_.colorObject.r,!0),t.setUint8(2,_.colorObject.g,!0),t.setUint8(3,_.colorObject.b,!0),K.send(t.buffer)}}static skin(){if(G.connected||G.connected2){const t=_.skin;let e=t.length;const i=this.createView(2+t.length);for(i.setUint8(0,4,!0);e--;)i.setUint8(e+1,t.charCodeAt(e),!0);i.setUint8(1+t.length,0,!0),G.send(i.buffer,_.typeID)}}static ip(){if(K.connected&&G.ip){const t=this.createView(8);t.setUint8(0,8,!0),t.setUint8(1,1,!0);const e=j.ip;let i=G.ip.split("."),s=i[3].split(":");e[0]=i[0],e[1]=i[1],e[2]=i[2],e[3]=s[0],e[4]=s[1],t.setUint8(2,0|e[0],!0),t.setUint8(3,0|e[1],!0),t.setUint8(4,0|e[2],!0),t.setUint8(5,0|e[3],!0),t.setUint16(6,0|e[4],!0),K.send(t.buffer)}}static tag(){const t=_.tag;if(t&&t.length>0&&K.connected){let e=t.length;const i=this.createView(2+t.length);for(i.setUint8(0,4,!0);e--;)i.setUint8(e+1,t.charCodeAt(e),!0);i.setUint8(1+t.length,0,!0),K.send(i.buffer)}}static positionMass(){if(K.connected){const t=this.createView(9);t.setUint8(0,16,!0),t.setInt16(1,0|_.x-U.offset.x,!0),t.setInt16(3,0|_.y-U.offset.y,!0),t.setUint32(5,_.mass,!0),K.send(t.buffer)}}static aliveStatus(){if(K.connected){const t=this.createView(2),e=_.isAlive?1:0;t.setUint8(0,32,!0),t.setUint8(1,e,!0),K.send(t.buffer)}}static chat(t,e){if(K.connected){const i=unescape(encodeURIComponent(e)),s=this.createView(3+i.length);s.setUint8(0,64,!0),s.setUint8(1,t,!0);for(let t=i.length;t--;)s.setUint8(t+2,i.charCodeAt(t),!0);s.setUint8(2+i.length,0,!0),K.send(s.buffer)}}static commander(){if(K.connected){const t=1===_.typeID?U.offset:U.offset2,e=m.canvasX-t.x,i=m.canvasY-t.y,s=this.createView(5);s.setUint8(0,128,!0),s.setInt16(1,0|e,!0),s.setInt16(3,0|i,!0),K.send(s.buffer)}}static spectator(){}static rgbMode(){if(K.connected){const t=_.isRGB?1:0,e=this.createView(3);e.setUint8(0,0,!0),e.setUint8(1,8,!0),e.setUint8(2,t,!0),K.send(e.buffer)}}static biggest(){if(K.connected){const t=A.spectatePoint.x-U.offset.x,e=A.spectatePoint.y-U.offset.y,i=this.createView(6);i.setUint8(0,0,!0),i.setUint8(1,16,!0),i.setInt16(2,0|t,!0),i.setInt16(4,0|e,!0),K.send(i.buffer)}}}class H{static init(){this.canvas=i.getElementById("canvas"),this.ctx=this.canvas.getContext("2d"),this.pi2=2*Math.PI,this.skinMap=new Map,this.arbSkinMap=new Map,this.downloadedSkins=new Map,this.knownSkins={},this.commanderPoints=new Set,this.rgbTeammates=new Set,this.indicator=this.cacheIndicator(),this.getKnownSkins(),this._bgImage=new Image,this._bgImage.crossOrigin="anonymous",this._bgReady=!1,this._ceImage=new Image,this._ceImage.crossOrigin="anonymous",this._ceReady=!1,this._loadCeImage(u.commanderImageUrl),z.init(),D.init(),this.resizeCanvas(),t.onresize=()=>{this.resizeCanvas()}}static _loadCeImage(t){this._ceReady=!1,t&&t.length>0&&(this._ceImage=new Image,this._ceImage.crossOrigin="anonymous",this._ceImage.onload=()=>{this._ceReady=!0},this._ceImage.onerror=()=>{this._ceReady=!1},this._ceImage.src=t)}static _loadBgImage(t){t&&t.length>0?(this._bgImage=new Image,this._bgImage.crossOrigin="anonymous",this._bgImage.onload=()=>{this._bgReady=!0},this._bgImage.onerror=()=>{this._bgReady=!1},this._bgImage.src=t):this._bgReady=!1}static resizeCanvas(){this.canvas.width=0|t.innerWidth,this.canvas.height=0|t.innerHeight}static run(){this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height),this.ctx.imageSmoothingEnabled="on"===l.antiAliasing,this.ctx.save(),this.vanillaGrid();const t=(this.canvas.width>>1)/A.viewport-A.x,e=(this.canvas.height>>1)/A.viewport-A.y;this.ctx.scale(A.viewport,A.viewport),this.ctx.translate(t,e),this._bgReady&&(this.ctx.save(),this.ctx.beginPath(),this.ctx.rect(U.left,U.top,U.edge,U.edge),this.ctx.clip(),this.ctx.drawImage(this._bgImage,U.left,U.top,U.edge,U.edge),this.ctx.restore()),D.update(),z.render(),this.border(),O.render(),this.createSkinMap(),this.createRGBset(),this.mouseTracker(),this.cells(),this.commands(),X.cleaner(),this.ctx.restore()}static vanillaGrid(){if("off"!==l.vanillaGrid){const t=this.ctx,e=A.viewport,i=this.canvas.width/e,s=this.canvas.height/e;let o=(-A.x+i/2)%50,a=(-A.y+s/2)%50;for(t.strokeStyle=u.gridColor,t.lineWidth=0|Math.min(u.gridWidth,20)*A.viewport,t.globalAlpha=.2*e,t.beginPath();o<i;)t.moveTo(o*e,0),t.lineTo(o*e,s*e),o+=50;for(;a<s;)t.moveTo(0,a*e),t.lineTo(i*e,a*e),a+=50;t.closePath(),t.stroke(),t.globalAlpha=1}}static border(){const t=this.ctx,e=u.borderWidth>>1,i=u.borderOpacity/10;if(t.globalAlpha=i,u.borderGlowSize>0&&(t.shadowBlur=~~u.borderGlowSize,t.shadowColor=u.borderGlowColor),"on"!==u.rainbowBorder)return t.strokeStyle=u.borderColor,t.lineWidth=u.borderWidth,t.strokeRect(U.left-e,U.top-e,U.edge+u.borderWidth,U.edge+u.borderWidth),t.shadowBlur=0,t.shadowColor="transparent",void(t.globalAlpha=1);const s=u.borderWidth,o=U.left-e,a=U.top-e,n=U.edge+s,r=U.edge+s,l=(u._rainbowHue||0)%360;u._rainbowHue=l+2;const c=l,h=(l+72)%360,d=(l+144)%360,m=(l+216)%360,g=(l+288)%360;let p=t.createLinearGradient(o,a,o,a+r);p.addColorStop(0,"hsl("+c+",100%,50%)"),p.addColorStop(.25,"hsl("+h+",100%,50%)"),p.addColorStop(.5,"hsl("+d+",100%,50%)"),p.addColorStop(.75,"hsl("+m+",100%,50%)"),p.addColorStop(1,"hsl("+g+",100%,50%)"),t.fillStyle=p,t.fillRect(o,a,s,r),p=t.createLinearGradient(o+n,a,o+n,a+r),p.addColorStop(0,"hsl("+g+",100%,50%)"),p.addColorStop(.25,"hsl("+m+",100%,50%)"),p.addColorStop(.5,"hsl("+d+",100%,50%)"),p.addColorStop(.75,"hsl("+h+",100%,50%)"),p.addColorStop(1,"hsl("+c+",100%,50%)"),t.fillStyle=p,t.fillRect(o+n-s,a,s,r),p=t.createLinearGradient(o+n,a,o,a),p.addColorStop(0,"hsl("+g+",100%,50%)"),p.addColorStop(.25,"hsl("+m+",100%,50%)"),p.addColorStop(.5,"hsl("+d+",100%,50%)"),p.addColorStop(.75,"hsl("+h+",100%,50%)"),p.addColorStop(1,"hsl("+c+",100%,50%)"),t.fillStyle=p,t.fillRect(o,a,n,s),p=t.createLinearGradient(o,a+r,o+n,a+r),p.addColorStop(0,"hsl("+c+",100%,50%)"),p.addColorStop(.25,"hsl("+h+",100%,50%)"),p.addColorStop(.5,"hsl("+d+",100%,50%)"),p.addColorStop(.75,"hsl("+m+",100%,50%)"),p.addColorStop(1,"hsl("+g+",100%,50%)"),t.fillStyle=p,t.fillRect(o,a+r-s,n,s),t.shadowBlur=0,t.shadowColor="transparent",t.globalAlpha=1}static cells(){const t=this.ctx,e="off"!==l.cellMass,i="off"!==l.cellNick,s="on"===l.hideOwnNick,o="on"===l.hideOwnMass,a="on"===l.urlSkins,n="on"===l.arbSkins,r="on"===l.teamIndicator,c="on"===l.multiboxRing,h="on"===l.multiboxCellColor,d="on"===l.cellShadow,m="on"===l.cellGradient,g=u.indicatorSize,p=u.cellTransparency/100,f=u.cellNickSize/100,k=u.cellMassSize/100,y=l.cellTextAnimation,v=u.multiboxActive,C=u.multiboxInactive,b=u.multiboxRingWidth,S=u.lightenCellColor/100;t.strokeStyle=u.virusBorderColor,t.lineWidth=u.virusBorderWidth;for(const w of I.sortedCells){!w.isVirus&&!w.isEjected&&(this.skinMap.has(w.worldID)||this.arbSkinMap.has(w.worldID));w.animate();let x=1;const I={x:0,y:0},M=2===w.cellType?U.position:I;if(w.fadeStartTime&&(x=1-(Y.time-w.fadeStartTime)/l.CellAnimation,x=Math.max(0,Math.min(1,x))),t.beginPath(),t.arc(w.animX-M.x,w.animY-M.y,w.animRadius+5,0,this.pi2,!0),t.closePath(),w.isVirus){if(t.fillStyle=u.virusColor,t.globalAlpha=.7,"on"===u.virusGlow&&(t.shadowBlur=~~(u.virusGlowSize*u.virusGlowStrength/5),t.shadowColor=u.virusGlowColor),t.fill(),t.shadowBlur=0,t.shadowColor="transparent",t.globalAlpha=1,t.stroke(),"on"===l.virusRing){const e=w.animX-M.x,i=w.animY-M.y,s=w.animRadius+5,o=16,a=this.pi2/o,n=s*u.virusRingWidth/100,r=s+n,l=s,c=l+.7*n,h=Y.time/3e3*(u.globalRotationSpeed||5)%this.pi2;t.save(),t.translate(e,i),t.rotate(h),t.fillStyle=u.virusGearColor||u.virusRingColor,t.globalAlpha=.8;for(let e=0;e<o;e++){const i=e*a,s=i-.3*a,o=i+.3*a;t.beginPath(),t.moveTo(Math.cos(s)*l,Math.sin(s)*l),t.quadraticCurveTo(Math.cos(s)*c,Math.sin(s)*c,Math.cos(i)*r,Math.sin(i)*r),t.quadraticCurveTo(Math.cos(o)*c,Math.sin(o)*c,Math.cos(o)*l,Math.sin(o)*l),t.closePath(),t.fill()}t.globalAlpha=1,t.restore(),t.strokeStyle=u.virusBorderColor,t.lineWidth=u.virusBorderWidth}if("text"===l.virusMass){const e=w.animX-M.x,i=w.animY-M.y,s=.3*~~w.animRadius;t.fillStyle="rgba(0,0,0,0.7)",t.font="bold "+Math.max(12,s)+"px ubuntu",t.textAlign="center",t.textBaseline="middle",t.fillText(w.mass,e+1,i+1),t.fillStyle="#fff",t.fillText(w.mass,e,i)}else if("fill"===l.virusMass){const e=w.animX-M.x,i=w.animY-M.y,s=Math.min(1,Math.max(0,(w.mass-100)/100)),o=w.animRadius*s;t.save(),t.globalAlpha=.8,t.fillStyle=u.virusBorderColor,t.beginPath(),t.arc(e,i,o,0,this.pi2,!0),t.closePath(),t.fill(),t.globalAlpha=1,t.restore()}}else w.isFood&&"on"===l.foodGlow?(t.fillStyle=D.getColor(w.colorObject,S),t.shadowBlur=~~(u.foodGlowSize*u.foodGlowStrength/5),t.shadowColor=u.foodGlowColor,t.fill(),t.shadowBlur=0,t.shadowColor="transparent"):(d&&w.isMine&&(t.shadowColor="black",t.shadowBlur=15),t.fillStyle=h&&w.isMine?w.cellType===_.typeID?v:C:"on"===l.grayscaleInactive&&w.isMine&&w.cellType!==_.typeID?D.getGrayscale(w.colorObject,S):D.getColor(w.colorObject,S),p*x<1?(t.globalAlpha=p*x,t.fill(),t.globalAlpha=1):t.fill(),d&&w.isMine&&(t.shadowBlur=0));if(m&&!w.isVirus&&!w.isEjected&&w.animRadius>25){const e=w.animX-M.x,i=w.animY-M.y,s=w.animRadius+5,o=t.createRadialGradient(e,i,.1*s,e,i,s);o.addColorStop(0,"rgba(0,0,0,0.35)"),o.addColorStop(.6,"rgba(0,0,0,0.1)"),o.addColorStop(1,"rgba(0,0,0,0)"),t.fillStyle=o,t.beginPath(),t.arc(e,i,s,0,this.pi2,!0),t.closePath(),t.fill()}if(w.isEjected)continue;if(r&&w.isMine&&w.cellType===_.typeID&&x>0){t.save(),t.textAlign="center",t.textBaseline="bottom",t.font="600 "+2*g+"px sans-serif",t.fillStyle="rgba(255,255,255,1)";const e=w.animX-M.x,i=w.animY-M.y-w.animRadius-5;t.fillText("▼",e,i+g/2),t.restore()}let T=this.skinMap.has(w.worldID)&&a&&this.getCustomSkin(w.worldID,"skinMap");const P=this.arbSkinMap.has(w.worldID)&&n&&this.getCustomSkin(w.worldID,"arbSkinMap");let R=T||P;if(!R&&a){const t=H.code2Url(H.getImgurCode(w.skin||""));if(t&&!t.includes("XXXXXXX")&&!t.startsWith("free/")){const e=this.downloadedSkins.get(t);e?(R=e,T=e):void 0===e&&this.downloadSkin(t)}}let O=H.code2Url(H.getImgurCode(w.skin||"")).includes("XXXXXXX")?w.skin:w.arbSkin;const z=n&&!R&&O&&(O.startsWith("free/")||this.knownSkins.hasOwnProperty(O.replace(/free\/|.png/g,"")))&&this.get3rbSkin(O);if((R||z)&&(t.save(),t.clip(),R?t.drawImage(R,w.animX-M.x-(w.animRadius+5),w.animY-M.y-(w.animRadius+5),2*(w.animRadius+5),2*(w.animRadius+5)):z&&t.drawImage(z,w.animX-M.x-(w.animRadius+5),w.animY-M.y-(w.animRadius+5),2*(w.animRadius+5),2*(w.animRadius+5)),t.restore()),w.isMine&&c){const e=w.animRadius*b/100;t.beginPath(),t.arc(w.animX-M.x,w.animY-M.y,w.animRadius+5-(e>>1),0,this.pi2,!0),t.closePath(),t.lineWidth=0|e,t.strokeStyle=w.cellType===_.typeID?v:C,t.stroke(),t.strokeStyle=u.virusBorderColor,t.lineWidth=u.virusBorderWidth}if("on"===l.multiboxShield&&w.isMine&&u._shieldReady){const e=2.8*w.animRadius;t.drawImage(u.shieldImage,w.animX-M.x-e/2,w.animY-M.y-e/2,e,e)}if("on"===l.cellLuminous&&w.isMine&&(t.shadowBlur=30,t.shadowColor=D.getColor(w.colorObject,S),t.beginPath(),t.arc(w.animX-M.x,w.animY-M.y,w.animRadius+5,0,this.pi2,!0),t.closePath(),t.fill(),t.shadowBlur=0,t.shadowColor="transparent"),"on"===u.maouCircle&&w.isMine&&u._maouReady){const e=2.6*w.animRadius;t.drawImage(u.maouCanvas,w.animX-M.x-e/2,w.animY-M.y-e/2,e,e)}if(1===x&&(w.isMine&&!s||!w.isMine&&i)){const e=X.nick(w);if(e){const i=(("on"===y?w.animRadius:"stepped"===y?50+75*(w.animRadius/75|0):w.radius)*f*.3+6/A.viewport)/e.height,s=e.width*i,o=e.height*i;s>0&&o>0&&t.drawImage(e,w.animX-M.x-(s>>1),w.animY-M.y-(o>>1),s,o)}}if(1===x&&!w.isVirus&&(w.isMine&&!o||!w.isMine&&e)){const e=X.mass(w);if(e){const o=(("on"===y?w.animRadius:"stepped"===y?50+75*(w.animRadius/75|0):w.radius)*k*.3+6/A.viewport)/e.height,a=e.width*o,n=e.height*o,r=w.isUnnamed||w.isMine&&s||!w.isMine&&!i?-(n>>1):n>>2;a>0&&n>0&&t.drawImage(e,w.animX-M.x-(a>>1),w.animY-M.y+r,a,n)}}}}static partyCells(){const t=this.ctx,e=u.cellTransparency/100;for(const[i,s]of N.partyCells){const o=N.teamPlayers.get(i);if(!o)continue;const a=o.worldID,n=this.skinMap.has(a),r=this.arbSkinMap.has(a),c=n&&"on"===l.urlSkins||r&&"on"===l.arbSkins;for(let i=0;i<s.length;i++){const a=s[i],r=a.r,h=a.x,d=a.y;if(t.beginPath(),t.arc(h,d,r+5,0,this.pi2,!0),t.closePath(),c){const e=n&&"on"===l.urlSkins?this.getCustomSkin(o.worldID,"skinMap"):this.getCustomSkin(o.worldID,"arbSkinMap");e&&(t.save(),t.clip(),t.drawImage(e,h-r-5,d-r-5,2*(r+5),2*(r+5)),t.restore())}else t.globalAlpha=e,t.fillStyle=o.colorHex||"#555",t.fill(),t.globalAlpha=1;if(t.strokeStyle="rgba(255,255,255,0.3)",t.lineWidth=2,t.stroke(),0===i&&o.nick){const e="bold "+Math.max(12,.3*r)+"px Ubuntu";t.font=e,t.fillStyle="#fff",t.textAlign="center",t.textBaseline="bottom",t.fillText(o.nick,h,d-r-5)}if(a.m>0){const e=Math.max(12,.3*r)+"px Ubuntu";t.font=e,t.fillStyle="#fff",t.textAlign="center",t.textBaseline="middle",t.fillText(a.m,h,d)}}}}static createSkinMap(){const t=(I.cells?.size||0)+(I.cells2?.size||0),e=(I.myCells?.size||0)+(I.myCells2?.size||0)+(N.teamPlayers?.size||0)+t;if(!(e!==this._lastSkinSize||Z&&Z._skinMapDirty))return;this._lastSkinSize=e,Z&&(Z._skinMapDirty=!1),this.skinMap.clear(),this.arbSkinMap.clear();const i=t=>t&&t.includes("3rb.io/res/skins/free"),s=(t,e,i)=>{if(t instanceof Map)for(const[s,o]of t)i.set(o.worldID,e)},o=(t,e)=>{if(t instanceof Map)for(const[i,s]of t){if(!s||s.isMine)continue;if(e&&s.nick&&(e.includes(s.nick)||e.some(t=>s.nick.indexOf(t)>=0)))continue;if(this.skinMap.has(s.worldID)||this.arbSkinMap.has(s.worldID))continue;let t=s.skin;if(t&&!t.includes("XXXXXXX")||s.nick&&this.hasSkinInNick(s.nick)&&(t=this._decSkin(s.nick),t&&!t.includes("XXXXXXX")||(t=null)),!t)continue;const i=t.startsWith("free/")||t.includes("3rb.io/res/skins/free"),o=i?"https://3rb.io/res/skins/free/"+t.replace(/^free\//,"").replace(/\.png$/,"")+".png":this.code2Url(t);(i?this.arbSkinMap:this.skinMap).set(s.worldID,o)}},a=_.skin;if(!a||a.includes("XXXXXXX")||a.startsWith("free/")||s(I.myCells,this.code2Url(a),this.skinMap),_.arbSkin){const t="https://3rb.io/res/skins/free/"+_.arbSkin.replace(/free\/|.png/g,"")+".png";s(I.myCells,t,this.arbSkinMap)}if(_.arbSkin2){const t="https://3rb.io/res/skins/free/"+_.arbSkin2.replace(/free\/|.png/g,"")+".png";s(I.myCells2,t,this.arbSkinMap)}_.skin2&&!_.skin2.includes("XXXXXXX")?s(I.myCells2,this.code2Url(_.skin2),this.skinMap):!a||a.includes("XXXXXXX")||a.startsWith("free/")||s(I.myCells2,this.code2Url(a),this.skinMap);for(const t of N.teamPlayers.values())if(t.isAlive&&t.skin&&!t.skin.includes("XXXXXXX")){const e=t.skin.startsWith("free/"),s=e?"https://3rb.io/res/skins/free/"+t.skin.replace("free/","")+".png":this.code2Url(t.skin),o=e||i(s)?this.arbSkinMap:this.skinMap;o.set(t.worldID,s);const a=t.nick;if(I.cells instanceof Map)for(const[t,e]of I.cells)e&&!e.isMine&&e.nick&&e.nick.indexOf(a)>=0&&o.set(e.worldID,s);if(I.cells2 instanceof Map)for(const[t,e]of I.cells2)e&&e.nick&&e.nick.indexOf(a)>=0&&o.set(e.worldID,s)}const n=[_.nick,_.nick2].filter(Boolean);if(Z&&Z._sharedSkins)for(const t in Z._sharedSkins){if(!t||n.includes(t))continue;const e=Z._sharedSkins[t];if(!e||e.includes("XXXXXXX"))continue;const s=e.startsWith("free/")||e.includes("3rb.io/res/skins/free"),o=s?"https://3rb.io/res/skins/free/"+e.replace(/^free\//,"").replace(/\.png$/,"")+".png":this.code2Url(e),a=s||i(o)?this.arbSkinMap:this.skinMap;for(const[e,i]of I.cells)i&&!i.isMine&&i.nick&&(i.nick===t||i.nick.indexOf(t)>=0)&&(a.has(i.worldID)||(a===this.arbSkinMap?this.skinMap:this.arbSkinMap).has(i.worldID)||a.set(i.worldID,o));for(const[e,i]of I.cells2)i&&i.nick&&(i.nick===t||i.nick.indexOf(t)>=0)&&(a.has(i.worldID)||(a===this.arbSkinMap?this.skinMap:this.arbSkinMap).has(i.worldID)||a.set(i.worldID,o))}o(I.cells,n),o(I.cells2,n)}static createRGBset(){this.rgbTeammates.clear(),_.isRGB&&this.rgbTeammates.add(_.worldID);for(const t of N.teamPlayers.values())t.isAlive&&t.isRGB&&this.rgbTeammates.add(t.worldID)}static getCustomSkin(t,e){const i="arbSkinMap"===e?this.arbSkinMap.get(t):"skinMap"===e?this.skinMap.get(t):this.skinMap.get(t)||this.arbSkinMap.get(t);if(!i)return!1;const s=this.downloadedSkins.get(i);return void 0===s?(this.downloadSkin(i),!1):s}static get3rbSkin(t){const e=this.downloadedSkins.get(t);return void 0===e?(this.download3rbSkin(t),!1):e}static download3rbSkin(t){this.downloadedSkins.set(t,!1);const e=new Image;e.onload=()=>{const s=i.createElement("canvas"),o=s.getContext("2d");s.width=512,s.height=512,o.beginPath(),o.arc(256,256,256,0,this.pi2,!0),o.closePath(),o.clip(),o.drawImage(e,0,0,512,512),e.onload=null,e.src=s.toDataURL(),this.downloadedSkins.set(t,e)},e.src="https://3rb.io/res/skins/free/"+t.replace(/free\/|.png/g,"")+".png"}static downloadSkin(t){this.downloadedSkins.set(t,!1);const e=new Image;e.onload=()=>{try{const s=i.createElement("canvas"),o=s.getContext("2d");s.width=512,s.height=512,o.beginPath(),o.arc(256,256,256,0,this.pi2,!0),o.closePath(),o.clip(),o.drawImage(e,0,0,512,512),this.downloadedSkins.set(t,e),e.src=s.toDataURL(),e.onload=null}catch(i){this.downloadedSkins.set(t,e)}},e.onerror=()=>{this.downloadedSkins.set(t,!1)},e.src=t}static getImgurCode(t){const e=t.match(/https?:\/\/.+\.(png|jpg|gif|webp)/i);return null===e?"XXXXXXX":e[0]}static getRaindowFlag(t){return null!==t.match(/#hue\s??=\s??auto\s??,\s??blend\s??=\s??auto/i)}static code2Url(t){return t.startsWith("http")?t:"https://i.imgur.com/"+t+".png"}static _SKIN_CHARS(){return"​‌‍⁠⁡⁢⁣⁤⁪⁫⁬⁭⁮⁯\ufeff᠎"}static _SKIN_PREFIX(){return"​‌‍"}static _encSkin(t){const e=this._SKIN_CHARS();let i=this._SKIN_PREFIX();for(let s=0;s<Math.min(t.length,64);s++){const o=t.charCodeAt(s);i+=e[o>>4&15]+e[15&o]}return i}static _decSkin(t){const e=this._SKIN_PREFIX(),i=this._SKIN_CHARS(),s=t.indexOf(e);if(s<0)return null;const o=t.slice(s+e.length);if(o.length<2)return null;const a=[];for(let t=0;t+1<o.length;t+=2){const e=i.indexOf(o[t]),s=i.indexOf(o[t+1]);if(e<0||s<0)break;a.push(e<<4|s)}return(new TextDecoder).decode(new Uint8Array(a))}static hasSkinInNick(t){return t&&t.indexOf(this._SKIN_PREFIX())>=0}static commands(){const t=this.ctx,e="off"===l.commander;for(const i of this.commanderPoints.values()){const s=i.x,o=i.y,a=Y.time-i.time;if(a>2e3)this.commanderPoints.delete(i);else if(!(e||50>a)){const e=1e3*a/2e3,i=e>333?(1e3-e)/667:1,n=200*e/1e3*8,r=a/1e3*(u.globalRotationSpeed||5);if(t.save(),t.globalAlpha=i,t.translate(s,o),this._ceReady)t.save(),t.rotate(3*r),t.drawImage(this._ceImage,-n,-n,2*n,2*n),t.restore();else if(u._maouReady)t.save(),t.rotate(3*r),t.drawImage(u.maouOuter,-n,-n,2*n,2*n),t.restore(),t.save(),t.rotate(2*-r),t.drawImage(u.maouInner,-n,-n,2*n,2*n),t.restore();else{const e=1e3*a/2e3,i=t.createRadialGradient(0,0,.7*e,0,0,e);i.addColorStop(0,"rgba(0,0,0,0)"),i.addColorStop(1,u.commanderColor),t.fillStyle=i,t.beginPath(),t.arc(0,0,e,0,this.pi2),t.closePath(),t.fill(),t.strokeStyle="#ffffff",t.lineWidth=5,t.stroke()}t.restore()}}}static mouseTracker(){if("off"!==l.cursorLine){const t=this.ctx;t.strokeStyle=u.cursorLineColor,t.lineWidth=4,t.lineCap="round",t.lineJoin="round";const e=(m.x-this.canvas.width/2)/A.viewport+A.x,i=(m.y-this.canvas.height/2)/A.viewport+A.y;t.beginPath();const s={x:0,y:0},o=1===_.typeID?I.myCells:I.myCells2,a=1===_.typeID?s:U.position;for(const s of o.values())t.moveTo(s.animX-a.x,s.animY-a.y),t.lineTo(e,i);t.closePath(),t.stroke()}}static async getKnownSkins(){var t=await fetch("https://3rb.io/php/Skins.php?type=free"),e=await t.json(),i=Date.now();for(let t=0;t<e.length;t++)H.knownSkins[e[t]]=i;for(let t in H.knownSkins)H.knownSkins[t]!=i&&delete H.knownSkins[t]}static cacheIndicator(){const t=i.createElement("canvas");t.width=150,t.height=150;const e=t.getContext("2d");return e.textAlign="center",e.textBaseline="middle",e.font="600 150px FontAwesome",e.fillStyle="rgba(255,255,255,1)",e.fillText("ï¸",75,75),t}}class Y{static init(){this.time=Date.now(),G.init(),o.init(),x.init(),I.init(),_.init(),A.init(),N.init(),H.init(),this.loop=new a(()=>{this.run()}),setInterval(()=>{m.send()},40)}static run(){Y.refreshTime(),I.update(),_.update(),A.update(),H.run(),v.run(),C.update(),S.update(),w.update()}static browserVersion(){const t=navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);return!!t&&parseInt(t[2],10)}static refreshTime(){this.time=Date.now()}}t.onload=()=>{var t=document.createElement("style");t.textContent="#loading-screen{z-index:200;position:fixed;left:0;top:0;right:0;bottom:0;background-color:#1a1a2e;opacity:1;background-image:url(https://i.imgur.com/nmBQBiv.jpeg);background-position:bottom;background-size:cover;background-repeat:no-repeat;transition:opacity 1s}#loading-screen .maou-circle-container{width:512px;height:512px;position:fixed;top:calc(50% - 256px);left:calc(50% - 256px);transform:scale(1);transition:all .75s}#loading-screen .maou-circle-container:hover{transform:scale(1.1)}#loading-screen .maou-circle-container .maou-circle{width:512px;height:512px;position:absolute}#loading-screen .maou-circle-container .maou-circle.p1{background:url(https://i.imgur.com/wfSDaIH.png);animation:spinRight 32s linear infinite,fadeIn 6s}#loading-screen .maou-circle-container .maou-circle.p2{background:url(https://i.imgur.com/blWRiUv.png);animation:spinLeft 20s linear infinite,fadeIn 6s}#loading-screen .maou-circle-container .maou-circle.p3{background:url(https://i.imgur.com/GRjA1gJ.png);animation:spinRight 16s linear infinite,fadeIn 6s}#loading-screen .message{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);font-family:raleway;font-size:25px;color:#fff;text-align:center;animation:fadeIn 1s;opacity:1;transition:opacity 1s}@keyframes spinRight{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes spinLeft{0%{transform:rotate(0)}100%{transform:rotate(-360deg)}}@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}",document.head.appendChild(t),e("#loading-screen").html('<div class="maou-circle-container"><div class="maou-circle p1"></div><div class="maou-circle p2"></div><div class="maou-circle p3"></div></div><div class="message">Loading...</div>'),49>Y.browserVersion()?e("#loading-screen .message").text(" Only Chrome version 49 or higher are supported."):(n.init(),Y.init(),class{static init(){this.apiUrl="",this.codeChecked=!1,this.salt=o.get("profiles","salt")||"",this.Code=o.get("profiles","MXCode")||"",e("#private-code").val(this.Code),this.addEvents(),this.checkCode()}static addCode(){this.salt=this.generateCode(5),o.set("profiles","salt",this.salt),this.MXCode=this.generateCode(10),o.set("profiles","Code",this.Code),this.sendAddCode()}static addEvents(){e("#user-code-check").click(()=>{e("#userCode").fadeOut(250),this.checkCode()})}static sendAddCode(){}static checkCode(){}static generateCode(t){for(var e="",i=0;i<t;i++){var s=Math.floor(62*Math.random()),o=s+=s>9?s<36?55:61:48;e+=String.fromCharCode(o)}return e}static getApiUrl(){return window.atob(window.atob(window.atob(this.apiUrl)))}}.init())};const Z={_ws:null,_ws2:null,_inParty:!1,_partyCode:"",_members:{},_pendingSkins:{},_sharedSkins:{},_skinMapDirty:!1,_savedSkins:new Map,_myId:null,_processing57:!1,_autoJoinTimer:null,_startAutoJoin(t){if(!this._autoJoinTimer){try{localStorage.setItem("3rb_party_code",t)}catch(t){}this._autoJoinTimer=setInterval(()=>{if(this._inParty)return clearInterval(this._autoJoinTimer),void(this._autoJoinTimer=null);G&&(G.connected||G.connected2)&&(clearInterval(this._autoJoinTimer),this._autoJoinTimer=null,this.joinParty(t))},1500),setTimeout(()=>{this._autoJoinTimer&&(clearInterval(this._autoJoinTimer),this._autoJoinTimer=null)},3e4)}},init(){this._t=document.getElementById("party-token"),this._c=document.getElementById("create-party"),this._j=document.getElementById("join-party"),this._l=document.getElementById("party-leave"),this._d=document.getElementById("party-code-display"),this._c&&this._c.addEventListener("click",()=>this.createParty()),this._j&&this._j.addEventListener("click",()=>this.joinParty((this._t?.value||"").trim())),this._t&&this._t.addEventListener("keydown",t=>"Enter"===t.key&&this.joinParty((this._t?.value||"").trim())),this._l&&this._l.addEventListener("click",()=>this.leaveParty());try{const t=localStorage.getItem("3rb_party_code");t&&!this._inParty&&this._startAutoJoin(t)}catch(t){}},_updateUI(){this._c&&(this._c.style.display=this._inParty?"none":""),this._j&&(this._j.style.display=this._inParty?"none":""),this._t&&(this._t.style.display=this._inParty?"none":""),this._l&&(this._l.style.display=this._inParty?"":"none"),this._d&&(this._d.style.display=this._inParty&&this._partyCode?"":"none",this._d.textContent=this._inParty?"Party: "+this._partyCode:"")},hookWs(t){this._ws?this._ws2=t:this._ws=t;const e=t.onmessage;t.onmessage=i=>{this._interceptMessage(i)||e&&e.call(t,i)}},_send(t){const e=2===_.typeID?G.ws2:this._ws;return!(!e||e.readyState!==WebSocket.OPEN)&&(e.send(new Uint8Array(t).buffer),!0)},_broadcastCurrentSkins(){if(this._inParty){try{const t=_.skin;t&&!t.includes("XXXXXXX")&&(this._sharedSkins[_.nick]=t)}catch(t){}try{const t=_.skin2;t&&!t.includes("XXXXXXX")&&(this._sharedSkins[_.nick2]=t)}catch(t){}}},_sendSkinUpdate(t,e){this._inParty&&t&&!t.includes("XXXXXXX")&&(this._sharedSkins[2===e?_.nick2:_.nick]=t,this._skinMapDirty=!0)},createParty(){this._inParty=!1,this._partyCode="",this._send([85,0])?k.normal("Party","Creating party..."):k.alert("Party","Failed - no connection")},joinParty(t){if(!t)return;t=t.replace(/https?:\/\/(www\.)?3rb\.io\/?/i,"").replace(/^#+/,"#");const e=(new TextEncoder).encode(t),i=new Uint8Array(2+e.length);i[0]=85,i[1]=1,i.set(e,2),this._send(Array.from(i))},leaveParty(){this._send([85,2]),this._inParty=!1,this._partyCode="",this._members={},this._leaveTime=Date.now(),this._cleanTeamPlayers(),this._updateUI();try{localStorage.removeItem("3rb_party_code")}catch(t){}k.normal("Party","Left party")},_cleanTeamPlayers(){for(const t of N.teamPlayers.keys())"string"==typeof t&&N.teamPlayers.delete(t);this._savedSkins.clear(),this._pendingSkins={},this._sharedSkins={},this._skinMapDirty=!0,N.partyCells.clear()},_interceptMessage(t){const e=t.data;if(!(e instanceof ArrayBuffer)||e.byteLength<2)return!1;const i=new DataView(e),s=i.getUint8(0);if(85===s){if(i.byteLength>2&&3===i.getUint8(1)){if(this._inParty){let t=2;const e=[];for(;t<i.byteLength&&0!==i.getUint8(t);)e.push(i.getUint8(t)),t++;t++;const s=(new TextDecoder).decode(new Uint8Array(e)),o=[];for(;t<i.byteLength&&0!==i.getUint8(t);)o.push(i.getUint8(t)),t++;const a=(new TextDecoder).decode(new Uint8Array(o));return s&&a&&!a.includes("XXXXXXX")&&(this._sharedSkins[s]=a),!0}return!0}if(this._inParty)return!0;if(this._leaveTime&&Date.now()-this._leaveTime<3e3)return!0;let e=1;const s=[];for(;e<i.byteLength&&0!==i.getUint8(e);)s.push(String.fromCharCode(i.getUint8(e))),e++;const o=s.join("");if(!o||"error"===o)return this.leaveParty(),!1;this._inParty=!0,this._partyCode=o,this._updateUI(),k.normal("Party","Party code: "+o);try{localStorage.setItem("3rb_party_code",o)}catch(t){}try{_.skin&&!_.skin.includes("XXXXXXX")&&(this._sharedSkins[_.nick]=_.skin)}catch(t){}try{_.skin2&&!_.skin2.includes("XXXXXXX")&&(this._sharedSkins[_.nick2]=_.skin2)}catch(t){}try{const t=(new TextEncoder).encode(o),e=new Uint8Array(2+t.length);e[0]=85,e[1]=1,e.set(t,2),G.ws2&&G.ws2.readyState===WebSocket.OPEN&&G.ws2.send(new Uint8Array(e).buffer)}catch(t){}return!0}if(87===s){if(!this._inParty)return!0;if(this._processing57)return!0;this._processing57=!0;try{let t=1;const e=i.getUint16(t,!0);t+=2;const s={},o=new Map;for(let a=0;a<e&&!(t+4>i.byteLength);a++){const e=i.getUint32(t,!0);t+=4;const a=[];for(;t<i.byteLength&&0!==i.getUint8(t);)a.push(i.getUint8(t)),t++;t++;const n=(new TextDecoder).decode(new Uint8Array(a));if(t+3>i.byteLength)break;const r=i.getUint8(t++),l=i.getUint8(t++),c="#"+((1<<24)+(r<<16)+(l<<8)+i.getUint8(t++)).toString(16).slice(1);if(t+12>i.byteLength)break;const h=i.getInt32(t,!0);t+=4;const d=i.getInt32(t,!0);t+=4;const m=i.getInt32(t,!0);t+=4,s[e]={id:e,name:n,col:c,px:d,py:m,sz:h};const g=Math.max(10,10*Math.sqrt(Math.abs(h)));o.set(e.toString(),[{x:d,y:m,r:g}])}this._members=s,N.partyCells=o,this._myId=null;for(const t of Object.keys(s)){const e=s[t];if(e.name===_.nick){this._myId=e.id;break}}null!==this._myId&&N.teamPlayers.delete(String(this._myId));for(const t in s){if(t==this._myId)continue;const e=s[t];let i=N.teamPlayers.get(t);i||(i=new T(t),i.nick=e.name,i.colorHex=e.col,i.team=1,i.isAlive=1,N.teamPlayers.set(t,i)),i.isAlive=1,i.mass=e.sz,i.x=e.px,i.y=e.py,(Math.abs(i.animX-e.px)>2e3||Math.abs(i.animY-e.py)>2e3)&&(i.animX=e.px,i.animY=e.py)}const a=[_.nick,_.nick2].filter(Boolean);for(const t of N.teamPlayers.keys())if("string"==typeof t&&!s[t]){const e=N.teamPlayers.get(t);if(e&&a.includes(e.nick))continue;e&&e.skin&&this._savedSkins.set(t,e.skin),N.teamPlayers.delete(t)}for(const t of N.teamPlayers.keys())if(this._savedSkins.has(t)){const e=N.teamPlayers.get(t);e&&!e.skin&&(e.skin=this._savedSkins.get(t)),this._savedSkins.delete(t)}for(const t of Object.keys(this._pendingSkins)){const e=N.teamPlayers.get(t);e&&(e.skin=this._pendingSkins[t],delete this._pendingSkins[t])}for(const t of N.teamPlayers.keys()){const e=N.teamPlayers.get(t);if(e&&!e.skin){let t=this._sharedSkins[e.nick];if(!t)for(const i of Object.keys(this._sharedSkins))if(i.toLowerCase()===e.nick.toLowerCase()){t=this._sharedSkins[i];break}t&&!t.includes("XXXXXXX")&&(e.skin=t,this._skinMapDirty=!0)}}return this._broadcastCurrentSkins(),!0}finally{this._processing57=!1}}if(88===s){let t=1;const e=i.getUint32(t,!0);return N.teamPlayers.delete(String(e)),!0}return 89===s&&(this._inParty=!1,this._members={},this._partyCode="",this._cleanTeamPlayers(),this._updateUI(),k.normal("Party","Party disbanded"),!0)},_sendSkinPacket(t,e){}};window.partyCode=function(t){Z&&!Z._inParty&&t&&Z.joinParty(t)},window.partyDebug=function(){return Z?{inParty:Z._inParty,sharedSkins:Object.assign({},Z._sharedSkins),members:Z._members?Z._members.map(function(t){return t.nick}):[],leaveTime:Z._leaveTime}:"partyNet not initialized"},window.removeChatHistory=function(t){e("#chatroom .chatroom-row").each(function(){e(this).text().indexOf(t)>=0&&e(this).remove()}),Z&&Z._startAutoJoin(t)},Z.init()}(window,$,document);
+!function (_0x1c478d, _0x14f7b2, _0x24f9ab) {
+  const _0x1fd443 = function () {
+    let _0x294ed8 = true;
+    return function (_0x21be21, _0x1a0b0e) {
+      const _0x1b4c66 = _0x294ed8 ? function () {
+        if (_0x1a0b0e) {
+          const _0x44e015 = _0x1a0b0e.apply(_0x21be21, arguments);
+          _0x1a0b0e = null;
+          return _0x44e015;
+        }
+      } : function () {};
+      _0x294ed8 = false;
+      return _0x1b4c66;
+    };
+  }();
+  const _0x5749c5 = _0x1fd443(this, function () {
+    const _0x3d4924 = function () {
+      let _0x2a5e0f;
+      try {
+        _0x2a5e0f = Function("return (function() {}.constructor(\"return this\")( ));")();
+      } catch (_0x21ce0e) {
+        _0x2a5e0f = window;
+      }
+      return _0x2a5e0f;
+    };
+    const _0x321a87 = _0x3d4924();
+    const _0x348dac = _0x321a87.console = _0x321a87.console || {};
+    const _0x3f0159 = ["log", "warn", 'info', "error", 'exception', "table", 'trace'];
+    for (let _0x9c6fd0 = 0; _0x9c6fd0 < _0x3f0159.length; _0x9c6fd0++) {
+      const _0x2b378c = _0x1fd443.constructor.prototype.bind(_0x1fd443);
+      const _0x10323e = _0x3f0159[_0x9c6fd0];
+      const _0x2a8521 = _0x348dac[_0x10323e] || _0x2b378c;
+      _0x2b378c.__proto__ = _0x1fd443.bind(_0x1fd443);
+      _0x2b378c.toString = _0x2a8521.toString.bind(_0x2a8521);
+      _0x348dac[_0x10323e] = _0x2b378c;
+    }
+  });
+  _0x5749c5();
+  class _0x19d5af {
+    static ["init"]() {
+      this.prefix = "MX-";
+      this.oldPrefix = 'MX-';
+      this.reset();
+    }
+    static ["get"](_0x5b0c61, _0x19d740) {
+      const _0x457af7 = JSON.parse(localStorage.getItem(this.prefix + _0x5b0c61));
+      return null !== _0x457af7 && undefined !== _0x457af7[_0x19d740] && _0x457af7[_0x19d740];
+    }
+    static ["set"](_0x1ffa71, _0x53564e, _0x122c33) {
+      let _0x1d766f = JSON.parse(localStorage.getItem(this.prefix + _0x1ffa71));
+      if (null === _0x1d766f) {
+        _0x1d766f = {};
+      }
+      _0x1d766f[_0x53564e] = _0x122c33;
+      localStorage.setItem(this.prefix + _0x1ffa71, JSON.stringify(_0x1d766f));
+    }
+    static ['reset']() {
+      if (!this.get('extras', "resetted")) {
+        for (const _0x1a99e1 in localStorage) if (_0x1a99e1.substring(0, 5) === this.oldPrefix) {
+          localStorage.removeItem(_0x1a99e1);
+        }
+        this.set("extras", "resetted", true);
+      }
+    }
+  }
+  class _0x4660a8 {
+    constructor(_0x217245) {
+      this.event = _0x217245;
+      this.maxFps = 30;
+      this.lastFrameTime = 0;
+      _0x1c478d.requestAnimationFrame(_0x18ec9c => {
+        this.run(_0x18ec9c);
+      });
+    }
+    ["run"](_0x211bd0) {
+      _0x1c478d.requestAnimationFrame(_0x40f544 => {
+        this.run(_0x40f544);
+      });
+      this.updateRafTime(_0x211bd0);
+      this.event();
+    }
+    ["updateRafTime"](_0x126f0f) {
+      const _0x14e32a = _0x126f0f - this.lastFrameTime;
+      this.lastFrameTime = _0x126f0f;
+      if (0.05 > Math.abs(33.333333333333336 - _0x14e32a)) {
+        this.maxFps = 30;
+      } else if (0.05 > Math.abs(16.666666666666668 - _0x14e32a)) {
+        this.maxFps = 60;
+      } else if (0.05 > Math.abs(13.333333333333334 - _0x14e32a)) {
+        this.maxFps = 75;
+      } else if (0.05 > Math.abs(10 - _0x14e32a)) {
+        this.maxFps = 100;
+      } else if (0.05 > Math.abs(8.333333333333334 - _0x14e32a)) {
+        this.maxFps = 120;
+      } else if (0.05 > Math.abs(6.944444444444445 - _0x14e32a)) {
+        this.maxFps = 144;
+      }
+    }
+    get ["rafLoopTime"]() {
+      return 1000 / this.maxFps;
+    }
+  }
+  class _0x59f59a {
+    static ['init']() {
+      this["default"] = 'EN';
+      this.supported = ['EN', 'JA', 'ZH', 'KO', 'ES'];
+    }
+    static ["change"]() {
+      const _0x1a12d8 = _0x14f7b2("[data]");
+      for (let _0x3ec507 = 0; _0x3ec507 < _0x1a12d8.length; _0x3ec507++) {
+        this.update(_0x14f7b2(_0x1a12d8[_0x3ec507]));
+      }
+    }
+    static ["update"](_0x2c6634) {
+      const _0x1681a8 = _0x2c6634.attr("data").split('.');
+      let _0x1c9c6f = _0x1c478d["lang_" + this.selected] || _0x1c478d.lang_EN;
+      const _0x56e7ab = _0x1681a8[0];
+      const _0x4de997 = _0x1681a8[1];
+      const _0x2624ac = _0x1681a8[2];
+      if (!(_0x1c9c6f[_0x4de997] && _0x1c9c6f[_0x4de997][_0x2624ac])) {
+        _0x1c9c6f = _0x1c478d["lang_" + this['default']];
+      }
+      if ("html" === _0x56e7ab) {
+        _0x2c6634.html(_0x1c9c6f[_0x4de997][_0x2624ac]);
+      } else if ("placeholder" === _0x56e7ab) {
+        _0x2c6634.attr(_0x56e7ab, _0x1c9c6f[_0x4de997][_0x2624ac]);
+      }
+    }
+    static get ["selected"]() {
+      return _0x2cc0f3.language;
+    }
+    static get ["current"]() {
+      return _0x1c478d["lang_" + this.selected];
+    }
+    static get ["browser"]() {
+      const _0x103b11 = _0x1c478d.navigator.language.toUpperCase();
+      const _0x62570a = _0x103b11.indexOf('-') ? _0x103b11.split('-')[0] : _0x103b11;
+      return 0 <= this.supported.indexOf(_0x62570a) ? _0x62570a : this["default"];
+    }
+  }
+  const _0xbb8dcf = {
+    btn_settings: "Settings",
+    btn_play: 'Play',
+    btn_spectate: "Spectate",
+    btn_inputs: "Inputs",
+    "btn_theme": "Theme",
+    input_tag1: "Tag",
+    "input_tag2": "Tag 2",
+    input_nick: "Nick",
+    input_3rbSkin: "3rb.io Skin",
+    input_skinUrl: "Skin URL (imgur)",
+    "select_ffa": "FFA",
+    select_party: "Party",
+    select_teams: "Teams",
+    select_experimental: "Experimental",
+    input_token: "Party token",
+    "btn_join": "Join",
+    "btn_create": "Create"
+  };
+  const _0x86fef5 = {
+    cantPlay2Tag: "You can't play in double tag mode.",
+    "MXNetConn": "Connected to Networks.",
+    MXNetDisconn: "Disconnected from networks.",
+    invalidSkinUrl: "Invalid skin URL",
+    login_lastSession: "Logged in from last session data.",
+    "sdk_error": "SDK not loaded",
+    alreadyLoggedIn: "Already logged in.",
+    login_success: "Logged in",
+    login_error: "Login error!",
+    "logout": "Logged out",
+    nickChangeInGame: "You can't change nick while in game.",
+    targeting_on: "Click a cell to begin targeting it. See instructions in mouse settings menu.",
+    targeting_off: "Targeting is turned off. Turn it on in settings menu in order to use it.",
+    target_unnamed: "Cannot target unnamed cells.",
+    MXSkin_noAcc: "Account does not exist."
+  };
+  const _0x170eeb = {
+    title: "Multibox"
+  };
+  const _0x342cb5 = {
+    enterChatMsg: "Enter chat message...",
+    teamlist_title: "Team Players",
+    "score": "Score",
+    num1position: "#1 position",
+    "paused": 'Paused',
+    targeting_bigCellVp: "BIGGEST CELL VIEWPORT",
+    targeting_followVp: "VIEWPORT FOLLOWING MOUSE",
+    targeting_totalMass: "TOTAL MASS",
+    targeting_players: "TARGETING PLAYERS"
+  };
+  const _0x30d9bc = {
+    "language": "Language",
+    CellAnimation: "Animation delay",
+    zoomSpeed: "Zoom speed",
+    cameraSpeed: "Camera speed [2 default]",
+    eatAnimation: "Cell eat [sucking] animation",
+    "autoZoom": "Auto zoom",
+    cellTextAnimation: "Cell text animation",
+    autoHideText: "Auto hide text",
+    hideOwnNick: "Hide own nick",
+    hideOwnMass: "Hide own mass",
+    "cellNick": "Cell nick",
+    cellMass: "Cell mass",
+    nickShadow: "Nick shadow",
+    "massShadow": "Mass shadow",
+    "urlSkins": "URL skins",
+    "arbSkins": "3rb.io skins",
+    food: "Food",
+    vanillaGrid: "Vanilla grid",
+    "bgSectors": "Background sectors",
+    "cursorLine": "Cursor lines",
+    opponentRings: "Opponent rings",
+    "splitRings": "Split rings",
+    "virusRange": "Viruses range",
+    teamIndicator: "Teammate indicator",
+    commander: "Commander",
+    "chatType": "Chat type",
+    virusMass: "Virus mass",
+    showMassInLB: "Show mass in leaderboard",
+    cellLuminous: "Cell Luminous",
+    multiboxShield: "Multibox Shield",
+    grayscaleInactive: "Grayscale Inactive",
+    antiAliasing: "Anti-aliasing",
+    virusRing: "Virus Ring",
+    foodGlow: "Food Glow",
+    targeting: "Cell Targeting [Spectate mode]",
+    "opt_on": 'On',
+    "opt_off": 'Off',
+    opt_stepped: "Stepped",
+    "opt_linear": "Linear",
+    opt_shortened: "Shortened",
+    "opt_full": "Full",
+    "opt_nick": 'Nick',
+    "opt_mass": "Mass",
+    "opt_both": "Nick + Mass",
+    opt_perf: "Performance",
+    "opt_normal": 'Normal',
+    opt_urlSkin: "Url skins",
+    opt_MXSkin: "3rb.io skins",
+    opt_allSkin: "All skins",
+    opt_singleClr: "Mono colored",
+    opt_rainbow: 'Rainbow',
+    opt_onlyLines: "Only lines",
+    opt_snowflakes: "Snowflakes",
+    opt_chatroom: "Chatroom",
+    "opt_popup": "Pop up chat",
+    opt_fill: "Fill",
+    opt_text: "Text"
+  };
+  const _0xc530a1 = {
+    "title": 'Hotkeys',
+    toggleMenuKey: "Toggle main menu",
+    feedKey: "Feed",
+    macroFeedKey: "Macro feed",
+    splitKey: "Split",
+    doubleSplitKey: "Double split",
+    "split16Key": "Split 64",
+    "stopKey": "Stop cell movement",
+    "chatKey": "Toggle chat",
+    privateChatKey: "Toggle private chat",
+    freeSpectateKey: "Toggle spectate mode",
+    toggleSplitRings: "Toggle split rings",
+    toggleOpponentRings: "Toggle opponent rings",
+    "toggleNick": "Toggle cell nick",
+    toggleMass: "Toggle cell mass",
+    "toggleSkin": "Toggle skin",
+    toggleCustomSkin: "Toggle Custom Skin",
+    "toggleFood": "Toggle food",
+    toggleMaouCircle: "Toggle Maou circle",
+    respawnKey: "Quick respawn",
+    multiboxTab: "Multibox switch",
+    command0Key: "Command 0",
+    command1Key: "Command 1",
+    command2Key: "Command 2",
+    command3Key: "Command 3",
+    command4Key: "Command 4",
+    command5Key: "Command 5",
+    command6Key: "Command 6",
+    command7Key: "Command 7",
+    command8Key: "Command 8",
+    command9Key: "Command 9",
+    "zoom1key": "Zoom level 1",
+    zoom2key: "Zoom level 2",
+    zoom3key: "Zoom level 3",
+    zoom4key: "Zoom level 4",
+    "zoom5key": "Zoom level 5"
+  };
+  const _0x1e7379 = {
+    "title": 'Mouse',
+    feed: "Feed",
+    "macroFeed": "Macro feed",
+    "split": "Split",
+    doubleSplit: "Double split",
+    split16: "Split 64",
+    commander: 'Commander',
+    "off": "Off",
+    lmb: "Left click",
+    "rmb": "Right click",
+    scroll: "Middle click",
+    targeting_h1: "Targeting",
+    targeting_txt1: "Lock target 1",
+    targeting_txt2: "Lock target 2",
+    targeting_txt3: "Middle click or Toggle spectate key",
+    targeting_txt4: "Toggle top cell mode to follow mouse mode",
+    targeting_txt5: "Toggle targeting mode to follow mouse mode",
+    targeting_txt6: "Toggle follow mouse mode to top cell mode"
+  };
+  const _0x48fb44 = {
+    "title": "Commands",
+    "command0": "Fuck!",
+    "command1": "Feed Me!",
+    "command2": "Split into me!",
+    "command3": "Need backup at %sector%!",
+    "command4": "Enemy spotted at %sector%!",
+    command5: "Need a teammate!",
+    "command6": "Tank the virus!",
+    "command7": "Eat the virus!",
+    command8: "Let's bait!",
+    "command9": "Fake tricksplit!"
+  };
+  const _0x38b74 = {
+    selectedPreset: "Theme preset",
+    cursor: "Cursor",
+    "lbSize": "Leaderboard size",
+    chatFontSize: "Chat font size",
+    minimapSize: "Minimap size",
+    "skinBorder": "Skin border",
+    rainbowBorder: "Rainbow border",
+    virusGlow: "Virus glow",
+    virusGlowDistance: "Virus glow distance",
+    virusGlowColor: "Virus glow color",
+    foodGlow: "Food glow",
+    maouCircle: "Maou circle",
+    cellTransparency: "Cell transparency",
+    lightenCellColor: "Lighten cell color",
+    borderColor: "Border color",
+    borderWidth: "Border width",
+    gridColor: "Grid color",
+    gridTextColor: "Grid text color",
+    gridTextSize: "Grid text size",
+    gridTextFont: "Grid text font",
+    gridWidth: "Grid width",
+    "nickColor": "Nick color",
+    nickStrokeColor: "Nick stroke color",
+    cellNickSize: "Nick size",
+    "nickFont": "Nick font",
+    "massColor": "Mass color",
+    massStrokeColor: "Mass stroke color",
+    cellMassSize: "Mass size",
+    "massFont": "Mass font",
+    "foodColor": "Food color",
+    foodSize: "Food size",
+    "virusColor": "Virus color",
+    virusBorderColor: "Virus border color",
+    virusBorderWidth: "virus border width",
+    "virusDecor": "Virus Decoration",
+    backgroundColor: "Background color",
+    commanderColor: "Commander color",
+    commanderImageUrl: "Commander image URL",
+    indicatorSize: "Teammate indicator size",
+    "team1color": "Team 1 color [Double Tag Mode]",
+    "team2color": "Team 2 color [Double Tag Mode]",
+    borderOpacity: "Border Opacity",
+    borderGlowSize: "Border glow size",
+    borderGlowStrength: "Border glow strength",
+    borderGlowColor: "Border glow color",
+    cursorLineColor: "Cursor Line Color",
+    leaderboardTitleColor: "Leaderboard title color",
+    customLeaderboardHead: "Custom Leaderboard Head",
+    globalRotationSpeed: "Global Rotation Speed",
+    maouCircleUrl: "Maou Circle Skin URL",
+    multiboxShieldUrl: "Multibox Shield URL",
+    virusGlowSize: "Virus glow size",
+    virusGlowStrength: "Virus glow strength",
+    virusRingWidth: "Virus Ring Width",
+    virusRingColor: "Virus Ring Color",
+    virusGearColor: "Virus Gear Color",
+    foodGlowSize: "Food Glow Size",
+    foodGlowStrength: "Food Glow Strength",
+    foodGlowColor: "Food Glow Color",
+    ghostColor: "Ghost cell color [minimap]",
+    selfColor: "Self cell color [minimap]",
+    selfViewportColor: "Self viewport color [minimap]",
+    selfViewportAlpha: "Self viewport alpha",
+    topViewportColor: "Top viewport color [minimap]",
+    topViewportAlpha: "Top viewport alpha",
+    teammateColor: "Teammate cells color [minimap]",
+    teammateNameColor: "Teammate name color [minimap]",
+    backgroundImage: "Background Image URL",
+    on: 'On',
+    "off": "Off"
+  };
+  const _0x3f5045 = {
+    mainMenu: _0xbb8dcf,
+    "notif": _0x86fef5,
+    leaderboard: _0x170eeb,
+    huds: _0x342cb5,
+    settingMenu: _0x30d9bc,
+    hkMenu: _0xc530a1,
+    "mouseMenu": _0x1e7379,
+    commandsMenu: _0x48fb44,
+    "themeMenu": _0x38b74
+  };
+  _0x1c478d.lang_EN = _0x3f5045;
+  class _0x2cc0f3 {
+    static ["init"]() {
+      this.isOpened = false;
+      this.div = _0x14f7b2("#settings");
+      this.language = _0x19d5af.get('settings', 'language') || _0x59f59a.browser;
+      this.CellAnimation = ~~_0x19d5af.get("settings", "CellAnimation") || 140;
+      this.eatAnimation = _0x19d5af.get("settings", "eatAnimation") || 'on';
+      this.zoomSpeed = ~~_0x19d5af.get("settings", "zoomSpeed") || 92;
+      this.cameraSpeed = ~~_0x19d5af.get("settings", "cameraSpeed") || 2;
+      this.autoZoom = _0x19d5af.get("settings", "autoZoom") || "off";
+      this.cellTextAnimation = _0x19d5af.get("settings", "cellTextAnimation") || 'on';
+      this.autoHideText = _0x19d5af.get("settings", "autoHideText") || 'on';
+      this.cellNick = _0x19d5af.get("settings", 'cellNick') || 'on';
+      this.nickShadow = _0x19d5af.get("settings", "nickShadow") || "off";
+      this.cellMass = _0x19d5af.get("settings", "cellMass") || "shortened";
+      this.massShadow = _0x19d5af.get("settings", "massShadow") || 'off';
+      this.hideOwnNick = _0x19d5af.get("settings", "hideOwnNick") || 'on';
+      this.hideOwnMass = _0x19d5af.get("settings", "hideOwnMass") || "off";
+      this.urlSkins = _0x19d5af.get("settings", "urlSkins") || 'on';
+      this.arbSkins = _0x19d5af.get("settings", "arbSkins") || 'on';
+      this.food = _0x19d5af.get("settings", 'food') || "monoColored";
+      this.bgSectors = _0x19d5af.get("settings", "bgSectors") || 'normal';
+      this.vanillaGrid = _0x19d5af.get("settings", "vanillaGrid") || "off";
+      this.cursorLine = _0x19d5af.get("settings", 'cursorLine') || "off";
+      this.teamIndicator = _0x19d5af.get('settings', "teamIndicator") || 'on';
+      this.opponentRings = _0x19d5af.get("settings", "opponentRings") || 'off';
+      this.splitRings = _0x19d5af.get('settings', "splitRings") || "off";
+      this.virusRange = _0x19d5af.get("settings", 'virusRange') || 'off';
+      this.multiboxRing = _0x19d5af.get('settings', "multiboxRing") || 'on';
+      this.multiboxCellColor = _0x19d5af.get('settings', "multiboxCellColor") || 'on';
+      this.commander = _0x19d5af.get('settings', 'commander') || 'on';
+      this.targeting = _0x19d5af.get("settings", "targeting") || "off";
+      this.chatType = _0x19d5af.get("settings", "chatType") || 'popup';
+      this.multiboxMode = _0x19d5af.get('settings', "multiboxMode") || 'on';
+      this.virusMass = _0x19d5af.get("settings", "virusMass") || 'off';
+      this.showMassInLB = _0x19d5af.get("settings", "showMassInLB") || 'off';
+      this.cellShadow = _0x19d5af.get("settings", "cellShadow") || 'off';
+      this.cellGradient = _0x19d5af.get("settings", "cellGradient") || 'off';
+      this.cellLuminous = _0x19d5af.get("settings", "cellLuminous") || 'off';
+      this.multiboxShield = _0x19d5af.get("settings", "multiboxShield") || 'off';
+      this.grayscaleInactive = _0x19d5af.get("settings", "grayscaleInactive") || 'off';
+      this.antiAliasing = _0x19d5af.get("settings", "antiAliasing") || 'on';
+      this.virusRing = _0x19d5af.get("settings", "virusRing") || 'off';
+      this.foodGlow = _0x19d5af.get("settings", "foodGlow") || 'off';
+      this.setDomValues();
+      this.addEvents();
+    }
+    static ["setDomValues"]() {
+      _0x14f7b2(".settings-options").each(function () {
+        const _0x19bdca = _0x14f7b2(this).attr("type");
+        if ("range" === _0x19bdca) {
+          _0x2cc0f3.handleRange(this, 2);
+        } else if ("options" === _0x19bdca) {
+          _0x2cc0f3.handleOptions(this, 2);
+        }
+      });
+      this.toggleChatroom();
+      this.changeLanguage();
+    }
+    static ["addEvents"]() {
+      _0x14f7b2(".settings-container").perfectScrollbar();
+      _0x14f7b2(".settings-container .fa-chevron-left").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x2b7d99 = _0x14f7b2(this).parent();
+          const _0x107fe3 = _0x14f7b2(_0x2b7d99).attr("type");
+          if ('options' === _0x107fe3) {
+            _0x2cc0f3.handleOptions(_0x2b7d99, 0);
+          } else if ("range" === _0x107fe3) {
+            _0x2cc0f3.handleRange(_0x2b7d99, 0);
+          }
+        });
+      });
+      _0x14f7b2(".settings-container span.outer").each(function () {
+        _0x14f7b2(this).click(_0x4da8bf => {
+          const _0x37646f = _0x14f7b2(this).parent();
+          _0x2cc0f3.handleRange(_0x37646f, 3, _0x4da8bf.offsetX);
+        });
+      });
+      _0x14f7b2(".settings-container .fa-chevron-right").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x2926ad = _0x14f7b2(this).parent();
+          const _0x79898a = _0x14f7b2(_0x2926ad).attr('type');
+          if ('options' === _0x79898a) {
+            _0x2cc0f3.handleOptions(_0x2926ad, 1);
+          } else if ("range" === _0x79898a) {
+            _0x2cc0f3.handleRange(_0x2926ad, 1);
+          }
+        });
+      });
+      _0x14f7b2(".settings-close").click(() => this.close());
+    }
+    static ["toggle"]() {
+      if (this.isOpened) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+    static ["close"]() {
+      this.isOpened = false;
+      this.div.fadeOut(250);
+    }
+    static ["open"]() {
+      this.isOpened = true;
+      this.div.fadeIn(250);
+    }
+    static ["handleOptions"](_0x2055b6, _0x54244c) {
+      const _0x57cfde = _0x14f7b2(_0x2055b6).attr("name");
+      const _0x488dc9 = _0x14f7b2(_0x2055b6).find('b');
+      const _0x46f276 = _0x488dc9.length;
+      let _0x4a5dfc = _0x46f276;
+      let _0x312b17 = 0;
+      for (; _0x4a5dfc--;) {
+        let _0x93ac42 = _0x488dc9[_0x4a5dfc];
+        if ("active" === _0x14f7b2(_0x93ac42).attr("class")) {
+          _0x312b17 = _0x4a5dfc;
+        }
+      }
+      if (1 === _0x54244c) {
+        const _0x59251c = _0x312b17 + 1 < _0x46f276 ? _0x312b17 + 1 : 0;
+        _0x14f7b2(_0x488dc9[_0x312b17]).removeAttr("class");
+        _0x14f7b2(_0x488dc9[_0x59251c]).attr("class", "active");
+        const _0x41b74f = _0x14f7b2(_0x488dc9[_0x59251c]).attr('value');
+        this.saveSettings(_0x57cfde, _0x41b74f);
+      } else {
+        if (0 === _0x54244c) {
+          const _0x44a974 = 0 < _0x312b17 ? _0x312b17 - 1 : _0x46f276 - 1;
+          _0x14f7b2(_0x488dc9[_0x312b17]).removeAttr("class");
+          _0x14f7b2(_0x488dc9[_0x44a974]).attr("class", "active");
+          const _0x15281c = _0x14f7b2(_0x488dc9[_0x44a974]).attr("value");
+          this.saveSettings(_0x57cfde, _0x15281c);
+        } else {
+          if (2 === _0x54244c) {
+            _0x14f7b2(_0x488dc9[_0x312b17]).removeAttr("class");
+            let _0x457c88;
+            for (let _0x40ad78 = _0x46f276; _0x40ad78--;) {
+              _0x457c88 = _0x488dc9[_0x40ad78];
+              if (_0x14f7b2(_0x457c88).attr("value") === this[_0x57cfde]) {
+                _0x14f7b2(_0x457c88).attr("class", 'active');
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    static ["handleRange"](_0x5dd1f0, _0x236718, _0x1be4a9 = 0) {
+      const _0x14cf3c = _0x14f7b2(_0x5dd1f0).attr("name");
+      const _0xe3b0d2 = _0x14f7b2(_0x5dd1f0).find('span');
+      const _0x12b89f = _0xe3b0d2[0];
+      const _0x36ffde = _0xe3b0d2[1];
+      const _0x3e7498 = _0x14f7b2(_0xe3b0d2[2]);
+      const _0xf87a91 = ~~_0x14f7b2(_0x12b89f).attr("min");
+      const _0x3112cc = ~~_0x14f7b2(_0x12b89f).attr("max");
+      const _0x4fc442 = ~~_0x14f7b2(_0x12b89f).attr('step');
+      const _0x310db3 = ~~_0x14f7b2(_0x12b89f).attr("value");
+      if (1 === _0x236718 && _0x310db3 + _0x4fc442 <= _0x3112cc) {
+        const _0x34058a = _0x4fc442 + _0x310db3;
+        _0x14f7b2(_0x12b89f).attr('value', _0x34058a);
+        _0x14f7b2(_0x36ffde).css("width", ~~(100 * (_0x34058a - _0xf87a91) / (_0x3112cc - _0xf87a91)) + 'px');
+        _0x3e7498.text('[' + _0x34058a + ']');
+        this.saveSettings(_0x14cf3c, ~~_0x34058a);
+      } else {
+        if (0 === _0x236718 && _0x310db3 - _0x4fc442 >= _0xf87a91) {
+          const _0x510077 = _0x310db3 - _0x4fc442;
+          _0x14f7b2(_0x12b89f).attr("value", _0x510077);
+          _0x14f7b2(_0x36ffde).css('width', ~~(100 * (_0x510077 - _0xf87a91) / (_0x3112cc - _0xf87a91)) + 'px');
+          _0x3e7498.text('[' + _0x510077 + ']');
+          this.saveSettings(_0x14cf3c, ~~_0x510077);
+        } else {
+          if (2 === _0x236718) {
+            const _0x306acf = this[_0x14cf3c];
+            _0x14f7b2(_0x12b89f).attr("value", _0x306acf);
+            _0x14f7b2(_0x36ffde).css("width", ~~(100 * (_0x306acf - _0xf87a91) / (_0x3112cc - _0xf87a91)) + 'px');
+            _0x3e7498.text('[' + _0x306acf + ']');
+          } else {
+            if (3 === _0x236718) {
+              let _0x3c81f8 = 0 | _0x1be4a9 / 100 * (_0x3112cc - _0xf87a91);
+              _0x3c81f8 = (0 | _0x3c81f8 / _0x4fc442) * _0x4fc442;
+              const _0x14c231 = 100 * ((_0x3c81f8 += _0xf87a91) - _0xf87a91) / (_0x3112cc - _0xf87a91);
+              _0x14f7b2(_0x12b89f).attr("value", _0x3c81f8);
+              _0x14f7b2(_0x36ffde).css('width', ~~_0x14c231 + 'px');
+              _0x3e7498.text('[' + _0x3c81f8 + ']');
+              this.saveSettings(_0x14cf3c, ~~_0x3c81f8);
+            }
+          }
+        }
+      }
+    }
+    static ["saveSettings"](_0x2dee0e, _0x1ffdc3) {
+      this[_0x2dee0e] = _0x1ffdc3;
+      if ("multiboxMode" === _0x2dee0e) {
+        _0x40f48a.alert("Multibox", "Please rejoin the server!");
+      }
+      if ("chatType" === _0x2dee0e) {
+        this.toggleChatroom();
+      }
+      if ("language" === _0x2dee0e) {
+        this.changeLanguage();
+      }
+      if ("nickShadow" === _0x2dee0e) {
+        _0x34f3bb.nickCaches.clear();
+      }
+      if ("massShadow" === _0x2dee0e) {
+        _0x34f3bb.massCaches.clear();
+      }
+      _0x19d5af.set("settings", _0x2dee0e, _0x1ffdc3);
+      if ("custom" !== _0x480be4.selectedPreset) {
+        _0x480be4.selectedPreset = 'custom';
+        _0x19d5af.set("theme", "selectedPreset", 'custom');
+        _0x480be4.setDomValues();
+      }
+    }
+    static ["changeLanguage"]() {
+      _0x59f59a.change();
+      _0x10ab3c.refresh();
+    }
+    static ["toggleChatroom"]() {
+      if ("chatroom" === this.chatType) {
+        _0x14f7b2("#chatroom").show();
+      } else {
+        _0x14f7b2("#chatroom").hide();
+      }
+    }
+  }
+  class _0x49cc31 {
+    static ["init"]() {
+      this.isOpened = false;
+      this.target = "hotkeys";
+      this.div = _0x14f7b2("#inputs");
+      this.addEvents();
+      _0x22a8df.init();
+      _0x50f0c6.initGallery();
+      _0x56ef98.init();
+      _0x128142.init();
+      _0x10ab3c.init();
+    }
+    static ['toggle']() {
+      if (this.isOpened) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+    static ["close"]() {
+      this.isOpened = false;
+      this.div.fadeOut(250);
+    }
+    static ['open']() {
+      this.isOpened = true;
+      this.div.fadeIn(250);
+    }
+    static ["addEvents"]() {
+      _0x14f7b2(".inputs-tab").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x2ae3a8 = _0x14f7b2(this).attr('target');
+          if ("#hotkeys" === _0x2ae3a8) {
+            _0x14f7b2("#hotkeys").addClass('active');
+            _0x14f7b2("#commands").removeClass("active");
+            _0x14f7b2("#mouse").removeClass('active');
+            _0x14f7b2(".inputs-tab[target=\"#hotkeys\"]").addClass("active");
+            _0x14f7b2(".inputs-tab[target=\"#mouse\"]").removeClass("active");
+            _0x14f7b2(".inputs-tab[target=\"#commands\"]").removeClass("active");
+            _0x49cc31.target = "hotkeys";
+          } else if ("#mouse" === _0x2ae3a8) {
+            _0x14f7b2("#mouse").addClass("active");
+            _0x14f7b2("#hotkeys").removeClass("active");
+            _0x14f7b2("#commands").removeClass("active");
+            _0x14f7b2(".inputs-tab[target=\"#hotkeys\"]").removeClass('active');
+            _0x14f7b2(".inputs-tab[target=\"#commands\"]").removeClass("active");
+            _0x14f7b2(".inputs-tab[target=\"#mouse\"]").addClass("active");
+            _0x49cc31.target = "mouse";
+          } else if ("#commands" === _0x2ae3a8) {
+            _0x14f7b2('#commands').addClass("active");
+            _0x14f7b2('#hotkeys').removeClass("active");
+            _0x14f7b2("#mouse").removeClass("active");
+            _0x14f7b2(".inputs-tab[target=\"#commands\"]").addClass("active");
+            _0x14f7b2(".inputs-tab[target=\"#hotkeys\"]").removeClass("active");
+            _0x14f7b2(".inputs-tab[target=\"#mouse\"]").removeClass('active');
+            _0x49cc31.target = 'commands';
+          }
+        });
+      });
+      _0x14f7b2(".inputs-tab.close").click(() => {
+        this.close();
+      });
+    }
+  }
+  class _0x50f0c6 {
+    static ["init"]() {
+      this.selected = ~~_0x19d5af.get("profiles", "selected") || 1;
+      this.wheelIsOpened = false;
+      this.tag = _0x19d5af.get("profiles", 'tag') || '';
+      this.arbSkin = _0x19d5af.get("profiles", "arbSkin") || '';
+      this.setDomValues();
+      this.addEvents();
+    }
+    static ["setDomValues"]() {
+      let _0x518ea9 = _0x19d5af.get('profiles', "profile" + this.selected);
+      const _0xededcf = {
+        "nick": "profile " + this.selected,
+        skin: "https://i.imgur.com/nRqSis7.png",
+        "arbSkin": '',
+        "nick2": '',
+        "skin2": ''
+      };
+      if (!_0x518ea9) {
+        _0x518ea9 = _0xededcf;
+      }
+      _0x19d5af.set('profiles', "profile" + this.selected, _0x518ea9);
+      _0x14f7b2("#nick").val(_0x518ea9.nick);
+      _0x14f7b2("#nick2").val(_0x518ea9.nick2 || '');
+      _0x14f7b2("#skin").val(_0x518ea9.skin);
+      _0x14f7b2("#skin2").val(_0x518ea9.skin2 || '');
+      _0x14f7b2("#tag").val(this.tag);
+      _0x14f7b2("#arbSkin").val(_0x518ea9.arbSkin);
+      _0x90a1a7.arbSkin = _0x518ea9.arbSkin || '';
+      this.updateMainSkin();
+      for (let _0x365a86 = 8; 0 < _0x365a86;) {
+        this.updatePreviewSkin(_0x365a86);
+        _0x365a86--;
+      }
+    }
+    static ["addEvents"]() {
+      _0x14f7b2(".bar-circle-outer").click(() => {
+        if (this.wheelIsOpened) {
+          _0x14f7b2(".skin-wheel").fadeOut(250);
+          return this.wheelIsOpened = false;
+        }
+        _0x14f7b2(".skin-wheel").fadeIn(250);
+        this.wheelIsOpened = true;
+      });
+      _0x14f7b2(".skin-selector").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x34b0bf = ~~_0x14f7b2(this).attr('value');
+          _0x50f0c6["switch"](_0x34b0bf);
+          _0x14f7b2(".skin-wheel").fadeOut(250);
+        });
+      });
+      _0x14f7b2(".menu-blur").click(() => {
+        if (this.wheelIsOpened) {
+          _0x14f7b2(".skin-wheel").fadeOut(250);
+          this.wheelIsOpened = false;
+        }
+      });
+      _0x14f7b2("#tag").blur(() => {
+        this.setTag(_0x14f7b2("#tag").val());
+        _0x2d5cce.spectator(true);
+      });
+      _0x14f7b2("#tag2").blur(() => {
+        this.setTag(_0x14f7b2('#tag').val());
+        _0x2d5cce.spectator(true);
+      });
+      _0x14f7b2("#nick").blur(() => {
+        this.setNick(_0x14f7b2("#nick").val());
+      });
+      _0x14f7b2('#arbSkin').blur(() => {
+        this.setarbSkin();
+      });
+      _0x14f7b2("#skin").blur(() => {
+        let _0x145a78 = _0x14f7b2('#skin').val();
+        if (!_0x145a78) {
+          _0x90a1a7._skin = "XXXXXXX";
+          this.setarbSkin();
+        } else if (!_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x145a78 || '')).includes('XXXXXXX')) {
+          return this.setSkin(_0x145a78);
+        } else {
+          this.setarbSkin();
+        }
+      });
+      _0x14f7b2("#nick2").blur(() => {
+        let _0xprofile2 = _0x19d5af.get('profiles', "profile" + this.selected);
+        if (!_0xprofile2) _0xprofile2 = {};
+        _0xprofile2.nick2 = _0x14f7b2("#nick2").val();
+        _0x19d5af.set('profiles', "profile" + this.selected, _0xprofile2);
+        _0x90a1a7.nick2 = _0xprofile2.nick2 || '';
+      });
+      _0x14f7b2("#skin2").blur(() => {
+        let _0xprofile2 = _0x19d5af.get('profiles', "profile" + this.selected);
+        if (!_0xprofile2) _0xprofile2 = {};
+        _0xprofile2.skin2 = _0x14f7b2("#skin2").val();
+        _0x19d5af.set('profiles', "profile" + this.selected, _0xprofile2);
+        _0x90a1a7.skin2 = _0x14f7b2("#skin2").val();
+      });
+    }
+    static ["switch"](_0x5517bb) {
+      this.selected = ~~_0x5517bb;
+      _0x19d5af.set("profiles", "selected", _0x5517bb);
+      let _0x4d475c = _0x19d5af.get("profiles", "profile" + _0x5517bb);
+      const _0x319c35 = {
+        nick: "profile " + this.selected,
+        skin: "https://i.imgur.com/nRqSis7.png",
+        arbSkin: '',
+        nick2: '',
+        skin2: ''
+      };
+      if (!_0x4d475c) {
+        _0x4d475c = _0x319c35;
+      }
+      _0x14f7b2("#nick").val(_0x4d475c.nick);
+      _0x14f7b2("#nick2").val(_0x4d475c.nick2 || '');
+      _0x14f7b2('#skin').val(_0x4d475c.skin);
+      _0x14f7b2("#skin2").val(_0x4d475c.skin2 || '');
+      _0x14f7b2("#arbSkin").val(_0x4d475c.arbSkin);
+      _0x90a1a7.nick = '' === _0x4d475c.nick ? "Unnamed Cell" : _0x4d475c.nick;
+      _0x90a1a7.nick2 = _0x4d475c.nick2 || '';
+      _0x90a1a7._skin = _0x4d475c.arbSkin ? '' : _0x4d475c.skin;
+      _0x90a1a7._skin2 = _0x4d475c.skin2 || '';
+      _0x90a1a7._arbSkin = _0x4d475c.arbSkin || '';
+      _0x19d5af.set('profiles', "profile" + this.selected, _0x4d475c);
+      this.updateMainSkin();
+    }
+    static ["setNick"](_0x27d7eb) {
+      if (_0x90a1a7.isAlive) {
+        _0x14f7b2("#nick").val(_0x90a1a7.nick);
+        _0x40f48a.alert('Multibox', _0x59f59a.current.notif.nickChangeInGame);
+      }
+      let _0x235246 = _0x19d5af.get("profiles", "profile" + this.selected);
+      const _0x1170bc = {
+        "nick": "profile " + this.selected,
+        "skin": "https://i.imgur.com/nRqSis7.png",
+        "arbSkin": '',
+        "nick2": '',
+        "skin2": ''
+      };
+      if (!_0x235246) {
+        _0x235246 = _0x1170bc;
+      }
+      _0x235246.nick = _0x27d7eb;
+      _0x19d5af.set("profiles", "profile" + this.selected, _0x235246);
+      _0x90a1a7.nick = '' === _0x27d7eb ? "Unnamed Cell" : _0x27d7eb;
+    }
+    static ["setarbSkin"]() {
+      var _0x431fed = _0x14f7b2("#arbSkin").val();
+      _0x90a1a7._skin = '';
+      _0x90a1a7._skin2 = '';
+      _0x90a1a7.arbSkin = _0x431fed;
+      _0x90a1a7.arbSkin2 = _0x431fed;
+      const _0prev = _0x19d5af.get('profiles', "profile" + this.selected) || {};
+      _0prev.arbSkin = _0x431fed;
+      _0prev.nick2 = _0prev.nick2 || '';
+      _0prev.skin2 = _0prev.skin2 || '';
+      _0x19d5af.set('profiles', "profile" + this.selected, _0prev);
+      this.updateMainSkin("https://3rb.io/res/skins/free/" + _0x431fed.replace(/free\/|.png/g, '') + ".png");
+      this.updatePreviewSkin(this.selected);
+      if (_0x431fed) {
+        const _0xskn = "free/" + _0x431fed.replace(/free\/|.png/g, '');
+        const _0xsendSkin = (_0id) => {
+          try {
+            const _0buf = _0x302a2c["createView"](2 + _0xskn.length);
+            _0buf.setUint8(0, 4, true);
+            for (let _0i = 0; _0i < _0xskn.length; _0i++) _0buf.setUint8(_0i + 1, _0xskn.charCodeAt(_0i), true);
+            _0buf.setUint8(_0xskn.length + 1, 0, true);
+            _0x302a2c["sendPacket"](_0buf, _0id);
+          } catch(e) {}
+        };
+        _0xsendSkin(1);
+        _0xsendSkin(2);
+        try { _0xpartyNet._sendSkinUpdate(_0xskn, 1); } catch(e) {}
+        try { _0xpartyNet._sendSkinUpdate(_0xskn, 2); } catch(e) {}
+        try { _0xpartyNet._sendSkinPacket(_0xskn, _0x90a1a7.nick); } catch(e) {}
+        try { _0xpartyNet._sendSkinPacket(_0xskn, _0x90a1a7.nick2); } catch(e) {}
+      }
+    }
+    static ["initGallery"]() {
+      _0x14f7b2("#galleryToggle").click(function(_0e) {
+        _0e.stopPropagation();
+        const _0g = document.getElementById('skinGalleryWrap');
+        const _0v = window.getComputedStyle(_0g).display;
+        if (_0v === 'block') {
+          _0g.style.display = 'none';
+        } else {
+          _0g.style.display = 'block';
+          _0x50f0c6.loadSkinGallery();
+        }
+      });
+      document.addEventListener('click', function(_0e) {
+        const _0g = document.getElementById('skinGalleryWrap');
+        if (_0g.style.display === 'block' && !_0e.target.closest('#skinGalleryWrap') && _0e.target.id !== 'galleryToggle') {
+          _0g.style.display = 'none';
+        }
+      });
+    }
+    static ["_skinList"]() {
+      return _0x50f0c6._cachedList || (_0x50f0c6._cachedList = []);
+    }
+    static ["loadSkinGallery"]() {
+      const _0list = _0x50f0c6._skinList();
+      if (_0list.length) { _0x50f0c6.renderGalleryPage(0); return; }
+      const _0url = "https://raw.githubusercontent.com/darknessxd/Endymion-3rb/main/skins.json";
+      _0x14f7b2.get(_0url, function(_0data) {
+        _0x50f0c6._cachedList = _0data;
+        _0x50f0c6._gPage = 0;
+        _0x50f0c6.renderGalleryPage(0);
+      }, "json").fail(function() {
+        _0x14f7b2("#skinGalleryGrid").html("<span style='color:red'>Failed to load skins</span>");
+      });
+      _0x14f7b2("#skinGallerySearch").off("input").on("input", function() {
+        _0x50f0c6._gPage = 0;
+        _0x50f0c6.renderGalleryPage(0);
+      });
+      _0x14f7b2("#skinGalleryGrid").off("click").on("click", function(_0e) {
+        const _0t = _0x14f7b2(_0e.target);
+        const _0img = _0t.is("img.gallery-thumb") ? _0t : _0t.find("img.gallery-thumb");
+        if (_0img.length) {
+          _0x50f0c6.galleryPick(_0img.attr("data-name"));
+        } else if (_0t.hasClass("gallery-nav")) {
+          _0x50f0c6._gPage = parseInt(_0t.attr("data-page"));
+          _0x50f0c6.renderGalleryPage(_0x50f0c6._gPage);
+        }
+      });
+    }
+    static ["renderGalleryPage"](_0page) {
+      const _0list = _0x50f0c6._skinList();
+      if (!_0list.length) return;
+      const _0search = (_0x14f7b2("#skinGallerySearch").val() || "").toLowerCase();
+      const _0filtered = _0search ? _0list.filter(function(_0n) { return _0n.toLowerCase().includes(_0search); }) : _0list;
+      const _0perPage = 30;
+      const _0start = _0page * _0perPage;
+      const _0items = _0filtered.slice(_0start, _0start + _0perPage);
+      const _0total = Math.ceil(_0filtered.length / _0perPage) || 1;
+      const _0selected = (_0x14f7b2("#arbSkin").val() || '').replace(/free\/|.png/g, '');
+      let _0html = '<div class="gallery-grid">';
+      for (let _0i = 0; _0i < _0items.length; _0i++) {
+        const _0name = _0items[_0i].replace('.png', '');
+        const _0sel = _0name === _0selected ? ' selected' : '';
+        _0html += '<div class="gallery-item' + _0sel + '">';
+        _0html += '<img class="gallery-thumb" data-name="' + _0name + '" src="https://3rb.io/res/skins/free/' + _0name + '.png" title="' + _0name + '">';
+        _0html += '<span class="gallery-name">' + _0name + '</span></div>';
+      }
+      _0html += '</div>';
+      let _0nav = '<div class="gallery-nav-wrap">';
+      _0nav += '<button class="gallery-nav" data-page="0"' + (_0page === 0 ? ' disabled' : '') + '>⏮</button>';
+      if (_0page > 0) _0nav += '<button class="gallery-nav" data-page="' + (_0page - 1) + '">◀</button>';
+      _0nav += '<span class="gallery-info">' + (_0page + 1) + ' / ' + _0total + '</span>';
+      if (_0page < _0total - 1) _0nav += '<button class="gallery-nav" data-page="' + (_0page + 1) + '">▶</button>';
+      _0nav += '<button class="gallery-nav" data-page="' + (_0total - 1) + '"' + (_0page >= _0total - 1 ? ' disabled' : '') + '>⏭</button>';
+      _0nav += '</div>';
+      _0html += _0nav;
+      _0x14f7b2("#skinGalleryGrid").html(_0html);
+    }
+    static ["galleryPick"](_0name) {
+      _0x14f7b2("#arbSkin").val(_0name);
+      _0x50f0c6.setarbSkin();
+      _0x50f0c6.renderGalleryPage(_0x50f0c6._gPage || 0);
+      document.getElementById('skinGalleryWrap').style.display = 'none';
+    }
+    static ["setSkin"](_0x10e480) {
+      let _0x2716a1 = _0x19d5af.get('profiles', "profile" + this.selected);
+      const _0x1197ad = {
+        "nick": "profile " + this.selected,
+        skin: "https://i.imgur.com/nRqSis7.png",
+        "arbSkin": _0x90a1a7._arbSkin || '',
+        "nick2": '',
+        "skin2": ''
+      };
+      if (!_0x2716a1) {
+        _0x2716a1 = _0x1197ad;
+      }
+      _0x2716a1.skin = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x10e480));
+      _0x19d5af.set("profiles", 'profile' + this.selected, _0x2716a1);
+      this.updateMainSkin();
+      this.updatePreviewSkin(this.selected);
+      _0x90a1a7.skin = _0x10e480;
+      if (_0x10e480) try { _0xpartyNet._sendSkinUpdate(_0x10e480, 1); } catch(e) {}
+      try {
+        const _0sk = _0x386cbc.getImgurCode(_0x10e480);
+        const _0buf2 = _0x302a2c["createView"](2 + _0sk.length);
+        _0buf2.setUint8(0, 4, true);
+        for (let _0i = 0; _0i < _0sk.length; _0i++) _0buf2.setUint8(_0i + 1, _0sk.charCodeAt(_0i), true);
+        _0buf2.setUint8(_0sk.length + 1, 0, true);
+        _0x302a2c["sendPacket"](_0buf2, _0x90a1a7.typeID);
+      } catch(e) {}
+    }
+    static ['setTag'](_0x57c637) {
+      _0x90a1a7.tag = _0x57c637;
+      _0x19d5af.set('profiles', "tag", _0x57c637);
+    }
+    static ["updateMainSkin"](_0x55f338) {
+      const _0x1f6a96 = _0x14f7b2('#skin').val();
+      _0x55f338 = _0x55f338 || _0x14f7b2('#arbSkin').val();
+      const _0x2517b0 = !_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x1f6a96 || '')).includes("XXXXXXX") ? _0x1f6a96 : "https://3rb.io/res/skins/free/" + _0x55f338.replace(/free\/|.png/g, '') + ".png";
+      _0x14f7b2(".skin-preview").css('background', "url(" + _0x2517b0 + ')');
+    }
+    static ["updatePreviewSkin"](_0x4207bd) {
+      let _0x5cc1ac = _0x19d5af.get("profiles", "profile" + _0x4207bd);
+      if (_0x5cc1ac) {
+        const _0x3d8c60 = !_0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5cc1ac.skin || '')).includes("XXXXXXX") ? _0x5cc1ac.skin : _0x5cc1ac.arbSkin && "https://3rb.io/res/skins/free/" + _0x5cc1ac.arbSkin.replace(/free\/|.png/g, '') + "png";
+        _0x14f7b2(".skin-selector[value=" + _0x4207bd + ']').css("background", "url(" + _0x3d8c60 + ')');
+      }
+    }
+  }
+  class _0x56ef98 {
+    static ["init"]() {
+      this.toggleMenuKey = _0x19d5af.get('hotkeys', "toggleMenuKey") || "ESC";
+      this.feedKey = _0x19d5af.get('hotkeys', "feedKey") || 'W';
+      this.macroFeedKey = _0x19d5af.get("hotkeys", "macroFeedKey") || 'E';
+      this.splitKey = _0x19d5af.get("hotkeys", "splitKey") || 'SPACE';
+      this.doubleSplitKey = _0x19d5af.get("hotkeys", "doubleSplitKey") || 'R';
+      this.split16Key = _0x19d5af.get("hotkeys", "split16Key") || 'G';
+      this.stopKey = _0x19d5af.get("hotkeys", "stopKey") || 'S';
+      this.chatKey = _0x19d5af.get("hotkeys", "chatKey") || 'ENTER';
+      this.privateChatKey = _0x19d5af.get("hotkeys", "privateChatKey") || "ALT+0";
+      this.freeSpectateKey = _0x19d5af.get("hotkeys", "freeSpectateKey") || 'Q';
+      this.toggleSplitRings = _0x19d5af.get("hotkeys", "toggleSplitRings") || 'U';
+      this.toggleOpponentRings = _0x19d5af.get("hotkeys", "toggleOpponentRings") || 'I';
+      this.toggleNick = _0x19d5af.get("hotkeys", 'toggleNick') || 'N';
+      this.toggleMass = _0x19d5af.get("hotkeys", "toggleMass") || 'M';
+      this.toggleBGsectors = _0x19d5af.get("hotkeys", "toggleBGsectors") || 'B';
+      this.toggleFood = _0x19d5af.get("hotkeys", "toggleFood") || 'F';
+      this.toggleSkin = _0x19d5af.get("hotkeys", "toggleSkin") || 'A';
+      this.toggleCustomSkin = _0x19d5af.get("hotkeys", "toggleCustomSkin") || 'X';
+      this.respawnKey = _0x19d5af.get("hotkeys", "respawnKey") || "TILDE";
+      this.multiboxTab = _0x19d5af.get('hotkeys', "multiboxTab") || "TAB";
+      this.togglemultiboxRing = _0x19d5af.get("hotkeys", "togglemultiboxRing") || 'L';
+      this.toggleMaouCircle = _0x19d5af.get("hotkeys", "toggleMaouCircle") || 'K';
+      this.command0Key = _0x19d5af.get("hotkeys", "command0Key") || '0';
+      this.command1Key = _0x19d5af.get("hotkeys", "command1Key") || '1';
+      this.command2Key = _0x19d5af.get("hotkeys", "command2Key") || '2';
+      this.command3Key = _0x19d5af.get("hotkeys", "command3Key") || '3';
+      this.command4Key = _0x19d5af.get('hotkeys', "command4Key") || '4';
+      this.command5Key = _0x19d5af.get("hotkeys", "command5Key") || '5';
+      this.command6Key = _0x19d5af.get("hotkeys", "command6Key") || '6';
+      this.command7Key = _0x19d5af.get("hotkeys", "command7Key") || '7';
+      this.command8Key = _0x19d5af.get("hotkeys", "command8Key") || '8';
+      this.command9Key = _0x19d5af.get("hotkeys", "command9Key") || '9';
+      this.zoom1key = _0x19d5af.get("hotkeys", "zoom1key") || "ALT+1";
+      this.zoom2key = _0x19d5af.get("hotkeys", "zoom2key") || "ALT+2";
+      this.zoom3key = _0x19d5af.get('hotkeys', 'zoom3key') || "ALT+3";
+      this.zoom4key = _0x19d5af.get("hotkeys", "zoom4key") || "ALT+4";
+      this.zoom5key = _0x19d5af.get("hotkeys", "zoom5key") || "ALT+5";
+      this.pressedKeys = new Map();
+      this.setDomKeys();
+      this.addEvents();
+    }
+    static ["setDomKeys"]() {
+      _0x14f7b2("#hotkeys .row").each(function () {
+        const _0x372497 = _0x14f7b2(this).attr("name");
+        const _0x58b8b6 = _0x14f7b2(this).find(".key")[0];
+        _0x14f7b2(_0x58b8b6).val(_0x56ef98[_0x372497]);
+      });
+    }
+    static ["addEvents"]() {
+      _0x14f7b2('#hotkeys').perfectScrollbar();
+      _0x14f7b2("#hotkeys .row .key").each(function () {
+        _0x14f7b2(this).keydown(_0x37578f => {
+          _0x37578f.preventDefault();
+          const _0x39eacf = _0x14f7b2(this).parent();
+          _0x56ef98.setKey(_0x39eacf, _0x37578f, this);
+        });
+      });
+      _0x24f9ab.addEventListener("keydown", _0x23acd0 => this.onKeyDown(_0x23acd0));
+      _0x24f9ab.addEventListener("keyup", _0x35e25b => this.onKeyUp(_0x35e25b));
+    }
+    static ["onKeyDown"](_0x4f6eb0) {
+      if (9 === _0x4f6eb0.keyCode) {
+        _0x4f6eb0.preventDefault();
+      }
+      const _0x226f1c = this.getKey(_0x4f6eb0);
+      if (_0x226f1c && !this.pressedKeys.has(_0x226f1c) && (this.pressedKeys.set(_0x226f1c, true), !_0x49cc31.isOpened || "hotkeys" !== _0x49cc31.target)) {
+        if (_0x226f1c === this.chatKey) {
+          return void _0x22a8df.chat(1);
+        }
+        if (_0x226f1c === this.privateChatKey) {
+          return void _0x22a8df.chat(2);
+        }
+        if (!_0x59ca82.isFocused) {
+          if (_0x226f1c === this.toggleMenuKey) {
+            return void _0x31c9b4.toggle();
+          }
+          if (!_0x31c9b4.isOpened) {
+            _0x4f6eb0.preventDefault();
+            return _0x226f1c !== this.freeSpectateKey || _0x90a1a7.isAlive ? _0x226f1c === this.respawnKey ? void _0x22a8df.respawn() : _0x226f1c === this.macroFeedKey ? void _0x22a8df.macroFeed(true) : _0x226f1c === this.feedKey ? void _0x22a8df.feed() : _0x226f1c === this.splitKey ? void _0x22a8df.split() : _0x226f1c === this.doubleSplitKey ? void _0x22a8df.doubleSplit() : _0x226f1c === this.split16Key ? void _0x22a8df.split16() : _0x226f1c === this.multiboxTab ? void _0x22a8df.multiboxTab() : _0x226f1c === this.stopKey ? void _0x22a8df.stopMovementToggle() : _0x226f1c === this.toggleSplitRings ? void _0x22a8df.toggleSplitRings() : _0x226f1c === this.toggleOpponentRings ? void _0x22a8df.toggleOpponentRings() : _0x226f1c === this.toggleNick ? void _0x22a8df.toggleCellNick() : _0x226f1c === this.toggleMass ? void _0x22a8df.toggleCellMass() : _0x226f1c === this.toggleBGsectors ? void _0x22a8df.toggleBGsectors() : _0x226f1c === this.toggleFood ? void _0x22a8df.toggleGameFood() : _0x226f1c === this.toggleSkin ? void _0x22a8df.toggleSkin() : _0x226f1c === this.toggleCustomSkin ? void _0x22a8df.toggleCustomSkin() : _0x226f1c === this.togglemultiboxRing ? void _0x22a8df.togglemultiboxRing() : _0x226f1c === this.toggleMaouCircle ? void _0x22a8df.toggleMaouCircle() : _0x226f1c === this.command0Key ? void _0x22a8df.command(0) : _0x226f1c === this.command1Key ? void _0x22a8df.command(1) : _0x226f1c === this.command2Key ? void _0x22a8df.command(2) : _0x226f1c === this.command3Key ? void _0x22a8df.command(3) : _0x226f1c === this.command4Key ? void _0x22a8df.command(4) : _0x226f1c === this.command5Key ? void _0x22a8df.command(5) : _0x226f1c === this.command6Key ? void _0x22a8df.command(6) : _0x226f1c === this.command7Key ? void _0x22a8df.command(7) : _0x226f1c === this.command8Key ? void _0x22a8df.command(8) : _0x226f1c === this.command9Key ? void _0x22a8df.command(9) : _0x226f1c === this.zoom1key ? void _0x22a8df.setZoom(0.5) : _0x226f1c === this.zoom2key ? void _0x22a8df.setZoom(0.25) : _0x226f1c === this.zoom3key ? void _0x22a8df.setZoom(0.125) : _0x226f1c === this.zoom4key ? void _0x22a8df.setZoom(0.075) : _0x226f1c === this.zoom5key ? void _0x22a8df.setZoom(0.05) : undefined : void _0x22a8df.toggleSpectate();
+          }
+        }
+      }
+    }
+    static ['onKeyUp'](_0x391fb9) {
+      const _0x4164bc = this.getKey(_0x391fb9);
+      if (_0x4164bc && (this.pressedKeys["delete"](_0x4164bc), _0x4164bc === this.macroFeedKey)) {
+        _0x22a8df.macroFeed(false);
+      }
+    }
+    static ["setKey"](_0x3848df, _0x10f53a, _0x327dad) {
+      let _0x16b872 = this.getKey(_0x10f53a);
+      let _0x5537db = _0x14f7b2(_0x3848df).attr("name");
+      if (false !== _0x16b872) {
+        if ("freeSpectateKey" !== _0x5537db) {
+          this.alreadyBinded(_0x16b872);
+        }
+        if ("DEL" === _0x16b872) {
+          _0x16b872 = '';
+        }
+        _0x14f7b2(_0x327dad).val(_0x16b872);
+        this[_0x5537db] = _0x16b872;
+        _0x19d5af.set("hotkeys", _0x5537db, _0x16b872);
+      }
+    }
+    static ["alreadyBinded"](_0x353177) {
+      let _0x5b9fc6 = false;
+      if (_0x353177 === this.toggleMenuKey) {
+        _0x5b9fc6 = "toggleMenuKey";
+      } else if (_0x353177 === this.feedKey) {
+        _0x5b9fc6 = 'feedKey';
+      } else if (_0x353177 === this.macroFeedKey) {
+        _0x5b9fc6 = "macroFeedKey";
+      } else if (_0x353177 === this.splitKey) {
+        _0x5b9fc6 = "splitKey";
+      } else if (_0x353177 === this.doubleSplitKey) {
+        _0x5b9fc6 = "doubleSplitKey";
+      } else if (_0x353177 === this.split16Key) {
+        _0x5b9fc6 = "split16Key";
+      } else if (_0x353177 === this.stopKey) {
+        _0x5b9fc6 = "stopKey";
+      } else if (_0x353177 === this.chatKey) {
+        _0x5b9fc6 = "chatKey";
+      } else if (_0x353177 === this.privateChatKey) {
+        _0x5b9fc6 = "privateChatKey";
+      } else if (_0x353177 === this.toggleSplitRings) {
+        _0x5b9fc6 = "toggleSplitRings";
+      } else if (_0x353177 === this.toggleOpponentRings) {
+        _0x5b9fc6 = "toggleOpponentRings";
+      } else if (_0x353177 === this.toggleNick) {
+        _0x5b9fc6 = "toggleNick";
+      } else if (_0x353177 === this.toggleMass) {
+        _0x5b9fc6 = "toggleMass";
+      } else if (_0x353177 === this.toggleBGsectors) {
+        _0x5b9fc6 = "toggleBGsectors";
+      } else if (_0x353177 === this.toggleFood) {
+        _0x5b9fc6 = "toggleFood";
+      } else if (_0x353177 === this.toggleSkin) {
+        _0x5b9fc6 = "toggleSkin";
+      } else if (_0x353177 === this.toggleCustomSkin) {
+        _0x5b9fc6 = "toggleCustomSkin";
+      } else if (_0x353177 === this.togglemultiboxRing) {
+        _0x5b9fc6 = "togglemultiboxRing";
+      } else if (_0x353177 === this.toggleMaouCircle) {
+        _0x5b9fc6 = "toggleMaouCircle";
+      } else if (_0x353177 === this.respawnKey) {
+        _0x5b9fc6 = 'respawnKey';
+      } else if (_0x353177 === this.command0Key) {
+        _0x5b9fc6 = "command0Key";
+      } else if (_0x353177 === this.command1Key) {
+        _0x5b9fc6 = "command1Key";
+      } else if (_0x353177 === this.command2Key) {
+        _0x5b9fc6 = "command2Key";
+      } else if (_0x353177 === this.command3Key) {
+        _0x5b9fc6 = "command3Key";
+      } else if (_0x353177 === this.command4Key) {
+        _0x5b9fc6 = "command4Key";
+      } else if (_0x353177 === this.command5Key) {
+        _0x5b9fc6 = "command5Key";
+      } else if (_0x353177 === this.command6Key) {
+        _0x5b9fc6 = "command6Key";
+      } else if (_0x353177 === this.command7Key) {
+        _0x5b9fc6 = "command7Key";
+      } else if (_0x353177 === this.command8Key) {
+        _0x5b9fc6 = "command8Key";
+      } else if (_0x353177 === this.command9Key) {
+        _0x5b9fc6 = "command9Key";
+      } else if (_0x353177 === this.zoom1key) {
+        _0x5b9fc6 = "zoom1key";
+      } else if (_0x353177 === this.zoom2key) {
+        _0x5b9fc6 = "zoom2key";
+      } else if (_0x353177 === this.zoom3key) {
+        _0x5b9fc6 = "zoom3key";
+      } else if (_0x353177 === this.zoom4key) {
+        _0x5b9fc6 = "zoom4key";
+      } else if (_0x353177 === this.zoom5key) {
+        _0x5b9fc6 = "zoom5key";
+      }
+      if (_0x5b9fc6) {
+        this[_0x5b9fc6] = '';
+        _0x19d5af.set("hotkeys", _0x5b9fc6, '');
+        _0x14f7b2("#hotkeys .row[name=" + _0x5b9fc6 + "] input").val('');
+      }
+    }
+    static ["isValidKey"](_0xa8ed8a) {
+      const _0x1bc256 = _0xa8ed8a.keyCode || _0xa8ed8a.which;
+      return 64 < _0x1bc256 && 91 > _0x1bc256 || 47 < _0x1bc256 && 58 > _0x1bc256 || 13 === _0x1bc256 || 27 === _0x1bc256 || 32 === _0x1bc256 || 16 === _0x1bc256 || 46 === _0x1bc256 || 192 === _0x1bc256 || 9 === _0x1bc256;
+    }
+    static ["getKey"](_0x1747b6) {
+      if (!this.isValidKey(_0x1747b6)) {
+        return false;
+      }
+      const _0x1d3089 = _0x1747b6.keyCode || _0x1747b6.which;
+      let _0x15ee1c = false;
+      let _0x4b3a43 = false;
+      if (_0x1747b6.ctrlKey) {
+        _0x15ee1c = "CTRL+";
+      } else if (_0x1747b6.altKey) {
+        _0x15ee1c = 'ALT+';
+      }
+      if (64 < _0x1d3089 && 91 > _0x1d3089) {
+        _0x4b3a43 = String.fromCharCode(_0x1d3089);
+      } else if (47 < _0x1d3089 && 58 > _0x1d3089) {
+        _0x4b3a43 = '' + (_0x1d3089 - 48);
+      } else if (!_0x15ee1c) {
+        if (13 === _0x1d3089) {
+          _0x4b3a43 = "ENTER";
+        } else if (27 === _0x1d3089) {
+          _0x4b3a43 = "ESC";
+        } else if (32 === _0x1d3089) {
+          _0x4b3a43 = "SPACE";
+        } else if (16 === _0x1d3089) {
+          _0x4b3a43 = "SHIFT";
+        } else if (9 === _0x1d3089) {
+          _0x4b3a43 = "TAB";
+        } else if (46 === _0x1d3089) {
+          _0x4b3a43 = "DEL";
+        } else if (192 === _0x1d3089) {
+          _0x4b3a43 = "TILDE";
+        }
+      }
+      return !!_0x4b3a43 && (_0x15ee1c ? _0x15ee1c + _0x4b3a43 : _0x4b3a43);
+    }
+  }
+  class _0x128142 {
+    static ['init']() {
+      this.leftClick = _0x19d5af.get("mouse", "leftClick") || 'off';
+      this.middleClick = _0x19d5af.get("mouse", "middleClick") || "commander";
+      this.rightClick = _0x19d5af.get('mouse', 'rightClick') || "off";
+      this.x = 0;
+      this.y = 0;
+      this.canvas = _0x24f9ab.getElementById("canvas");
+      this.canvasX = 0;
+      this.canvasY = 0;
+      this.setDomValues();
+      this.addEvents();
+    }
+    static ["send"]() {
+      const _0x37635b = {
+        x: 0x0,
+        y: 0x0
+      };
+      const _0x2295c7 = 2 === _0x90a1a7.typeID ? _0x996564.position : _0x37635b;
+      this.canvasX = (this.x - this.canvas.width / 2) / _0xddb6d6.viewport + _0xddb6d6.x + _0x2295c7.x;
+      this.canvasY = (this.y - this.canvas.height / 2) / _0xddb6d6.viewport + _0xddb6d6.y + _0x2295c7.y;
+      return _0xddb6d6.isSpectating && _0x3a83be.isTurnedOn ? void _0x302a2c.mouse(0 | _0x3a83be.center.x, 0 | _0x3a83be.center.y) : _0x90a1a7.movementPaused ? void _0x302a2c.mouse(0 | _0x90a1a7.x, 0 | _0x90a1a7.y) : void _0x302a2c.mouse(0 | this.canvasX, 0 | this.canvasY);
+    }
+    static ["setDomValues"]() {
+      _0x14f7b2(".mouse-options").each(function () {
+        const _0x2a9f88 = _0x14f7b2(this).attr("type");
+        if ("range" === _0x2a9f88) {
+          _0x128142.handleRange(this, 2);
+        } else if ("options" === _0x2a9f88) {
+          _0x128142.handleOptions(this, 2);
+        }
+      });
+    }
+    static ["addEvents"]() {
+      _0x14f7b2("#mouse").perfectScrollbar();
+      _0x14f7b2("#mouse .fa-chevron-left").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x2a7485 = _0x14f7b2(this).parent();
+          const _0x5ac730 = _0x14f7b2(_0x2a7485).attr("type");
+          if ("options" === _0x5ac730) {
+            _0x128142.handleOptions(_0x2a7485, 0);
+          } else if ('range' === _0x5ac730) {
+            _0x128142.handleRange(_0x2a7485, 0);
+          }
+        });
+      });
+      _0x14f7b2("#mouse .fa-chevron-right").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x53f175 = _0x14f7b2(this).parent();
+          const _0x47905c = _0x14f7b2(_0x53f175).attr("type");
+          if ("options" === _0x47905c) {
+            _0x128142.handleOptions(_0x53f175, 1);
+          } else if ('range' === _0x47905c) {
+            _0x128142.handleRange(_0x53f175, 1);
+          }
+        });
+      });
+      this.canvas.addEventListener("mousemove", _0x1c9462 => {
+        this.x = _0x1c9462.clientX;
+        this.y = _0x1c9462.clientY;
+      });
+      this.canvas.addEventListener('mousedown', _0xc5c07d => {
+        this.onMouseClick(_0xc5c07d);
+      });
+      this.canvas.addEventListener('mouseup', _0xf7c24a => {
+        this.onMouseRelease(_0xf7c24a);
+      });
+      this.canvas.addEventListener("wheel", _0x48c72e => {
+        this.onMouseWheel(_0x48c72e);
+      });
+      this.canvas.addEventListener("contextmenu", _0x230a32 => {
+        _0x230a32.preventDefault();
+      });
+    }
+    static ["onMouseWheel"](_0x6ba23b) {
+      let _0x43363b = _0xddb6d6.targetViewport;
+      if (0 > _0x6ba23b.wheelDelta) {
+        _0x43363b *= _0x2cc0f3.zoomSpeed / 100;
+      } else {
+        _0x43363b /= _0x2cc0f3.zoomSpeed / 100;
+      }
+      _0x43363b = 2 < _0x43363b ? 2 : 0.02 > _0x43363b ? 0.02 : _0x43363b;
+      _0xddb6d6.targetViewport = _0x43363b;
+    }
+    static ["onMouseClick"](_0x47116f) {
+      let _0x26dc43 = false;
+      switch (_0x47116f.which) {
+        case 1:
+          _0x26dc43 = 'leftClick';
+          break;
+        case 2:
+          _0x26dc43 = "middleClick";
+          break;
+        case 3:
+          _0x26dc43 = "rightClick";
+      }
+      if (_0x26dc43) {
+        if (_0xddb6d6.isSpectating && 'on' === _0x2cc0f3.targeting) {
+          const _0x100551 = (_0x47116f.clientX - (_0x1c478d.innerWidth >> 1)) / _0xddb6d6.viewport + _0xddb6d6.x;
+          const _0x1d1b96 = (_0x47116f.clientY - (_0x1c478d.innerHeight >> 1)) / _0xddb6d6.viewport + _0xddb6d6.y;
+          return void ('leftClick' === _0x26dc43 ? _0x3a83be.lockTarget(_0x100551, _0x1d1b96, 1) : "middleClick" === _0x26dc43 ? _0x3a83be.reset() : "rightClick" == _0x26dc43 && _0x3a83be.lockTarget(_0x100551, _0x1d1b96, 2));
+        }
+        const _0x468bbf = this[_0x26dc43];
+        return "off" === _0x468bbf ? undefined : "feed" === _0x468bbf ? void _0x22a8df.feed() : 'macroFeed' === _0x468bbf ? void _0x22a8df.macroFeed(true) : 'split' === _0x468bbf ? void _0x22a8df.split() : "doubleSplit" === _0x468bbf ? void _0x22a8df.doubleSplit() : 'split16' === _0x468bbf ? void _0x22a8df.split16() : "commander" === _0x468bbf ? void _0x2d5cce.commander() : undefined;
+      }
+    }
+    static ["onMouseRelease"](_0x3fd5b1) {
+      let _0x3cf92e = false;
+      switch (_0x3fd5b1.which) {
+        case 1:
+          _0x3cf92e = 'leftClick';
+          break;
+        case 2:
+          _0x3cf92e = "middleClick";
+          break;
+        case 3:
+          _0x3cf92e = "rightClick";
+      }
+      if (_0x3cf92e) {
+        if ("macroFeed" === this[_0x3cf92e]) {
+          return void _0x22a8df.macroFeed(false);
+        }
+      }
+    }
+    static ["handleOptions"](_0x4b1e6e, _0x3b3390) {
+      const _0x28bf25 = _0x14f7b2(_0x4b1e6e).attr('name');
+      const _0x3ad54c = _0x14f7b2(_0x4b1e6e).find('b');
+      const _0x476442 = _0x3ad54c.length;
+      let _0x4a39c1 = _0x476442;
+      let _0x2b5b94 = 0;
+      for (; _0x4a39c1--;) {
+        let _0x2f7f1e = _0x3ad54c[_0x4a39c1];
+        if ('active' === _0x14f7b2(_0x2f7f1e).attr("class")) {
+          _0x2b5b94 = _0x4a39c1;
+        }
+      }
+      if (1 === _0x3b3390) {
+        const _0xf23814 = _0x2b5b94 + 1 < _0x476442 ? _0x2b5b94 + 1 : 0;
+        _0x14f7b2(_0x3ad54c[_0x2b5b94]).removeAttr("class");
+        _0x14f7b2(_0x3ad54c[_0xf23814]).attr("class", "active");
+        const _0x21622c = _0x14f7b2(_0x3ad54c[_0xf23814]).attr('value');
+        this.saveMouseOptions(_0x28bf25, _0x21622c);
+      } else {
+        if (0 === _0x3b3390) {
+          const _0x5ab8e2 = 0 < _0x2b5b94 ? _0x2b5b94 - 1 : _0x476442 - 1;
+          _0x14f7b2(_0x3ad54c[_0x2b5b94]).removeAttr('class');
+          _0x14f7b2(_0x3ad54c[_0x5ab8e2]).attr("class", "active");
+          const _0x4d8662 = _0x14f7b2(_0x3ad54c[_0x5ab8e2]).attr("value");
+          this.saveMouseOptions(_0x28bf25, _0x4d8662);
+        } else {
+          if (2 === _0x3b3390) {
+            _0x14f7b2(_0x3ad54c[_0x2b5b94]).removeAttr("class");
+            let _0x2ebfee;
+            for (let _0x253e9f = _0x476442; _0x253e9f--;) {
+              _0x2ebfee = _0x3ad54c[_0x253e9f];
+              if (_0x14f7b2(_0x2ebfee).attr("value") === this[_0x28bf25]) {
+                _0x14f7b2(_0x2ebfee).attr("class", "active");
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    static ["handleRange"](_0x459cfd, _0x38026c) {
+      const _0x5b5f0a = _0x14f7b2(_0x459cfd).attr("name");
+      const _0x44de45 = _0x14f7b2(_0x459cfd).find("span");
+      const _0x29da59 = _0x44de45[0];
+      const _0x2e034d = _0x44de45[1];
+      const _0x4f7ee4 = ~~_0x14f7b2(_0x29da59).attr("min");
+      const _0x887f8c = ~~_0x14f7b2(_0x29da59).attr("max");
+      const _0x1761fe = ~~_0x14f7b2(_0x29da59).attr("step");
+      const _0x1cd1f0 = ~~_0x14f7b2(_0x29da59).attr("value");
+      if (1 === _0x38026c && _0x1cd1f0 + _0x1761fe <= _0x887f8c) {
+        const _0x4fbb29 = _0x1761fe + _0x1cd1f0;
+        _0x14f7b2(_0x29da59).attr("value", _0x4fbb29);
+        _0x14f7b2(_0x2e034d).css("width", ~~(100 * (_0x4fbb29 - _0x4f7ee4) / (_0x887f8c - _0x4f7ee4)) + 'px');
+        this.saveMouseOptions(_0x5b5f0a, _0x4fbb29);
+      } else {
+        if (0 === _0x38026c && _0x1cd1f0 - _0x1761fe >= _0x4f7ee4) {
+          const _0x28a886 = _0x1cd1f0 - _0x1761fe;
+          _0x14f7b2(_0x29da59).attr('value', _0x28a886);
+          _0x14f7b2(_0x2e034d).css('width', ~~(100 * (_0x28a886 - _0x4f7ee4) / (_0x887f8c - _0x4f7ee4)) + 'px');
+          this.saveMouseOptions(_0x5b5f0a, _0x28a886);
+        } else {
+          if (2 === _0x38026c) {
+            const _0x4e3b9d = this[_0x5b5f0a];
+            _0x14f7b2(_0x29da59).attr("value", _0x4e3b9d);
+            _0x14f7b2(_0x2e034d).css("width", ~~(100 * (_0x4e3b9d - _0x4f7ee4) / (_0x887f8c - _0x4f7ee4)) + 'px');
+          }
+        }
+      }
+    }
+    static ["saveMouseOptions"](_0x23ebd1, _0x55d92b) {
+      this[_0x23ebd1] = _0x55d92b;
+      _0x19d5af.set('mouse', _0x23ebd1, _0x55d92b);
+    }
+  }
+  class _0x10ab3c {
+    static ['init']() {
+      this.load();
+      this.setDomValues();
+      this.addEvents();
+    }
+    static ["load"]() {
+      this.command1 = _0x19d5af.get("commands", "command1") || _0x59f59a.current.commandsMenu.command1;
+      this.command2 = _0x19d5af.get("commands", "command2") || _0x59f59a.current.commandsMenu.command2;
+      this.command3 = _0x19d5af.get("commands", "command3") || _0x59f59a.current.commandsMenu.command3;
+      this.command4 = _0x19d5af.get('commands', "command4") || _0x59f59a.current.commandsMenu.command4;
+      this.command5 = _0x19d5af.get("commands", "command5") || _0x59f59a.current.commandsMenu.command5;
+      this.command6 = _0x19d5af.get('commands', 'command6') || _0x59f59a.current.commandsMenu.command6;
+      this.command7 = _0x19d5af.get("commands", 'command7') || _0x59f59a.current.commandsMenu.command7;
+      this.command8 = _0x19d5af.get("commands", "command8") || _0x59f59a.current.commandsMenu.command8;
+      this.command9 = _0x19d5af.get("commands", "command9") || _0x59f59a.current.commandsMenu.command9;
+      this.command0 = _0x19d5af.get("commands", 'command0') || _0x59f59a.current.commandsMenu.command0;
+    }
+    static ["addEvents"]() {
+      _0x14f7b2("#commands").perfectScrollbar();
+      let _0xcbd57;
+      for (let _0x36400f = 10; _0x36400f--;) {
+        _0xcbd57 = "command" + _0x36400f;
+        _0x14f7b2('#' + _0xcbd57).blur(() => {
+          this.setCommand(_0xcbd57, _0x14f7b2('#' + _0xcbd57).val());
+        });
+      }
+    }
+    static ["setCommand"](_0x5a8d5b, _0x4d2612) {
+      this[_0x5a8d5b] = _0x4d2612;
+      _0x19d5af.set('commands', _0x5a8d5b, _0x4d2612);
+    }
+    static ["setDomValues"]() {
+      let _0x134c8f;
+      for (let _0x40c482 = 10; _0x40c482--;) {
+        _0x134c8f = "command" + _0x40c482;
+        _0x14f7b2('#' + _0x134c8f).val(this[_0x134c8f]);
+      }
+    }
+    static ['refresh']() {
+      this.load();
+      this.setDomValues();
+    }
+  }
+  class _0x22a8df {
+    static ["init"]() {
+      this.ejectInterval = false;
+    }
+    static ["stopMovementToggle"]() {
+      _0x90a1a7.movementPaused = !_0x90a1a7.movementPaused;
+    }
+    static ['feed']() {
+      _0x128142.send();
+      _0x302a2c.eject();
+    }
+    static ["macroFeed"](_0x2045c7) {
+      if (_0x2045c7) {
+        if (this.ejectInterval) {
+          return;
+        }
+        this.feed();
+        this.ejectInterval = setInterval(() => {
+          this.feed();
+        }, 25);
+      } else if (this.ejectInterval) {
+        clearInterval(this.ejectInterval);
+        this.ejectInterval = false;
+      }
+    }
+    static ["split"]() {
+      _0x128142.send();
+      _0x302a2c.split();
+    }
+    static ["doubleSplit"]() {
+      this.split();
+      setTimeout(() => {
+        this.split();
+      }, 40);
+    }
+    static ['split16']() {
+      this.split();
+      setTimeout(() => {
+        this.split();
+      }, 40);
+      setTimeout(() => {
+        this.split();
+      }, 60);
+      setTimeout(() => {
+        this.split();
+      }, 80);
+      setTimeout(() => {
+        this.split();
+      }, 100);
+      setTimeout(() => {
+        this.split();
+      }, 120);
+      setTimeout(() => {
+        this.split();
+      }, 140);
+    }
+    static ["toggleSpectate"]() {
+      return _0x3a83be.isTurnedOn ? (_0x3a83be.reset(), _0x3a83be.target1.turnedOn = false, _0x3a83be.target2.turnedOn = false, void _0x3a43e7.mouseViewport()) : (_0x302a2c.freeSpectate(), _0xddb6d6.freeSpectate ? _0x3a43e7.mouseViewport() : _0x3a43e7.topViewport(), _0x3a83be.target1.turnedOn = false, void (_0x3a83be.target2.turnedOn = false));
+    }
+    static ["chat"](_0x37e550) {
+      _0x59ca82.enter(_0x37e550);
+    }
+    static ["command"](_0x4a99af) {
+      let _0x2dfda6 = _0x10ab3c["command" + _0x4a99af];
+      if (0 <= _0x2dfda6.indexOf("%sector%")) {
+        const _0x43246e = _0x996564.getLocation(_0xddb6d6.x, _0xddb6d6.y);
+        _0x2dfda6 = _0x2dfda6.replace("%sector%", _0x43246e);
+      }
+      _0x302a2c.chat(_0x2dfda6);
+      _0x2d5cce.chat(2, _0x2dfda6);
+    }
+    static ['setZoom'](_0x4b51ed) {
+      _0xddb6d6.targetViewport = _0x4b51ed;
+    }
+    static ["toggleCellNick"]() {
+      const _0x390341 = _0x19d5af.get("settings", "cellNick");
+      _0x2cc0f3.cellNick = 'off' === _0x2cc0f3.cellNick ? "off" !== _0x390341 && _0x390341 || 'on' : "off";
+    }
+    static ["toggleCellMass"]() {
+      const _0x283e57 = _0x19d5af.get("settings", "cellMass");
+      _0x2cc0f3.cellMass = "off" === _0x2cc0f3.cellMass ? "off" !== _0x283e57 && _0x283e57 || "shortened" : 'off';
+    }
+    static ["toggleGameFood"]() {
+      const _0x6f503d = _0x19d5af.get("settings", "food");
+      _0x2cc0f3.food = "off" === _0x2cc0f3.food ? 'off' !== _0x6f503d && _0x6f503d || "monoColored" : "off";
+    }
+    static ["toggleBGsectors"]() {
+      const _0xfd7451 = _0x19d5af.get('settings', "bgSectors");
+      _0x2cc0f3.bgSectors = "off" === _0x2cc0f3.bgSectors ? "off" !== _0xfd7451 && _0xfd7451 || "normal" : "off";
+    }
+    static ["toggleSkin"]() {
+      const _0x25ada7 = _0x19d5af.get('settings', "arbSkins");
+      _0x2cc0f3.arbSkins = "off" === _0x2cc0f3.arbSkins ? "off" !== _0x25ada7 && _0x25ada7 || 'on' : "off";
+    }
+    static ["toggleCustomSkin"]() {
+      const _0x37c923 = _0x19d5af.get("settings", "urlSkins");
+      _0x2cc0f3.urlSkins = "off" === _0x2cc0f3.urlSkins ? "off" !== _0x37c923 && _0x37c923 || 'on' : "off";
+    }
+    static ["toggleSplitRings"]() {
+      const _0x45fe0b = _0x19d5af.get("settings", "splitRings");
+      _0x2cc0f3.splitRings = "off" === _0x2cc0f3.splitRings ? "off" !== _0x45fe0b && _0x45fe0b || 'on' : "off";
+    }
+    static ["toggleOpponentRings"]() {
+      const _0x502302 = _0x19d5af.get("settings", "opponentRings");
+      _0x2cc0f3.opponentRings = "off" === _0x2cc0f3.opponentRings ? "off" !== _0x502302 && _0x502302 || 'on' : "off";
+    }
+    static ["togglemultiboxRing"]() {
+      const _0x319d03 = _0x19d5af.get("settings", "multiboxRing");
+      _0x2cc0f3.multiboxRing = "off" === _0x2cc0f3.multiboxRing ? 'off' !== _0x319d03 && _0x319d03 || 'on' : "off";
+    }
+    static ["toggleMaouCircle"]() {
+      const _0x3c9a1b = _0x19d5af.get("theme", "maouCircle");
+      _0x480be4.maouCircle = "off" === _0x480be4.maouCircle ? 'off' !== _0x3c9a1b && _0x3c9a1b || 'on' : 'off';
+    }
+    static ["respawn"]() {
+      const _0x247aae = setInterval(() => {
+        if (_0x18a8d1.connected) {
+          _0x302a2c.spawn();
+          clearInterval(_0x247aae);
+        }
+      }, 100);
+    }
+    static ["multiboxTab"]() {
+      if (1 === _0x90a1a7.typeID) {
+        _0x90a1a7.typeID = 2;
+        if (!_0x90a1a7._isAlive2) {
+          _0x302a2c.spawn();
+        }
+      } else {
+        _0x90a1a7.typeID = 1;
+        if (!_0x90a1a7._isAlive) {
+          _0x302a2c.spawn();
+        }
+      }
+    }
+  }
+  class _0x77d3cd {
+    static ["init"]() {
+      this.addEvents();
+      this.setServers();
+    }
+    static ["addEvents"]() {
+      _0x14f7b2("#servers").change(() => {
+        let _0x16b9d8 = _0x14f7b2("#servers").val();
+        if ('' != _0x16b9d8) {
+          this.joinServer(_0x16b9d8);
+        }
+      });
+    }
+    static ["fetchServerinfo"]() {
+      let _0x3be13b;
+      let _0x4f61db = new XMLHttpRequest();
+      _0x4f61db.open('GET', "https://3rb.io/php/Servers.php", false);
+      _0x4f61db.send();
+      try {
+        _0x3be13b = JSON.parse(_0x4f61db.responseText);
+      } catch (_0xa4a5bc) {
+        _0x3be13b = null;
+      }
+      return _0x3be13b;
+    }
+    static ["getServers"]() {
+      try {
+        var _0x53f748 = [];
+        var _0x5171cd = [];
+        var _0x522225 = this.fetchServerinfo();
+        var {
+          ip: _0x352371,
+          modes: _0x325373
+        } = _0x522225;
+        Object.keys(_0x325373).forEach(_0x52b40f => {
+          var {
+            total: _0x16a8aa,
+            max: _0x434fe4,
+            servers: [{
+              port: _0xf96a1f
+            }]
+          } = _0x325373[_0x52b40f];
+          _0x53f748[_0x52b40f] = {
+            'ip': "wss://" + _0x352371 + ':' + _0xf96a1f + "/V5",
+            'gamemode': _0x52b40f,
+            'max_players': _0x434fe4,
+            'current_players': _0x16a8aa
+          };
+          _0x5171cd[_0x52b40f] = "wss://" + _0x352371 + ':' + _0xf96a1f + "/V5";
+        });
+      } catch (_0x4d7dc1) {
+        _0x40f48a.warn("Multibox", "Unexpected error occured while parsing servers info.");
+        throw _0x4d7dc1;
+      }
+      return [_0x5171cd, _0x53f748];
+    }
+    static ['setServers']() {
+      let [_0x5e6c1, _0x11c4ff] = this.getServers();
+      let _0x47b577 = '';
+      let _0x3e7ddf = null;
+      let _0x182337 = null;
+      Object.keys(_0x5e6c1).forEach((_0x5db14f, _0x19dca1) => {
+        _0x182337 = _0x5db14f.replace(/[^a-zA-Z0-9 ]/g, '');
+        _0x47b577 = null != _0x11c4ff[_0x5db14f] ? _0x47b577 + "<option id=\"ffa" + parseInt(_0x19dca1 + 1) + "\" value=\"" + _0x5e6c1[_0x5db14f] + "\">" + _0x182337 + " [" + _0x11c4ff[_0x5db14f].current_players + '/' + _0x11c4ff[_0x5db14f].max_players + "]</option>" : _0x47b577 + "<option id=\"ffa" + parseInt(_0x19dca1 + 1) + "\" value=\"" + _0x5e6c1[_0x5db14f] + "\">" + _0x5db14f + '</option>';
+      });
+      _0x3e7ddf = Math.floor(_0x5e6c1.length * Math.random()) + 1;
+      _0x14f7b2("#servers").html(_0x47b577);
+      _0x14f7b2("#opt_ffa" + _0x3e7ddf).prop("selected", true);
+      _0x14f7b2(document).ready(function () {
+        _0x77d3cd.joinServer(_0x14f7b2("#servers").val());
+      });
+    }
+    static ["joinServer"](_0x4fdb09) {
+      _0x18a8d1.connect(_0x4fdb09);
+    }
+  }
+  class _0x480be4 {
+    static ["init"]() {
+      this.isOpened = false;
+      this.div = _0x14f7b2('#theme');
+      this.selectedPreset = _0x19d5af.get("theme", "selectedPreset") || "custom";
+      this.skinBorder = ~~_0x19d5af.get("theme", "skinBorder") || 100;
+      this.lbSize = ~~_0x19d5af.get('theme', "lbSize") || 110;
+      this.minimapSize = ~~_0x19d5af.get('theme', "minimapSize") || 200;
+      this.chatFontSize = ~~_0x19d5af.get("theme", "chatFontSize") || 14;
+      this.cellTransparency = ~~_0x19d5af.get('theme', "cellTransparency") || 100;
+      this.lightenCellColor = ~~_0x19d5af.get("theme", "lightenCellColor") || 100;
+      this.borderWidth = ~~_0x19d5af.get("theme", "borderWidth") || 60;
+      this.borderColor = _0x19d5af.get('theme', "borderColor") || "#ffffff";
+      this.rainbowBorder = _0x19d5af.get("theme", "rainbowBorder") || "off";
+      this._rainbowHue = 0;
+      this.virusGlow = _0x19d5af.get("theme", "virusGlow") || "off";
+      this.virusGlowDistance = ~~_0x19d5af.get("theme", "virusGlowDistance") || 50;
+      this.virusGlowColor = _0x19d5af.get('theme', "virusGlowColor") || "#00bcff";
+      this.foodGlowColor = _0x19d5af.get('theme', "foodGlowColor") || "#00ff00";
+      this.foodGlowSize = ~~_0x19d5af.get("theme", "foodGlowSize") || 20;
+      this.foodGlowStrength = ~~_0x19d5af.get("theme", "foodGlowStrength") || 1;
+      this.maouCircle = _0x19d5af.get("theme", "maouCircle") || "off";
+      this.team1color = _0x19d5af.get("theme", "team1color") || "#aeaeae";
+      this.team2color = _0x19d5af.get("theme", 'team2color') || "#ff171f";
+      this.multiboxActive = _0x19d5af.get("theme", "multiboxActive") || "#ff61f8";
+      this.multiboxInactive = _0x19d5af.get("theme", "multiboxInactive") || "#fff";
+      this.multiboxRingWidth = ~~_0x19d5af.get("theme", "multiboxRingWidth") || 10;
+      this.nickColor = _0x19d5af.get("theme", "nickColor") || "#fff";
+      this.nickStrokeColor = _0x19d5af.get('theme', "nickStrokeColor") || "#000";
+      this.cellNickSize = ~~_0x19d5af.get('theme', "cellNickSize") || 120;
+      this.nickFont = _0x19d5af.get("theme", "nickFont") || 'ubuntu';
+      this.massColor = _0x19d5af.get('theme', 'massColor') || "#fff";
+      this.massStrokeColor = _0x19d5af.get('theme', "massStrokeColor") || "#000";
+      this.cellMassSize = ~~_0x19d5af.get('theme', "cellMassSize") || 150;
+      this.massFont = _0x19d5af.get("theme", "massFont") || "ubuntu";
+      this.gridWidth = ~~_0x19d5af.get("theme", "gridWidth") || 100;
+      this.gridColor = _0x19d5af.get("theme", 'gridColor') || "#111";
+      this.gridTextColor = _0x19d5af.get("theme", "gridTextColor") || "#111";
+      this.gridTextSize = _0x19d5af.get("theme", "gridTextSize") || 1500;
+      this.gridTextFont = _0x19d5af.get('theme', "gridTextFont") || 'ubuntu';
+      this.foodSize = ~~_0x19d5af.get('theme', "foodSize") || 1;
+      this.foodColor = _0x19d5af.get("theme", "foodColor") || "#6111ff";
+      this.virusColor = _0x19d5af.get('theme', "virusColor") || "#8f8f8f";
+      this.virusBorderColor = _0x19d5af.get('theme', "virusBorderColor") || "#c2c2c2";
+      this.virusBorderWidth = ~~_0x19d5af.get("theme", "virusBorderWidth") || 10;
+      this.commanderColor = _0x19d5af.get("theme", "commanderColor") || "#f5e35d";
+      this.commanderImageUrl = _0x19d5af.get("theme", "commanderImageUrl") || "https://i.imgur.com/RD7gHuK.png";
+      this.backgroundColor = _0x19d5af.get("theme", "backgroundColor") || "#000000";
+      this.indicatorSize = ~~_0x19d5af.get("theme", "indicatorSize") || 100;
+      this.cursor = _0x19d5af.get("theme", "cursor") || 13;
+      this.borderOpacity = ~~_0x19d5af.get("theme", "borderOpacity") || 10;
+      this.borderGlowSize = ~~_0x19d5af.get("theme", "borderGlowSize") || 10;
+      this.borderGlowStrength = ~~_0x19d5af.get("theme", "borderGlowStrength") || 5;
+      this.borderGlowColor = _0x19d5af.get("theme", "borderGlowColor") || "#ffffff";
+      this.cursorLineColor = _0x19d5af.get("theme", "cursorLineColor") || "#ff0000";
+      this.leaderboardTitleColor = _0x19d5af.get("theme", "leaderboardTitleColor") || "#ffffff";
+      this.customLeaderboardHead = _0x19d5af.get("theme", "customLeaderboardHead") || "off";
+      this.globalRotationSpeed = ~~_0x19d5af.get("theme", "globalRotationSpeed") || 5;
+      this.maouCircleUrl = _0x19d5af.get("theme", "maouCircleUrl") || "";
+      this.multiboxShieldUrl = _0x19d5af.get("theme", "multiboxShieldUrl") || "";
+      this.virusGlowSize = ~~_0x19d5af.get("theme", "virusGlowSize") || 50;
+      this.virusGlowStrength = ~~_0x19d5af.get("theme", "virusGlowStrength") || 5;
+      this.virusRingWidth = ~~_0x19d5af.get("theme", "virusRingWidth") || 10;
+      this.virusRingColor = _0x19d5af.get("theme", "virusRingColor") || "#ffffff";
+      this.virusGearColor = _0x19d5af.get("theme", "virusGearColor") || "#ff0066";
+      this.ghostColor = _0x19d5af.get("theme", "ghostColor") || "#aaa";
+      this.selfColor = _0x19d5af.get("theme", "selfColor") || "#fff";
+      this.selfViewportColor = _0x19d5af.get("theme", "selfViewportColor") || "#fff";
+      this.selfViewportAlpha = ~~_0x19d5af.get("theme", "selfViewportAlpha") || 5;
+      this.topViewportColor = _0x19d5af.get("theme", "topViewportColor") || "#fff";
+      this.topViewportAlpha = ~~_0x19d5af.get("theme", "topViewportAlpha") || 5;
+      this.teammateColor = _0x19d5af.get("theme", "teammateColor") || "#555";
+      this.teammateNameColor = _0x19d5af.get("theme", "teammateNameColor") || "#fff";
+      this.backgroundImage = _0x19d5af.get("theme", "backgroundImage") || "";
+      this.addPresets();
+      this.setDomValues();
+      this.addEvents();
+      this.setLeaderboardTitle();
+      this.setBackgroundImage(this.backgroundImage);
+      this._initMaouCircle();
+      this._initMultiboxShield();
+    }
+    static ["_initMultiboxShield"]() {
+      this._shieldReady = false;
+      this.shieldImage = new Image();
+      this.shieldImage.crossOrigin = "anonymous";
+      this.shieldImage.onload = () => { this._shieldReady = true; };
+      this.shieldImage.src = this.multiboxShieldUrl && this.multiboxShieldUrl.length > 0
+        ? this.multiboxShieldUrl
+        : "https://raw.githubusercontent.com/darknessxd/3rbio-multibox/main/hslo_ring.png";
+    }
+    static ["_initMaouCircle"]() {
+      this.maouRotation = 0;
+      this._maouReady = false;
+      this.maouCanvas = document.createElement('canvas');
+      this.maouCanvas.width = this.maouCanvas.height = 513;
+      this.maouCtx = this.maouCanvas.getContext('2d');
+      this.maouOuter = new Image();
+      this.maouInner = new Image();
+      this.maouOuter.crossOrigin = "anonymous";
+      this.maouInner.crossOrigin = "anonymous";
+      const _0xb0d1c2 = this.maouCircleUrl && this.maouCircleUrl.length > 0 ? this.maouCircleUrl : "https://raw.githubusercontent.com/darknessxd/3rbio-multibox/main/";
+      this.maouOuter.onload = () => { this._maouReady = true; };
+      this.maouInner.onload = () => { if (this.maouOuter.complete) this._maouReady = true; };
+      this.maouOuter.src = _0xb0d1c2 + "hslo_ring.png";
+      this.maouInner.src = _0xb0d1c2 + "maou_inner.png";
+      setInterval(() => {
+        if (this.maouCircle !== "on" || !this._maouReady) return;
+        this.maouRotation = (this.maouRotation + (this.globalRotationSpeed || 1)) % 360;
+        const _0x5e3f1a = 256.5;
+        this.maouCtx.save();
+        this.maouCtx.setTransform(1, 0, 0, -1, _0x5e3f1a + 0.5, _0x5e3f1a + 0.5);
+        this.maouCtx.clearRect(-_0x5e3f1a, -_0x5e3f1a, 513, 513);
+        const _0x3a7b2c = this.maouRotation * Math.PI / 180;
+        this.maouCtx.rotate(_0x3a7b2c);
+        this.maouCtx.drawImage(this.maouOuter, -_0x5e3f1a, -_0x5e3f1a);
+        this.maouCtx.rotate(-_0x3a7b2c * 2);
+        this.maouCtx.drawImage(this.maouInner, -_0x5e3f1a, -_0x5e3f1a);
+        this.maouCtx.restore();
+      }, 40);
+    }
+    static ["setDomValues"]() {
+      _0x14f7b2(".theme-options").each(function () {
+        const _0x46ba3f = _0x14f7b2(this).attr("type");
+        if ("range" === _0x46ba3f) {
+          _0x480be4.handleRange(this, 2);
+        } else if ("options" === _0x46ba3f) {
+          _0x480be4.handleOptions(this, 2);
+        } else if ("colorpicker" === _0x46ba3f) {
+          _0x480be4.initColorpicker(this);
+        }
+      });
+      this.setChatFontSize(this.chatFontSize);
+      this.setBackground(this.backgroundColor);
+      this.setLeaderboard(this.lbSize);
+      this.setMinimap(this.minimapSize);
+      this.setCursor(this.cursor);
+    }
+    static ["addEvents"]() {
+      _0x14f7b2(".theme-container").perfectScrollbar();
+      _0x14f7b2(".theme-container .fa-chevron-left").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x398d1b = _0x14f7b2(this).parent();
+          const _0x4f91e6 = _0x14f7b2(_0x398d1b).attr("type");
+          if ('options' === _0x4f91e6) {
+            _0x480be4.handleOptions(_0x398d1b, 0);
+          } else if ("range" === _0x4f91e6) {
+            _0x480be4.handleRange(_0x398d1b, 0);
+          }
+        });
+      });
+      _0x14f7b2(".theme-container span.outer").each(function () {
+        _0x14f7b2(this).click(_0xd56321 => {
+          const _0x4d37d = _0x14f7b2(this).parent();
+          _0x480be4.handleRange(_0x4d37d, 3, _0xd56321.offsetX);
+        });
+      });
+      _0x14f7b2(".theme-container .fa-chevron-right").each(function () {
+        _0x14f7b2(this).click(() => {
+          const _0x3c1d33 = _0x14f7b2(this).parent();
+          const _0x2d84ac = _0x14f7b2(_0x3c1d33).attr('type');
+          if ("options" === _0x2d84ac) {
+            _0x480be4.handleOptions(_0x3c1d33, 1);
+          } else if ("range" === _0x2d84ac) {
+            _0x480be4.handleRange(_0x3c1d33, 1);
+          }
+        });
+      });
+      _0x14f7b2(".theme-close").click(() => this.close());
+      _0x14f7b2("input#backgroundImage, input#maouCircleUrl, input#multiboxShieldUrl, input#commanderImageUrl").each(function () {
+        const _0x558bc6 = _0x14f7b2(this).attr('id');
+        _0x14f7b2(this).val(_0x480be4[_0x558bc6] || '');
+        _0x14f7b2(this).on('input', function () {
+          const _0x2b7e1d = _0x14f7b2(this).val();
+          _0x480be4.saveTheme(_0x558bc6, _0x2b7e1d);
+          if ('commanderImageUrl' === _0x558bc6) {
+            _0x386cbc._loadCeImage(_0x2b7e1d);
+          }
+        });
+      });
+    }
+    static ['toggle']() {
+      if (this.isOpened) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+    static ["close"]() {
+      this.isOpened = false;
+      this.div.fadeOut(250);
+    }
+    static ['open']() {
+      this.isOpened = true;
+      this.div.fadeIn(250);
+    }
+    static ["handleOptions"](_0xed1b67, _0x597539) {
+      const _0x5aa17f = _0x14f7b2(_0xed1b67).attr("name");
+      const _0x5147f6 = _0x14f7b2(_0xed1b67).find('b');
+      const _0x44bdf9 = _0x5147f6.length;
+      let _0x21024e = _0x44bdf9;
+      let _0x1d5d41 = 0;
+      for (; _0x21024e--;) {
+        let _0x466967 = _0x5147f6[_0x21024e];
+        if ("active" === _0x14f7b2(_0x466967).attr("class")) {
+          _0x1d5d41 = _0x21024e;
+        }
+      }
+      if (1 === _0x597539) {
+        const _0xafd047 = _0x1d5d41 + 1 < _0x44bdf9 ? _0x1d5d41 + 1 : 0;
+        _0x14f7b2(_0x5147f6[_0x1d5d41]).removeAttr('class');
+        _0x14f7b2(_0x5147f6[_0xafd047]).attr('class', "active");
+        const _0x5fa32 = _0x14f7b2(_0x5147f6[_0xafd047]).attr('value');
+        this.saveTheme(_0x5aa17f, _0x5fa32);
+      } else {
+        if (0 === _0x597539) {
+          const _0x5d5dfc = 0 < _0x1d5d41 ? _0x1d5d41 - 1 : _0x44bdf9 - 1;
+          _0x14f7b2(_0x5147f6[_0x1d5d41]).removeAttr("class");
+          _0x14f7b2(_0x5147f6[_0x5d5dfc]).attr("class", "active");
+          const _0x359d61 = _0x14f7b2(_0x5147f6[_0x5d5dfc]).attr("value");
+          this.saveTheme(_0x5aa17f, _0x359d61);
+        } else {
+          if (2 === _0x597539) {
+            _0x14f7b2(_0x5147f6[_0x1d5d41]).removeAttr("class");
+            let _0x5d6174;
+            for (let _0x5cf991 = _0x44bdf9; _0x5cf991--;) {
+              _0x5d6174 = _0x5147f6[_0x5cf991];
+              if (_0x14f7b2(_0x5d6174).attr("value") === this[_0x5aa17f]) {
+                _0x14f7b2(_0x5d6174).attr("class", "active");
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    static ["handleRange"](_0x200bd4, _0x21746b, _0x5cdbab = 0) {
+      const _0xf883e3 = _0x14f7b2(_0x200bd4).attr("name");
+      const _0xcdedf8 = _0x14f7b2(_0x200bd4).find("span");
+      const _0x35ea55 = _0xcdedf8[0];
+      const _0x1dd6bb = _0xcdedf8[1];
+      const _0x43cad7 = _0x14f7b2(_0xcdedf8[2]);
+      const _0x207e11 = ~~_0x14f7b2(_0x35ea55).attr("min");
+      const _0x2a491d = ~~_0x14f7b2(_0x35ea55).attr("max");
+      const _0x4d07cd = ~~_0x14f7b2(_0x35ea55).attr("step");
+      const _0x4a5bd7 = ~~_0x14f7b2(_0x35ea55).attr("value");
+      if (1 === _0x21746b && _0x4a5bd7 + _0x4d07cd <= _0x2a491d) {
+        const _0x589000 = _0x4d07cd + _0x4a5bd7;
+        _0x14f7b2(_0x35ea55).attr("value", _0x589000);
+        _0x14f7b2(_0x1dd6bb).css("width", ~~(100 * (_0x589000 - _0x207e11) / (_0x2a491d - _0x207e11)) + 'px');
+        _0x43cad7.text('[' + _0x589000 + ']');
+        this.saveTheme(_0xf883e3, ~~_0x589000);
+      } else {
+        if (0 === _0x21746b && _0x4a5bd7 - _0x4d07cd >= _0x207e11) {
+          const _0xdd44a1 = _0x4a5bd7 - _0x4d07cd;
+          _0x14f7b2(_0x35ea55).attr("value", _0xdd44a1);
+          _0x14f7b2(_0x1dd6bb).css("width", ~~(100 * (_0xdd44a1 - _0x207e11) / (_0x2a491d - _0x207e11)) + 'px');
+          _0x43cad7.text('[' + _0xdd44a1 + ']');
+          this.saveTheme(_0xf883e3, ~~_0xdd44a1);
+        } else {
+          if (2 === _0x21746b) {
+            const _0xda887a = this[_0xf883e3];
+            _0x14f7b2(_0x35ea55).attr("value", _0xda887a);
+            _0x14f7b2(_0x1dd6bb).css("width", ~~(100 * (_0xda887a - _0x207e11) / (_0x2a491d - _0x207e11)) + 'px');
+            _0x43cad7.text('[' + _0xda887a + ']');
+          } else {
+            if (3 === _0x21746b) {
+              let _0x5cf273 = 0 | _0x5cdbab / 100 * (_0x2a491d - _0x207e11);
+              _0x5cf273 = (0 | _0x5cf273 / _0x4d07cd) * _0x4d07cd;
+              const _0x41837e = 100 * ((_0x5cf273 += _0x207e11) - _0x207e11) / (_0x2a491d - _0x207e11);
+              _0x14f7b2(_0x35ea55).attr("value", _0x5cf273);
+              _0x14f7b2(_0x1dd6bb).css("width", ~~_0x41837e + 'px');
+              _0x43cad7.text('[' + _0x5cf273 + ']');
+              this.saveTheme(_0xf883e3, ~~_0x5cf273);
+            }
+          }
+        }
+      }
+    }
+    static ["initColorpicker"](_0x5c4eed) {
+      const _0x2560ae = _0x14f7b2(_0x5c4eed).find("input");
+      const _0x4372e5 = _0x2560ae.attr('id');
+      const _0xc279bf = this[_0x4372e5];
+      _0x14f7b2(_0x2560ae).val(_0xc279bf);
+      const _0x1b8ec5 = !!~~_0x2560ae.attr("opacity");
+      _0x14f7b2('#' + _0x4372e5).minicolors({
+        'opacity': _0x1b8ec5,
+        'position': "bottom right",
+        'change': _0x2e58c9 => {
+          this.saveTheme(_0x4372e5, _0x2e58c9);
+        }
+      });
+    }
+    static ["saveTheme"](_0x589c1b, _0x33fe69) {
+      this[_0x589c1b] = _0x33fe69;
+      if ("selectedPreset" === _0x589c1b) {
+        this.selectPreset(_0x33fe69);
+      } else if ("custom" !== this.selectedPreset) {
+        this.selectedPreset = "custom";
+        _0x19d5af.set("theme", "selectedPreset", "custom");
+        this.setDomValues();
+      }
+      if ("backgroundColor" === _0x589c1b) {
+        this.setBackground(_0x33fe69);
+      }
+      if ("chatFontSize" === _0x589c1b) {
+        this.setChatFontSize(_0x33fe69);
+      }
+      if ("lbSize" === _0x589c1b) {
+        this.setLeaderboard(_0x33fe69);
+      }
+      if ("minimapSize" === _0x589c1b) {
+        this.setMinimap(_0x33fe69);
+      }
+      if ('cursor' === _0x589c1b) {
+        this.setCursor(_0x33fe69);
+      }
+      if ("massFont" === _0x589c1b) {
+        _0x34f3bb.setMassCtxFont();
+      }
+      if ('nickFont' === _0x589c1b) {
+        _0x34f3bb.setNickCtxFont();
+      }
+      if ("massStrokeColor" === _0x589c1b) {
+        _0x34f3bb.massCaches.clear();
+      }
+      if ("nickStrokeColor" === _0x589c1b) {
+        _0x34f3bb.nickCaches.clear();
+      }
+      if ("massColor" === _0x589c1b) {
+        _0x34f3bb.massCaches.clear();
+      }
+      if ("nickColor" === _0x589c1b) {
+        _0x34f3bb.nickCaches.clear();
+      }
+      if ("leaderboardTitleColor" === _0x589c1b || "customLeaderboardHead" === _0x589c1b) {
+        this.setLeaderboardTitle();
+      }
+      if ("backgroundImage" === _0x589c1b) {
+        this.setBackgroundImage(_0x33fe69);
+      }
+      _0x19d5af.set('theme', _0x589c1b, _0x33fe69);
+    }
+    static ["setBackground"](_0x4ffb10) {
+      _0x14f7b2('body').css("background", _0x4ffb10);
+    }
+    static ["setChatFontSize"](_0xb43d48) {
+      _0x14f7b2("#notifications").css("font-size", _0xb43d48 + 'px');
+    }
+    static ["setLeaderboard"](_0x48a858) {
+      const _0x5136af = _0x48a858 / 100;
+      _0x14f7b2("#leaderboard-head").css("font-size", (0 | 24 * _0x5136af) + 'px');
+      _0x14f7b2("#leaderboard-positions").css("font-size", (0 | 13 * _0x5136af) + 'px');
+    }
+    static ["setMinimap"](_0x567cb6) {
+      if (_0x5cda9b.initted) {
+        _0x5cda9b.size = _0x567cb6;
+        _0x5cda9b.canvas.width = _0x567cb6;
+        _0x5cda9b.canvas.height = _0x567cb6;
+      }
+      _0x14f7b2("#minimap-hud, .minimap-grid").css({
+        'width': _0x567cb6 + 'px',
+        'height': _0x567cb6 + 'px'
+      });
+      _0x14f7b2(".minimap-row").css({
+        'width': _0x567cb6 + 'px',
+        'height': (0 | _0x567cb6 / 5) + 'px'
+      });
+      _0x14f7b2(".minimap-sector").css({
+        'width': (0 | _0x567cb6 / 5) + 'px',
+        'height': (0 | _0x567cb6 / 5) + 'px',
+        'font-size': (0 | 15 * _0x567cb6 / 200) + 'px',
+        'padding-top': (0 | 11 * _0x567cb6 / 200) + 'px'
+      });
+      _0x14f7b2(".minimap-head").css("bottom", _0x567cb6 + 9 + 'px');
+    }
+    static ['setCursor'](_0xef6b4e) {}
+    static ["setLeaderboardTitle"]() {
+      const _0x2933e8 = this.customLeaderboardHead;
+      const _0x245fbe = "off" === _0x2933e8 ? "DarknessV1" : _0x2933e8;
+      _0x14f7b2("#leaderboard-head").css("color", this.leaderboardTitleColor);
+      _0x14f7b2("#leaderboard-head span").text(_0x245fbe);
+    }
+    static ["setBackgroundImage"](_0x3e7195) {
+      _0x386cbc._loadBgImage(_0x3e7195);
+    }
+    static ["selectPreset"](_0x4da382) {
+      const _0x5ae372 = this.presets[_0x4da382];
+      if ("custom" !== _0x4da382 && _0x5ae372) {
+        for (const _0x4e0263 in _0x5ae372.theme) if (_0x5ae372.theme.hasOwnProperty(_0x4e0263) && undefined !== this[_0x4e0263]) {
+          this[_0x4e0263] = _0x5ae372.theme[_0x4e0263];
+          _0x19d5af.set("theme", _0x4e0263, this[_0x4e0263]);
+        }
+        this.setDomValues();
+        for (const _0x305881 in _0x5ae372.settings) if (_0x5ae372.settings.hasOwnProperty(_0x305881) && undefined !== _0x2cc0f3[_0x305881]) {
+          _0x2cc0f3[_0x305881] = _0x5ae372.settings[_0x305881];
+          _0x19d5af.set("settings", _0x305881, _0x2cc0f3[_0x305881]);
+        }
+        _0x2cc0f3.setDomValues();
+      }
+    }
+    static ["addPresets"]() {
+      const _0x1b5f87 = {
+        "skinBorder": 0x64,
+        "lbSize": 0x64,
+        minimapSize: 0xc8,
+        chatFontSize: 0xe,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x64,
+        borderWidth: 0x28,
+        borderColor: "#fff",
+        "team1color": '#aeaeae',
+        "team2color": "#fff700",
+        "nickColor": "#fff",
+        nickStrokeColor: "#000",
+        cellNickSize: 0x78,
+        "nickFont": "ubuntu",
+        "massColor": '#fff',
+        massStrokeColor: '#000',
+        cellMassSize: 0xa0,
+        "massFont": 'ubuntu',
+        "gridWidth": 0x28,
+        "gridColor": '#1a1a1a',
+        gridTextColor: "#1a1a1a",
+        gridTextSize: 0x4b0,
+        gridTextFont: "ubuntu",
+        foodSize: 0x1,
+        foodColor: '#ffffff',
+        virusColor: "#000",
+        virusBorderColor: "#d4d6dd",
+        virusBorderWidth: 0xe,
+        commanderColor: "#0849d4",
+        backgroundColor: "#000",
+        indicatorSize: 0x64,
+        "cursor": 0x7,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0x4d89ea = {
+        CellAnimation: 0xa0,
+        eatAnimation: 'on',
+        cellTextAnimation: 'on',
+        "cellMass": "shortened",
+        food: "monoColored",
+        bgSectors: "normal",
+        vanillaGrid: 'off'
+      };
+      const _0x4def84 = {
+        "author": 'Cyper',
+        theme: _0x1b5f87,
+        "settings": _0x4d89ea
+      };
+      const _0x45e5ca = {
+        "skinBorder": 0x64,
+        lbSize: 0x6e,
+        minimapSize: 0xc8,
+        chatFontSize: 0x12,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x64,
+        borderWidth: 0x28,
+        borderColor: "#ffffff",
+        team1color: "#aeaeae",
+        "team2color": "#fff700",
+        nickColor: "#fff",
+        nickStrokeColor: "#000",
+        cellNickSize: 0x8c,
+        "nickFont": "ubuntu",
+        "massColor": "#fff",
+        massStrokeColor: "#000",
+        cellMassSize: 0x8c,
+        "massFont": 'ubuntu',
+        "gridWidth": 0x64,
+        "gridColor": "#1a1a1a",
+        gridTextColor: "#1a1a1a",
+        gridTextSize: 0x6a4,
+        gridTextFont: "ubuntu",
+        "foodSize": 0x5,
+        "foodColor": '#0849d4',
+        "virusColor": "#808080",
+        virusBorderColor: '#9e9e9e',
+        virusBorderWidth: 0xa,
+        commanderColor: "#0849d4",
+        backgroundColor: '#000000',
+        indicatorSize: 0x64,
+        cursor: 0x1,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0x351870 = {
+        CellAnimation: 0x78,
+        eatAnimation: 'on',
+        cellTextAnimation: 'on',
+        cellMass: 'full',
+        "food": "monoColored",
+        "bgSectors": 'normal',
+        vanillaGrid: 'off'
+      };
+      const _0x28e9d7 = {
+        "author": "Acydwarp",
+        theme: _0x45e5ca,
+        "settings": _0x351870
+      };
+      const _0x4ccef7 = {
+        skinBorder: 0x64,
+        "lbSize": 0x6e,
+        minimapSize: 0xc8,
+        chatFontSize: 0x12,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x64,
+        borderWidth: 0x3c,
+        borderColor: '#ffffff',
+        "team1color": "#aeaeae",
+        team2color: "#fff700",
+        nickColor: "#fff",
+        nickStrokeColor: "#000",
+        cellNickSize: 0x82,
+        nickFont: 'sans-serif',
+        "massColor": '#fff',
+        massStrokeColor: "#000",
+        cellMassSize: 0x82,
+        "massFont": 'sans-serif',
+        "gridWidth": 0x64,
+        gridColor: "#1a1a1a",
+        gridTextColor: "#1a1a1a",
+        gridTextSize: 0x6a4,
+        gridTextFont: "ubuntu",
+        "foodSize": 0x5,
+        "foodColor": "#6111ff",
+        virusColor: "#808080",
+        virusBorderColor: "#9e9e9e",
+        virusBorderWidth: 0xa,
+        commanderColor: "#0849d4",
+        backgroundColor: "#000000",
+        indicatorSize: 0x64,
+        "cursor": 0x1,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0x4cb220 = {
+        CellAnimation: 0x78,
+        eatAnimation: 'on',
+        cellTextAnimation: "off",
+        "cellMass": "full",
+        "food": "monoColored",
+        "bgSectors": "off",
+        vanillaGrid: "off"
+      };
+      const _0x5680ed = {
+        "author": "Num Jai",
+        "theme": _0x4ccef7,
+        "settings": _0x4cb220
+      };
+      const _0x2f0677 = {
+        "skinBorder": 0x64,
+        "lbSize": 0x64,
+        minimapSize: 0xf0,
+        chatFontSize: 0x12,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x5a,
+        borderWidth: 0x28,
+        borderColor: "#01d9cc",
+        "team1color": "#aeaeae",
+        "team2color": '#fff700',
+        "nickColor": "#fff",
+        nickStrokeColor: '#000',
+        cellNickSize: 0x78,
+        "nickFont": 'ubuntu',
+        massColor: "#fff",
+        massStrokeColor: "#000",
+        cellMassSize: 0xa0,
+        "massFont": "ubuntu",
+        "gridWidth": 0x28,
+        "gridColor": "#00243e",
+        gridTextColor: "#00243e",
+        gridTextSize: 0x4b0,
+        gridTextFont: "ubuntu",
+        foodSize: 0x5,
+        "foodColor": '#5000ff',
+        "virusColor": "#002f52",
+        virusBorderColor: "#00b9e8",
+        virusBorderWidth: 0xe,
+        commanderColor: "#0849d4",
+        backgroundColor: "#000a11",
+        indicatorSize: 0x64,
+        "cursor": 0x1,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0x8508de = {
+        CellAnimation: 0x8c,
+        eatAnimation: 'on',
+        cellTextAnimation: 'on',
+        "cellMass": "shortened",
+        food: "monoColored",
+        "bgSectors": "normal",
+        vanillaGrid: "off"
+      };
+      const _0x5e84f4 = {
+        "author": "Szymy",
+        "theme": _0x2f0677,
+        "settings": _0x8508de
+      };
+      const _0x3865bb = {
+        "skinBorder": 0x64,
+        "lbSize": 0x82,
+        minimapSize: 0xc8,
+        chatFontSize: 0x12,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x64,
+        borderWidth: 0xa,
+        borderColor: "#116111",
+        team1color: '#aeaeae',
+        "team2color": "#fff700",
+        "nickColor": "#fff",
+        nickStrokeColor: "#000",
+        cellNickSize: 0x64,
+        "nickFont": "ubuntu",
+        "massColor": "#fff",
+        massStrokeColor: "#000",
+        cellMassSize: 0x64,
+        "massFont": "ubuntu",
+        "gridWidth": 0xa,
+        "gridColor": "#333333",
+        gridTextColor: "#333333",
+        gridTextSize: 0x6a4,
+        gridTextFont: "ubuntu",
+        "foodSize": 0x1,
+        "foodColor": "#555",
+        "virusColor": "#6fff00",
+        virusBorderColor: "#55b304",
+        virusBorderWidth: 0xe,
+        commanderColor: "#00fff7",
+        backgroundColor: "#000000",
+        indicatorSize: 0x64,
+        "cursor": 0x1,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0xa9ef03 = {
+        CellAnimation: 0x78,
+        eatAnimation: 'on',
+        cellTextAnimation: 'on',
+        "cellMass": "full",
+        food: "rainbow",
+        bgSectors: "normal",
+        vanillaGrid: "off"
+      };
+      const _0xf48ba = {
+        "author": 'DaChong',
+        "theme": _0x3865bb,
+        settings: _0xa9ef03
+      };
+      const _0x5ebeed = {
+        skinBorder: 0x64,
+        lbSize: 0x64,
+        minimapSize: 0xc8,
+        chatFontSize: 0x12,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x64,
+        borderWidth: 0xa,
+        borderColor: "#333333",
+        "team1color": "#aeaeae",
+        "team2color": '#fff700',
+        "nickColor": '#fff',
+        nickStrokeColor: "#000",
+        cellNickSize: 0x6e,
+        "nickFont": "ubuntu",
+        "massColor": '#fff',
+        massStrokeColor: "#000",
+        cellMassSize: 0x6e,
+        massFont: 'ubuntu',
+        "gridWidth": 0xa,
+        gridColor: "#333333",
+        gridTextColor: "#444444",
+        gridTextSize: 0x4b0,
+        gridTextFont: "ubuntu",
+        "foodSize": 0x1,
+        "foodColor": "#4b6efa",
+        virusColor: "#6fff00",
+        virusBorderColor: "#55b304",
+        virusBorderWidth: 0xe,
+        commanderColor: "#00fff7",
+        backgroundColor: "#111",
+        indicatorSize: 0x64,
+        cursor: 0x1,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0x59aee0 = {
+        CellAnimation: 0x78,
+        eatAnimation: 'on',
+        cellTextAnimation: "stepped",
+        cellMass: "shortened",
+        "food": "monoColored",
+        "bgSectors": "normal",
+        vanillaGrid: "off"
+      };
+      const _0x4e79f3 = {
+        "author": "KSCC",
+        theme: _0x5ebeed,
+        "settings": _0x59aee0
+      };
+      const _0x1bb62a = {
+        "skinBorder": 0x64,
+        "lbSize": 0x64,
+        minimapSize: 0xc8,
+        chatFontSize: 0xe,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x64,
+        borderWidth: 0x14,
+        borderColor: "#666666",
+        "team1color": "#aeaeae",
+        "team2color": "#fff700",
+        "nickColor": "#fff",
+        nickStrokeColor: "#000",
+        cellNickSize: 0x6e,
+        nickFont: "ubuntu",
+        "massColor": "#fff",
+        massStrokeColor: "#444",
+        cellMassSize: 0x8c,
+        "massFont": "oswald",
+        "gridWidth": 0x64,
+        "gridColor": "#222222",
+        gridTextColor: "#222222",
+        gridTextSize: 0x578,
+        gridTextFont: 'sans-serif',
+        "foodSize": 0x1,
+        "foodColor": "#c9d3f5",
+        "virusColor": "#e0e0e0",
+        virusBorderColor: "#9c9c9c",
+        virusBorderWidth: 0xa,
+        commanderColor: "#ffffff",
+        backgroundColor: "#000000",
+        indicatorSize: 0x64,
+        "cursor": 0x1,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0x66c0ae = {
+        CellAnimation: 0x78,
+        eatAnimation: 'on',
+        cellTextAnimation: 'on',
+        "cellMass": "full",
+        food: "monoColored",
+        "bgSectors": "normal",
+        vanillaGrid: 'off'
+      };
+      const _0x129ce6 = {
+        author: "Eric",
+        "theme": _0x1bb62a,
+        "settings": _0x66c0ae
+      };
+      const _0x375db3 = {
+        "skinBorder": 0x5a,
+        "lbSize": 0x64,
+        minimapSize: 0xb4,
+        chatFontSize: 0xe,
+        cellTransparency: 0x64,
+        lightenCellColor: 0x64,
+        borderWidth: 0x28,
+        borderColor: "#f5d25f",
+        team1color: "#aeaeae",
+        "team2color": "#ff006f",
+        "nickColor": '#fff',
+        nickStrokeColor: "#000000",
+        cellNickSize: 0x6e,
+        "nickFont": "ubuntu",
+        massColor: "#fff",
+        massStrokeColor: "#000000",
+        cellMassSize: 0x78,
+        massFont: 'ubuntu',
+        "gridWidth": 0xa,
+        "gridColor": '#fa676c',
+        gridTextColor: "#333333",
+        gridTextSize: 0x514,
+        gridTextFont: 'oswald',
+        foodSize: 0x1,
+        "foodColor": "#555555",
+        "virusColor": "#7a4ba3",
+        virusBorderColor: '#ead2fa',
+        virusBorderWidth: 0xe,
+        commanderColor: "#ff006f",
+        backgroundColor: "#222222",
+        indicatorSize: 0x64,
+        cursor: 0x1,
+        borderOpacity: 0xa,
+        borderGlowSize: 0xa,
+        borderGlowStrength: 0x5,
+        borderGlowColor: "#ffffff",
+        cursorLineColor: "#ff0000",
+        leaderboardTitleColor: "#ffffff",
+        customLeaderboardHead: "off",
+        globalRotationSpeed: 0x5,
+        maouCircleUrl: "",
+        multiboxShieldUrl: "",
+        virusGlowSize: 0x32,
+        virusGlowStrength: 0x5,
+        ghostColor: "#aaa",
+        selfColor: "#fff",
+        selfViewportColor: "#fff",
+        selfViewportAlpha: 0x5,
+        topViewportColor: "#fff",
+        topViewportAlpha: 0x5,
+        teammateColor: "#555",
+        teammateNameColor: "#fff",
+        backgroundImage: ""
+      };
+      const _0x32fa65 = {
+        CellAnimation: 0x8c,
+        eatAnimation: 'on',
+        cellTextAnimation: 'on',
+        "cellMass": "shortened",
+        "food": "monoColored",
+        bgSectors: "normal",
+        vanillaGrid: "off"
+      };
+      const _0x7d4929 = {
+        "author": "2coolife",
+        "theme": _0x375db3,
+        "settings": _0x32fa65
+      };
+      const _0x1ff161 = {
+        "Multibox": _0x4def84,
+        "Agarplus v2": _0x28e9d7,
+        "HKG": _0x5680ed,
+        "Ogario v4": _0x5e84f4,
+        "Yin": _0xf48ba,
+        "VNDOT": _0x4e79f3,
+        OZYDOT: _0x129ce6,
+        "Pastels": _0x7d4929
+      };
+      this.presets = _0x1ff161;
+    }
+  }
+  class _0x40f48a {
+    static ["init"]() {
+      this.div = _0x14f7b2("#notifications");
+      this.duration = 10000;
+      this.animDuration = 500;
+      this.iconChat = "<i class=\"fa fa-comment\"></i>";
+      this.iconAlert = "<i class=\"fa fa-exclamation-circle\"></i>";
+      this.iconBell = "<i class=\"fa fa-bell\"></i>";
+      this.warningIcon = "<i class=\"fa-solid fa-triangle-exclamation\"></i>";
+      this.chatroomdiv = _0x14f7b2("#chatroom");
+      this.emojiPath = './';
+      this.emojis = {};
+      this.displayEmojis();
+      const _0style = document.createElement('style');
+      _0style.textContent = '.cf-turnstile{display:none!important}';
+      document.head.appendChild(_0style);
+      const _0toggle = document.createElement('div');
+      _0toggle.id = 'chat-toggle';
+      _0toggle.innerHTML = '<i class="fa fa-chevron-down"></i>';
+      _0toggle.style.cssText = 'position:fixed;bottom:314px;left:5px;width:250px;z-index:101;cursor:pointer;color:#aaa;text-align:center;padding:2px 0;font-size:12px;background:rgba(27,27,27,0.6);border-radius:2px 2px 0 0;user-select:none;';
+      _0toggle.addEventListener('click', function() {
+        const _0cr = _0x14f7b2('#chatroom');
+        const _0icon = _0x14f7b2('#chat-toggle i');
+        if (_0cr.height() < 30) {
+          _0cr.css({height:'280px',overflow:'visible'});
+          _0toggle.style.bottom = '314px';
+          _0icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
+        } else {
+          _0cr.css({height:'0',overflow:'hidden'});
+          _0toggle.style.bottom = '34px';
+          _0icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
+        }
+      });
+      document.body.appendChild(_0toggle);
+    }
+    static ["displayEmojis"]() {
+      const _0x1b6e7b = _0x14f7b2("#emojiContainer");
+      for (const _0x2d8c15 in this.emojis) {
+        const _0x2d208b = _0x14f7b2("<img src=\"" + (this.emojiPath + this.emojis[_0x2d8c15]) + "\" class=\"emojiPreview\">");
+        _0x2d208b.click(() => {
+          const _0x5172b4 = _0x14f7b2('#message');
+          const _0x2000a8 = _0x5172b4.val();
+          _0x5172b4.val(_0x2000a8 + " " + _0x2d8c15);
+          _0x59ca82.input.focus();
+        });
+        _0x1b6e7b.append(_0x2d208b);
+      }
+    }
+    static ['normal'](_0x21b406, _0x579e04) {
+      this.chatroom(_0x21b406, _0x579e04, this.iconChat);
+      if ('chatroom' !== _0x2cc0f3.chatType) {
+        const _0x4e27c7 = "<div><div class=\"normal\">" + this.iconChat + "<span class=\"nick\">" + _0x21b406 + "</span><span class=\"message\">" + this.putEmojis(this.cleanMessage(_0x579e04)) + "</span></div></div>";
+        this.append(_0x4e27c7);
+      }
+    }
+    static ["command"](_0x5efb37, _0x3be8a3) {
+      this.chatroom(_0x5efb37, _0x3be8a3, this.iconAlert);
+      if ('chatroom' !== _0x2cc0f3.chatType) {
+        const _0x8b1c84 = "<div><div class=\"command\">" + this.iconAlert + "<span class=\"nick\">" + _0x5efb37 + "</span><span class=\"message\">" + this.cleanMessage(_0x3be8a3) + "</span></div></div>";
+        this.append(_0x8b1c84);
+      }
+    }
+    static ["warn"](_0x19cd28, _0x1397c0) {
+      this.chatroom(_0x19cd28, _0x1397c0, this.warningIcon);
+      if ("chatroom" !== _0x2cc0f3.chatType) {
+        const _0x2feb56 = "<div><div class=\"alert\">" + this.warningIcon + "<span class=\"nick\">" + _0x19cd28 + "</span><span class=\"message\">" + this.cleanMessage(_0x1397c0) + "</span></div></div>";
+        this.append(_0x2feb56);
+      }
+    }
+    static ["alert"](_0x406bca, _0x2b385c) {
+      this.chatroom(_0x406bca, _0x2b385c, this.iconBell);
+      if ("chatroom" !== _0x2cc0f3.chatType) {
+        const _0x164569 = "<div><div class=\"alert\" style=\"direction: ltr;\">" + this.iconBell + "<span class=\"nick\">" + _0x406bca + "</span><span class=\"message\">" + this.cleanMessage(_0x2b385c) + "</span></div></div>";
+        this.append(_0x164569);
+      }
+    }
+    static ['append'](_0x270fa2) {
+      const _0x3f5e4f = _0x14f7b2(_0x270fa2);
+      _0x3f5e4f.slideUp(0);
+      _0x3f5e4f.appendTo(this.div);
+      _0x3f5e4f.slideDown(this.animDuration);
+      setTimeout(() => {
+        _0x3f5e4f.slideUp(this.animDuration, () => {
+          _0x3f5e4f.remove();
+        });
+      }, this.duration);
+    }
+    static ["cleanMessage"](_0x41baf4) {
+      return _0x41baf4;
+    }
+    static ['putEmojis'](_0x4fd165) {
+      for (const _0x3d84fc in this.emojis) {
+        const _0x1fac9a = new RegExp(_0x3d84fc, 'g');
+        _0x4fd165 = _0x4fd165.replace(_0x1fac9a, "<img src=\"" + (this.emojiPath + this.emojis[_0x3d84fc]) + "\">");
+      }
+      return _0x4fd165;
+    }
+    static ["chatroom"](_0x577c0f, _0x3e358a, _0x5d23c7) {
+      const _0x9dd250 = new Date();
+      const _0x3fd098 = _0x9dd250.getHours() + ':' + _0x9dd250.getMinutes();
+      this.chatroomdiv.append("<div class=\"chatroom-row\"><span class=\"chattime\">" + _0x3fd098 + "</span> " + _0x5d23c7 + " <span class=\"nick\">" + _0x577c0f + "</span> <span class=\"message\">" + this.putEmojis(this.cleanMessage(_0x3e358a)) + "</span></div>");
+      this.chatroomdiv.scrollTop(this.chatroomdiv[0].scrollHeight);
+      this.chatroomdiv.addClass('chat-active');
+      clearTimeout(this._chatTimer);
+      this._chatTimer = setTimeout(() => {
+        _0x14f7b2('#chatroom').removeClass('chat-active');
+      }, 10000);
+    }
+  }
+  class _0xa916b {
+    static ["init"]() {
+      this.list = new Set();
+      this.div = _0x14f7b2("#leaderboard-positions")[0];
+      this.teamLB = _0x14f7b2("#leaderboard-chart");
+      this.teamLBvisible = false;
+      this.barsCss = _0x24f9ab.createElement("style");
+      _0x24f9ab.head.append(this.barsCss);
+    }
+    static ['add'](_0x163eb9, _0x45d22b, _0x16dc97, _0x1f5c26, _0x5e4055, _0x3c8584) {
+      const _0x215fe4 = {
+        "nick": _0x163eb9,
+        "position": _0x45d22b,
+        isSelf: _0x16dc97,
+        account: _0x5e4055,
+        "isFriend": _0x1f5c26,
+        "mass": _0x3c8584 || 0
+      };
+      this.list.add(_0x215fe4);
+    }
+    static ['team'](_0x1a4e06, _0x23d577, _0x78ac64) {
+      if (!this.teamLBvisible) {
+        this.teamLB.show();
+        this.div.innerHTML = '';
+        this.teamLBvisible = true;
+      }
+      this.barsCss.innerText = ".chart-bar.red { width: " + (0 | 150 * _0x1a4e06) + "px } .chart-bar.green { width: " + (0 | 150 * _0x23d577) + "px } .chart-bar.blue { width: " + (0 | 150 * _0x78ac64) + "px }";
+    }
+    static ['clear']() {
+      this.list.clear();
+    }
+    static ["update"]() {
+      if (this.teamLBvisible) {
+        this.teamLB.hide();
+        this.teamLBvisible = false;
+      }
+      let _0x25ab99 = '';
+      for (const _0x5341c7 of this.list.values()) {
+        const _0x2d18ff = _0x2cc0f3.showMassInLB === "on" && _0x5341c7.mass > 0 ? " <span class=\"lb-mass\">" + _0x5341c7.mass + "</span>" : "";
+        _0x25ab99 += "<span style=\"direction: rtl;\"><strong>" + _0x5341c7.position + "  </strong>" + this.cleanNick(_0x5341c7.nick) + _0x2d18ff + "</span>";
+      }
+      this.div.innerHTML = _0x25ab99;
+    }
+    static ["cleanNick"](_0x23f18d) {
+      return _0x23f18d.replace(/</g, '(').replace(/>/g, ')').substring(0, 15);
+    }
+  }
+  class _0x5cda9b {
+    static ["init"]() {
+      this.initted = true;
+      this.canvas = _0x14f7b2("#minimap-nodes")[0];
+      this.size = _0x480be4.minimapSize;
+      this.canvas.width = this.size;
+      this.canvas.height = this.size;
+      this.pi2 = 2 * Math.PI;
+      this.ctx = this.canvas.getContext('2d');
+      this.ctx.textAlign = 'center';
+      this.ctx.textBaseline = "bottom";
+      this.ctx.font = "500 12px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif";
+      this.ctx.lineWidth = 2;
+      this.selector = 0;
+    }
+    static ['run']() {
+      const _0x46ff1c = this.ctx;
+      const _0x145776 = this.size / _0x996564.edge;
+      const _0x3f151d = _0xddb6d6.viewBounds;
+      _0x46ff1c.clearRect(0, 0, this.size, this.size);
+      const _0x3a9422 = _0x480be4.selfViewportAlpha / 10;
+      _0x46ff1c.globalAlpha = _0x3a9422;
+      _0x46ff1c.fillStyle = _0x480be4.selfViewportColor || "#fff";
+      _0x46ff1c.fillRect(0 | (_0x3f151d.left - _0x996564.offset.x + 8000) * _0x145776, 0 | (_0x3f151d.top - _0x996564.offset.y + 8000) * _0x145776, 0 | (_0x3f151d.right - _0x3f151d.left) * _0x145776, 0 | (_0x3f151d.bottom - _0x3f151d.top) * _0x145776);
+      _0x46ff1c.globalAlpha = 1;
+      if (_0x12ac51.biggestIsOn && (!_0xddb6d6.isSpectating || _0xddb6d6.freeSpectate)) {
+        _0x12ac51.biggest.animate();
+        const _0x10ec1e = _0x12ac51.biggest.mapX;
+        const _0x28b9b8 = _0x12ac51.biggest.mapY;
+        const _0x24b0cd = _0x480be4.topViewportAlpha / 10;
+        _0x46ff1c.beginPath();
+        _0x46ff1c.arc(_0x10ec1e, _0x28b9b8, 7, 0, this.pi2, false);
+        _0x46ff1c.closePath();
+        _0x46ff1c.fillStyle = _0x480be4.topViewportColor || "#fff";
+        _0x46ff1c.globalAlpha = _0x24b0cd;
+        _0x46ff1c.fill();
+        _0x46ff1c.globalAlpha = 1;
+        _0x46ff1c.stroke();
+        _0x46ff1c.fillText(_0x59f59a.current.huds.num1position || "#1 position", _0x10ec1e, _0x28b9b8 - 8);
+      }
+      _0x46ff1c.strokeStyle = _0x480be4.ghostColor || "#666";
+      const _0x524787 = (8000 - _0x996564.offset.x + _0x90a1a7.deathLocation.x) * _0x145776;
+      const _0x31e116 = (8000 - _0x996564.offset.y + _0x90a1a7.deathLocation.y) * _0x145776;
+      _0x46ff1c.beginPath();
+      _0x46ff1c.moveTo(_0x524787 - 4, _0x31e116 - 4);
+      _0x46ff1c.lineTo(_0x524787 + 4, _0x31e116 + 4);
+      _0x46ff1c.moveTo(_0x524787 - 4, _0x31e116 + 4);
+      _0x46ff1c.lineTo(_0x524787 + 4, _0x31e116 - 4);
+      _0x46ff1c.closePath();
+      _0x46ff1c.stroke();
+      _0x46ff1c.strokeStyle = "rgba(51, 51, 51, 0.5)";
+      const _0x3a9e37 = (8000 - _0x996564.offset.x + _0xddb6d6.x) * _0x145776;
+      const _0x192baa = (8000 - _0x996564.offset.y + _0xddb6d6.y) * _0x145776;
+      const _0x26be95 = _0x90a1a7.isAlive ? 4 : 7;
+      _0x46ff1c.beginPath();
+      _0x46ff1c.arc(_0x3a9e37, _0x192baa, _0x26be95, 0, this.pi2, false);
+      _0x46ff1c.closePath();
+      _0x46ff1c.fillStyle = _0x480be4.selfColor || "#fff";
+      _0x46ff1c.fill();
+      _0x46ff1c.stroke();
+      if (_0x12ac51.isSpectator) {
+        this.teamMinimap();
+      } else {
+        this.normalMinimap();
+      }
+    }
+    static ["teamMinimap"]() {
+      const _0x5db847 = this.ctx;
+      _0x5db847.textAlign = "center";
+      _0x5db847.textBaseline = "bottom";
+      _0x5db847.font = "8px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif";
+      for (const _0x3f6db4 of _0x12ac51.teamPlayers.values()) if (_0x3f6db4.isAlive && (!this.selector || this.selector === _0x3f6db4.team)) {
+        _0x3f6db4.animate();
+        const _0x37e58c = _0x3f6db4.mapX;
+        const _0x5936f8 = _0x3f6db4.mapY;
+        _0x5db847.beginPath();
+        _0x5db847.arc(_0x37e58c, _0x5936f8, 5, 0, this.pi2, false);
+        _0x5db847.closePath();
+        if (0 < _0x3f6db4.nick.length) {
+          _0x5db847.fillStyle = _0x480be4.teammateNameColor || "#fff";
+          _0x5db847.fillText(_0x3f6db4.nick, _0x37e58c, _0x5936f8 - 5);
+        }
+        _0x5db847.fillStyle = 1 === _0x3f6db4.team ? _0x480be4.team1color : _0x480be4.team2color;
+        _0x5db847.fill();
+        _0x5db847.stroke();
+      }
+    }
+    static ["normalMinimap"]() {
+      const _0x121e2c = this.ctx;
+      _0x121e2c.textAlign = "center";
+      _0x121e2c.textBaseline = "bottom";
+      _0x121e2c.font = "8px 'Segoe UI','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',ubuntu,sans-serif";
+      _0x121e2c.beginPath();
+      for (const _0x477434 of _0x12ac51.teamPlayers.values()) if (_0x477434.isAlive) {
+        _0x477434.animate();
+        const _0x15a5b7 = _0x477434.mapX;
+        const _0x119d6b = _0x477434.mapY;
+        _0x121e2c.moveTo(_0x15a5b7 + 5, _0x119d6b);
+        _0x121e2c.arc(_0x15a5b7, _0x119d6b, 5, 0, this.pi2, false);
+        if (0 < _0x477434.nick.length) {
+          _0x121e2c.fillStyle = _0x480be4.teammateNameColor || "#fff";
+          _0x121e2c.fillText(_0x477434.nick, _0x15a5b7, _0x119d6b - 5);
+        }
+      }
+      _0x121e2c.closePath();
+      _0x121e2c.fillStyle = _0x480be4.teammateColor || "#555";
+      _0x121e2c.fill();
+    }
+  }
+  class _0x2a0c5c {
+    static ["init"]() {
+      this.lastUpdateTime = 0;
+      this.totalmass = 0;
+      this.alive = 0;
+      this.spectate = 0;
+      this.html = '';
+      this.temporaryArray = [];
+      this.div = {
+        'positions': _0x14f7b2("#teamlist-positions")[0],
+        'alive': _0x14f7b2("#teamlist-alive span")[0],
+        'spectate': _0x14f7b2("#teamlist-spectate span")[0],
+        'totalmass': _0x14f7b2("#teamlist-totalmass span")[0]
+      };
+      this.divTeam1 = {
+        'alive': _0x14f7b2("#teamlist-alive1 span")[0],
+        'spectate': _0x14f7b2("#teamlist-spectate1 span")[0],
+        'totalmass': _0x14f7b2("#teamlist-totalmass1 span")[0]
+      };
+      this.divTeam2 = {
+        'alive': _0x14f7b2("#teamlist-alive2 span")[0],
+        'spectate': _0x14f7b2("#teamlist-spectate2 span")[0],
+        'totalmass': _0x14f7b2("#teamlist-totalmass2 span")[0]
+      };
+      this.teamVsBar = _0x14f7b2(".team-vs-bar-inner");
+      this.teamVsBarStyle = _0x24f9ab.getElementsByClassName("team-vs-bar")[0].style;
+      this.teamVsBarInnerStyle = _0x24f9ab.getElementsByClassName("team-vs-bar-inner")[0].style;
+    }
+    static ["update"]() {
+      if (1000 < _0xb45f1b.time - this.lastUpdateTime) {
+        this.lastUpdateTime = _0xb45f1b.time;
+        if (_0x12ac51.isSpectator) {
+          this.updateVs();
+        }
+        this.generateList();
+        this.div.positions.innerHTML = this.html;
+        this.div.alive.innerHTML = this.alive;
+        this.div.spectate.innerHTML = this.spectate;
+        this.div.totalmass.innerHTML = this.totalmass;
+        this.reset();
+      }
+    }
+    static ["generateList"]() {
+      _0x12ac51.teamPlayers.forEach(_0x152fdf => {
+        if (_0x152fdf.isAlive) {
+          this.totalmass += _0x152fdf.mass;
+          this.temporaryArray.push(_0x152fdf);
+          this.alive++;
+        } else {
+          this.spectate++;
+        }
+      });
+      this.temporaryArray.sort((_0x510cd4, _0x4fd9f1) => _0x4fd9f1.mass - _0x510cd4.mass);
+      this.temporaryArray.splice(5);
+      if (!_0x12ac51.isSpectator) {
+        if (_0x90a1a7.isAlive) {
+          this.totalmass += _0x90a1a7.mass;
+          this.temporaryArray.push(_0x90a1a7);
+          this.alive++;
+        } else {
+          this.spectate++;
+        }
+      }
+      for (let _0x1f17de = 0; _0x1f17de < this.temporaryArray.length; _0x1f17de++) {
+        const _0x5dca94 = this.temporaryArray[_0x1f17de];
+        this.addPlayer(_0x5dca94);
+      }
+    }
+    static ["addPlayer"](_0x4d2819) {
+      const _0x240f85 = 100 * _0x4d2819.mass / this.totalmass;
+      let _avSrc = '';
+      let _avColor = _0x4d2819.colorHex || '#555';
+      if (_0x4d2819 === _0x90a1a7) {
+        const _s = _0x386cbc.getImgurCode(_0x90a1a7._skin || '');
+        if (_s && !_s.includes('XXXXXXX')) _avSrc = _0x386cbc.code2Url(_s);
+        else if (_0x90a1a7._arbSkin) _avSrc = 'https://3rb.io/res/skins/free/' + _0x90a1a7._arbSkin.replace(/^free\/|\.png$/g, '') + '.png';
+      } else if (_0x4d2819.nick === _0x90a1a7.nick2) {
+        const _s = _0x386cbc.getImgurCode(_0x90a1a7._skin2 || '');
+        if (_s && !_s.includes('XXXXXXX')) _avSrc = _0x386cbc.code2Url(_s);
+      } else if (_0x4d2819.skin && !_0x4d2819.skin.includes('XXXXXXX')) {
+        if (_0x4d2819.skin.startsWith('http')) _avSrc = _0x4d2819.skin;
+        else if (_0x4d2819.skin.startsWith('free/')) _avSrc = 'https://3rb.io/res/skins/free/' + _0x4d2819.skin.replace(/^free\/|\.png$/g, '') + '.png';
+        else {
+          const _s = _0x386cbc.getImgurCode(_0x4d2819.skin);
+          if (_s && !_s.includes('XXXXXXX')) _avSrc = _0x386cbc.code2Url(_s);
+        }
+      }
+      if (!_avSrc && _0x4d2819.worldID) {
+        const _m = _0x386cbc.skinMap.get(_0x4d2819.worldID) || _0x386cbc.arbSkinMap.get(_0x4d2819.worldID);
+        if (_m && !_m.includes('XXXXXXX')) {
+          if (_m.startsWith('http')) _avSrc = _m;
+          else _avSrc = _0x386cbc.code2Url(_m);
+        }
+      }
+      const _avTag = _avSrc
+        ? '<img class="tl-player-avatar" src="' + _avSrc + '">'
+        : '<span class="tl-player-avatar" style="background:' + _avColor + '"></span>';
+      this.html += "<div class=\"tl-player\"><div class=\"tl-player-mass\">" + _0x4d2819.mass + "</div><div class=\"tl-player-nick\">" + _avTag + this.cleanNick(_0x4d2819.nick) + "</div><div class=\"tl-player-massbar\"><div class=\"tl-player-massbar-inner\" style=\"width: " + (0 | _0x240f85) + "%;\"></div></div></div>";
+    }
+    static ["updateVs"]() {
+      const _0x141b95 = _0x12ac51.teamData;
+      let _0x24dbe5 = _0x141b95[1].totalMass / (_0x141b95[1].totalMass + _0x141b95[2].totalMass) * 100;
+      if (0 === _0x141b95[1].totalMass && 0 === _0x141b95[2].totalMass) {
+        _0x24dbe5 = 50;
+      }
+      this.teamVsBar.css("width", (0 | _0x24dbe5) + '%');
+      this.divTeam1.alive.innerHTML = _0x141b95[1].alive;
+      this.divTeam1.spectate.innerHTML = _0x141b95[1].spectate;
+      this.divTeam1.totalmass.innerHTML = _0x141b95[1].totalMass;
+      this.divTeam2.alive.innerHTML = _0x141b95[2].alive;
+      this.divTeam2.spectate.innerHTML = _0x141b95[2].spectate;
+      this.divTeam2.totalmass.innerHTML = _0x141b95[2].totalMass;
+      this.teamVsBarStyle.background = _0x480be4.team2color;
+      this.teamVsBarInnerStyle.background = _0x480be4.team1color;
+    }
+    static ["reset"]() {
+      this.totalmass = 0;
+      this.alive = 0;
+      this.spectate = 0;
+      this.temporaryArray = [];
+      this.html = '';
+    }
+    static ["cleanNick"](_0x2cbbe4) {
+      return _0x2cbbe4.replace(/</g, '(').replace(/>/g, ')');
+    }
+  }
+  class _0x59ca82 {
+    static ["init"]() {
+      this.containerType = null;
+      this.container = _0x14f7b2("#message-hud");
+      this.input = _0x14f7b2("#message");
+      this.isOpened = false;
+      this.isFocused = false;
+      this.input.blur(() => {
+        this.isFocused = false;
+      });
+      this.input.focus(() => {
+        this.isFocused = true;
+      });
+      this.chatroom = _0x14f7b2("#chatroom");
+      this.chatroom.perfectScrollbar();
+    }
+    static ["enter"](_0x2cf121) {
+      if (this.isOpened) {
+        if (this.isFocused) {
+          this.containerType = this.input.attr("type");
+          let _0x5ba76e = this.input.val();
+          if (0 < _0x5ba76e.length && 100 < _0x5ba76e.length) {
+            _0x5ba76e = _0x5ba76e.substring(0, 100);
+          }
+          if (1 == this.containerType) {
+            _0x302a2c.chat(_0x5ba76e);
+          } else if (2 == this.containerType) {
+            _0x2d5cce.chat(1, _0x5ba76e);
+          }
+          this.input.val('');
+          this.input.blur();
+          this.container.hide();
+          this.isOpened = false;
+        } else {
+          this.input.focus();
+        }
+      } else {
+        this.container.show();
+        this.isOpened = true;
+        this.input.focus();
+        this.input.attr("type", _0x2cf121);
+      }
+    }
+  }
+  class _0x9547b4 {
+    static ["init"]() {
+      this.fpsCount = 0;
+      this.lastUpdateTime = 0;
+      this.div = _0x14f7b2('#stats-hud')[0];
+      this.div.style.fontSize = '12px';
+      this.lockClosed = "<i class=\"fa fa-lock\"></i>";
+      this.lockOpened = "<i class=\"fa fa-unlock-alt\"></i>";
+      this.speedometer = "<i class=\"fa fa-tachometer\"></i>";
+      this.iconPause = "<i class=\"fa fa-pause-circle\"></i>";
+      const _0timer = document.createElement('div');
+      _0timer.id = 'hud-reset-timer';
+      _0timer.style.cssText = 'position:absolute;left:50%;transform:translateX(-50%);bottom:100%;color:#fff;font-family:ubuntu;font-size:12px;font-weight:600;white-space:nowrap;text-shadow:0 0 3px #000;z-index:10;pointer-events:none;margin-bottom:2px;';
+      _0x14f7b2('#minimap-hud')[0].appendChild(_0timer);
+      this.timerDiv = _0timer;
+    }
+    static ["update"]() {
+      this.fpsCount++;
+      if (1000 < _0xb45f1b.time - this.lastUpdateTime) {
+        this.lastUpdateTime = _0xb45f1b.time;
+        this.refresh();
+      }
+    }
+    static ["refresh"]() {
+      let _0x5be063 = '';
+      _0x5be063 += this.fps;
+      if (_0x90a1a7.isAlive) {
+        _0x5be063 += this.score + this.n64 + this.STE + this.speed;
+      }
+      _0x5be063 += this.PIO + this.paused + this.zoomLock;
+      this.div.innerHTML = _0x5be063;
+      if (this.timerDiv) this.timerDiv.innerHTML = this.resetTimer;
+    }
+    static get ["zoomLock"]() {
+      return 'on' === _0x2cc0f3.autoZoom ? this.lockClosed : this.lockOpened;
+    }
+    static get ["score"]() {
+      return (_0x59f59a.current.huds.score || "Score") + ": " + _0x90a1a7.score + "   ";
+    }
+    static get ["n64"]() {
+      return '[' + _0x90a1a7.pieceCount + "/64] ";
+    }
+    static get ["STE"]() {
+      const _0x275cde = _0x90a1a7.biggestPieceMass;
+      return 35 < _0x275cde ? "STE: " + (0 | _0x275cde * (1000 > _0x275cde ? 0.35 : 0.38)) + "   " : '';
+    }
+    static get ["speed"]() {
+      _0x90a1a7.animSpeed += (_0x90a1a7.speed - _0x90a1a7.animSpeed) / 3;
+      _0x90a1a7.speed = 0;
+      return this.speedometer + " " + (0 | _0x90a1a7.animSpeed) + "px/s   ";
+    }
+    static get ['PIO']() {
+      const _0x4c04ff = _0x18a8d1.packetCount['in'];
+      const _0x56e980 = _0x18a8d1.packetCount.out;
+      _0x18a8d1.packetCount['in'] = 0;
+      _0x18a8d1.packetCount.out = 0;
+      return "PIO: " + _0x4c04ff + '|' + _0x56e980 + " ";
+    }
+    static get ['paused']() {
+      return _0x90a1a7.movementPaused ? '[' + this.iconPause + " " + (_0x59f59a.current.huds.paused || "Paused") + "]   " : '';
+    }
+    static get ["fps"]() {
+      const _0x29b3a1 = this.fpsCount;
+      this.fpsCount = 0;
+      return "FPS: " + _0x29b3a1 + "   ";
+    }
+    static get ["resetTimer"]() {
+      if (_0x245b10._restartTime) {
+        let _0x5f8b2a = Math.max(0, _0x245b10._restartTime - Date.now());
+        const _0x37edd8 = Math.floor(_0x5f8b2a / 3600000);
+        const _0x4d1be0 = Math.floor((_0x5f8b2a % 3600000) / 60000);
+        const _0x4f9b19 = Math.floor((_0x5f8b2a % 60000) / 1000);
+        const _0timeStr = String(_0x37edd8).padStart(2, '0') + ':' + String(_0x4d1be0).padStart(2, '0') + ':' + String(_0x4f9b19).padStart(2, '0');
+        if (_0x5f8b2a <= 300000) return 'Reset: <span style="color:#ff0000">' + _0timeStr + '</span>   ';
+        return 'Reset: ' + _0timeStr + '   ';
+      }
+      return '';
+    }
+  }
+  class _0x3a43e7 {
+    static ["init"]() {
+      this.container = _0x14f7b2("#targeting-hud");
+      this.DIVno1viewport = _0x14f7b2("#targeting-no-1");
+      this.DIVmouse = _0x14f7b2("#targeting-mouse");
+      this.DIVplayers = _0x14f7b2("#targeting-players");
+      this.DIVtotalMass = _0x14f7b2("#targeting-playersMass span.mass")[0];
+      this.DIVplayer1 = {
+        'nick': _0x14f7b2("#targeting-player1 span.nick")[0],
+        'mass': _0x14f7b2("#targeting-player1 span.mass")[0]
+      };
+      this.DIVplayer2 = {
+        'nick': _0x14f7b2("#targeting-player2 span.nick")[0],
+        'mass': _0x14f7b2("#targeting-player2 span.mass")[0]
+      };
+      this.lastTime = _0xb45f1b.time;
+    }
+    static ["update"]() {
+      if (!(1000 > _0xb45f1b.time - this.lastTime) && (this.lastTime = _0xb45f1b.time, _0xddb6d6.freeSpectate && _0x3a83be.isTurnedOn)) {
+        let _0x37ad91 = 0;
+        if (_0x3a83be.target1.turnedOn) {
+          this.DIVplayer1.nick.innerHTML = _0x3a83be.target1.nick;
+          this.DIVplayer1.mass.innerHTML = _0x3a83be.target1.outOfView ? "OUT OF VIEW" : _0x3a83be.target1.mass;
+          _0x37ad91 += _0x3a83be.target1.outOfView ? 0 : _0x3a83be.target1.mass;
+        } else {
+          this.DIVplayer1.nick.innerHTML = "Target 1";
+          this.DIVplayer1.mass.innerHTML = "NOT SELECTED";
+        }
+        if (_0x3a83be.target2.turnedOn) {
+          this.DIVplayer2.nick.innerHTML = _0x3a83be.target2.nick;
+          this.DIVplayer2.mass.innerHTML = _0x3a83be.target2.outOfView ? "OUT OF VIEW" : _0x3a83be.target2.mass;
+          _0x37ad91 += _0x3a83be.target2.outOfView ? 0 : _0x3a83be.target2.mass;
+        } else {
+          this.DIVplayer2.nick.innerHTML = "Target 2";
+          this.DIVplayer2.mass.innerHTML = "NOT SELECTED";
+        }
+        this.DIVtotalMass.innerHTML = _0x37ad91;
+      }
+    }
+    static ["show"]() {
+      this.container.show();
+    }
+    static ["hide"]() {
+      this.container.hide();
+    }
+    static ["topViewport"]() {
+      this.DIVno1viewport.show();
+      this.DIVmouse.hide();
+      this.DIVplayers.hide();
+      _0x14f7b2("#spectate-mode-top").addClass("active");
+      _0x14f7b2("#spectate-mode-mouse").removeClass("active");
+      _0x14f7b2("#spectate-mode-target").removeClass("active");
+    }
+    static ["mouseViewport"]() {
+      this.DIVmouse.show();
+      this.DIVno1viewport.hide();
+      this.DIVplayers.hide();
+      _0x14f7b2("#spectate-mode-top").removeClass("active");
+      _0x14f7b2("#spectate-mode-mouse").addClass("active");
+      _0x14f7b2("#spectate-mode-target").removeClass("active");
+    }
+    static ["targetMode"]() {
+      this.DIVplayers.show();
+      this.DIVmouse.hide();
+      this.DIVno1viewport.hide();
+      _0x14f7b2("#spectate-mode-top").removeClass("active");
+      _0x14f7b2("#spectate-mode-mouse").removeClass("active");
+      _0x14f7b2("#spectate-mode-target").addClass("active");
+    }
+  }
+  class _0x31c9b4 {
+    static ["init"]() {
+      _0x40f48a.init();
+      _0x2cc0f3.init();
+      _0x49cc31.init();
+      _0x50f0c6.init();
+      _0x77d3cd.init();
+      _0x480be4.init();
+      _0xa916b.init();
+      _0x5cda9b.init();
+      _0x2a0c5c.init();
+      _0x59ca82.init();
+      _0x9547b4.init();
+      _0x3a43e7.init();
+      this.isOpened = true;
+      this.gMode = ":party";
+      this.div = _0x14f7b2("#menu-overlay");
+      this.streammode = !_0x19d5af.get("extras", "streammode");
+      this.toggleStreammode();
+      this.buttons();
+    }
+    static ["buttons"]() {
+      _0x14f7b2("#button-settings").click(() => {
+        this.closeSubMenus();
+        _0x2cc0f3.toggle();
+      });
+      _0x14f7b2("#button-play").click(() => {
+        this.play();
+      });
+      _0x14f7b2("#button-spectate").click(() => {
+        _0x302a2c.spectate();
+        this.close();
+      });
+      _0x14f7b2("#button-inputs").click(() => {
+        this.closeSubMenus();
+        _0x49cc31.toggle();
+      });
+      _0x14f7b2("#button-theme").click(() => {
+        this.closeSubMenus();
+        _0x480be4.toggle();
+      });
+      _0x14f7b2("#normal-tag").click(() => {
+        this.normalTag();
+      });
+      _0x14f7b2("#minimap-show-1").click(() => {
+        _0x14f7b2("#minimap-show-" + _0x5cda9b.selector).removeClass("active");
+        _0x14f7b2("#minimap-show-1").addClass('active');
+        _0x5cda9b.selector = 1;
+      });
+      _0x14f7b2("#minimap-show-2").click(() => {
+        _0x14f7b2("#minimap-show-" + _0x5cda9b.selector).removeClass("active");
+        _0x14f7b2("#minimap-show-2").addClass("active");
+        _0x5cda9b.selector = 2;
+      });
+      _0x14f7b2("#minimap-show-0").click(() => {
+        _0x14f7b2("#minimap-show-" + _0x5cda9b.selector).removeClass('active');
+        _0x14f7b2("#minimap-show-0").addClass("active");
+        _0x5cda9b.selector = 0;
+      });
+      _0x14f7b2("#streamMode").click(() => {
+        this.toggleStreammode();
+      });
+      _0x14f7b2("#spectate-mode-top").click(() => {
+        this.spectateModeTop();
+      });
+      _0x14f7b2("#spectate-mode-mouse").click(() => {
+        this.spectateModeMouse();
+      });
+      _0x14f7b2("#spectate-mode-target").click(() => {
+        this.spectateModeTarget();
+      });
+      if (!_0x19d5af.get("extras", "openedChangelog")) {
+        _0x14f7b2('#changelog').addClass("active");
+      }
+      _0x14f7b2('#changelog').click(() => {
+        _0x19d5af.set('extras', "openedChangelog", true);
+        _0x14f7b2("#changelog").removeClass("active");
+      });
+    }
+    static ['doubleTag']() {
+      _0x14f7b2("#double-tag").addClass("active-tag");
+      _0x14f7b2("#normal-tag").removeClass('active-tag');
+      _0x14f7b2("#tag2").show();
+      _0x14f7b2('#nick').css("width", "189px");
+      _0x14f7b2("#teams-vs").show();
+      _0x14f7b2("#info-tp").hide();
+      _0x12ac51.isSpectator = true;
+      _0x2d5cce.spectator(true);
+      _0x14f7b2(".minimap-button").each(function () {
+        _0x14f7b2(this).show();
+      });
+    }
+    static ["normalTag"]() {
+      _0x14f7b2("#normal-tag").addClass("active-tag");
+      _0x14f7b2("#double-tag").removeClass('active-tag');
+      _0x14f7b2('#tag2').hide();
+      _0x14f7b2("#nick").css("width", "45px");
+      _0x14f7b2("#teams-vs").hide();
+      _0x14f7b2("#info-tp").show();
+      _0x2d5cce.spectator(false);
+      _0x12ac51.isSpectator = false;
+      _0x14f7b2(".minimap-button").each(function () {
+        _0x14f7b2(this).hide();
+      });
+    }
+    static ["play"]() {
+      this.close();
+      _0x302a2c.spawn();
+    }
+    static ["closeSubMenus"]() {
+      _0x49cc31.close();
+      _0x2cc0f3.close();
+      _0x480be4.close();
+    }
+    static ["toggle"]() {
+      if (this.isOpened) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+    static ["close"]() {
+      this.isOpened = false;
+      this.div.fadeOut(250);
+      _0x14f7b2("#leaderboard-hud").css('top', "-2px");
+      _0x14f7b2("#teamlist-hud").css("top", "10px");
+      _0x14f7b2(".menu-bar").slideUp(250);
+      _0x14f7b2("#targeting-hud").css("top", "0px");
+    }
+    static ['open']() {
+      this.isOpened = true;
+      this.div.fadeIn(250);
+      _0x14f7b2("#leaderboard-hud").css("top", "-2px");
+      _0x14f7b2("#teamlist-hud").css("top", "10px");
+      _0x14f7b2(".menu-bar").slideDown(250);
+      _0x14f7b2("#targeting-hud").css("top", "0px");
+    }
+    static ["toggleStreammode"]() {
+      if (this.streammode) {
+        _0x14f7b2("#nick, #tag, #tag2").removeClass("input-hidden");
+        _0x14f7b2("#streamMode").html("<i class=\"fa fa-eye fa-fw\"></i>");
+        this.streammode = false;
+        _0x19d5af.set('extras', "streammode", this.streammode);
+      } else {
+        _0x14f7b2("#nick, #tag, #tag2").addClass("input-hidden");
+        _0x14f7b2("#streamMode").html("<i class=\"fa fa-eye-slash fa-fw\"></i>");
+        this.streammode = true;
+        _0x19d5af.set("extras", "streammode", this.streammode);
+      }
+    }
+    static ["spectateModeTop"]() {
+      if (!_0x90a1a7.isAlive && _0xddb6d6.isSpectating && _0xddb6d6.freeSpectate) {
+        _0x3a43e7.topViewport();
+        _0x302a2c.freeSpectate();
+      }
+    }
+    static ["spectateModeMouse"]() {
+      if (!(_0x90a1a7.isAlive || !_0xddb6d6.isSpectating || _0xddb6d6.freeSpectate && !_0x3a83be.isTurnedOn)) {
+        if (_0x3a83be.isTurnedOn) {
+          _0x3a83be.target1.turnedOn = false;
+          _0x3a83be.target2.turnedOn = false;
+          _0x3a43e7.mouseViewport();
+        } else {
+          _0x302a2c.freeSpectate();
+          _0x3a43e7.mouseViewport();
+        }
+      }
+    }
+    static ["spectateModeTarget"]() {
+      if ('on' === _0x2cc0f3.targeting) {
+        _0x40f48a.command("Multibox", _0x59f59a.current.notif.targeting_on);
+      } else {
+        _0x40f48a.command('Multibox', _0x59f59a.current.notif.targeting_off);
+      }
+    }
+  }
+  class _0x14d4a3 {
+    static ["init"]() {
+      const _0x4fa31c = {
+        left: 0x0,
+        "top": 0x0,
+        "right": 0x0,
+        "bottom": 0x0
+      };
+      this.cells = new Map();
+      this.cells2 = new Map();
+      this.myCellsIDs = new Set();
+      this.myCellsIDs2 = new Set();
+      this.myCells = new Map();
+      this.myCells2 = new Map();
+      this.sortedCells = [];
+      this.food = [];
+      this.cellsPositions = _0x4fa31c;
+    }
+    static ["update"]() {
+      this.positions();
+      this.food = [];
+      this.sortedCells = [];
+      this.cells.forEach((_0x15abc5, _0x1eb010) => {
+        this.cellsPos(_0x15abc5);
+        if (_0x15abc5.fadeStartTime && 1 < (_0xb45f1b.time - _0x15abc5.fadeStartTime) / _0x2cc0f3.CellAnimation) {
+          this.cells["delete"](_0x1eb010);
+        } else if (this.isInView(_0x15abc5) && _0x15abc5.worldID !== _0x90a1a7.worldID2) {
+          if (_0x15abc5.isFood) {
+            this.food.push(_0x15abc5);
+          } else {
+            this.sortedCells.push(_0x15abc5);
+          }
+        }
+      });
+      this.cells2.forEach((_0x5c7000, _0x3f3aaf) => {
+        if (_0x5c7000.fadeStartTime && 1 < (_0xb45f1b.time - _0x5c7000.fadeStartTime) / _0x2cc0f3.CellAnimation) {
+          this.cells2['delete'](_0x3f3aaf);
+        } else if (!(!this.isInView(_0x5c7000) || !_0x5c7000.isMine && this.check(_0x5c7000))) {
+          if (_0x5c7000.isFood) {
+            this.food.push(_0x5c7000);
+          } else {
+            this.sortedCells.push(_0x5c7000);
+          }
+        }
+      });
+      this.sortedCells.sort((_0x424a64, _0x58f7ba) => {
+        const _0x55c3fe = _0x424a64.animRadius;
+        const _0x403ea8 = _0x58f7ba.animRadius;
+        return _0x55c3fe === _0x403ea8 ? _0x58f7ba.id - _0x424a64.id : _0x55c3fe - _0x403ea8;
+      });
+    }
+    static ['getCell'](_0x3f80e7, _0xeb4927) {
+      return (1 === _0xeb4927 ? this.cells : this.cells2).get(_0x3f80e7) || this.addCell(_0x3f80e7, _0xeb4927);
+    }
+    static ['addCell'](_0x413407, _0x5549f4) {
+      const _0x71aec9 = 1 === _0x5549f4 ? this.cells : this.cells2;
+      const _0x267674 = new _0x3b109c(_0x413407, _0x5549f4);
+      _0x71aec9.set(_0x413407, _0x267674);
+      this.myCellCheck(_0x413407, _0x267674, _0x5549f4);
+      return _0x267674;
+    }
+    static ["myCellCheck"](_0x1bed1b, _0x3ec24e, _0x5afc32) {
+      const _0x48358c = 1 === _0x5afc32 ? this.myCellsIDs : this.myCellsIDs2;
+      const _0x27f603 = 1 === _0x5afc32 ? this.myCells : this.myCells2;
+      if (_0x48358c.has(_0x1bed1b)) {
+        _0x27f603.set(_0x1bed1b, _0x3ec24e);
+        _0x48358c["delete"](_0x1bed1b);
+        _0x3ec24e.isMine = true;
+        _0x3ec24e.nick = _0x90a1a7.nick;
+      }
+    }
+    static ["eatCell"](_0x5cbea9, _0x65a01d, _0x66ed43) {
+      const _0x1abf73 = 1 === _0x66ed43 ? this.cells : this.cells2;
+      const _0x3c8d5e = 1 === _0x66ed43 ? this.myCells : this.myCells2;
+      const _0x4d8937 = _0x1abf73.get(_0x65a01d);
+      const _0x77c0b5 = _0x1abf73.get(_0x5cbea9);
+      if (_0x4d8937 && _0x77c0b5) {
+        _0x4d8937.x = _0x77c0b5.x;
+        _0x4d8937.y = _0x77c0b5.y;
+        _0x4d8937.radius = _0x4d8937.animRadius;
+        _0x4d8937.fadeStartTime = _0xb45f1b.time;
+        _0x4d8937.lastUpdateTime = _0xb45f1b.time;
+        if (_0x4d8937.isMine) {
+          _0x3c8d5e["delete"](_0x65a01d);
+        }
+        _0x1abf73["delete"](_0x65a01d);
+        if (!_0x4d8937.isFood) {
+          _0x1abf73.set(_0x65a01d + ":removed", _0x4d8937);
+        }
+      }
+    }
+    static ['removeCell'](_0x139992, _0x28ebac) {
+      const _0x1641c3 = 1 === _0x28ebac ? this.cells : this.cells2;
+      const _0x75cd3c = 1 === _0x28ebac ? this.myCells : this.myCells2;
+      const _0x2d052b = _0x1641c3.get(_0x139992);
+      if (_0x2d052b) {
+        if (_0x2d052b.isMine) {
+          _0x75cd3c["delete"](_0x139992);
+        }
+        _0x1641c3["delete"](_0x139992);
+        if (!(_0x2d052b.isFood || 'on' !== _0x2cc0f3.eatAnimation)) {
+          _0x2d052b.fadeStartTime = _0xb45f1b.time;
+          _0x1641c3.set(_0x139992 + ":removed", _0x2d052b);
+        }
+      }
+    }
+    static ['isInView'](_0x519429) {
+      const _0x106585 = {
+        x: 0x0,
+        y: 0x0
+      };
+      const _0x1b6a0e = 2 === _0x519429.cellType ? _0x996564.position : _0x106585;
+      const _0x2b674d = _0xddb6d6.viewBounds;
+      return !(_0x519429.animX - _0x1b6a0e.x + _0x519429.animRadius < _0x2b674d.left || _0x519429.animX - _0x1b6a0e.x - _0x519429.animRadius > _0x2b674d.right || _0x519429.animY - _0x1b6a0e.y + _0x519429.animRadius < _0x2b674d.top || _0x519429.animY - _0x1b6a0e.y - _0x519429.animRadius > _0x2b674d.bottom);
+    }
+    static ["positions"]() {
+      _0x14d4a3.cells.forEach((_0x5d98d5, _0x5a8733) => {
+        this.cellsPositions.left = _0x5d98d5.x;
+        this.cellsPositions.right = _0x5d98d5.x;
+        this.cellsPositions.top = _0x5d98d5.y;
+        this.cellsPositions.bottom = _0x5d98d5.y;
+      });
+    }
+    static ["cellsPos"](_0x2be956) {
+      if (this.cellsPositions.left > _0x2be956.x + _0x2be956.radius) {
+        this.cellsPositions.left = _0x2be956.x + _0x2be956.radius;
+      }
+      if (this.cellsPositions.right < _0x2be956.x - _0x2be956.radius) {
+        this.cellsPositions.right = _0x2be956.x - _0x2be956.radius;
+      }
+      if (this.cellsPositions.top > _0x2be956.y + _0x2be956.radius) {
+        this.cellsPositions.top = _0x2be956.y + _0x2be956.radius;
+      }
+      if (this.cellsPositions.bottom < _0x2be956.y - _0x2be956.radius) {
+        this.cellsPositions.bottom = _0x2be956.y - _0x2be956.radius;
+      }
+    }
+    static ["check"](_0x199e69) {
+      const _0x59e2b4 = _0x996564.position;
+      const _0x208e66 = _0x199e69.x - _0x59e2b4.x;
+      const _0x340ab6 = _0x199e69.y - _0x59e2b4.y;
+      const _0x5df441 = this.cellsPositions;
+      return !(_0x208e66 + _0x199e69.radius < _0x5df441.left || _0x208e66 - _0x199e69.radius > _0x5df441.right || _0x340ab6 + _0x199e69.radius < _0x5df441.top || _0x340ab6 - _0x199e69.radius > _0x5df441.bottom);
+    }
+  }
+  class _0x3b109c {
+    constructor(_0x46ae80, _0x2a2eaf) {
+      const _0x19f55d = {
+        r: 0x0,
+        g: 0x0,
+        b: 0x0
+      };
+      this.id = _0x46ae80;
+      this.x = 0;
+      this.y = 0;
+      this.radius = 0;
+      this.colorObject = _0x19f55d;
+      this.colorHex = "#555";
+      this.skin = '';
+      this.skinCode = 0;
+      this._nick = '';
+      this.isMine = false;
+      this.isFood = false;
+      this.isEjected = false;
+      this.isVirus = false;
+      this.isFriend = false;
+      this.account = '';
+      this.cellType = _0x2a2eaf;
+
+      this.animX = 0;
+      this.animY = 0;
+      this.animRadius = 0;
+      this.lastUpdateTime = 0;
+      this.fadeStartTime = 0;
+    }
+    set ['nick'](_0x310872) {
+      if (!_0x310872) {
+        return;
+      }
+      this._nick = _0x310872;
+      const _0x507157 = _0x310872.indexOf("");
+      if (0 <= _0x507157 && _0x310872.length >= _0x507157 + 1) {
+        const _0x1d8d8e = _0x310872.charCodeAt(_0x507157 + 1);
+        if (12000 < _0x1d8d8e) {
+          this.skinCode = _0x1d8d8e;
+        }
+      }
+    }
+    get ["nick"]() {
+      return this._nick;
+    }
+    get ["mass"]() {
+      return 0 | this.animRadius * this.animRadius / 100;
+    }
+    get ['staticMass']() {
+      return 0 | this.radius * this.radius / 100;
+    }
+    ["setColor"](_0x2874b8, _0x53537a, _0x270a0f) {
+      this.colorObject.r = _0x2874b8;
+      this.colorObject.g = _0x53537a;
+      this.colorObject.b = _0x270a0f;
+      this.colorHex = '#' + (16777216 + (_0x2874b8 << 16) + (_0x53537a << 8) + _0x270a0f).toString(16).slice(1);
+    }
+    ["animate"]() {
+      let _0x4ea84a = (_0xb45f1b.time - this.lastUpdateTime) / _0x2cc0f3.CellAnimation;
+      _0x4ea84a = 0 > _0x4ea84a ? 0 : 1 < _0x4ea84a ? 1 : _0x4ea84a;
+      this.animX = _0x4ea84a * (this.x - this.animX) + this.animX;
+      this.animY = _0x4ea84a * (this.y - this.animY) + this.animY;
+      this.animRadius = _0x4ea84a * (this.radius - this.animRadius) + this.animRadius;
+      this.lastUpdateTime = _0xb45f1b.time;
+    }
+    get ["worldID"]() {
+      let _0x33f29e = this._nick.substring(this._nick.indexOf('}') + 1);
+      _0x33f29e = _0x33f29e.replace('%*^', '');
+      return ":party" === _0x31c9b4.gMode ? _0x33f29e + this.colorHex : _0x33f29e;
+    }
+    get ['isUnnamed']() {
+      return 1 > this._nick.substring(this._nick.indexOf('}') + 1).length;
+    }
+  }
+  class _0x90a1a7 {
+    static ['init']() {
+      const _0x75abdd = {
+        r: 0x0,
+        g: 0x0,
+        b: 0x0
+      };
+      const _0x59bb60 = {
+        x: 0x64,
+        y: 0x64
+      };
+      this._nick = _0x14f7b2("#nick").val();
+      this._nick2 = _0x14f7b2("#nick2").val();
+      this._arbSkin = _0x14f7b2("#arbSkin").val();
+      this._arbSkin2 = '';
+      this._skin = _0x386cbc.getImgurCode(_0x14f7b2("#skin").val());
+      this._skin2 = _0x386cbc.getImgurCode(_0x14f7b2("#skin2").val());
+      this.tag = _0x14f7b2("#tag").val();
+      this._colorObject = _0x75abdd;
+      this.colorHex = '#000';
+      this.colorHex2 = "#000";
+      this._isAlive = false;
+      this._isAlive2 = false;
+      this.isRGB = false;
+      this.x = 0;
+      this.y = 0;
+      this.speed = 0;
+      this.animSpeed = 0;
+      this.mass = 0;
+      this.biggestPieceMass = 0;
+      this.score = 0;
+      this.movementPaused = false;
+      this.deathLocation = _0x59bb60;
+      this.type = 1;
+    }
+    static ["update"]() {
+      if (0 < this.pieceCount1) {
+        this.playing();
+      } else {
+        this.dead();
+      }
+      if (0 < this.pieceCount2) {
+        this.playing2();
+      } else {
+        this.dead2();
+      }
+      this.updateData();
+    }
+    static ["playing"]() {
+      if (!this._isAlive) {
+        this._isAlive = true;
+        if (!this._isAlive2) {
+          _0x2d5cce.aliveStatus(2);
+        }
+        for (const _0x305bc5 of _0x14d4a3.myCells.values()) {
+          this.colorObject = _0x305bc5.colorObject;
+          this.colorHex = _0x305bc5.colorHex;
+          break;
+        }
+        if ('on' === _0x2cc0f3.commander) {
+          for (const _0x188d46 of _0x14d4a3.myCells.values()) {
+            _0x386cbc.commanderPoints.add({ x: _0x188d46.animX, y: _0x188d46.animY, time: _0xb45f1b.time });
+            break;
+          }
+        }
+      }
+    }
+    static ['playing2']() {
+      if (!this._isAlive2) {
+        this._isAlive2 = true;
+        if (!this._isAlive) {
+          _0x2d5cce.aliveStatus(1);
+        }
+        for (const _0x4e2c94 of _0x14d4a3.myCells2.values()) {
+          this.colorHex2 = _0x4e2c94.colorHex;
+          break;
+        }
+        if ('on' === _0x2cc0f3.commander) {
+          for (const _0x1c6de9 of _0x14d4a3.myCells2.values()) {
+            _0x386cbc.commanderPoints.add({ x: _0x1c6de9.animX, y: _0x1c6de9.animY, time: _0xb45f1b.time });
+            break;
+          }
+        }
+      }
+    }
+    static ["updateData"]() {
+      if (this.isAlive) {
+        let _0x5ea492 = 0;
+        let _0x36957a = 0;
+        let _0x228d9b = 0;
+        this.mass = 0;
+        this.biggestPieceMass = 0;
+        if (this._isAlive) {
+          for (const _0x18f0e2 of _0x14d4a3.myCells.values()) {
+            _0x18f0e2.animate();
+            _0x5ea492 += _0x18f0e2.animX / this.pieceCount;
+            _0x36957a += _0x18f0e2.animY / this.pieceCount;
+            _0x228d9b += _0x18f0e2.animRadius;
+            this.mass += _0x18f0e2.staticMass;
+            if (this.biggestPieceMass < _0x18f0e2.staticMass) {
+              this.biggestPieceMass = _0x18f0e2.staticMass;
+            }
+          }
+        }
+        if (this._isAlive2) {
+          const _0x4b9250 = _0x996564.position;
+          for (const _0x2f5f9b of _0x14d4a3.myCells2.values()) {
+            _0x2f5f9b.animate();
+            _0x5ea492 += (_0x2f5f9b.animX - _0x4b9250.x) / this.pieceCount;
+            _0x36957a += (_0x2f5f9b.animY - _0x4b9250.y) / this.pieceCount;
+            _0x228d9b += _0x2f5f9b.animRadius;
+            this.mass += _0x2f5f9b.staticMass;
+            if (this.biggestPieceMass < _0x2f5f9b.staticMass) {
+              this.biggestPieceMass = _0x2f5f9b.staticMass;
+            }
+          }
+        }
+        if (!this.movementPaused) {
+          const _0x9475df = this.x - _0x5ea492;
+          const _0x1b24a7 = this.y - _0x36957a;
+          const _0x54e26 = Math.sqrt(_0x9475df * _0x9475df + _0x1b24a7 * _0x1b24a7);
+          this.speed += _0x54e26;
+          this.x = _0x5ea492;
+          this.y = _0x36957a;
+        }
+        if (this.score < this.mass) {
+          this.score = this.mass;
+        }
+        const _0x346099 = Math.pow(Math.min(64 / _0x228d9b, 1), 0.4);
+        const _0x4e3a9e = Math.max(_0x1c478d.innerWidth / 1920, _0x1c478d.innerHeight / 1080);
+        _0xddb6d6.autoZoomViewport = _0x346099 * _0x4e3a9e;
+      }
+    }
+    static ["dead"]() {
+      if (this._isAlive) {
+        this._isAlive = false;
+        if (this._isAlive2) {
+          this.type = 2;
+          _0x302a2c.spectate(1);
+        } else {
+          this.setInfo();
+        }
+      }
+    }
+    static ['dead2']() {
+      if (this._isAlive2) {
+        this._isAlive2 = false;
+        if (this._isAlive) {
+          this.type = 1;
+          _0x302a2c.spectate(2);
+        } else {
+          this.setInfo();
+        }
+      }
+    }
+    static ["setInfo"]() {
+      this.score = 0;
+      this.mass = 0;
+      this.biggestPieceMass = 0;
+      this.movementPaused = false;
+      this.deathLocation.x = this.x;
+      this.deathLocation.y = this.y;
+      this.type = 1;
+      _0x31c9b4.open();
+    }
+    static set ["nick"](_0x4397c5) {
+      this._nick = _0x4397c5;
+      _0x2d5cce.nick();
+    }
+    static get ['nick']() {
+      return this._nick ? this._nick.substring(0, 15) : '';
+    }
+    static set ["nick2"](_0x4397c5) {
+      this._nick2 = _0x4397c5;
+    }
+    static get ['nick2']() {
+      return this._nick2 ? this._nick2.substring(0, 15) : '';
+    }
+    static set ["arbSkin"](_0x591f79) {
+      this._arbSkin = _0x591f79;
+    }
+    static get ["arbSkin"]() {
+      return this._arbSkin;
+    }
+    static set ["arbSkin2"](_0x591f79) {
+      this._arbSkin2 = _0x591f79;
+    }
+    static get ["arbSkin2"]() {
+      return this._arbSkin2;
+    }
+    static set ["skin"](_0x1a9370) {
+      const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
+      const _0x356638 = _0x386cbc.getRaindowFlag(_0x1a9370);
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) { this._skin = _0x5518a5; _0x2d5cce.skin(); try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 1); } catch(e){} try { _0xpartyNet._sendSkinPacket(_0x5518a5, _0x90a1a7.nick); } catch(e){} }
+    }
+    static get ['skin']() {
+      return this._skin;
+    }
+    static set ["skin2"](_0x1a9370) {
+      const _0x5518a5 = _0x386cbc.getImgurCode(_0x1a9370);
+      if ("XXXXXXX" !== _0x5518a5 && _0x5518a5) {
+        this._skin2 = _0x5518a5;
+        try { _0xpartyNet._sendSkinUpdate(_0x5518a5, 2); } catch(e){}
+        try { _0xpartyNet._sendSkinPacket(_0x5518a5, _0x90a1a7.nick2); } catch(e){}
+      }
+    }
+    static get ['skin2']() {
+      return this._skin2 || '';
+    }
+
+    static set ["colorObject"](_0x50d681) {
+      this._colorObject.r = _0x50d681.r;
+      this._colorObject.g = _0x50d681.g;
+      this._colorObject.b = _0x50d681.b;
+      _0x2d5cce.color();
+    }
+    static get ["colorObject"]() {
+      return this._colorObject;
+    }
+    static set ["isAlive"](_0xb726b1) {
+      this._isAlive = _0xb726b1;
+      _0x2d5cce.aliveStatus(_0xb726b1);
+    }
+    static get ["isAlive"]() {
+      return this._isAlive || this._isAlive2;
+    }
+    static get ["worldID"]() {
+      let _0x28c4c5 = this._nick.substring(this._nick.indexOf('}') + 1);
+      _0x28c4c5 = _0x28c4c5.replace('%*^', '');
+      return ':party' === _0x31c9b4.gMode ? _0x28c4c5 + this.colorHex : _0x28c4c5;
+    }
+    static get ["worldID2"]() {
+      const _0xsrc = this._nick2 || this._nick;
+      let _0x5dbd66 = _0xsrc.substring(_0xsrc.indexOf('}') + 1);
+      _0x5dbd66 = _0x5dbd66.replace("%*^", '');
+      return ":party" === _0x31c9b4.gMode ? _0x5dbd66 + this.colorHex2 : _0x5dbd66;
+    }
+    static get ['location']() {
+      return _0x996564.getLocation(this.x, this.y);
+    }
+    static get ["pieceCount1"]() {
+      return _0x14d4a3.myCells.size;
+    }
+    static get ["pieceCount2"]() {
+      return _0x14d4a3.myCells2.size;
+    }
+    static get ['pieceCount']() {
+      return this.pieceCount1 + this.pieceCount2;
+    }
+    static set ["typeID"](_0x131ff6) {
+      this.type = _0x131ff6;
+    }
+    static get ['typeID']() {
+      return this.type;
+    }
+  }
+  class _0xb33099 {
+    constructor(_0x2c1c34) {
+      this.id = _0x2c1c34;
+      this.isNew = 2;
+      this.x = 90;
+      this.y = 90;
+      this.isAlive = 0;
+      this.mass = 0;
+      this.nick = '';
+      this.skin = '';
+      this.colorHex = '#000';
+      this.isRGB = false;
+      this.animX = 90;
+      this.animY = 90;
+      this.timeStamp = _0xb45f1b.time;
+      this.team = 1;
+    }
+    get ["worldID"]() {
+      let _0x469bf7 = this.nick.substring(this.nick.indexOf('}') + 1);
+      _0x469bf7 = _0x469bf7.replace("%*^", '');
+      return ":party" === _0x31c9b4.gMode ? _0x469bf7 + this.colorHex : _0x469bf7;
+    }
+    get ["location"]() {
+      return _0x996564.getLocation(this.x + _0x996564.offset.x, this.y + _0x996564.offset.y);
+    }
+    ["animate"]() {
+      let _0x469008 = (_0xb45f1b.time - this.timeStamp) / 1000;
+      _0x469008 = 1 < _0x469008 ? 1 : 0 > _0x469008 ? 0 : _0x469008;
+      this.animX += (this.x - this.animX) * _0x469008;
+      this.animY += (this.y - this.animY) * _0x469008;
+      this.timeStamp = _0xb45f1b.time;
+    }
+    get ['mapX']() {
+      return (this.animX - _0x996564.left) / _0x996564.edge * _0x5cda9b.size;
+    }
+    get ["mapY"]() {
+      return (this.animY - _0x996564.top) / _0x996564.edge * _0x5cda9b.size;
+    }
+  }
+  class _0x996564 {
+    static ["init"]() {
+      const _0x2ac531 = {
+        "left": -8000,
+        "top": -8000
+      };
+      const _0x17032a = {
+        x: 0x0,
+        y: 0x0
+      };
+      const _0x2347d8 = {
+        x: 0x0,
+        y: 0x0
+      };
+      const _0x21aea0 = {
+        x: 0x0,
+        y: 0x0
+      };
+      const _0x5854d6 = {
+        x: 0x0,
+        y: 0x0
+      };
+      this.left = -8000;
+      this.top = -8000;
+      this.right = 8000;
+      this.bottom = 8000;
+      this.edge = 16000;
+      this.botOffset = _0x2ac531;
+      this.offset = _0x17032a;
+      this.center = _0x2347d8;
+      this.offset2 = _0x21aea0;
+      this.center2 = _0x5854d6;
+      this.focusedAtCenter = false;
+    }
+    static ["update"](_0x41556a, _0x52a61a, _0x443c5a, _0x2959a4) {
+      this.left = _0x41556a;
+      this.top = _0x52a61a;
+      this.right = _0x443c5a;
+      this.edge = this.right - this.left + _0x480be4.borderWidth;
+      this.bottom = _0x2959a4;
+      this.offset.x = 8000 + _0x41556a;
+      this.offset.y = 8000 + _0x52a61a;
+      this.center.x = _0x443c5a + _0x41556a >> 1;
+      this.center.y = _0x2959a4 + _0x52a61a >> 1;
+      if (!this.focusedAtCenter) {
+        _0xddb6d6.x = this.center.x;
+        _0xddb6d6.y = this.center.y;
+        this.focusedAtCenter = true;
+      }
+    }
+    static ["update2"](_0x47093f, _0x17ddf7, _0x4bff61, _0x409379) {
+      this.offset2.x = 8000 + _0x47093f;
+      this.offset2.y = 8000 + _0x17ddf7;
+      this.botOffset.left = _0x47093f;
+      this.botOffset.top = _0x17ddf7;
+    }
+    static ["getLocation"](_0x240562, _0x28bd28) {
+      let _0x5115b3 = 0 | (_0x240562 - this.left) / 3199;
+      let _0x22399a = 0 | (_0x28bd28 - this.top) / 3199;
+      _0x5115b3 = 0 > _0x5115b3 ? 0 : 4 < _0x5115b3 ? 4 : _0x5115b3;
+      _0x22399a = 0 > _0x22399a ? 0 : 4 < _0x22399a ? 4 : _0x22399a;
+      return String.fromCharCode(65 + _0x22399a) + (_0x5115b3 + 1);
+    }
+    static get ['position']() {
+      this.center2.x = this.offset2.x - this.offset.x;
+      this.center2.y = this.offset2.y - this.offset.y;
+      return this.center2;
+    }
+  }
+  class _0xddb6d6 {
+    static ["init"]() {
+      const _0x2eb015 = {
+        "left": -960,
+        "right": 0x3c0,
+        top: -540,
+        "bottom": 0x21c
+      };
+      const _0x49dc4f = {
+        x: 0x0,
+        y: 0x0
+      };
+      this.x = 0;
+      this.y = 0;
+      this.targetViewport = 1;
+      this.autoZoomViewport = 1;
+      this.viewport = 1;
+      this.viewBounds = _0x2eb015;
+      this.spectatePoint = _0x49dc4f;
+      this._isSpectating = false;
+      this._freeSpectate = false;
+      _0x3a83be.init();
+    }
+    static get ["isSpectating"]() {
+      return this._isSpectating;
+    }
+    static get ["freeSpectate"]() {
+      return this._freeSpectate;
+    }
+    static set ["isSpectating"](_0x5841d6) {
+      this._isSpectating = _0x5841d6;
+      if (!_0x90a1a7.isAlive && _0x5841d6) {
+        _0x3a43e7.show();
+      } else {
+        _0x3a43e7.hide();
+      }
+    }
+    static set ["freeSpectate"](_0x353667) {
+      this._freeSpectate = _0x353667;
+      if (_0x353667) {
+        _0x3a43e7.mouseViewport();
+      } else {
+        _0x3a43e7.topViewport();
+      }
+    }
+    static ['update']() {
+      if (this.isSpectating) {
+        _0x3a83be.update();
+      }
+      this.move();
+      this.updateView();
+    }
+    static ["move"]() {
+      if (_0x90a1a7.isAlive) {
+        this.x += (_0x90a1a7.x - this.x) / _0x2cc0f3.cameraSpeed;
+        this.y += (_0x90a1a7.y - this.y) / _0x2cc0f3.cameraSpeed;
+      } else if (this.isSpectating) {
+        this.x = (29 * this.x + this.spectatePoint.x) / 30;
+        this.y = (29 * this.y + this.spectatePoint.y) / 30;
+      }
+    }
+    static ["updateView"]() {
+      let _0x13ea50 = this.targetViewport;
+      if ('on' === _0x2cc0f3.autoZoom) {
+        _0x13ea50 *= this.autoZoomViewport;
+      }
+      this.viewport += (_0x13ea50 - this.viewport) / 8;
+      const _0x598bd4 = _0x386cbc.canvas.width / 2 / this.viewport;
+      const _0x4e8ec2 = _0x386cbc.canvas.height / 2 / this.viewport;
+      this.viewBounds.left = Math.max(-_0x598bd4 + this.x, _0x996564.left);
+      this.viewBounds.right = Math.min(_0x598bd4 + this.x, _0x996564.right);
+      this.viewBounds.top = Math.max(-_0x4e8ec2 + this.y, _0x996564.top);
+      this.viewBounds.bottom = Math.min(_0x4e8ec2 + this.y, _0x996564.bottom);
+    }
+  }
+  const _0x34f3bb = new class {
+    constructor() {
+      this.nickCaches = new Map();
+      this.massCaches = new Map();
+      this.maxCacheLife = 1000;
+      this.massUpdateInterval = 500;
+      this.nickShadowCtx = this.newShadowContext();
+      this.massShadowCtx = this.newShadowContext();
+      this.canvasPool = [];
+    }
+    ['nick'](_0x18cbda) {
+      if (_0x18cbda.isUnnamed || this.isSmall(_0x18cbda)) {
+        return false;
+      }
+      let _0x356a8b = _0x18cbda.nick.substring(_0x18cbda.nick.indexOf('}') + 1) || '';
+      const _0x490323 = this.nickCaches.get(_0x356a8b) || this.newNickCache(_0x356a8b);
+      _0x490323.lastUsedAt = _0xb45f1b.time;
+      const _0x202e61 = 50 > this.getScreenRadius(_0x18cbda.animRadius) ? 0 : 1;
+      const _0x420665 = _0x490323.level[_0x202e61];
+      if (_0x420665) {
+        return _0x420665;
+      }
+      const _0x128fe2 = this.getNewCanvas();
+      const _0x492419 = _0x128fe2.getContext('2d');
+      const _0x2d7ae1 = 50 * (_0x202e61 + 1) * _0x480be4.cellNickSize / 100;
+      _0x128fe2.height = 0 | 1.2 * _0x2d7ae1;
+      _0x128fe2.width = 0 | 1.2 * this.getNickWidth(_0x356a8b, _0x2d7ae1);
+      _0x492419.font = "700 " + (0 | _0x2d7ae1) + "px " + _0x480be4.nickFont;
+      _0x492419.textBaseline = "middle";
+      _0x492419.textAlign = "center";
+      if ("normal" === _0x2cc0f3.nickShadow) {
+        _0x492419.strokeStyle = _0x480be4.nickStrokeColor;
+        _0x492419.lineWidth = 6 * (_0x202e61 + 1);
+        _0x492419.strokeText(_0x356a8b, _0x128fe2.width >> 1, _0x128fe2.height >> 1);
+      } else {
+        if ("performance" === _0x2cc0f3.nickShadow) {
+          _0x492419.fillStyle = _0x480be4.nickStrokeColor;
+          _0x492419.globalAlpha = 0.75;
+          const _0x5cb4c6 = 0 | _0x128fe2.width / 1.2;
+          const _0x49dca4 = 0 | _0x128fe2.height / 1.2;
+          _0x492419.fillRect(_0x128fe2.width - _0x5cb4c6 >> 1, _0x128fe2.height - _0x49dca4 >> 1, _0x5cb4c6, _0x49dca4);
+          _0x492419.globalAlpha = 1;
+        }
+      }
+      _0x492419.fillStyle = _0x480be4.nickColor;
+      _0x492419.fillText(_0x356a8b, _0x128fe2.width >> 1, _0x128fe2.height >> 1);
+      _0x490323.level[_0x202e61] = _0x128fe2;
+      return _0x128fe2;
+    }
+    ["newNickCache"](_0x564f63) {
+      const _0x160ca3 = new _0x58f96a();
+      this.nickCaches.set(_0x564f63, _0x160ca3);
+      return _0x160ca3;
+    }
+    ["getNickWidth"](_0x331b74, _0x4c5114) {
+      return this.nickShadowCtx.measureText(_0x331b74).width * _0x4c5114 / 50;
+    }
+    ["setNickCtxFont"]() {
+      this.nickCaches.clear();
+      this.nickShadowCtx.font = "700 50px " + _0x480be4.nickFont;
+    }
+    ["mass"](_0x177638) {
+      if (!_0x177638.isVirus && this.isSmall(_0x177638)) {
+        return false;
+      }
+      const _0x5d334c = this.massCaches.get(_0x177638.id) || this.newMassCache(_0x177638.id);
+      const _0x223d75 = "shortened" === _0x2cc0f3.cellMass && 999 < _0x177638.staticMass ? (0 | _0x177638.staticMass / 100) / 10 + 'k' : _0x177638.staticMass;
+      const _0x3968bd = this.getScreenRadius(_0x177638.radius);
+      const _0x211b77 = _0x223d75 !== _0x5d334c.lastMass;
+      const _0x2c1101 = _0xb45f1b.time - _0x5d334c.lastRenderTime > this.massUpdateInterval;
+      const _0x401a53 = 1.2 < _0x3968bd / _0x5d334c.lastScreenRadius || _0x211b77 && _0x2c1101;
+      _0x5d334c.lastUsedAt = _0xb45f1b.time;
+      if (!_0x401a53 && _0x5d334c.canvas) {
+        return _0x5d334c.canvas;
+      }
+      if (!_0x5d334c.canvas) {
+        _0x5d334c.canvas = this.getNewCanvas();
+      }
+      const _0x4cc465 = _0x5d334c.canvas;
+      const _0x15cb06 = _0x4cc465.getContext('2d');
+      const _0x400599 = 0 | _0x3968bd / 2 * (_0x480be4.cellMassSize / 100);
+      _0x4cc465.height = 0 | 1.2 * _0x400599;
+      _0x4cc465.width = 0 | 1.2 * this.getMassWidth(_0x223d75, _0x400599);
+      _0x15cb06.font = "700 " + _0x400599 + "px " + _0x480be4.massFont;
+      _0x15cb06.textBaseline = "middle";
+      _0x15cb06.textAlign = "center";
+      if ('normal' === _0x2cc0f3.massShadow) {
+        _0x15cb06.strokeStyle = _0x480be4.massStrokeColor;
+        _0x15cb06.lineWidth = 6 * _0x400599 / 50;
+        _0x15cb06.strokeText(_0x223d75, _0x4cc465.width >> 1, _0x4cc465.height >> 1);
+      } else {
+        if ("performance" === _0x2cc0f3.massShadow) {
+          _0x15cb06.fillStyle = _0x480be4.massStrokeColor;
+          _0x15cb06.globalAlpha = 0.75;
+          const _0x2d61b7 = 0 | _0x4cc465.width / 1.2;
+          const _0x33f6c2 = 0 | _0x4cc465.height / 1.2;
+          _0x15cb06.fillRect(_0x4cc465.width - _0x2d61b7 >> 1, _0x4cc465.height - _0x33f6c2 >> 1, _0x2d61b7, _0x33f6c2);
+          _0x15cb06.globalAlpha = 1;
+        }
+      }
+      _0x15cb06.fillStyle = _0x480be4.massColor;
+      _0x15cb06.fillText(_0x223d75, _0x4cc465.width >> 1, _0x4cc465.height >> 1);
+      _0x5d334c.lastMass = _0x223d75;
+      _0x5d334c.lastScreenRadius = _0x3968bd;
+      _0x5d334c.lastRenderTime = _0xb45f1b.time + _0x5d334c.timeShift;
+      return _0x4cc465;
+    }
+    ["newMassCache"](_0x1286a5) {
+      const _0x16f7e8 = new _0x2e97e4();
+      this.massCaches.set(_0x1286a5, _0x16f7e8);
+      return _0x16f7e8;
+    }
+    ["getMassWidth"](_0x1a2018, _0x5486b0) {
+      return this.massShadowCtx.measureText(_0x1a2018).width * _0x5486b0 / 50;
+    }
+    ["setMassCtxFont"]() {
+      this.massCaches.clear();
+      this.massShadowCtx.font = "700 50px " + _0x480be4.massFont;
+    }
+    ["getScreenRadius"](_0x4669c2) {
+      return _0x4669c2 * _0xddb6d6.viewport;
+    }
+    ["isSmall"](_0x3a934b) {
+      return 'on' === _0x2cc0f3.autoHideText && 20 > this.getScreenRadius(_0x3a934b.animRadius);
+    }
+    ["getNewCanvas"]() {
+      return this.canvasPool.shift() || _0x24f9ab.createElement("canvas");
+    }
+    ["newShadowContext"]() {
+      const _0x474b8e = _0x24f9ab.createElement('canvas').getContext('2d');
+      _0x474b8e.font = "700 50px ubuntu";
+      return _0x474b8e;
+    }
+    ["cleaner"]() {
+      this.nickCaches.forEach((_0xa3f99f, _0x1f0714) => {
+        if (_0xb45f1b.time - _0xa3f99f.lastUsedAt > this.maxCacheLife) {
+          this.nickCaches["delete"](_0x1f0714);
+          if (50 <= this.canvasPool.length) {
+            return;
+          }
+          const _0x27c2f7 = _0xa3f99f.level[0];
+          const _0x169356 = _0xa3f99f.level[1];
+          if (_0x27c2f7) {
+            this.resetCanvas(_0x27c2f7);
+            this.canvasPool.push(_0x27c2f7);
+          }
+          if (_0x169356) {
+            this.resetCanvas(_0x169356);
+            this.canvasPool.push(_0x169356);
+          }
+        }
+      });
+      this.massCaches.forEach((_0x4158e1, _0xf3efc2) => {
+        if (_0xb45f1b.time - _0x4158e1.lastUsedAt > this.maxCacheLife) {
+          this.massCaches["delete"](_0xf3efc2);
+          if (50 <= this.canvasPool.length) {
+            return;
+          }
+          const _0x8b7645 = _0x4158e1.canvas;
+          if (_0x8b7645) {
+            this.resetCanvas(_0x8b7645);
+            this.canvasPool.push(_0x8b7645);
+          }
+        }
+      });
+    }
+    ["resetCanvas"](_0x1489c8) {
+      _0x1489c8.width = 0;
+    }
+  }();
+  class _0x2e97e4 {
+    constructor() {
+      this.lastUsedAt = _0xb45f1b.time;
+      this.timeShift = 0 | Math.random() * _0x34f3bb.massUpdateInterval;
+      this.lastMass = 0;
+      this.lastScreenRadius = 0;
+      this.lastRenderTime = _0xb45f1b.time;
+      this.canvas = null;
+    }
+  }
+  class _0x58f96a {
+    constructor() {
+      this.lastUsedAt = _0xb45f1b.time;
+      this.level = [null, null];
+    }
+  }
+  class _0x4c0fb5 {
+    static ["render"]() {
+      if ("off" !== _0x2cc0f3.food) {
+        if ("monoColored" === _0x2cc0f3.food) {
+          this.monoColored();
+        } else if ('rainbow' === _0x2cc0f3.food) {
+          this.rainbow();
+        }
+      }
+    }
+    static ["monoColored"]() {
+      const _0x35608f = _0x386cbc.ctx;
+      const _0xb35fb3 = _0x480be4.foodSize;
+      let _0x452dec = _0x14d4a3.food.length;
+      _0x35608f.fillStyle = _0x480be4.foodColor;
+      for (_0x35608f.beginPath(); _0x452dec--;) {
+        const _0x6bc6c7 = {
+          x: 0x0,
+          y: 0x0
+        };
+        const _0x105e9e = _0x14d4a3.food[_0x452dec];
+        const _0x12f0da = 2 === _0x105e9e.cellType ? _0x996564.position : _0x6bc6c7;
+        const _0x3d8a95 = _0x105e9e.animRadius + _0xb35fb3;
+        _0x35608f.moveTo(_0x105e9e.animX - _0x12f0da.x + _0x3d8a95, _0x105e9e.animY - _0x12f0da.y);
+        _0x35608f.arc(_0x105e9e.animX - _0x12f0da.x, _0x105e9e.animY - _0x12f0da.y, _0x3d8a95, 0, _0x386cbc.pi2, true);
+      }
+      _0x35608f.closePath();
+      _0x35608f.fill();
+    }
+    static ["rainbow"]() {
+      let _0x31b51a = _0x386cbc.ctx;
+      let _0x23c062 = _0x480be4.foodSize;
+      for (let _0x198238 = _0x14d4a3.food.length; _0x198238--;) {
+        const _0x5096a7 = {
+          x: 0x0,
+          y: 0x0
+        };
+        const _0x4e1e7f = _0x14d4a3.food[_0x198238];
+        const _0x142eae = 2 === _0x4e1e7f.cellType ? _0x996564.position : _0x5096a7;
+        const _0x5c6dd3 = _0x4e1e7f.animRadius + _0x23c062;
+        _0x31b51a.fillStyle = _0x4e1e7f.colorHex;
+        if (2 > _0x5c6dd3 * _0xddb6d6.viewport) {
+          _0x31b51a.fillRect(_0x4e1e7f.animX - _0x142eae.x - _0x5c6dd3, _0x4e1e7f.animY - _0x142eae.y - _0x5c6dd3, 2 * _0x5c6dd3, 2 * _0x5c6dd3);
+        } else {
+          _0x31b51a.beginPath();
+          _0x31b51a.arc(_0x4e1e7f.animX - _0x142eae.x, _0x4e1e7f.animY - _0x142eae.y, _0x5c6dd3, 0, _0x386cbc.pi2, true);
+          _0x31b51a.closePath();
+          _0x31b51a.fill();
+        }
+      }
+    }
+  }
+  class _0x51fad0 {
+    static ["init"]() {
+      this.left = 0;
+      this.top = 0;
+      this.sectorEdge = 0;
+      this.edge = 0;
+      this.halfSectorEdge = 0;
+      this.letters = ['A', 'B', 'C', 'D', 'E'];
+      this.visible = new Set();
+    }
+    static ["render"]() {
+      const _0x499cfe = _0x2cc0f3.bgSectors;
+      if ("off" !== _0x499cfe) {
+        const _0x4a2d38 = _0x386cbc.ctx;
+        const _0x5ba8ae = _0x480be4.gridWidth >> 1;
+        this.edge = _0x996564.edge - _0x480be4.gridWidth;
+        this.left = _0x996564.left + _0x5ba8ae;
+        this.top = _0x996564.top + _0x5ba8ae;
+        this.sectorEdge = 0 | this.edge / 5;
+        this.halfSectorEdge = 0 | this.edge / 10;
+        _0x4a2d38.lineWidth = _0x480be4.gridWidth;
+        _0x4a2d38.strokeStyle = _0x480be4.gridColor;
+        this.sectors();
+        if ("onlyLines" !== _0x499cfe) {
+          _0x4a2d38.textAlign = "center";
+          _0x4a2d38.textBaseline = "middle";
+          _0x4a2d38.fillStyle = _0x480be4.gridTextColor;
+          this.updateViewSectors();
+          if ('snowflakes' === _0x499cfe) {
+            this.snowflakes();
+          } else {
+            this.normal();
+          }
+        }
+      }
+    }
+    static ['sectors']() {
+      const _0x387dc2 = _0x386cbc.ctx;
+      _0xddb6d6.viewBounds;
+      _0x387dc2.beginPath();
+      _0x387dc2.rect(this.left + this.sectorEdge, this.top, this.sectorEdge, this.edge);
+      _0x387dc2.rect(this.left + 3 * this.sectorEdge, this.top, this.sectorEdge, this.edge);
+      _0x387dc2.rect(this.left, this.top + this.sectorEdge, this.edge, this.sectorEdge);
+      _0x387dc2.rect(this.left, this.top + 3 * this.sectorEdge, this.edge, this.sectorEdge);
+      _0x387dc2.rect(this.left, this.top, this.edge, this.edge);
+      _0x387dc2.closePath();
+      _0x387dc2.stroke();
+    }
+    static ["updateViewSectors"]() {
+      const _0x11a8bc = this.visible;
+      _0x11a8bc.clear();
+      const _0x40948e = _0xddb6d6.viewBounds;
+      const _0x2124fe = 0 | (_0x40948e.left - 200 - _0x996564.left) / this.sectorEdge;
+      const _0x2220e7 = 0 | (_0x40948e.top - 200 - _0x996564.top) / this.sectorEdge;
+      const _0x179245 = 5 - (0 | (_0x996564.right - _0x40948e.right - 200) / this.sectorEdge) - _0x2124fe;
+      const _0xfb889b = 5 - (0 | (_0x996564.bottom - _0x40948e.bottom - 200) / this.sectorEdge) - _0x2220e7;
+      for (let _0x1bea32 = 0; _0x1bea32 < _0x179245; _0x1bea32++) {
+        for (let _0x800f28 = 0; _0x800f28 < _0xfb889b; _0x800f28++) {
+          _0x11a8bc.add(this.letters[_0x2220e7 + _0x800f28] + (_0x2124fe + _0x1bea32 + 1));
+        }
+      }
+    }
+    static ['normal']() {
+      const _0x374eb1 = _0x386cbc.ctx;
+      _0x374eb1.font = "400 " + _0x480be4.gridTextSize + "px " + _0x480be4.gridTextFont;
+      for (let _0xf67ab4 = 0; 5 > _0xf67ab4; _0xf67ab4++) {
+        const _0x934ba5 = this.top + this.halfSectorEdge + _0xf67ab4 * this.sectorEdge;
+        for (let _0x2ec138 = 0; 5 > _0x2ec138; _0x2ec138++) {
+          const _0x3d569a = this.letters[_0xf67ab4] + (_0x2ec138 + 1);
+          if (this.visible.has(_0x3d569a)) {
+            const _0x77491c = this.left + this.halfSectorEdge + _0x2ec138 * this.sectorEdge;
+            _0x374eb1.fillText(_0x3d569a, _0x77491c, _0x934ba5);
+          }
+        }
+      }
+    }
+    static ['snowflakes']() {
+      const _0x29baf0 = _0x386cbc.ctx;
+      _0x29baf0.font = "400 " + _0x480be4.gridTextSize + "px Ubuntu";
+      for (let _0x959833 = 0; 5 > _0x959833; _0x959833++) {
+        const _0x594cbf = this.top + this.halfSectorEdge + _0x959833 * this.sectorEdge;
+        for (let _0x3951fe = 0; 5 > _0x3951fe; _0x3951fe++) {
+          const _0x13073d = this.letters[_0x959833] + (_0x3951fe + 1);
+          if (this.visible.has(_0x13073d)) {
+            const _0x8a2a31 = this.left + this.halfSectorEdge + _0x3951fe * this.sectorEdge;
+            _0x29baf0.fillText('❆', _0x8a2a31, _0x594cbf);
+          }
+        }
+      }
+    }
+  }
+  class _0x3a83be {
+    static ["init"]() {
+      const _0x5dffce = {
+        x: 0x0,
+        y: 0x0
+      };
+      const _0x5d903a = {
+        "turnedOn": false,
+        "nick": '',
+        "worldID": '',
+        "mass": 0x0,
+        cellCount: 0x0,
+        "position": _0x5dffce,
+        "outOfView": false
+      };
+      const _0x464ccd = {
+        x: 0x0,
+        y: 0x0
+      };
+      const _0x2a5e15 = {
+        "turnedOn": false,
+        "nick": '',
+        worldID: '',
+        "mass": 0x0,
+        "cellCount": 0x0,
+        "position": _0x464ccd,
+        "outOfView": false
+      };
+      const _0x210563 = {
+        x: 0x0,
+        y: 0x0
+      };
+      this.target1 = _0x5d903a;
+      this.target2 = _0x2a5e15;
+      this.center = _0x210563;
+    }
+    static ['update']() {
+      if (this.target1.turnedOn || this.target2.turnedOn) {
+        const _0x12bae4 = this.target1;
+        const _0x5298ff = this.target2;
+        _0x12bae4.mass = 0;
+        _0x12bae4.position.x = 0;
+        _0x12bae4.position.y = 0;
+        _0x12bae4.cellCount = 0;
+        _0x5298ff.mass = 0;
+        _0x5298ff.position.x = 0;
+        _0x5298ff.position.y = 0;
+        _0x5298ff.cellCount = 0;
+        _0x14d4a3.cells.forEach(_0x558cf4 => {
+          if (_0x12bae4.turnedOn && _0x12bae4.worldID === _0x558cf4.worldID) {
+            _0x12bae4.position.x += _0x558cf4.animX;
+            _0x12bae4.position.y += _0x558cf4.animY;
+            _0x12bae4.mass += _0x558cf4.mass;
+            _0x12bae4.cellCount++;
+          } else if (_0x5298ff.turnedOn && _0x5298ff.worldID === _0x558cf4.worldID) {
+            _0x5298ff.position.x += _0x558cf4.animX;
+            _0x5298ff.position.y += _0x558cf4.animY;
+            _0x5298ff.mass += _0x558cf4.mass;
+            _0x5298ff.cellCount++;
+          }
+        });
+        _0x12bae4.mass |= 0;
+        _0x5298ff.mass |= 0;
+        let _0x3bee00 = 0;
+        let _0x3edaaa = 0;
+        let _0x35be38 = 0;
+        if (_0x12bae4.turnedOn) {
+          if (0 < _0x12bae4.cellCount) {
+            _0x12bae4.position.x /= _0x12bae4.cellCount;
+            _0x12bae4.position.y /= _0x12bae4.cellCount;
+            _0x12bae4.outOfView = false;
+            _0x3edaaa += _0x12bae4.position.x;
+            _0x35be38 += _0x12bae4.position.y;
+            _0x3bee00++;
+          } else {
+            _0x12bae4.outOfView = true;
+          }
+        }
+        if (_0x5298ff.turnedOn) {
+          if (0 < _0x5298ff.cellCount) {
+            _0x5298ff.position.x /= _0x5298ff.cellCount;
+            _0x5298ff.position.y /= _0x5298ff.cellCount;
+            _0x5298ff.outOfView = false;
+            _0x3edaaa += _0x5298ff.position.x;
+            _0x35be38 += _0x5298ff.position.y;
+            _0x3bee00++;
+          } else {
+            _0x5298ff.outOfView = true;
+          }
+        }
+        if (0 < _0x3bee00) {
+          this.center.x = 0 | _0x3edaaa / _0x3bee00;
+          this.center.y = 0 | _0x35be38 / _0x3bee00;
+        }
+      }
+    }
+    static ['lockTarget'](_0x2af725, _0x5e43e5, _0x42a1a4) {
+      if (!_0xddb6d6.freeSpectate) {
+        _0x22a8df.toggleSpectate();
+      }
+      let _0x24c35b = 199996164;
+      let _0x53b303 = false;
+      _0x14d4a3.cells.forEach(_0x5e2d7a => {
+        if (!(_0x5e2d7a.isFood || _0x5e2d7a.isVirus || _0x5e2d7a.isEjected)) {
+          const _0x3c43d4 = this.getDistanceSquare(_0x2af725, _0x5e43e5, _0x5e2d7a.animX, _0x5e2d7a.animY);
+          if (_0x3c43d4 < _0x24c35b) {
+            _0x24c35b = _0x3c43d4;
+            _0x53b303 = _0x5e2d7a;
+          }
+        }
+      });
+      if (_0x53b303) {
+        if (_0x53b303.isUnnamed) {
+          _0x40f48a.alert('Multibox', _0x59f59a.current.notif.target_unnamed);
+        } else {
+          const _0x345b88 = this[1 === _0x42a1a4 ? "target1" : "target2"];
+          _0x345b88.turnedOn = true;
+          _0x345b88.nick = _0x53b303.nick;
+          _0x345b88.worldID = _0x53b303.worldID;
+          _0x345b88.outOfView = false;
+          _0x3a43e7.targetMode();
+        }
+      }
+    }
+    static ["getDistanceSquare"](_0x557cf5, _0x15a59d, _0x22c733, _0x4a9e22) {
+      const _0x124a57 = _0x22c733 - _0x557cf5;
+      const _0x3fa5ae = _0x4a9e22 - _0x15a59d;
+      return _0x124a57 * _0x124a57 + _0x3fa5ae * _0x3fa5ae;
+    }
+    static ["reset"]() {
+      if (!this.isTurnedOn) {
+        _0x22a8df.toggleSpectate();
+      }
+      if (_0xddb6d6.freeSpectate) {
+        _0x3a43e7.mouseViewport();
+      } else {
+        _0x3a43e7.topViewport();
+      }
+      this.target1.turnedOn = false;
+      this.target2.turnedOn = false;
+    }
+    static ["getMass"](_0x52f2f0) {
+      return _0x52f2f0 * _0x52f2f0 / 100;
+    }
+    static get ['isTurnedOn']() {
+      return this.target1.turnedOn || this.target2.turnedOn;
+    }
+  }
+  class _0x2ab3a8 {
+    static ["init"]() {
+      this.r = 0;
+      this.g = 0;
+      this.b = 0;
+      this.targetR = 0;
+      this.targetG = 0;
+      this.targetB = 0;
+      this.color = "#000000";
+      this.lastTime = 0;
+    }
+    static ["update"]() {
+      this.r += (this.targetR - this.r) / 80;
+      this.g += (this.targetG - this.g) / 80;
+      this.b += (this.targetB - this.b) / 80;
+      this.color = '#' + (16777216 + (this.r << 16) + (this.g << 8) + (0 | this.b)).toString(16).slice(1);
+      const _0x327775 = Math.min(_0xb45f1b.time - this.lastTime - 2000, 33);
+      if (!(0 > _0x327775)) {
+        this.lastTime = _0xb45f1b.time + _0x327775;
+        this.newTargetRGB();
+      }
+    }
+    static ["newTargetRGB"]() {
+      let _0x218a7e = [255, 7, 0 | 255 * Math.random()];
+      _0x218a7e.sort(() => 0.5 - Math.random());
+      this.targetR = _0x218a7e[0];
+      this.targetG = _0x218a7e[1];
+      this.targetB = _0x218a7e[2];
+    }
+    static ["getColor"](_0x16d8f4, _0x5f426b) {
+      return 'rgb(' + (0 | _0x16d8f4.r * _0x5f426b) + ',' + (0 | _0x16d8f4.g * _0x5f426b) + ',' + (0 | _0x16d8f4.b * _0x5f426b) + ')';
+    }
+    static ["getGrayscale"](_0x16d8f4, _0x5f426b) {
+      var _0xgray = 0 | (0.299 * _0x16d8f4.r * _0x5f426b + 0.587 * _0x16d8f4.g * _0x5f426b + 0.114 * _0x16d8f4.b * _0x5f426b);
+      return 'rgb(' + _0xgray + ',' + _0xgray + ',' + _0xgray + ')';
+    }
+  }
+  class _0x4c265b {
+    constructor(_0x491bf5) {
+      this.dataView = _0x491bf5;
+      this.index = 0;
+      this.maxIndex = _0x491bf5.byteLength;
+    }
+    ['readUInt8']() {
+      const _0x1fb3a0 = this.dataView.getUint8(this.index, true);
+      this.index++;
+      return _0x1fb3a0;
+    }
+    ["readInt8"]() {
+      const _0x1cb8c7 = this.dataView.getInt8(this.index, true);
+      this.index++;
+      return _0x1cb8c7;
+    }
+    ["readUInt16"]() {
+      const _0x6361ee = this.dataView.getUint16(this.index, true);
+      this.index += 2;
+      return _0x6361ee;
+    }
+    ['readInt16']() {
+      const _0x55eda1 = this.dataView.getInt16(this.index, true);
+      this.index += 2;
+      return _0x55eda1;
+    }
+    ["readUInt32"]() {
+      const _0x84424c = this.dataView.getUint32(this.index, true);
+      this.index += 4;
+      return _0x84424c;
+    }
+    ["readInt32"]() {
+      const _0x304660 = this.dataView.getInt32(this.index, true);
+      this.index += 4;
+      return _0x304660;
+    }
+    ["readFloat32"]() {
+      const _0x518805 = this.dataView.getFloat32(this.index, true);
+      this.index += 4;
+      return _0x518805;
+    }
+    ["readFloat64"]() {
+      const _0x21cd32 = this.dataView.getFloat64(this.index, true);
+      this.index += 8;
+      return _0x21cd32;
+    }
+    ["readUTF8string"]() {
+      let _0x22cf08;
+      let _0x43f4c4 = '';
+      for (; 0 !== (_0x22cf08 = this.readUInt8()) && !this.endOfBuffer();) {
+        _0x43f4c4 += String.fromCharCode(_0x22cf08);
+      }
+      return _0x43f4c4;
+    }
+    ["readStringZeroUtf8"]() {
+      let _0x4aa4c3 = '';
+      let _0x4ce2d6 = 0;
+      for (var _0x516684 = this.index; _0x516684 < this.dataView.byteLength; _0x516684++) {
+        if (this.dataView.getUint8(_0x516684, true)) {
+          _0x4ce2d6++;
+        } else {
+          break;
+        }
+      }
+      _0x4aa4c3 += new TextDecoder().decode(new Uint8Array(this.dataView.buffer, this.index, _0x4ce2d6));
+      this.index += _0x4ce2d6 + 1;
+      return _0x4aa4c3;
+    }
+    ["readEscapedUTF8string"]() {
+      const _0x3b8095 = this.readUTF8string();
+      return decodeURIComponent(escape(_0x3b8095));
+    }
+    ["decompress"]() {
+      const _0x3dfaeb = new Uint8Array(this.dataView.buffer);
+      const _0x2af2bb = this.readUInt32();
+      const _0x2ef075 = new Uint8Array(_0x2af2bb);
+      LZ4.decodeBlock(_0x3dfaeb.slice(5), _0x2ef075);
+      this.dataView = new DataView(_0x2ef075.buffer);
+      this.index = 0;
+      this.maxIndex = this.dataView.byteLength;
+    }
+    ["endOfBuffer"]() {
+      return this.index >= this.maxIndex;
+    }
+    ["readUTF16String"]() {
+      let _0x340f0b = '';
+      while (this.index + 1 < this.maxIndex) {
+        const _0x563f73 = this.dataView.getUint8(this.index);
+        const _0x2ae0e0 = this.dataView.getUint8(this.index + 1);
+        if (_0x563f73 === 0 && _0x2ae0e0 === 0) break;
+        _0x340f0b += String.fromCharCode(_0x563f73);
+        this.index += 2;
+      }
+      this.index += 2;
+      return _0x340f0b;
+    }
+  }
+  class _0x18a8d1 {
+    static ["init"]() {
+      const _0x4c69f9 = {
+        'in': 0x0,
+        "out": 0x0
+      };
+      this.ip = null;
+      this.ws = null;
+      this.connected = false;
+      this.ws2 = null;
+      this.connected2 = false;
+      this.packetCount = _0x4c69f9;
+      _0x996564.init();
+    }
+    static async ["getToken"](_0xe90589) {
+      return new Promise((_0x2d5600, _0x1ab686) => {
+        if (_0xe90589 <= 1) {
+          _0x40f48a.warn("Multibox", "Solving captcha, please wait..");
+        }
+        if (window.turnstile) {
+          window.turnstile.render(".cf-turnstile", {
+            'sitekey': (window._3rbSitekey || "0x4AAAAAABwAtcdv_5-aS9cf"),
+            'callback': (_0x4a58da, _0x51a9e5) => {
+              if (!_0x51a9e5 && !_0x4a58da) {
+                return _0x40f48a.warn('Multibox', "Unexpected response from turnstile API.");
+              }
+              if (_0x14f7b2("#loading-screen") && _0x14f7b2("#loading-screen").fadeOut(500)) {
+                _0x14f7b2("#loading-screen").remove();
+              }
+              _0x302a2c.handleDisabledProperty(false);
+              _0x40f48a.warn("Multibox", "Captcha has been solved successfully for Tab " + _0xe90589);
+              return _0x2d5600(_0x4a58da);
+            },
+            'expired-callback': _0x1ab686,
+            'error-callback': _0x1ab686
+          });
+        }
+      });
+    }
+    static ['connect'](_0x23e168, _0x5ad969) {
+      if ("string" != typeof _0x23e168) {
+        return _0x40f48a.warn('Multibox', "Server IP is invalid");
+      }
+      if (_0x23e168) {
+        this.disconnect();
+        this.resetData();
+        this.ws = new WebSocket(_0x23e168, "algamees");
+        this.ws.binaryType = "arraybuffer";
+        this.ws.onopen = () => {
+          this.onOpen(1);
+        };
+        this.ws.onmessage = _0x36ede8 => {
+          this.onMessage(_0x36ede8, 1);
+        };
+        this.ws.onclose = (e) => {
+          console.log("[Darkness] ws1 onclose code="+e.code+" reason="+e.reason);
+          this.onClose(1);
+        };
+        this.ws.onerror = () => {
+          this.onError(1);
+        };
+        _0xpartyNet.hookWs(this.ws);
+      }
+      if (_0x23e168) {
+        this.ws2 = new WebSocket(_0x23e168, "algamees");
+        this.ws2.binaryType = "arraybuffer";
+        this.ws2.onopen = () => {
+          this.onOpen(2);
+        };
+        this.ws2.onmessage = _0x568400 => {
+          this.onMessage(_0x568400, 2);
+        };
+        this.ws2.onclose = (e) => {
+          console.log("[Darkness] ws2 onclose code="+e.code+" reason="+e.reason);
+          this.onClose(2);
+        };
+        this.ws2.onerror = () => {
+          this.onError(2);
+        };
+        _0xpartyNet.hookWs(this.ws2);
+        this.ip = _0x23e168;
+        console.log("Connecting to: " + _0x23e168);
+      }
+    }
+    static ['disconnect']() {
+      if (this.ws && this.ws.close) {
+        this.ws.close();
+        this.ws.onopen = null;
+        this.ws.onmessage = null;
+        this.ws.onclose = null;
+        this.ws.onerror = null;
+      }
+      if (this.ws2 && this.ws2.close) {
+        this.ws2.close();
+        this.ws2.onopen = null;
+        this.ws2.onmessage = null;
+        this.ws2.onclose = null;
+        this.ws2.onerror = null;
+      }
+      this.ws = null;
+      this.connected = false;
+      this.ws2 = null;
+      this.connected2 = false;
+      this.ip = null;
+    }
+    static ["resetData"]() {
+      _0x14d4a3.cells.clear();
+      _0x14d4a3.myCellsIDs.clear();
+      _0x14d4a3.myCells.clear();
+      _0x14d4a3.cells2.clear();
+      _0x14d4a3.myCellsIDs2.clear();
+      _0x14d4a3.myCells2.clear();
+      _0x90a1a7._isAlive = false;
+      _0x90a1a7._isAlive2 = false;
+    }
+    static ["send"](_0x545759, _0x4b600f) {
+      this.packetCount.out++;
+      if (1 === _0x4b600f && this.wsOpen) {
+        this.ws.send(_0x545759);
+      } else if (2 === _0x4b600f && this.ws2Open) {
+        this.ws2.send(_0x545759);
+      }
+    }
+    static ["onOpen"](_0x310b30) {
+      _0x2d5cce.ip();
+      _0x1d0165.init();
+      _0x302a2c.init(_0x310b30);
+      _0x40f48a.alert("Multibox", "Tab " + _0x310b30 + " connected");
+    }
+    static ["onMessage"](_0xdbc368, _0x57208b) {
+      this.packetCount['in']++;
+      _0x245b10.getBuffer(_0xdbc368, _0x57208b);
+    }
+    static ["onClose"](_0x1903d8) {
+      if (!(this.wsOpen || this.ws2Open)) {
+        _0x31c9b4.open();
+      }
+      if (1 === _0x1903d8) {
+        this.connected = false;
+      } else {
+        this.connected2 = false;
+      }
+      _0x245b10.clearCells(_0x1903d8);
+      _0x40f48a.alert("Multibox", "Tab " + _0x1903d8 + " disconnected");
+      console.log("Websocket " + _0x1903d8 + " closed");
+    }
+    static ["onError"](_0xe834f) {
+      if (!(this.wsOpen || this.ws2Open)) {
+        _0x31c9b4.open();
+      }
+      if (1 === _0xe834f) {
+        this.connected = false;
+      } else {
+        this.connected2 = false;
+      }
+      console.log("Websocket " + _0xe834f + " errored out!");
+    }
+    static get ["wsOpen"]() {
+      return this.ws && this.ws.readyState === this.ws.OPEN;
+    }
+    static get ["ws2Open"]() {
+      return this.ws2 && this.ws2.readyState === this.ws2.OPEN;
+    }
+  }
+  class _0x1d0165 {
+    static ["init"]() {
+      this.messages = new Map();
+      this.spammers = [];
+    }
+    static ['checkSpam'](_0x2071d8, _0x1a8ffb) {
+      if (-1 !== this.spammers.indexOf(_0x2071d8)) {
+        return true;
+      }
+      if (this.messages.has(_0x2071d8)) {
+        const _0x80533c = this.messages.get(_0x2071d8);
+        if (_0x80533c == _0x1a8ffb && _0x1a8ffb.length >= 30 || _0x80533c.length >= 30 && _0x1a8ffb.length >= 30) {
+          this.spammers.push(_0x2071d8);
+          _0x40f48a.alert('Multibox', "Spammer Catched -> " + _0x2071d8);
+          return true;
+        }
+      } else if (_0x1a8ffb.length >= 30) {
+        this.messages.set(_0x2071d8, _0x1a8ffb);
+      }
+      if (this.messages.size >= 10) {
+        this.messages.clear();
+      }
+      return false;
+    }
+  }
+  class _0x245b10 {
+    static ['getBuffer'](_0x332dc4, _0x4e19d2) {
+      const _0x56cf06 = new DataView(_0x332dc4.data);
+      this.parse(_0x56cf06, _0x4e19d2);
+    }
+    static ["parse"](_0xf8bab6, _0x24de2f) {
+      const _0x4f5972 = new _0x4c265b(_0xf8bab6);
+      const _0x6ab5d9 = _0x4f5972.readUInt8();
+      if (16 === _0x6ab5d9) {
+        this.worldUpdate(_0x4f5972, _0x24de2f);
+      } else if (17 === _0x6ab5d9) {
+        this.getSpectateData(_0x4f5972);
+      } else if (18 === _0x6ab5d9) {
+        this.clearCells(_0x24de2f);
+      } else if (20 === _0x6ab5d9) {
+        this.clearMyCells(_0x24de2f);
+      } else if (32 === _0x6ab5d9) {
+        this.getMyCellId(_0x4f5972, _0x24de2f);
+      } else if (50 === _0x6ab5d9 && 1 === _0x24de2f) {
+        this.getLeaderboard(_0x4f5972);
+      } else if (49 === _0x6ab5d9 && 1 === _0x24de2f) {
+        this.getLeaderboardFFA(_0x4f5972);
+      } else if (65 === _0x6ab5d9) {
+        this.borderUpdate(_0x4f5972, _0x24de2f);
+      }
+      if (86 === _0x6ab5d9) {
+        this.handleChat(_0x4f5972, _0x24de2f);
+      }
+      if (254 === _0x6ab5d9) {
+        this.handleServerTime(_0x4f5972);
+      }
+    }
+    static ["handleChat"](_0x4be406, _0x24de2f) {
+      var _0id = _0x4be406.readUInt32();
+      for (var _0i = 0; _0i < 7; _0i++) _0x4be406.readUInt8();
+      var _0name = _0x4be406.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g, '').replace(/^\[.\]/, '');
+      var _0msg = _0x4be406.readStringZeroUtf8().replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\ufffd]/g, '');
+      if (_0msg && _0msg.indexOf('__SK__') === 0) {
+        try {
+          const _decoded = atob(_0msg.substring(6));
+          const _tp = _0x12ac51.teamPlayers.get(String(_0id));
+          if (_tp) _tp.skin = _decoded;
+          else if (_0xpartyNet && _0xpartyNet._pendingSkins) _0xpartyNet._pendingSkins[String(_0id)] = _decoded;
+        } catch(_e) {}
+        return;
+      }
+      if (_0msg && _0msg.indexOf('__PC__') === 0 && _0xpartyNet) {
+        if (!_0xpartyNet._inParty) {
+          try {
+            const _code = atob(_0msg.substring(6));
+            if (_code) _0xpartyNet._startAutoJoin(_code);
+          } catch(_e) {}
+        }
+        return;
+      }
+      if (_0msg && 1 === _0x24de2f) _0x40f48a.normal(_0name || 'Player', _0msg);
+    }
+    static ["worldUpdate"](_0x449cb9, _0x43ee07 = 1) {
+      _0xb45f1b.refreshTime();
+      var _0x49c709;
+      var _0x55e445;
+      var _0x2283b5;
+      var _0x26f542 = false;
+      var _0xabb49d = null;
+      var _0x8aab7f = null;
+      var _0x348ca4 = undefined;
+      var _0x468d84 = undefined;
+      var _0x178a5a = undefined;
+      var _0x1b8419 = undefined;
+      var _0x415005 = undefined;
+      var _0x472603 = undefined;
+      var _0xf3f2e0 = undefined;
+      var _0xe4d42a = undefined;
+      var _0x3d627b = undefined;
+      var _0xd54ce1 = undefined;
+      var _0x466514 = 'on' === _0x2cc0f3.eatAnimation;
+      var _0x9e119e = _0x449cb9.readUInt16();
+      for (var _0xbdb90c = 0; _0xbdb90c < _0x9e119e; _0xbdb90c++) {
+        var _0x49c709;
+        var _0x55e445;
+        var _0x2283b5;
+        var _0x26f542;
+        var _0xabb49d;
+        var _0x8aab7f;
+        var _0x348ca4;
+        var _0x468d84;
+        var _0x178a5a;
+        var _0x1b8419;
+        var _0x415005;
+        var _0x472603;
+        var _0xf3f2e0;
+        var _0xe4d42a;
+        var _0x3d627b;
+        var _0xd54ce1;
+        var _0x466514;
+        var _0x9e119e;
+        var _0xbdb90c;
+        _0x348ca4 = _0x449cb9.readUInt32();
+        _0x468d84 = _0x449cb9.readUInt32();
+        if (_0x466514) {
+          _0x14d4a3.eatCell(_0x348ca4, _0x468d84, _0x43ee07);
+        }
+      }
+      for (; 0 !== (_0x178a5a = _0x449cb9.readUInt32());) {
+        _0xabb49d = _0x14d4a3.getCell(_0x178a5a, _0x43ee07);
+        _0xabb49d.isFood = this.checkIsFood(_0xabb49d);
+        _0x1b8419 = _0x449cb9.readInt32();
+        _0x415005 = _0x449cb9.readInt32();
+        _0x472603 = _0x449cb9.readUInt16();
+        if (_0xabb49d.init) {
+          _0xabb49d.animate();
+          _0xabb49d.x = _0xabb49d.animX;
+          _0xabb49d.y = _0xabb49d.animY;
+          _0xabb49d.radius = _0xabb49d.animRadius;
+        } else {
+          _0xabb49d.animX = _0xabb49d.x = _0x1b8419;
+          _0xabb49d.animY = _0xabb49d.y = _0x415005;
+          _0xabb49d.radius = _0xabb49d.animRadius = _0x472603;
+          _0xabb49d.lastUpdateTime = _0xb45f1b.time;
+          _0xabb49d.init = true;
+        }
+        _0xabb49d.x = _0x1b8419;
+        _0xabb49d.y = _0x415005;
+        _0xabb49d.radius = _0x472603;
+        _0xabb49d.lastUpdateTime = _0xb45f1b.time;
+        _0x8aab7f = _0x449cb9.readUInt8();
+        _0x3d627b = !!(1 & _0x8aab7f);
+        _0xe4d42a = !!(4 & _0x8aab7f);
+        _0xf3f2e0 = !!(8 & _0x8aab7f);
+        _0x49c709 = !!(16 & _0x8aab7f);
+        _0x55e445 = !!(32 & _0x8aab7f);
+        _0x2283b5 = !!(64 & _0x8aab7f);
+        _0xd54ce1 = !!(128 & _0x8aab7f);
+        if (_0x2283b5) {
+          _0x449cb9.readInt32();
+        }
+        if (2 & _0x8aab7f) {
+          _0xabb49d.setColor(_0x449cb9.readUInt8(), _0x449cb9.readUInt8(), _0x449cb9.readUInt8());
+        } else {
+          null;
+        }
+        _0x26f542 = !!(32 & _0x8aab7f);
+        if (_0xe4d42a) {
+          _0xabb49d.skin = _0x449cb9.readEscapedUTF8string();
+          if (_0xabb49d.skin.split('/')[1] !== "undefined" && !_0xabb49d.skin.startsWith('http')) {
+            _0x386cbc.get3rbSkin(_0xabb49d.skin);
+          }
+        }
+        _0xabb49d.nick = _0xf3f2e0 ? _0x449cb9.readEscapedUTF8string() : null;
+        _0xabb49d.bNick = _0xd54ce1 ? _0x449cb9.readEscapedUTF8string() : null;
+        _0xabb49d.isVirus = _0x3d627b;
+        _0xabb49d.isEjected = _0x26f542;
+      }
+      _0x9e119e = _0x449cb9.readUInt16();
+      for (_0xbdb90c = 0; _0xbdb90c < _0x9e119e; _0xbdb90c++) {
+        _0x468d84 = _0x449cb9.readUInt32();
+        _0x14d4a3.removeCell(_0x468d84, _0x43ee07);
+      }
+    }
+    static ["checkIsFood"](_0x451fee) {
+      return _0x451fee.isUnnamed && _0x451fee.nodeType != 0 && !_0x451fee.isMine && !_0x451fee.isEjected && _0x451fee.radius < 100;
+    }
+    static ["getSpectateData"](_0x111b6e) {
+      _0xddb6d6.spectatePoint.x = _0x111b6e.readFloat32();
+      _0xddb6d6.spectatePoint.y = _0x111b6e.readFloat32();
+      _0xddb6d6.autoZoomViewport = _0x111b6e.readFloat32();
+    }
+    static ['clearCells'](_0x402088) {
+      console.log("Reseting World...");
+      if (1 === _0x402088) {
+        _0x14d4a3.cells.clear();
+        _0x14d4a3.myCellsIDs.clear();
+        _0x14d4a3.myCells.clear();
+      } else {
+        _0x14d4a3.cells2.clear();
+        _0x14d4a3.myCellsIDs2.clear();
+        _0x14d4a3.myCells2.clear();
+      }
+    }
+    static ["clearMyCells"](_0x2ebd53) {
+      if (1 === _0x2ebd53) {
+        _0x14d4a3.myCellsIDs.clear();
+        _0x14d4a3.myCells.clear();
+      } else {
+        _0x14d4a3.myCellsIDs2.clear();
+        _0x14d4a3.myCells2.clear();
+      }
+    }
+    static ["handleServerTime"](_0x3bfd6e) {
+      const _0x419bc4 = _0x3bfd6e.readUTF16String();
+      if (_0x419bc4) {
+        let _0restartDate;
+        if (_0x419bc4.indexOf('[console]') > -1) {
+          _0restartDate = _0x419bc4.split('[console]')[1];
+        } else if (_0x419bc4.indexOf('[]') === -1) {
+          _0restartDate = _0x419bc4;
+        }
+        if (_0restartDate) {
+          this._restartTime = new Date(_0restartDate).getTime();
+        }
+      }
+    }
+    static ["getMyCellId"](_0x5d6513, _0x5c4a06) {
+      const _0x5d61ff = 1 === _0x5c4a06 ? _0x14d4a3.myCellsIDs : _0x14d4a3.myCellsIDs2;
+      const _0x22f304 = _0x5d6513.readUInt32();
+      _0x5d61ff.add(_0x22f304);
+    }
+    static ["getLeaderboard"](_0x51f993) {
+      _0xa916b.clear();
+      let _0x1f42cb;
+      let _0x2539a8;
+      let _0x58f5fe = _0x51f993.readUInt16();
+      for (_0x1f42cb = 0; _0x1f42cb < _0x58f5fe; _0x1f42cb++) {
+        _0x2539a8 = (_0x2539a8 = _0x51f993.readStringZeroUtf8()) || "unnamed cell";
+        _0xa916b.add(_0x2539a8, _0x1f42cb + 1, false, false, false);
+      }
+      _0xa916b.update();
+    }
+    static ["getLeaderboardFFA"](_0x1d0b9f) {
+      _0xa916b.clear();
+      let _0x41a400;
+      let _0x35833d;
+      let _0x54147a;
+      let _0x19bafb;
+      let _0x4599fc = _0x1d0b9f.readUInt16();
+      for (_0x41a400 = 0; _0x41a400 < _0x4599fc; _0x41a400++) {
+        _0x35833d = _0x1d0b9f.readUInt16();
+        _0x54147a = _0x1d0b9f.readUInt32();
+        _0x19bafb = _0x1d0b9f.readStringZeroUtf8() || "unnamed cell";
+        _0xa916b.add(_0x19bafb, _0x35833d || 1, false, false, false, _0x54147a);
+      }
+      _0xa916b.update();
+    }
+    static ["getLeaderboardTeam"](_0x96914f) {
+      _0xa916b.clear();
+      let _0x59ed1e;
+      let _0x1272e4 = _0x96914f.readUInt32();
+      let _0x225f6e = [];
+      for (_0x59ed1e = 0; _0x59ed1e <= _0x1272e4 && !_0x96914f.endOfBuffer(); _0x59ed1e++) {
+        _0x225f6e.push(_0x96914f.readFloat32());
+      }
+      _0xa916b.team(_0x225f6e[0], _0x225f6e[1], _0x225f6e[2]);
+    }
+    static ["borderUpdate"](_0x222f96, _0x1b97a8) {
+      const _0x4d3085 = 0 | _0x222f96.readFloat64();
+      const _0x4fc544 = 0 | _0x222f96.readFloat64();
+      const _0x5c57dc = 0 | _0x222f96.readFloat64();
+      const _0x3fb1e9 = 0 | _0x222f96.readFloat64();
+      if (1 === _0x1b97a8) {
+        _0x996564.update(_0x4d3085, _0x4fc544, _0x5c57dc, _0x3fb1e9);
+      } else {
+        _0x996564.update2(_0x4d3085, _0x4fc544, _0x5c57dc, _0x3fb1e9);
+      }
+    }
+    static ["bytesToColor"](_0x191b5f, _0x422824, _0x26702a) {
+      return '#' + ('00' + (~~_0x191b5f).toString(16)).slice(-2) + ('00' + (~~_0x422824).toString(16)).slice(-2) + ('00' + (~~_0x26702a).toString(16)).slice(-2);
+    }
+  }
+  class _0x302a2c {
+    static ['init'](_0x578a51) {
+      clearInterval(this.pingInterval);
+      this.handleDisabledProperty(true);
+      this.handshake1(_0x578a51);
+      this.initPingLoop(_0x578a51);
+      this.handshake2(_0x578a51);
+      this.accountPacketSent = false;
+      _0xddb6d6.isSpectating = false;
+      _0xddb6d6.freeSpectate = false;
+      console.log("Connected to: " + _0x18a8d1.ip);
+      if (1 === _0x578a51) {
+        _0x18a8d1.connected = true;
+      } else {
+        _0x18a8d1.connected2 = true;
+      }
+    }
+    static ["handleDisabledProperty"](_0x1b3281) {
+      document.querySelector("#button-play").disabled = _0x1b3281;
+      document.querySelector("#button-spectate").disabled = _0x1b3281;
+    }
+    static ["createView"](_0x19fbe3) {
+      return new DataView(new ArrayBuffer(_0x19fbe3));
+    }
+    static ["chekConnection"](_0x26b575) {
+      return 1 === _0x26b575 && _0x18a8d1.connected || 2 === _0x26b575 && _0x18a8d1.connected2;
+    }
+    static ["sendPacket"](_0x4bcbe9, _0x51333e) {
+      _0x18a8d1.send(_0x4bcbe9.buffer, _0x51333e);
+    }
+    static ["initPingLoop"](_0x185c33) {
+      this.pingInterval = setInterval(() => {
+        console.log("[Darkness] ping sent");
+        _0x18a8d1.send(new Uint8Array([100]).buffer, _0x185c33);
+      }, 1000);
+    }
+    static ["handshake1"](_0x5f0055) {
+      var _0x3cbVersion = window._3rbCv;
+      var _0x3cbBuffer;
+      if (_0x3cbVersion !== null && _0x3cbVersion !== undefined) {
+        _0x3cbBuffer = new Uint8Array([255, _0x3cbVersion & 0xFF, (_0x3cbVersion >> 8) & 0xFF, (_0x3cbVersion >> 16) & 0xFF, (_0x3cbVersion >> 24) & 0xFF]);
+      } else {
+        _0x3cbBuffer = new Uint8Array([255, 5, 0, 0, 0]);
+      }
+      _0x18a8d1.send(_0x3cbBuffer, _0x5f0055);
+    }
+    static async ["handshake2"](_0x340056) {
+      try{console.log("[Darkness] handshake2 starting getToken...");}catch(e){}
+      if (_0x18a8d1.connected && _0x18a8d1.connected2) {
+        return;
+      }
+      var _0x556654 = await _0x18a8d1.getToken(_0x340056);
+      var _0x1e3fda = new DataView(new ArrayBuffer(_0x556654.length + 3));
+      var _0x256006 = 0;
+      _0x1e3fda.setUint8(_0x256006++, 123);
+      _0x1e3fda.setUint8(_0x256006++, 6);
+      _0x556654.split('').forEach(_0x19bda2 => _0x1e3fda.setUint8(_0x256006++, _0x19bda2.charCodeAt(0)));
+      _0x1e3fda.setUint8(_0x256006++, 0);
+      console.log("[Darkness] sending captcha token len="+_0x556654.length);
+      _0x18a8d1.send(_0x1e3fda.buffer, _0x340056);
+    }
+    static ["mouse"](_0x5b3cbc, _0x1226e6) {
+      const _0x5b1e06 = _0x90a1a7.typeID;
+      if (this.chekConnection(_0x5b1e06)) {
+        const _0x1d42bf = this.createView(17);
+        _0x1d42bf.setUint8(0, 16, true);
+        _0x1d42bf.setFloat64(1, Math.fround(~~_0x5b3cbc), true);
+        _0x1d42bf.setFloat64(9, Math.fround(~~_0x1226e6), true);
+        this.sendPacket(_0x1d42bf, _0x5b1e06);
+      }
+    }
+    static ["chat"](_0x135efd) {
+      const _0x27786b = _0x90a1a7.typeID;
+      if (this.chekConnection(_0x27786b)) {
+        const _0x207ee8 = unescape(encodeURIComponent(_0x135efd));
+        const _0x1d139a = this.createView(6 + _0x207ee8.length);
+        _0x1d139a.setUint8(0, 86);
+        _0x1d139a.setUint8(1, 255);
+        _0x1d139a.setUint8(2, 255);
+        _0x1d139a.setUint8(3, 255);
+        _0x1d139a.setUint8(4, 255);
+        for (let _0xd39348 = _0x207ee8.length; _0xd39348--;) {
+          _0x1d139a.setUint8(_0xd39348 + 5, _0x207ee8.charCodeAt(_0xd39348), true);
+        }
+        _0x1d139a.setUint8(5 + _0x207ee8.length, 0, true);
+        this.sendPacket(_0x1d139a, _0x27786b);
+      }
+    }
+    static ['spectate'](_0x73a4f5) {
+      const _0x300d14 = _0x73a4f5 || 1;
+      if (this.chekConnection(_0x300d14) || !_0x90a1a7.isAlive && !_0xddb6d6.isSpectating || _0x73a4f5) {
+        const _0x3640ce = this.createView(1);
+        _0x3640ce.setUint8(0, 1, true);
+        this.sendPacket(_0x3640ce, _0x300d14);
+        _0xddb6d6.isSpectating = true;
+        if (!_0x90a1a7.isAlive) {
+          _0xddb6d6.targetViewport = 0.1;
+        }
+      }
+    }
+    static ["spawn"]() {
+      const _0x115240 = _0x90a1a7.typeID;
+      if (this.chekConnection(_0x115240) && (!_0x90a1a7._isAlive && 1 === _0x115240 || !_0x90a1a7._isAlive2 && 2 === _0x115240)) {
+        _0xddb6d6.isSpectating = false;
+        const _0xisTab2 = _0x115240 === 2;
+        if ('' === (_0xisTab2 ? _0x90a1a7.nick2 : _0x90a1a7.nick)) {
+          _0xisTab2 ? _0x90a1a7.nick2 = "Unnamed cell" : _0x90a1a7.nick = "Unnamed cell";
+        }
+        let _0x4a58df = unescape(encodeURIComponent(_0xisTab2 ? _0x90a1a7.nick2 : _0x90a1a7.nick));
+        let _0x1084d5 = unescape(encodeURIComponent("free/" + (_0xisTab2 ? _0x90a1a7.arbSkin2 : _0x90a1a7.arbSkin)));
+        const _0x4208f8 = {
+          'n': _0x4a58df
+        };
+        if (_0xisTab2 && _0x90a1a7.skin2 && !String(_0x90a1a7.skin2).includes("XXXXXXX")) {
+          _0x4208f8.s = unescape(encodeURIComponent(_0x90a1a7.skin2));
+          _0x4208f8.w = '';
+        } else if (!_0xisTab2 && _0x90a1a7.skin && !String(_0x90a1a7.skin).includes("XXXXXXX")) {
+          _0x4208f8.s = unescape(encodeURIComponent(_0x90a1a7.skin));
+          _0x4208f8.w = '';
+        } else if (_0xisTab2 ? _0x90a1a7.arbSkin2 : _0x90a1a7.arbSkin) {
+          _0x4208f8.s = _0x1084d5;
+          _0x4208f8.w = '';
+        }
+        const _0x428efe = JSON.stringify(_0x4208f8);
+        const _0x301649 = _0x428efe.length;
+        const _0x314127 = this.createView(2 + _0x301649);
+        _0x314127.setUint8(0, 0, true);
+        for (let _0x2e9472 = 0; _0x2e9472 < _0x301649; _0x2e9472++) {
+          _0x314127.setUint8(_0x2e9472 + 1, _0x428efe.charCodeAt(_0x2e9472), true);
+        }
+        _0x314127.setUint8(_0x301649 + 1, 0, true);
+        this.sendPacket(_0x314127, _0x115240);
+      }
+    }
+    static ["split"]() {
+      const _0x1fd00d = _0x90a1a7.typeID;
+      if (this.chekConnection(_0x1fd00d)) {
+        const _0x2a8e00 = this.createView(1);
+        _0x2a8e00.setUint8(0, 17, true);
+        this.sendPacket(_0x2a8e00, _0x1fd00d);
+      }
+    }
+    static ["eject"]() {
+      const _0x25abd0 = _0x90a1a7.typeID;
+      if (this.chekConnection(_0x25abd0)) {
+        const _0x1b92ea = this.createView(1);
+        _0x1b92ea.setUint8(0, 21, true);
+        this.sendPacket(_0x1b92ea, _0x25abd0);
+      }
+    }
+    static ["freeSpectate"]() {
+      if (this.chekConnection(1)) {
+        _0xddb6d6.freeSpectate = !_0xddb6d6.freeSpectate;
+        const _0x2272b3 = this.createView(1);
+        _0x2272b3.setUint8(0, 18, true);
+        this.sendPacket(_0x2272b3, 1);
+      }
+    }
+  }
+  class _0x1530af {
+    static ['init']() {
+      this.ip = '';
+      this.ws = null;
+      this.connected = false;
+      this.connect();
+    }
+    static ['connect']() {}
+    static ["send"](_0x13f21e) {
+      this.ws.send(_0x13f21e);
+    }
+    static ['onOpen']() {
+      _0x2d5cce.init();
+    }
+    static ["onMessage"](_0x1ffd4c) {
+      _0x7a58b0.parse(_0x1ffd4c);
+    }
+    static ["onClose"]() {
+      this.connected = false;
+      console.log("Disconnected from networks.");
+    }
+    static ["onError"]() {
+      this.connected = false;
+      console.log("Connection to networks errored out!");
+    }
+  }
+  class _0x12ac51 {
+    static ['init']() {
+      const _0x399fc8 = {
+        "totalMass": 0x0,
+        alive: 0x0,
+        spectate: 0x0
+      };
+      const _0x4fbb9e = {
+        "totalMass": 0x0,
+        "alive": 0x0,
+        "spectate": 0x0
+      };
+      const _0x5e31b7 = {
+        '1': _0x399fc8,
+        '2': _0x4fbb9e
+      };
+      _0x1530af.init();
+      this.teamPlayers = new Map();
+      this.selfID = -1;
+      this.isSpectator = false;
+      this.teamAlternator = true;
+      this.teamData = _0x5e31b7;
+      this.biggestIsOn = false;
+      this.biggest = new _0xb33099(0);
+      this.partyCells = new Map();
+    }
+    static ["clear"]() {
+      for (const _key of this.teamPlayers.keys()) {
+        if (typeof _key === 'number') this.teamPlayers["delete"](_key);
+      }
+      this.partyCells.clear();
+    }
+    static ['remove'](_0x3660b6) {
+      this.teamPlayers["delete"](_0x3660b6);
+    }
+    static ['getPlayer'](_0x47e4e6) {
+      if (_0x47e4e6 === this.selfID) {
+        return {};
+      }
+      let _0x1666d0 = this.teamPlayers.get(_0x47e4e6);
+      if (undefined === _0x1666d0) {
+        _0x1666d0 = this.newPlayer(_0x47e4e6);
+      }
+      return _0x1666d0;
+    }
+    static ["newPlayer"](_0x142a67) {
+      const _0x1486ac = new _0xb33099(_0x142a67);
+      this.teamPlayers.set(_0x142a67, _0x1486ac);
+      return _0x1486ac;
+    }
+    static ['chat'](_0x34245f, _0x164dbf, _0x3a86a2, _0x3d910f) {
+      let _0x3f5768 = _0x3d910f || "Anonymous";
+      if (_0x3d910f || _0x34245f !== this.selfID) {
+        const _0x2e574e = this.teamPlayers.get(_0x34245f);
+        if (undefined !== _0x2e574e) {
+          _0x3f5768 = _0x2e574e.nick;
+        }
+      } else {
+        _0x3f5768 = _0x90a1a7.nick;
+      }
+      if (1 === _0x164dbf || 3 === _0x164dbf) {
+        _0x40f48a.normal(_0x3f5768, _0x3a86a2);
+      } else if (2 == _0x164dbf) {
+        _0x40f48a.command(_0x3f5768, _0x3a86a2);
+      }
+    }
+  }
+  class _0x7a58b0 {
+    static ['parse'](_0x53d82a) {
+      const _0x34aecd = new DataView(_0x53d82a.data);
+      const _0x345da0 = new _0x4c265b(_0x34aecd);
+      const _0x4399b2 = _0x345da0.readUInt8();
+      if (1 === _0x4399b2) {
+        this.update(_0x345da0);
+      } else if (2 === _0x4399b2) {
+        this.chat(_0x345da0);
+      } else if (3 === _0x4399b2) {
+        this.commander(_0x345da0);
+      } else if (4 === _0x4399b2) {
+        this.selfID(_0x345da0);
+      } else if (5 === _0x4399b2) {
+        this.prePlayers(_0x345da0);
+      }
+    }
+    static ["update"](_0x3adb12) {
+      if (_0x90a1a7.isAlive && !_0x12ac51.isSpectator) {
+        _0x2d5cce.positionMass();
+      }
+      if (!(_0x90a1a7.isAlive || !_0xddb6d6.isSpectating || _0xddb6d6.freeSpectate)) {
+        _0x2d5cce.biggest();
+      }
+      const _0x125d15 = _0x12ac51.teamAlternator ? 1 : 2;
+      const _0x10fd99 = _0x12ac51.teamData[_0x125d15];
+      _0x10fd99.totalMass = 0;
+      _0x10fd99.alive = 0;
+      _0x10fd99.spectate = 0;
+      let _0x5902ec = _0x3adb12.readUInt8();
+      for (; _0x5902ec--;) {
+        const _0x29beeb = _0x3adb12.readUInt32();
+        _0x12ac51.remove(_0x29beeb);
+      }
+      for (_0x5902ec = _0x3adb12.readUInt8(); _0x5902ec--;) {
+        const _0x4f2cf7 = _0x3adb12.readUInt32();
+        const _0x5aa296 = _0x12ac51.getPlayer(_0x4f2cf7);
+        const _0x51b623 = _0x3adb12.readUInt8();
+        if (1 & _0x51b623) {
+          const _0x442708 = _0x3adb12.readEscapedUTF8string();
+          if (2 === _0x5aa296.isNew) {
+            _0x40f48a.alert(_0x442708, "joined the chatroom.");
+            _0x5aa296.isNew = 1;
+          } else if (1 === _0x5aa296.isNew) {
+            _0x40f48a.alert(_0x5aa296.nick, "changed name to " + _0x442708);
+          }
+          _0x5aa296.nick = _0x442708;
+        }
+        if (2 & _0x51b623) {
+          const _0x5a641d = _0x3adb12.readUInt8();
+          const _0x510beb = _0x3adb12.readUInt8();
+          const _0x32ba28 = _0x3adb12.readUInt8();
+          _0x5aa296.colorHex = '#' + (16777216 + (_0x5a641d << 16) + (_0x510beb << 8) + _0x32ba28).toString(16).slice(1);
+        }
+        if (4 & _0x51b623) {
+          _0x5aa296.skin = _0x3adb12.readUTF8string();
+        }
+        if (16 & _0x51b623) {
+          _0x5aa296.x = _0x3adb12.readInt16();
+          _0x5aa296.y = _0x3adb12.readInt16();
+          _0x5aa296.mass = _0x3adb12.readUInt32();
+        }
+        if (32 & _0x51b623) {
+          _0x5aa296.isAlive = _0x3adb12.readUInt8();
+        }
+        if (64 & _0x51b623) {
+          _0x5aa296.isRGB = _0x3adb12.readUInt8();
+        }
+        _0x5aa296.team = _0x125d15;
+        if (_0x5aa296.isAlive) {
+          _0x10fd99.totalMass += _0x5aa296.mass;
+          _0x10fd99.alive++;
+        } else {
+          _0x10fd99.spectate++;
+        }
+      }
+      const _0x2a227e = _0x3adb12.readUInt8();
+      _0x12ac51.biggestIsOn = _0x2a227e;
+      if (_0x2a227e) {
+        _0x12ac51.biggest.x = _0x3adb12.readInt16();
+        _0x12ac51.biggest.y = _0x3adb12.readInt16();
+      }
+    }
+    static ['prePlayers'](_0x4641e7) {
+      _0x12ac51.clear();
+      for (let _0x49a4c3 = _0x4641e7.readUInt8(); _0x49a4c3--;) {
+        const _0x552c8d = _0x4641e7.readUInt32();
+        const _0xfe2e6f = _0x12ac51.newPlayer(_0x552c8d);
+        _0xfe2e6f.nick = _0x4641e7.readEscapedUTF8string();
+        const _0x3b4ef2 = _0x4641e7.readUInt8();
+        const _0x2b4c89 = _0x4641e7.readUInt8();
+        const _0x272dc2 = _0x4641e7.readUInt8();
+        _0xfe2e6f.colorHex = '#' + (16777216 + (_0x3b4ef2 << 16) + (_0x2b4c89 << 8) + _0x272dc2).toString(16).slice(1);
+        _0xfe2e6f.skin = _0x4641e7.readUTF8string();
+        _0xfe2e6f.x = _0x4641e7.readInt16();
+        _0xfe2e6f.y = _0x4641e7.readInt16();
+        _0xfe2e6f.mass = _0x4641e7.readUInt32();
+        _0xfe2e6f.isAlive = _0x4641e7.readUInt8();
+        _0xfe2e6f.isRGB = _0x4641e7.readUInt8();
+      }
+    }
+    static ["chat"](_0x4740d4) {
+      const _0x312577 = _0x4740d4.readUInt32();
+      const _0x28e339 = _0x4740d4.readUInt8();
+      const _0x1b29af = _0x4740d4.readEscapedUTF8string();
+      if (3 === _0x28e339) {
+        const _0x59cd24 = _0x1b29af.split("");
+        _0x12ac51.chat(_0x312577, _0x28e339, _0x59cd24[1], _0x59cd24[0]);
+      } else {
+        _0x12ac51.chat(_0x312577, _0x28e339, _0x1b29af);
+      }
+    }
+    static ["commander"](_0x545a15) {
+      const _0x442e7f = _0x545a15.readInt16() + _0x996564.offset.x;
+      const _0x3a9146 = _0x545a15.readInt16() + _0x996564.offset.y;
+      const _0x5d143c = _0xb45f1b.time;
+      const _0x14eb93 = {
+        x: _0x442e7f,
+        y: _0x3a9146,
+        time: _0x5d143c
+      };
+      _0x386cbc.commanderPoints.add(_0x14eb93);
+    }
+    static ["selfID"](_0x2c6ab1) {
+      const _0x4e5b0c = _0x2c6ab1.readUInt32();
+      _0x12ac51.selfID = _0x4e5b0c;
+    }
+  }
+  class _0x2d5cce {
+    static ["init"]() {
+      console.log("Connected to Networks.");
+      _0x1530af.connected = true;
+      this.nick();
+      this.skin();
+      this.tag();
+      this.color();
+      this.ip();
+      this.aliveStatus();
+      this.rgbMode();
+      if (_0x12ac51.isSpectator) {
+        this.spectator(true);
+      }
+    }
+    static ["createView"](_0x3d6054) {
+      return new DataView(new ArrayBuffer(_0x3d6054));
+    }
+    static ["nick"]() {
+      if (_0x1530af.connected) {
+        const _0x24245f = unescape(encodeURIComponent(_0x90a1a7.nick));
+        let _0x599045 = _0x24245f.length;
+        const _0x4523c2 = this.createView(2 + _0x24245f.length);
+        for (_0x4523c2.setUint8(0, 1, true); _0x599045--;) {
+          _0x4523c2.setUint8(_0x599045 + 1, _0x24245f.charCodeAt(_0x599045), true);
+        }
+        _0x4523c2.setUint8(1 + _0x24245f.length, 0, true);
+        _0x1530af.send(_0x4523c2.buffer);
+      }
+    }
+    static ["color"]() {
+      if (_0x1530af.connected) {
+        const _0xcfacbc = this.createView(4);
+        _0xcfacbc.setUint8(0, 2, true);
+        _0xcfacbc.setUint8(1, _0x90a1a7.colorObject.r, true);
+        _0xcfacbc.setUint8(2, _0x90a1a7.colorObject.g, true);
+        _0xcfacbc.setUint8(3, _0x90a1a7.colorObject.b, true);
+        _0x1530af.send(_0xcfacbc.buffer);
+      }
+    }
+    static ["skin"]() {
+      if (_0x18a8d1.connected || _0x18a8d1.connected2) {
+        const _0x5e1baa = _0x90a1a7.skin;
+        let _0x582581 = _0x5e1baa.length;
+        const _0x15de34 = this.createView(2 + _0x5e1baa.length);
+        for (_0x15de34.setUint8(0, 4, true); _0x582581--;) {
+          _0x15de34.setUint8(_0x582581 + 1, _0x5e1baa.charCodeAt(_0x582581), true);
+        }
+        _0x15de34.setUint8(1 + _0x5e1baa.length, 0, true);
+        _0x18a8d1.send(_0x15de34.buffer, _0x90a1a7.typeID);
+      }
+    }
+    static ['ip']() {
+      if (_0x1530af.connected && _0x18a8d1.ip) {
+        const _0x2c8eb4 = this.createView(8);
+        _0x2c8eb4.setUint8(0, 8, true);
+        _0x2c8eb4.setUint8(1, 1, true);
+        const _0x6d5c19 = _0x2d5cce.ip;
+        let _0x5cf655 = _0x18a8d1.ip.split('.');
+        let _0x2ddb58 = _0x5cf655[3].split(':');
+        _0x6d5c19[0] = _0x5cf655[0];
+        _0x6d5c19[1] = _0x5cf655[1];
+        _0x6d5c19[2] = _0x5cf655[2];
+        _0x6d5c19[3] = _0x2ddb58[0];
+        _0x6d5c19[4] = _0x2ddb58[1];
+        _0x2c8eb4.setUint8(2, 0 | _0x6d5c19[0], true);
+        _0x2c8eb4.setUint8(3, 0 | _0x6d5c19[1], true);
+        _0x2c8eb4.setUint8(4, 0 | _0x6d5c19[2], true);
+        _0x2c8eb4.setUint8(5, 0 | _0x6d5c19[3], true);
+        _0x2c8eb4.setUint16(6, 0 | _0x6d5c19[4], true);
+        _0x1530af.send(_0x2c8eb4.buffer);
+      }
+    }
+    static ["tag"]() {
+      const _0x35e0be = _0x90a1a7.tag;
+      if (_0x35e0be && _0x35e0be.length > 0) {
+        if (_0x1530af.connected) {
+          let _0x21b532 = _0x35e0be.length;
+          const _0x427eb0 = this.createView(2 + _0x35e0be.length);
+          _0x427eb0.setUint8(0, 4, true);
+          for (; _0x21b532--;) {
+            _0x427eb0.setUint8(_0x21b532 + 1, _0x35e0be.charCodeAt(_0x21b532), true);
+          }
+          _0x427eb0.setUint8(1 + _0x35e0be.length, 0, true);
+          _0x1530af.send(_0x427eb0.buffer);
+        }
+      }
+    }
+    static ["positionMass"]() {
+      if (_0x1530af.connected) {
+        const _0x56c21f = this.createView(9);
+        _0x56c21f.setUint8(0, 16, true);
+        _0x56c21f.setInt16(1, 0 | _0x90a1a7.x - _0x996564.offset.x, true);
+        _0x56c21f.setInt16(3, 0 | _0x90a1a7.y - _0x996564.offset.y, true);
+        _0x56c21f.setUint32(5, _0x90a1a7.mass, true);
+        _0x1530af.send(_0x56c21f.buffer);
+      }
+    }
+    static ["aliveStatus"]() {
+      if (_0x1530af.connected) {
+        const _0x42182d = this.createView(2);
+        const _0x4a1c40 = _0x90a1a7.isAlive ? 1 : 0;
+        _0x42182d.setUint8(0, 32, true);
+        _0x42182d.setUint8(1, _0x4a1c40, true);
+        _0x1530af.send(_0x42182d.buffer);
+      }
+    }
+    static ["chat"](_0x3b9cd8, _0x39cf3c) {
+      if (_0x1530af.connected) {
+        const _0x13b87d = unescape(encodeURIComponent(_0x39cf3c));
+        const _0x215c48 = this.createView(3 + _0x13b87d.length);
+        _0x215c48.setUint8(0, 64, true);
+        _0x215c48.setUint8(1, _0x3b9cd8, true);
+        for (let _0x4d2d0f = _0x13b87d.length; _0x4d2d0f--;) {
+          _0x215c48.setUint8(_0x4d2d0f + 2, _0x13b87d.charCodeAt(_0x4d2d0f), true);
+        }
+        _0x215c48.setUint8(2 + _0x13b87d.length, 0, true);
+        _0x1530af.send(_0x215c48.buffer);
+      }
+    }
+    static ["commander"]() {
+      if (_0x1530af.connected) {
+        const _0x5bcfa5 = 1 === _0x90a1a7.typeID ? _0x996564.offset : _0x996564.offset2;
+        const _0xdd3cb5 = _0x128142.canvasX - _0x5bcfa5.x;
+        const _0x33bfdb = _0x128142.canvasY - _0x5bcfa5.y;
+        const _0x354f1b = this.createView(5);
+        _0x354f1b.setUint8(0, 128, true);
+        _0x354f1b.setInt16(1, 0 | _0xdd3cb5, true);
+        _0x354f1b.setInt16(3, 0 | _0x33bfdb, true);
+        _0x1530af.send(_0x354f1b.buffer);
+      }
+    }
+    static ["spectator"]() {}
+    static ["rgbMode"]() {
+      if (_0x1530af.connected) {
+        const _0x2e4a9b = _0x90a1a7.isRGB ? 1 : 0;
+        const _0x4a3312 = this.createView(3);
+        _0x4a3312.setUint8(0, 0, true);
+        _0x4a3312.setUint8(1, 8, true);
+        _0x4a3312.setUint8(2, _0x2e4a9b, true);
+        _0x1530af.send(_0x4a3312.buffer);
+      }
+    }
+    static ["biggest"]() {
+      if (_0x1530af.connected) {
+        const _0x1b28af = _0xddb6d6.spectatePoint.x - _0x996564.offset.x;
+        const _0x44131d = _0xddb6d6.spectatePoint.y - _0x996564.offset.y;
+        const _0x4fac57 = this.createView(6);
+        _0x4fac57.setUint8(0, 0, true);
+        _0x4fac57.setUint8(1, 16, true);
+        _0x4fac57.setInt16(2, 0 | _0x1b28af, true);
+        _0x4fac57.setInt16(4, 0 | _0x44131d, true);
+        _0x1530af.send(_0x4fac57.buffer);
+      }
+    }
+  }
+  class _0x386cbc {
+    static ['init']() {
+      this.canvas = _0x24f9ab.getElementById("canvas");
+      this.ctx = this.canvas.getContext('2d');
+      this.pi2 = 2 * Math.PI;
+      this.skinMap = new Map();
+      this.arbSkinMap = new Map();
+      this.downloadedSkins = new Map();
+      this.knownSkins = {};
+      this.commanderPoints = new Set();
+      this.rgbTeammates = new Set();
+      this.indicator = this.cacheIndicator();
+      this.getKnownSkins();
+      this._bgImage = new Image();
+      this._bgImage.crossOrigin = "anonymous";
+      this._bgReady = false;
+      this._ceImage = new Image();
+      this._ceImage.crossOrigin = "anonymous";
+      this._ceReady = false;
+      this._loadCeImage(_0x480be4.commanderImageUrl);
+      _0x51fad0.init();
+      _0x2ab3a8.init();
+      this.resizeCanvas();
+      _0x1c478d.onresize = () => {
+        this.resizeCanvas();
+      };
+    }
+    static ["_loadCeImage"](_0x2c6a91) {
+      this._ceReady = false;
+      if (_0x2c6a91 && _0x2c6a91.length > 0) {
+        this._ceImage = new Image();
+        this._ceImage.crossOrigin = "anonymous";
+        this._ceImage.onload = () => { this._ceReady = true; };
+        this._ceImage.onerror = () => { this._ceReady = false; };
+        this._ceImage.src = _0x2c6a91;
+      }
+    }
+    static ["_loadBgImage"](_0x1a2b3c) {
+      if (_0x1a2b3c && _0x1a2b3c.length > 0) {
+        this._bgImage = new Image();
+        this._bgImage.crossOrigin = "anonymous";
+        this._bgImage.onload = () => { this._bgReady = true; };
+        this._bgImage.onerror = () => { this._bgReady = false; };
+        this._bgImage.src = _0x1a2b3c;
+      } else {
+        this._bgReady = false;
+      }
+    }
+    static ["resizeCanvas"]() {
+      this.canvas.width = 0 | _0x1c478d.innerWidth;
+      this.canvas.height = 0 | _0x1c478d.innerHeight;
+    }
+    static ["run"]() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.imageSmoothingEnabled = _0x2cc0f3.antiAliasing === "on";
+      this.ctx.save();
+      this.vanillaGrid();
+      const _0x810445 = (this.canvas.width >> 1) / _0xddb6d6.viewport - _0xddb6d6.x;
+      const _0x2de058 = (this.canvas.height >> 1) / _0xddb6d6.viewport - _0xddb6d6.y;
+      this.ctx.scale(_0xddb6d6.viewport, _0xddb6d6.viewport);
+      this.ctx.translate(_0x810445, _0x2de058);
+      if (this._bgReady) {
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.rect(_0x996564.left, _0x996564.top, _0x996564.edge, _0x996564.edge);
+        this.ctx.clip();
+        this.ctx.drawImage(this._bgImage, _0x996564.left, _0x996564.top, _0x996564.edge, _0x996564.edge);
+        this.ctx.restore();
+      }
+      _0x2ab3a8.update();
+      _0x51fad0.render();
+      this.border();
+      _0x4c0fb5.render();
+      this.createSkinMap();
+      this.createRGBset();
+      this.mouseTracker();
+      this.cells();
+      this.commands();
+      _0x34f3bb.cleaner();
+      this.ctx.restore();
+    }
+    static ["vanillaGrid"]() {
+      if ("off" !== _0x2cc0f3.vanillaGrid) {
+        const _0x68655c = this.ctx;
+        const _0x2a7ec2 = _0xddb6d6.viewport;
+        const _0x390693 = this.canvas.width / _0x2a7ec2;
+        const _0x4ab074 = this.canvas.height / _0x2a7ec2;
+        let _0x4d6612 = (-_0xddb6d6.x + _0x390693 / 2) % 50;
+        let _0x173c0d = (-_0xddb6d6.y + _0x4ab074 / 2) % 50;
+        _0x68655c.strokeStyle = _0x480be4.gridColor;
+        _0x68655c.lineWidth = 0 | Math.min(_0x480be4.gridWidth, 20) * _0xddb6d6.viewport;
+        _0x68655c.globalAlpha = 0.2 * _0x2a7ec2;
+        for (_0x68655c.beginPath(); _0x4d6612 < _0x390693;) {
+          _0x68655c.moveTo(_0x4d6612 * _0x2a7ec2, 0);
+          _0x68655c.lineTo(_0x4d6612 * _0x2a7ec2, _0x4ab074 * _0x2a7ec2);
+          _0x4d6612 += 50;
+        }
+        for (; _0x173c0d < _0x4ab074;) {
+          _0x68655c.moveTo(0, _0x173c0d * _0x2a7ec2);
+          _0x68655c.lineTo(_0x390693 * _0x2a7ec2, _0x173c0d * _0x2a7ec2);
+          _0x173c0d += 50;
+        }
+        _0x68655c.closePath();
+        _0x68655c.stroke();
+        _0x68655c.globalAlpha = 1;
+      }
+    }
+    static ["border"]() {
+      const _0x3f1e55 = this.ctx;
+      const _0x1b4ff4 = _0x480be4.borderWidth >> 1;
+      const _0x1b2d38 = _0x480be4.borderOpacity / 10;
+      _0x3f1e55.globalAlpha = _0x1b2d38;
+      if (_0x480be4.borderGlowSize > 0) {
+        _0x3f1e55.shadowBlur = ~~_0x480be4.borderGlowSize;
+        _0x3f1e55.shadowColor = _0x480be4.borderGlowColor;
+      }
+      if (_0x480be4.rainbowBorder !== "on") {
+        _0x3f1e55.strokeStyle = _0x480be4.borderColor;
+        _0x3f1e55.lineWidth = _0x480be4.borderWidth;
+        _0x3f1e55.strokeRect(_0x996564.left - _0x1b4ff4, _0x996564.top - _0x1b4ff4, _0x996564.edge + _0x480be4.borderWidth, _0x996564.edge + _0x480be4.borderWidth);
+        _0x3f1e55.shadowBlur = 0;
+        _0x3f1e55.shadowColor = 'transparent';
+        _0x3f1e55.globalAlpha = 1;
+        return;
+      }
+      const _0x14e95b = _0x480be4.borderWidth;
+      const _0x2f4167 = _0x996564.left - _0x1b4ff4;
+      const _0x531a16 = _0x996564.top - _0x1b4ff4;
+      const _0x3e7362 = _0x996564.edge + _0x14e95b;
+      const _0x18ec80 = _0x996564.edge + _0x14e95b;
+      const _0x298e0a = (_0x480be4._rainbowHue || 0) % 360;
+      _0x480be4._rainbowHue = _0x298e0a + 2;
+      const _0x1fce1b = _0x298e0a;
+      const _0x2c7ca7 = (_0x298e0a + 72) % 360;
+      const _0x4289cc = (_0x298e0a + 144) % 360;
+      const _0x1d5a73 = (_0x298e0a + 216) % 360;
+      const _0x160a8f = (_0x298e0a + 288) % 360;
+      let _0x22cafb = _0x3f1e55.createLinearGradient(_0x2f4167, _0x531a16, _0x2f4167, _0x531a16 + _0x18ec80);
+      _0x22cafb.addColorStop(0, "hsl(" + _0x1fce1b + ",100%,50%)");
+      _0x22cafb.addColorStop(0.25, "hsl(" + _0x2c7ca7 + ",100%,50%)");
+      _0x22cafb.addColorStop(0.5, "hsl(" + _0x4289cc + ",100%,50%)");
+      _0x22cafb.addColorStop(0.75, "hsl(" + _0x1d5a73 + ",100%,50%)");
+      _0x22cafb.addColorStop(1, "hsl(" + _0x160a8f + ",100%,50%)");
+      _0x3f1e55.fillStyle = _0x22cafb;
+      _0x3f1e55.fillRect(_0x2f4167, _0x531a16, _0x14e95b, _0x18ec80);
+      _0x22cafb = _0x3f1e55.createLinearGradient(_0x2f4167 + _0x3e7362, _0x531a16, _0x2f4167 + _0x3e7362, _0x531a16 + _0x18ec80);
+      _0x22cafb.addColorStop(0, "hsl(" + _0x160a8f + ",100%,50%)");
+      _0x22cafb.addColorStop(0.25, "hsl(" + _0x1d5a73 + ",100%,50%)");
+      _0x22cafb.addColorStop(0.5, "hsl(" + _0x4289cc + ",100%,50%)");
+      _0x22cafb.addColorStop(0.75, "hsl(" + _0x2c7ca7 + ",100%,50%)");
+      _0x22cafb.addColorStop(1, "hsl(" + _0x1fce1b + ",100%,50%)");
+      _0x3f1e55.fillStyle = _0x22cafb;
+      _0x3f1e55.fillRect(_0x2f4167 + _0x3e7362 - _0x14e95b, _0x531a16, _0x14e95b, _0x18ec80);
+      _0x22cafb = _0x3f1e55.createLinearGradient(_0x2f4167 + _0x3e7362, _0x531a16, _0x2f4167, _0x531a16);
+      _0x22cafb.addColorStop(0, "hsl(" + _0x160a8f + ",100%,50%)");
+      _0x22cafb.addColorStop(0.25, "hsl(" + _0x1d5a73 + ",100%,50%)");
+      _0x22cafb.addColorStop(0.5, "hsl(" + _0x4289cc + ",100%,50%)");
+      _0x22cafb.addColorStop(0.75, "hsl(" + _0x2c7ca7 + ",100%,50%)");
+      _0x22cafb.addColorStop(1, "hsl(" + _0x1fce1b + ",100%,50%)");
+      _0x3f1e55.fillStyle = _0x22cafb;
+      _0x3f1e55.fillRect(_0x2f4167, _0x531a16, _0x3e7362, _0x14e95b);
+      _0x22cafb = _0x3f1e55.createLinearGradient(_0x2f4167, _0x531a16 + _0x18ec80, _0x2f4167 + _0x3e7362, _0x531a16 + _0x18ec80);
+      _0x22cafb.addColorStop(0, "hsl(" + _0x1fce1b + ",100%,50%)");
+      _0x22cafb.addColorStop(0.25, "hsl(" + _0x2c7ca7 + ",100%,50%)");
+      _0x22cafb.addColorStop(0.5, "hsl(" + _0x4289cc + ",100%,50%)");
+      _0x22cafb.addColorStop(0.75, "hsl(" + _0x1d5a73 + ",100%,50%)");
+      _0x22cafb.addColorStop(1, "hsl(" + _0x160a8f + ",100%,50%)");
+      _0x3f1e55.fillStyle = _0x22cafb;
+      _0x3f1e55.fillRect(_0x2f4167, _0x531a16 + _0x18ec80 - _0x14e95b, _0x3e7362, _0x14e95b);
+      _0x3f1e55.shadowBlur = 0;
+      _0x3f1e55.shadowColor = 'transparent';
+      _0x3f1e55.globalAlpha = 1;
+    }
+    static ['cells']() {
+      const _0xfdf4f4 = this.ctx;
+      const _0x7ae23d = _0x2cc0f3.cellMass !== "off";
+      const _0x54c029 = _0x2cc0f3.cellNick !== "off";
+      const _0x8efbd4 = _0x2cc0f3.hideOwnNick === 'on';
+      const _0x5c97e3 = _0x2cc0f3.hideOwnMass === 'on';
+      const _0x290b1c = _0x2cc0f3.urlSkins === 'on';
+      const _0x24bf81 = _0x2cc0f3.arbSkins === 'on';
+      const _0x4f4928 = _0x2cc0f3.teamIndicator === 'on';
+      const _0x3060bb = _0x2cc0f3.multiboxRing === 'on';
+      const _0x235e9c = _0x2cc0f3.multiboxCellColor === 'on';
+      const _0x112233 = _0x2cc0f3.cellShadow === 'on';
+      const _0x445566 = _0x2cc0f3.cellGradient === 'on';
+      const _0x1c7e25 = _0x480be4.indicatorSize;
+      const _0x5ab10a = _0x480be4.cellTransparency / 100;
+      const _0x1005b0 = _0x480be4.cellNickSize / 100;
+      const _0x2549e3 = _0x480be4.cellMassSize / 100;
+      const _0x494dac = _0x2cc0f3.cellTextAnimation;
+      const _0x355e3d = _0x480be4.multiboxActive;
+      const _0x15f66b = _0x480be4.multiboxInactive;
+      const _0x26462b = _0x480be4.multiboxRingWidth;
+      const _0x30af86 = _0x480be4.lightenCellColor / 100;
+      _0xfdf4f4.strokeStyle = _0x480be4.virusBorderColor;
+      _0xfdf4f4.lineWidth = _0x480be4.virusBorderWidth;
+      for (const _0x5987fa of _0x14d4a3.sortedCells) {
+        const _0x48567b = !_0x5987fa.isVirus && !_0x5987fa.isEjected && (this.skinMap.has(_0x5987fa.worldID) || this.arbSkinMap.has(_0x5987fa.worldID));
+        _0x5987fa.animate();
+        let _0x21653d = 1;
+        const _0xe84373 = {
+          x: 0x0,
+          y: 0x0
+        };
+        const _0x1241cd = _0x5987fa.cellType === 2 ? _0x996564.position : _0xe84373;
+        if (_0x5987fa.fadeStartTime) {
+          _0x21653d = 1 - (_0xb45f1b.time - _0x5987fa.fadeStartTime) / _0x2cc0f3.CellAnimation;
+          _0x21653d = Math.max(0, Math.min(1, _0x21653d));
+        }
+        _0xfdf4f4.beginPath();
+        _0xfdf4f4.arc(_0x5987fa.animX - _0x1241cd.x, _0x5987fa.animY - _0x1241cd.y, _0x5987fa.animRadius + 5, 0, this.pi2, true);
+        _0xfdf4f4.closePath();
+        if (_0x5987fa.isVirus) {
+          _0xfdf4f4.fillStyle = _0x480be4.virusColor;
+          _0xfdf4f4.globalAlpha = 0.7;
+          if (_0x480be4.virusGlow === "on") {
+            _0xfdf4f4.shadowBlur = ~~(_0x480be4.virusGlowSize * _0x480be4.virusGlowStrength / 5);
+            _0xfdf4f4.shadowColor = _0x480be4.virusGlowColor;
+          }
+          _0xfdf4f4.fill();
+          _0xfdf4f4.shadowBlur = 0;
+          _0xfdf4f4.shadowColor = 'transparent';
+          _0xfdf4f4.globalAlpha = 1;
+          _0xfdf4f4.stroke();
+          if (_0x2cc0f3.virusRing === 'on') {
+            const _0x2cx = _0x5987fa.animX - _0x1241cd.x;
+            const _0x2cy = _0x5987fa.animY - _0x1241cd.y;
+            const _0x2cr = _0x5987fa.animRadius + 5;
+            const _0x2teeth = 16;
+            const _0x2step = this.pi2 / _0x2teeth;
+            const _0x2toothH = _0x2cr * _0x480be4.virusRingWidth / 100;
+            const _0x2outerR = _0x2cr + _0x2toothH;
+            const _0x2innerR = _0x2cr;
+            const _0x2ctrlR = _0x2innerR + _0x2toothH * 0.7;
+            const _0x2rot = (_0xb45f1b.time / 3000 * (_0x480be4.globalRotationSpeed || 5)) % this.pi2;
+            _0xfdf4f4.save();
+            _0xfdf4f4.translate(_0x2cx, _0x2cy);
+            _0xfdf4f4.rotate(_0x2rot);
+            _0xfdf4f4.fillStyle = _0x480be4.virusGearColor || _0x480be4.virusRingColor;
+            _0xfdf4f4.globalAlpha = 0.8;
+            for (let _0x2i = 0; _0x2i < _0x2teeth; _0x2i++) {
+              const _0x2a = _0x2i * _0x2step;
+              const _0x2l = _0x2a - _0x2step * 0.3;
+              const _0x2c = _0x2a + _0x2step * 0.3;
+              _0xfdf4f4.beginPath();
+              _0xfdf4f4.moveTo(Math.cos(_0x2l) * _0x2innerR, Math.sin(_0x2l) * _0x2innerR);
+              _0xfdf4f4.quadraticCurveTo(Math.cos(_0x2l) * _0x2ctrlR, Math.sin(_0x2l) * _0x2ctrlR, Math.cos(_0x2a) * _0x2outerR, Math.sin(_0x2a) * _0x2outerR);
+              _0xfdf4f4.quadraticCurveTo(Math.cos(_0x2c) * _0x2ctrlR, Math.sin(_0x2c) * _0x2ctrlR, Math.cos(_0x2c) * _0x2innerR, Math.sin(_0x2c) * _0x2innerR);
+              _0xfdf4f4.closePath();
+              _0xfdf4f4.fill();
+            }
+            _0xfdf4f4.globalAlpha = 1;
+            _0xfdf4f4.restore();
+            _0xfdf4f4.strokeStyle = _0x480be4.virusBorderColor;
+            _0xfdf4f4.lineWidth = _0x480be4.virusBorderWidth;
+          }
+          if (_0x2cc0f3.virusMass === "text") {
+            const _0x175afd = _0x5987fa.animX - _0x1241cd.x;
+            const _0x4f4e2b = _0x5987fa.animY - _0x1241cd.y;
+            const _0x4edbb9 = ~~_0x5987fa.animRadius * 0.3;
+            _0xfdf4f4.fillStyle = "rgba(0,0,0,0.7)";
+            _0xfdf4f4.font = "bold " + Math.max(12, _0x4edbb9) + "px ubuntu";
+            _0xfdf4f4.textAlign = "center";
+            _0xfdf4f4.textBaseline = "middle";
+            _0xfdf4f4.fillText(_0x5987fa.mass, _0x175afd + 1, _0x4f4e2b + 1);
+            _0xfdf4f4.fillStyle = "#fff";
+            _0xfdf4f4.fillText(_0x5987fa.mass, _0x175afd, _0x4f4e2b);
+          } else if (_0x2cc0f3.virusMass === "fill") {
+            const _0x175afd = _0x5987fa.animX - _0x1241cd.x;
+            const _0x4f4e2b = _0x5987fa.animY - _0x1241cd.y;
+            const _0x2massProg = Math.min(1, Math.max(0, (_0x5987fa.mass - 100) / 100));
+            const _0x2fillR = _0x5987fa.animRadius * _0x2massProg;
+            _0xfdf4f4.save();
+            _0xfdf4f4.globalAlpha = 0.8;
+            _0xfdf4f4.fillStyle = _0x480be4.virusBorderColor;
+            _0xfdf4f4.beginPath();
+            _0xfdf4f4.arc(_0x175afd, _0x4f4e2b, _0x2fillR, 0, this.pi2, true);
+            _0xfdf4f4.closePath();
+            _0xfdf4f4.fill();
+            _0xfdf4f4.globalAlpha = 1;
+            _0xfdf4f4.restore();
+          }
+        } else if (_0x5987fa.isFood && _0x2cc0f3.foodGlow === "on") {
+          _0xfdf4f4.fillStyle = _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
+          _0xfdf4f4.shadowBlur = ~~(_0x480be4.foodGlowSize * _0x480be4.foodGlowStrength / 5);
+          _0xfdf4f4.shadowColor = _0x480be4.foodGlowColor;
+          _0xfdf4f4.fill();
+          _0xfdf4f4.shadowBlur = 0;
+          _0xfdf4f4.shadowColor = 'transparent';
+        } else {
+          if (_0x112233 && _0x5987fa.isMine) {
+            _0xfdf4f4.shadowColor = "black";
+            _0xfdf4f4.shadowBlur = 15;
+          }
+          _0xfdf4f4.fillStyle = _0x235e9c && _0x5987fa.isMine ? _0x5987fa.cellType === _0x90a1a7.typeID ? _0x355e3d : _0x15f66b : _0x2cc0f3.grayscaleInactive === "on" && _0x5987fa.isMine && _0x5987fa.cellType !== _0x90a1a7.typeID ? _0x2ab3a8.getGrayscale(_0x5987fa.colorObject, _0x30af86) : _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
+          if (_0x5ab10a * _0x21653d < 1) {
+            _0xfdf4f4.globalAlpha = _0x5ab10a * _0x21653d;
+            _0xfdf4f4.fill();
+            _0xfdf4f4.globalAlpha = 1;
+          } else {
+            _0xfdf4f4.fill();
+          }
+          if (_0x112233 && _0x5987fa.isMine) {
+            _0xfdf4f4.shadowBlur = 0;
+          }
+        }
+        if (_0x445566 && !_0x5987fa.isVirus && !_0x5987fa.isEjected && _0x5987fa.animRadius > 25) {
+          const _0xgcx = _0x5987fa.animX - _0x1241cd.x;
+          const _0xgcy = _0x5987fa.animY - _0x1241cd.y;
+          const _0gcr = _0x5987fa.animRadius + 5;
+          const _0grad = _0xfdf4f4.createRadialGradient(_0xgcx, _0xgcy, _0gcr * 0.1, _0xgcx, _0xgcy, _0gcr);
+          _0grad.addColorStop(0, "rgba(0,0,0,0.35)");
+          _0grad.addColorStop(0.6, "rgba(0,0,0,0.1)");
+          _0grad.addColorStop(1, "rgba(0,0,0,0)");
+          _0xfdf4f4.fillStyle = _0grad;
+          _0xfdf4f4.beginPath();
+          _0xfdf4f4.arc(_0xgcx, _0xgcy, _0gcr, 0, this.pi2, true);
+          _0xfdf4f4.closePath();
+          _0xfdf4f4.fill();
+        }
+        if (_0x5987fa.isEjected) {
+          continue;
+        }
+        if (_0x4f4928 && _0x5987fa.isMine && _0x5987fa.cellType === _0x90a1a7.typeID && _0x21653d > 0) {
+          _0xfdf4f4.save();
+          _0xfdf4f4.textAlign = "center";
+          _0xfdf4f4.textBaseline = "bottom";
+          _0xfdf4f4.font = "600 " + (_0x1c7e25 * 2) + "px sans-serif";
+          _0xfdf4f4.fillStyle = "rgba(255,255,255,1)";
+          const _0indX = _0x5987fa.animX - _0x1241cd.x;
+          const _0indY = _0x5987fa.animY - _0x1241cd.y - _0x5987fa.animRadius - 5;
+          _0xfdf4f4.fillText("\u25BC", _0indX, _0indY + _0x1c7e25 / 2);
+          _0xfdf4f4.restore();
+        }
+        let _0urlSkin = this.skinMap.has(_0x5987fa.worldID) && _0x290b1c && this.getCustomSkin(_0x5987fa.worldID, 'skinMap');
+        const _0arbSkin = this.arbSkinMap.has(_0x5987fa.worldID) && _0x24bf81 && this.getCustomSkin(_0x5987fa.worldID, 'arbSkinMap');
+        let _0x1a6b68 = _0urlSkin || _0arbSkin;
+        if (!_0x1a6b68 && _0x290b1c) {
+          const _cellUrl = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5987fa.skin || ''));
+          if (_cellUrl && !_cellUrl.includes("XXXXXXX") && !_cellUrl.startsWith('free/')) {
+            const _cached = this.downloadedSkins.get(_cellUrl);
+            if (_cached) { _0x1a6b68 = _cached; _0urlSkin = _cached; }
+            else if (undefined === _cached) this.downloadSkin(_cellUrl);
+          }
+        }
+        let _0x20f1ed = _0x386cbc.code2Url(_0x386cbc.getImgurCode(_0x5987fa.skin || '')).includes("XXXXXXX") ? _0x5987fa.skin : _0x5987fa.arbSkin;
+        const _0xb89262 = _0x24bf81 && !_0x1a6b68 && _0x20f1ed && (_0x20f1ed.startsWith('free/') || this.knownSkins.hasOwnProperty(_0x20f1ed.replace(/free\/|.png/g, ''))) && this.get3rbSkin(_0x20f1ed);
+        if (_0x1a6b68 || _0xb89262) {
+          _0xfdf4f4.save();
+          _0xfdf4f4.clip();
+          if (_0x1a6b68) _0xfdf4f4.drawImage(_0x1a6b68, _0x5987fa.animX - _0x1241cd.x - (_0x5987fa.animRadius + 5), _0x5987fa.animY - _0x1241cd.y - (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5));
+          else if (_0xb89262) _0xfdf4f4.drawImage(_0xb89262, _0x5987fa.animX - _0x1241cd.x - (_0x5987fa.animRadius + 5), _0x5987fa.animY - _0x1241cd.y - (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5), 2 * (_0x5987fa.animRadius + 5));
+          _0xfdf4f4.restore();
+        }
+        if (_0x5987fa.isMine && _0x3060bb) {
+          const _0x27d8ff = _0x5987fa.animRadius * _0x26462b / 100;
+          _0xfdf4f4.beginPath();
+          _0xfdf4f4.arc(_0x5987fa.animX - _0x1241cd.x, _0x5987fa.animY - _0x1241cd.y, _0x5987fa.animRadius + 5 - (_0x27d8ff >> 1), 0, this.pi2, true);
+          _0xfdf4f4.closePath();
+          _0xfdf4f4.lineWidth = _0x27d8ff | 0;
+          _0xfdf4f4.strokeStyle = _0x5987fa.cellType === _0x90a1a7.typeID ? _0x355e3d : _0x15f66b;
+          _0xfdf4f4.stroke();
+          _0xfdf4f4.strokeStyle = _0x480be4.virusBorderColor;
+          _0xfdf4f4.lineWidth = _0x480be4.virusBorderWidth;
+        }
+        if (_0x2cc0f3.multiboxShield === "on" && _0x5987fa.isMine && _0x480be4._shieldReady) {
+          const _0x3b92c8 = _0x5987fa.animRadius * 2.8;
+          _0xfdf4f4.drawImage(_0x480be4.shieldImage, _0x5987fa.animX - _0x1241cd.x - _0x3b92c8 / 2, _0x5987fa.animY - _0x1241cd.y - _0x3b92c8 / 2, _0x3b92c8, _0x3b92c8);
+        }
+        if (_0x2cc0f3.cellLuminous === "on" && _0x5987fa.isMine) {
+          _0xfdf4f4.shadowBlur = 30;
+          _0xfdf4f4.shadowColor = _0x2ab3a8.getColor(_0x5987fa.colorObject, _0x30af86);
+          _0xfdf4f4.beginPath();
+          _0xfdf4f4.arc(_0x5987fa.animX - _0x1241cd.x, _0x5987fa.animY - _0x1241cd.y, _0x5987fa.animRadius + 5, 0, this.pi2, true);
+          _0xfdf4f4.closePath();
+          _0xfdf4f4.fill();
+          _0xfdf4f4.shadowBlur = 0;
+          _0xfdf4f4.shadowColor = 'transparent';
+        }
+        if (_0x480be4.maouCircle === "on" && _0x5987fa.isMine && _0x480be4._maouReady) {
+          const _0x49e3f8 = _0x5987fa.animRadius * 2.6;
+          _0xfdf4f4.drawImage(_0x480be4.maouCanvas, _0x5987fa.animX - _0x1241cd.x - _0x49e3f8 / 2, _0x5987fa.animY - _0x1241cd.y - _0x49e3f8 / 2, _0x49e3f8, _0x49e3f8);
+        }
+        if (_0x21653d === 1 && (_0x5987fa.isMine && !_0x8efbd4 || !_0x5987fa.isMine && _0x54c029)) {
+          const _0x14859d = _0x34f3bb.nick(_0x5987fa);
+          if (_0x14859d) {
+            const _0x251937 = _0x494dac === 'on' ? _0x5987fa.animRadius : _0x494dac === 'stepped' ? 50 + 75 * (_0x5987fa.animRadius / 75 | 0) : _0x5987fa.radius;
+            const _0x3798c7 = (_0x251937 * _0x1005b0 * 0.3 + 6 / _0xddb6d6.viewport) / _0x14859d.height;
+            const _0x30a436 = _0x14859d.width * _0x3798c7;
+            const _0x592c7c = _0x14859d.height * _0x3798c7;
+            if (_0x30a436 > 0 && _0x592c7c > 0) {
+              _0xfdf4f4.drawImage(_0x14859d, _0x5987fa.animX - _0x1241cd.x - (_0x30a436 >> 1), _0x5987fa.animY - _0x1241cd.y - (_0x592c7c >> 1), _0x30a436, _0x592c7c);
+            }
+          }
+        }
+        if (_0x21653d === 1 && !_0x5987fa.isVirus && (_0x5987fa.isMine && !_0x5c97e3 || !_0x5987fa.isMine && _0x7ae23d)) {
+          const _0x2e6835 = _0x34f3bb.mass(_0x5987fa);
+          if (_0x2e6835) {
+            const _0x1c92d8 = _0x494dac === 'on' ? _0x5987fa.animRadius : _0x494dac === "stepped" ? 50 + 75 * (_0x5987fa.animRadius / 75 | 0) : _0x5987fa.radius;
+            const _0x2be8dc = (_0x1c92d8 * _0x2549e3 * 0.3 + 6 / _0xddb6d6.viewport) / _0x2e6835.height;
+            const _0x348dc3 = _0x2e6835.width * _0x2be8dc;
+            const _0x418aca = _0x2e6835.height * _0x2be8dc;
+            const _0x20bbfa = _0x5987fa.isUnnamed || _0x5987fa.isMine && _0x8efbd4 || !_0x5987fa.isMine && !_0x54c029 ? -(_0x418aca >> 1) : _0x418aca >> 2;
+            if (_0x348dc3 > 0 && _0x418aca > 0) {
+              _0xfdf4f4.drawImage(_0x2e6835, _0x5987fa.animX - _0x1241cd.x - (_0x348dc3 >> 1), _0x5987fa.animY - _0x1241cd.y + _0x20bbfa, _0x348dc3, _0x418aca);
+            }
+          }
+        }
+      }
+    }
+    static ["partyCells"]() {
+      const _ctx = this.ctx;
+      const _viewAlpha = _0x480be4.cellTransparency / 100;
+      for (const [_pid, _cells] of _0x12ac51.partyCells) {
+        const _pp = _0x12ac51.teamPlayers.get(_pid);
+        if (!_pp) continue;
+        const _wid = _pp.worldID;
+        const _hasUrlSkin = this.skinMap.has(_wid);
+        const _hasArbSkin = this.arbSkinMap.has(_wid);
+        const _hasSkin = _hasUrlSkin && _0x2cc0f3.urlSkins === 'on' || _hasArbSkin && _0x2cc0f3.arbSkins === 'on';
+        for (let _ci = 0; _ci < _cells.length; _ci++) {
+          const _c = _cells[_ci];
+          const _pr = _c.r;
+          const _px = _c.x;
+          const _py = _c.y;
+          _ctx.beginPath();
+          _ctx.arc(_px, _py, _pr + 5, 0, this.pi2, true);
+          _ctx.closePath();
+          if (_hasSkin) {
+            const _ps = _hasUrlSkin && _0x2cc0f3.urlSkins === 'on' ? this.getCustomSkin(_pp.worldID, 'skinMap') : this.getCustomSkin(_pp.worldID, 'arbSkinMap');
+            if (_ps) {
+              _ctx.save();
+              _ctx.clip();
+              _ctx.drawImage(_ps, _px - _pr - 5, _py - _pr - 5, 2 * (_pr + 5), 2 * (_pr + 5));
+              _ctx.restore();
+            }
+          } else {
+            _ctx.globalAlpha = _viewAlpha;
+            _ctx.fillStyle = _pp.colorHex || '#555';
+            _ctx.fill();
+            _ctx.globalAlpha = 1;
+          }
+          _ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+          _ctx.lineWidth = 2;
+          _ctx.stroke();
+          if (_ci === 0 && _pp.nick) {
+            const _nf = 'bold ' + Math.max(12, _pr * 0.3) + 'px Ubuntu';
+            _ctx.font = _nf;
+            _ctx.fillStyle = '#fff';
+            _ctx.textAlign = 'center';
+            _ctx.textBaseline = 'bottom';
+            _ctx.fillText(_pp.nick, _px, _py - _pr - 5);
+          }
+          if (_c.m > 0) {
+            const _mf = Math.max(12, _pr * 0.3) + 'px Ubuntu';
+            _ctx.font = _mf;
+            _ctx.fillStyle = '#fff';
+            _ctx.textAlign = 'center';
+            _ctx.textBaseline = 'middle';
+            _ctx.fillText(_c.m, _px, _py);
+          }
+        }
+      }
+    }
+    static ["createSkinMap"]() {
+      const _0foreignCount = (_0x14d4a3.cells?.size || 0) + (_0x14d4a3.cells2?.size || 0);
+      const _0cs = (_0x14d4a3.myCells?.size || 0) + (_0x14d4a3.myCells2?.size || 0) + (_0x12ac51.teamPlayers?.size || 0) + _0foreignCount;
+      if (_0cs === this._lastSkinSize && !(_0xpartyNet && _0xpartyNet._skinMapDirty)) return;
+      this._lastSkinSize = _0cs;
+      if (_0xpartyNet) _0xpartyNet._skinMapDirty = false;
+      this.skinMap.clear();
+      this.arbSkinMap.clear();
+      const _isArb = (u) => u && u.includes("3rb.io/res/skins/free");
+      const _addMyCells = (_cells, _url, _map) => { if (_cells instanceof Map) for (const [_, _c] of _cells) _map.set(_c.worldID, _url); };
+      const _addForeignSkin = (_cells, _selfNicks) => {
+        if (!(_cells instanceof Map)) return;
+        for (const [_, _c] of _cells) {
+          if (!_c || _c.isMine) continue;
+          if (_selfNicks && _c.nick && (_selfNicks.includes(_c.nick) || _selfNicks.some(n => _c.nick.indexOf(n) >= 0))) continue;
+          if (this.skinMap.has(_c.worldID) || this.arbSkinMap.has(_c.worldID)) continue;
+          let _skinStr = _c.skin;
+          if (!_skinStr || _skinStr.includes("XXXXXXX")) {
+            if (_c.nick && this.hasSkinInNick(_c.nick)) {
+              _skinStr = this._decSkin(_c.nick);
+              if (!_skinStr || _skinStr.includes("XXXXXXX")) _skinStr = null;
+            }
+          }
+          if (!_skinStr) continue;
+          const _isFree = _skinStr.startsWith('free/') || _skinStr.includes("3rb.io/res/skins/free");
+          const _url = _isFree ? "https://3rb.io/res/skins/free/" + _skinStr.replace(/^free\//, '').replace(/\.png$/, '') + ".png" : this.code2Url(_skinStr);
+          (_isFree ? this.arbSkinMap : this.skinMap).set(_c.worldID, _url);
+        }
+      };
+      const _0mySkin = _0x90a1a7.skin;
+      if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+        _addMyCells(_0x14d4a3.myCells, this.code2Url(_0mySkin), this.skinMap);
+      }
+      if (_0x90a1a7.arbSkin) {
+        const _aurl = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin.replace(/free\/|.png/g, '') + ".png";
+        _addMyCells(_0x14d4a3.myCells, _aurl, this.arbSkinMap);
+      }
+      if (_0x90a1a7.arbSkin2) {
+        const _aurl2 = "https://3rb.io/res/skins/free/" + _0x90a1a7.arbSkin2.replace(/free\/|.png/g, '') + ".png";
+        _addMyCells(_0x14d4a3.myCells2, _aurl2, this.arbSkinMap);
+      }
+      if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) {
+        _addMyCells(_0x14d4a3.myCells2, this.code2Url(_0x90a1a7.skin2), this.skinMap);
+      } else if (_0mySkin && !_0mySkin.includes("XXXXXXX") && !_0mySkin.startsWith('free/')) {
+        _addMyCells(_0x14d4a3.myCells2, this.code2Url(_0mySkin), this.skinMap);
+      }
+      for (const _0x5d3988 of _0x12ac51.teamPlayers.values()) if (_0x5d3988.isAlive && _0x5d3988.skin && !_0x5d3988.skin.includes("XXXXXXX")) {
+        const _isFreeSkin = _0x5d3988.skin.startsWith('free/');
+        const _tUrl = _isFreeSkin ? "https://3rb.io/res/skins/free/" + _0x5d3988.skin.replace('free/', '') + ".png" : this.code2Url(_0x5d3988.skin);
+        const _tMap = _isFreeSkin || _isArb(_tUrl) ? this.arbSkinMap : this.skinMap;
+        _tMap.set(_0x5d3988.worldID, _tUrl);
+        const _tpNick = _0x5d3988.nick;
+        if (_0x14d4a3.cells instanceof Map) for (const [_, _c] of _0x14d4a3.cells) if (_c && !_c.isMine && _c.nick && _c.nick.indexOf(_tpNick) >= 0) _tMap.set(_c.worldID, _tUrl);
+        if (_0x14d4a3.cells2 instanceof Map) for (const [_, _c2] of _0x14d4a3.cells2) if (_c2 && _c2.nick && _c2.nick.indexOf(_tpNick) >= 0) _tMap.set(_c2.worldID, _tUrl);
+      }
+      const _selfNicks = [_0x90a1a7.nick, _0x90a1a7.nick2].filter(Boolean);
+      if (_0xpartyNet && _0xpartyNet._sharedSkins) {
+        for (const _sn in _0xpartyNet._sharedSkins) {
+          if (!_sn || _selfNicks.includes(_sn)) continue;
+          const _su = _0xpartyNet._sharedSkins[_sn];
+          if (!_su || _su.includes("XXXXXXX")) continue;
+          const _sfree = _su.startsWith('free/') || _su.includes("3rb.io/res/skins/free");
+          const _surl = _sfree ? "https://3rb.io/res/skins/free/" + _su.replace(/^free\//, '').replace(/\.png$/, '') + ".png" : this.code2Url(_su);
+          const _smap = _sfree || _isArb(_surl) ? this.arbSkinMap : this.skinMap;
+          for (const [_, _c] of _0x14d4a3.cells) {
+            if (_c && !_c.isMine && _c.nick && (_c.nick === _sn || _c.nick.indexOf(_sn) >= 0)) {
+              if (!_smap.has(_c.worldID) && !(_smap === this.arbSkinMap ? this.skinMap : this.arbSkinMap).has(_c.worldID)) {
+                _smap.set(_c.worldID, _surl);
+              }
+            }
+          }
+          for (const [_, _c2] of _0x14d4a3.cells2) {
+            if (_c2 && _c2.nick && (_c2.nick === _sn || _c2.nick.indexOf(_sn) >= 0)) {
+              if (!_smap.has(_c2.worldID) && !(_smap === this.arbSkinMap ? this.skinMap : this.arbSkinMap).has(_c2.worldID)) {
+                _smap.set(_c2.worldID, _surl);
+              }
+            }
+          }
+        }
+      }
+      _addForeignSkin(_0x14d4a3.cells, _selfNicks);
+      _addForeignSkin(_0x14d4a3.cells2, _selfNicks);
+    }
+    static ["createRGBset"]() {
+      this.rgbTeammates.clear();
+      if (_0x90a1a7.isRGB) {
+        this.rgbTeammates.add(_0x90a1a7.worldID);
+      }
+      for (const _0x33940b of _0x12ac51.teamPlayers.values()) if (_0x33940b.isAlive && _0x33940b.isRGB) {
+        this.rgbTeammates.add(_0x33940b.worldID);
+      }
+    }
+    static ["getCustomSkin"](_0xb1bf13, _0mapOnly) {
+      const _0x35f9db = _0mapOnly === 'arbSkinMap' ? this.arbSkinMap.get(_0xb1bf13) : _0mapOnly === 'skinMap' ? this.skinMap.get(_0xb1bf13) : this.skinMap.get(_0xb1bf13) || this.arbSkinMap.get(_0xb1bf13);
+      if (!_0x35f9db) {
+        return false;
+      }
+      const _0x4bd4ce = this.downloadedSkins.get(_0x35f9db);
+      return undefined === _0x4bd4ce ? (this.downloadSkin(_0x35f9db), false) : _0x4bd4ce;
+    }
+    static ["get3rbSkin"](_0x1d8246) {
+      const _0x3bf8cf = this.downloadedSkins.get(_0x1d8246);
+      return undefined === _0x3bf8cf ? (this.download3rbSkin(_0x1d8246), false) : _0x3bf8cf;
+    }
+    static ["download3rbSkin"](_0x26f184) {
+      this.downloadedSkins.set(_0x26f184, false);
+      const _0x323825 = new Image();
+      _0x323825.onload = () => {
+        const _0x5753ba = _0x24f9ab.createElement("canvas");
+        const _0x552ac8 = _0x5753ba.getContext('2d');
+        _0x5753ba.width = 512;
+        _0x5753ba.height = 512;
+        _0x552ac8.beginPath();
+        _0x552ac8.arc(256, 256, 256, 0, this.pi2, true);
+        _0x552ac8.closePath();
+        _0x552ac8.clip();
+        _0x552ac8.drawImage(_0x323825, 0, 0, 512, 512);
+        _0x323825.onload = null;
+        _0x323825.src = _0x5753ba.toDataURL();
+        this.downloadedSkins.set(_0x26f184, _0x323825);
+      };
+      _0x323825.src = "https://3rb.io/res/skins/free/" + _0x26f184.replace(/free\/|.png/g, '') + ".png";
+    }
+    static ["downloadSkin"](_0x31eb71) {
+      this.downloadedSkins.set(_0x31eb71, false);
+      const _0x252d42 = new Image();
+      _0x252d42.onload = () => {
+        try {
+          const _0x4282fb = _0x24f9ab.createElement("canvas");
+          const _0x56a6bc = _0x4282fb.getContext('2d');
+          _0x4282fb.width = 512;
+          _0x4282fb.height = 512;
+          _0x56a6bc.beginPath();
+          _0x56a6bc.arc(256, 256, 256, 0, this.pi2, true);
+          _0x56a6bc.closePath();
+          _0x56a6bc.clip();
+          _0x56a6bc.drawImage(_0x252d42, 0, 0, 512, 512);
+          this.downloadedSkins.set(_0x31eb71, _0x252d42);
+          _0x252d42.src = _0x4282fb.toDataURL();
+          _0x252d42.onload = null;
+        } catch(_e) {
+          this.downloadedSkins.set(_0x31eb71, _0x252d42);
+        }
+      };
+      _0x252d42.onerror = () => { this.downloadedSkins.set(_0x31eb71, false); };
+      _0x252d42.src = _0x31eb71;
+    }
+    static ["getImgurCode"](_0x96fe5e) {
+      const _0x5e0df5 = _0x96fe5e.match(/https?:\/\/.+\.(png|jpg|gif|webp)/i);
+      return null === _0x5e0df5 ? "XXXXXXX" : _0x5e0df5[0];
+    }
+    static ["getRaindowFlag"](_0x4a64ed) {
+      return null !== _0x4a64ed.match(/#hue\s??=\s??auto\s??,\s??blend\s??=\s??auto/i);
+    }
+    static ["code2Url"](_0x4e8aaa) {
+      return _0x4e8aaa.startsWith("http") ? _0x4e8aaa : "https://i.imgur.com/" + _0x4e8aaa + '.png';
+    }
+    static ["_SKIN_CHARS"]() { return '\u200B\u200C\u200D\u2060\u2061\u2062\u2063\u2064\u206A\u206B\u206C\u206D\u206E\u206F\uFEFF\u180E'; }
+    static ["_SKIN_PREFIX"]() { return '\u200B\u200C\u200D'; }
+    static ["_encSkin"](_0url) {
+      const _c = this._SKIN_CHARS();
+      let _r = this._SKIN_PREFIX();
+      for (let _i = 0; _i < Math.min(_0url.length, 64); _i++) {
+        const _b = _0url.charCodeAt(_i);
+        _r += _c[(_b >> 4) & 15] + _c[_b & 15];
+      }
+      return _r;
+    }
+    static ["_decSkin"](_0str) {
+      const _p = this._SKIN_PREFIX();
+      const _c = this._SKIN_CHARS();
+      const _idx = _0str.indexOf(_p);
+      if (_idx < 0) return null;
+      const _enc = _0str.slice(_idx + _p.length);
+      if (_enc.length < 2) return null;
+      const _bytes = [];
+      for (let _i = 0; _i + 1 < _enc.length; _i += 2) {
+        const _hi = _c.indexOf(_enc[_i]);
+        const _lo = _c.indexOf(_enc[_i + 1]);
+        if (_hi < 0 || _lo < 0) break;
+        _bytes.push((_hi << 4) | _lo);
+      }
+      return new TextDecoder().decode(new Uint8Array(_bytes));
+    }
+    static ["hasSkinInNick"](_0nick) {
+      return _0nick && _0nick.indexOf(this._SKIN_PREFIX()) >= 0;
+    }
+    static ["commands"]() {
+      const _0x5b9c43 = this.ctx;
+      const _0x41c288 = 'off' === _0x2cc0f3.commander;
+      for (const _0x52ff22 of this.commanderPoints.values()) {
+        const _0x537d77 = _0x52ff22.x;
+        const _0x130956 = _0x52ff22.y;
+        const _0x266134 = _0xb45f1b.time - _0x52ff22.time;
+        if (_0x266134 > 2000) {
+          this.commanderPoints['delete'](_0x52ff22);
+        } else {
+          if (!(_0x41c288 || 50 > _0x266134)) {
+            const _0xa9830a = 1000 * _0x266134 / 2000;
+            const _0x3bc5a1 = _0xa9830a > 333 ? (1000 - _0xa9830a) / 667 : 1;
+            const _0x5c9d41 = 200 * _0xa9830a / 1000 * 8;
+            const _0x1d25a8 = _0x266134 / 1000 * (_0x480be4.globalRotationSpeed || 5);
+            _0x5b9c43.save();
+            _0x5b9c43.globalAlpha = _0x3bc5a1;
+            _0x5b9c43.translate(_0x537d77, _0x130956);
+            if (this._ceReady) {
+              _0x5b9c43.save();
+              _0x5b9c43.rotate(_0x1d25a8 * 3);
+              _0x5b9c43.drawImage(this._ceImage, -_0x5c9d41, -_0x5c9d41, _0x5c9d41 * 2, _0x5c9d41 * 2);
+              _0x5b9c43.restore();
+            } else if (_0x480be4._maouReady) {
+              _0x5b9c43.save();
+              _0x5b9c43.rotate(_0x1d25a8 * 3);
+              _0x5b9c43.drawImage(_0x480be4.maouOuter, -_0x5c9d41, -_0x5c9d41, _0x5c9d41 * 2, _0x5c9d41 * 2);
+              _0x5b9c43.restore();
+              _0x5b9c43.save();
+              _0x5b9c43.rotate(-_0x1d25a8 * 2);
+              _0x5b9c43.drawImage(_0x480be4.maouInner, -_0x5c9d41, -_0x5c9d41, _0x5c9d41 * 2, _0x5c9d41 * 2);
+              _0x5b9c43.restore();
+            } else {
+              const _0x47c30e = 1000 * _0x266134 / 2000;
+              const _0x490014 = _0x5b9c43.createRadialGradient(0, 0, 0.7 * _0x47c30e, 0, 0, _0x47c30e);
+              _0x490014.addColorStop(0, "rgba(0,0,0,0)");
+              _0x490014.addColorStop(1, _0x480be4.commanderColor);
+              _0x5b9c43.fillStyle = _0x490014;
+              _0x5b9c43.beginPath();
+              _0x5b9c43.arc(0, 0, _0x47c30e, 0, this.pi2);
+              _0x5b9c43.closePath();
+              _0x5b9c43.fill();
+              _0x5b9c43.strokeStyle = "#ffffff";
+              _0x5b9c43.lineWidth = 5;
+              _0x5b9c43.stroke();
+            }
+            _0x5b9c43.restore();
+          }
+        }
+      }
+    }
+    static ["mouseTracker"]() {
+      if ("off" !== _0x2cc0f3.cursorLine) {
+        const _0x33c20a = this.ctx;
+        _0x33c20a.strokeStyle = _0x480be4.cursorLineColor;
+        _0x33c20a.lineWidth = 4;
+        _0x33c20a.lineCap = "round";
+        _0x33c20a.lineJoin = "round";
+        const _0xe7932f = (_0x128142.x - this.canvas.width / 2) / _0xddb6d6.viewport + _0xddb6d6.x;
+        const _0x162ae5 = (_0x128142.y - this.canvas.height / 2) / _0xddb6d6.viewport + _0xddb6d6.y;
+        _0x33c20a.beginPath();
+        const _0x480493 = {
+          x: 0x0,
+          y: 0x0
+        };
+        const _0x50f43c = 1 === _0x90a1a7.typeID ? _0x14d4a3.myCells : _0x14d4a3.myCells2;
+        const _0x522f5e = 1 === _0x90a1a7.typeID ? _0x480493 : _0x996564.position;
+        for (const _0x545b71 of _0x50f43c.values()) {
+          _0x33c20a.moveTo(_0x545b71.animX - _0x522f5e.x, _0x545b71.animY - _0x522f5e.y);
+          _0x33c20a.lineTo(_0xe7932f, _0x162ae5);
+        }
+        _0x33c20a.closePath();
+        _0x33c20a.stroke();
+      }
+    }
+    static async ["getKnownSkins"]() {
+      var _0x2fed90 = await fetch("https://3rb.io/php/Skins.php?type=free");
+      var _0x525e1b = await _0x2fed90.json();
+      var _0x406cf8 = Date.now();
+      for (let _0x303c1f = 0; _0x303c1f < _0x525e1b.length; _0x303c1f++) {
+        _0x386cbc.knownSkins[_0x525e1b[_0x303c1f]] = _0x406cf8;
+      }
+      for (let _0x4f2d13 in _0x386cbc.knownSkins) if (_0x386cbc.knownSkins[_0x4f2d13] != _0x406cf8) {
+        delete _0x386cbc.knownSkins[_0x4f2d13];
+      }
+    }
+    static ["cacheIndicator"]() {
+      const _0x1339ea = _0x24f9ab.createElement("canvas");
+      _0x1339ea.width = 150;
+      _0x1339ea.height = 150;
+      const _0x435b08 = _0x1339ea.getContext('2d');
+      _0x435b08.textAlign = "center";
+      _0x435b08.textBaseline = "middle";
+      _0x435b08.font = "600 150px FontAwesome";
+      _0x435b08.fillStyle = "rgba(255,255,255,1)";
+      _0x435b08.fillText("ï¸", 75, 75);
+      return _0x1339ea;
+    }
+  }
+  class _0xb45f1b {
+    static ["init"]() {
+      this.time = Date.now();
+      _0x18a8d1.init();
+      _0x19d5af.init();
+      _0x31c9b4.init();
+      _0x14d4a3.init();
+      _0x90a1a7.init();
+      _0xddb6d6.init();
+      _0x12ac51.init();
+      _0x386cbc.init();
+      this.loop = new _0x4660a8(() => {
+        this.run();
+      });
+      setInterval(() => {
+        _0x128142.send();
+      }, 40);
+    }
+    static ['run']() {
+      _0xb45f1b.refreshTime();
+      _0x14d4a3.update();
+      _0x90a1a7.update();
+      _0xddb6d6.update();
+      _0x386cbc.run();
+      _0x5cda9b.run();
+      _0x2a0c5c.update();
+      _0x9547b4.update();
+      _0x3a43e7.update();
+    }
+    static ["browserVersion"]() {
+      const _0x79e4dd = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+      return !!_0x79e4dd && parseInt(_0x79e4dd[2], 10);
+    }
+    static ["refreshTime"]() {
+      this.time = Date.now();
+    }
+  }
+  _0x1c478d.onload = () => {
+    var _0xlsCSS = document.createElement('style');
+    _0xlsCSS.textContent = '#loading-screen{z-index:200;position:fixed;left:0;top:0;right:0;bottom:0;background-color:#1a1a2e;opacity:1;background-image:url(https://i.imgur.com/nmBQBiv.jpeg);background-position:bottom;background-size:cover;background-repeat:no-repeat;transition:opacity 1s}#loading-screen .maou-circle-container{width:512px;height:512px;position:fixed;top:calc(50% - 256px);left:calc(50% - 256px);transform:scale(1);transition:all .75s}#loading-screen .maou-circle-container:hover{transform:scale(1.1)}#loading-screen .maou-circle-container .maou-circle{width:512px;height:512px;position:absolute}#loading-screen .maou-circle-container .maou-circle.p1{background:url(https://i.imgur.com/wfSDaIH.png);animation:spinRight 32s linear infinite,fadeIn 6s}#loading-screen .maou-circle-container .maou-circle.p2{background:url(https://i.imgur.com/blWRiUv.png);animation:spinLeft 20s linear infinite,fadeIn 6s}#loading-screen .maou-circle-container .maou-circle.p3{background:url(https://i.imgur.com/GRjA1gJ.png);animation:spinRight 16s linear infinite,fadeIn 6s}#loading-screen .message{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);font-family:raleway;font-size:25px;color:#fff;text-align:center;animation:fadeIn 1s;opacity:1;transition:opacity 1s}@keyframes spinRight{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes spinLeft{0%{transform:rotate(0)}100%{transform:rotate(-360deg)}}@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}';
+    document.head.appendChild(_0xlsCSS);
+    _0x14f7b2("#loading-screen").html('<div class="maou-circle-container"><div class="maou-circle p1"></div><div class="maou-circle p2"></div><div class="maou-circle p3"></div></div><div class="message">Loading...</div>');
+    if (49 > _0xb45f1b.browserVersion()) {
+      _0x14f7b2("#loading-screen .message").text(" Only Chrome version 49 or higher are supported.");
+    } else {
+      _0x59f59a.init();
+      _0xb45f1b.init();
+      (class {
+    static ["init"]() {
+      this.apiUrl = '';
+      this.codeChecked = false;
+      this.salt = _0x19d5af.get("profiles", "salt") || '';
+      this.Code = _0x19d5af.get("profiles", "MXCode") || '';
+      _0x14f7b2("#private-code").val(this.Code);
+      this.addEvents();
+      this.checkCode();
+    }
+    static ['addCode']() {
+      this.salt = this.generateCode(5);
+      _0x19d5af.set("profiles", "salt", this.salt);
+      this.MXCode = this.generateCode(10);
+      _0x19d5af.set("profiles", 'Code', this.Code);
+      this.sendAddCode();
+    }
+    static ["addEvents"]() {
+      _0x14f7b2("#user-code-check").click(() => {
+        _0x14f7b2("#userCode").fadeOut(250);
+        this.checkCode();
+      });
+    }
+    static ["sendAddCode"]() {}
+    static ["checkCode"]() {}
+    static ["generateCode"](_0x385be4) {
+      var _0x2121bd = '';
+      for (var _0xde3000 = 0; _0xde3000 < _0x385be4; _0xde3000++) {
+        var _0x2bac44 = Math.floor(62 * Math.random());
+        var _0x461243 = _0x2bac44 += _0x2bac44 > 9 ? _0x2bac44 < 36 ? 55 : 61 : 48;
+        _0x2121bd += String.fromCharCode(_0x461243);
+      }
+      return _0x2121bd;
+    }
+    static ["getApiUrl"]() {
+      return window.atob(window.atob(window.atob(this.apiUrl)));
+    }
+    }).init();
+    }
+  };
+  const _0xpartyNet = {
+    _ws: null,
+    _ws2: null,
+    _inParty: false,
+    _partyCode: '',
+    _members: {},
+    _pendingSkins: {},
+    _sharedSkins: {},
+    _skinMapDirty: false,
+    _savedSkins: new Map(),
+    _myId: null,
+    _processing57: false,
+
+    _autoJoinTimer: null,
+
+    _startAutoJoin(code) {
+      if (this._autoJoinTimer) return;
+      try { localStorage.setItem('3rb_party_code', code); } catch(e) {}
+      this._autoJoinTimer = setInterval(() => {
+        if (this._inParty) { clearInterval(this._autoJoinTimer); this._autoJoinTimer = null; return; }
+        if (_0x18a8d1 && (_0x18a8d1.connected || _0x18a8d1.connected2)) {
+          clearInterval(this._autoJoinTimer); this._autoJoinTimer = null;
+          this.joinParty(code);
+        }
+      }, 1500);
+      setTimeout(() => { if (this._autoJoinTimer) { clearInterval(this._autoJoinTimer); this._autoJoinTimer = null; } }, 30000);
+    },
+
+    init() {
+      this._t = document.getElementById('party-token');
+      this._c = document.getElementById('create-party');
+      this._j = document.getElementById('join-party');
+      this._l = document.getElementById('party-leave');
+      this._d = document.getElementById('party-code-display');
+
+      if (this._c) this._c.addEventListener('click', () => this.createParty());
+      if (this._j) this._j.addEventListener('click', () => this.joinParty((this._t?.value || '').trim()));
+      if (this._t) this._t.addEventListener('keydown', e => e.key === 'Enter' && this.joinParty((this._t?.value || '').trim()));
+      if (this._l) this._l.addEventListener('click', () => this.leaveParty());
+
+      try {
+        const saved = localStorage.getItem('3rb_party_code');
+        if (saved && !this._inParty) this._startAutoJoin(saved);
+      } catch(e) {}
+    },
+
+    _updateUI() {
+      if (this._c) this._c.style.display = this._inParty ? 'none' : '';
+      if (this._j) this._j.style.display = this._inParty ? 'none' : '';
+      if (this._t) this._t.style.display = this._inParty ? 'none' : '';
+      if (this._l) this._l.style.display = this._inParty ? '' : 'none';
+      if (this._d) {
+        this._d.style.display = this._inParty && this._partyCode ? '' : 'none';
+        this._d.textContent = this._inParty ? 'Party: ' + this._partyCode : '';
+      }
+    },
+
+    hookWs(ws) {
+      if (!this._ws) {
+        this._ws = ws;
+      } else {
+        this._ws2 = ws;
+      }
+      const orig = ws.onmessage;
+      ws.onmessage = (e) => {
+        this._interceptMessage(e) || (orig && orig.call(ws, e));
+      };
+    },
+
+    _send(b) {
+      const _ws = _0x90a1a7.typeID === 2 ? (_0x18a8d1.ws2) : this._ws;
+      if (!_ws || _ws.readyState !== WebSocket.OPEN) return false;
+      _ws.send(new Uint8Array(b).buffer);
+      return true;
+    },
+
+    _broadcastCurrentSkins() {
+      if (!this._inParty) return;
+      try {
+        const s1 = _0x90a1a7.skin;
+        if (s1 && !s1.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick] = s1;
+      } catch(e) {}
+      try {
+        const s2 = _0x90a1a7.skin2;
+        if (s2 && !s2.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick2] = s2;
+      } catch(e) {}
+    },
+
+    _sendSkinUpdate(skinUrl, botIdx) {
+      if (!this._inParty || !skinUrl || skinUrl.includes("XXXXXXX")) return;
+      this._sharedSkins[botIdx === 2 ? _0x90a1a7.nick2 : _0x90a1a7.nick] = skinUrl;
+      this._skinMapDirty = true;
+    },
+
+    createParty() {
+      this._inParty = false;
+      this._partyCode = '';
+      if (!this._send([0x55, 0x00])) {
+        _0x40f48a.alert("Party", "Failed - no connection");
+        return;
+      }
+      _0x40f48a.normal("Party", "Creating party...");
+    },
+
+    joinParty(code) {
+      if (!code) return;
+      code = code.replace(/https?:\/\/(www\.)?3rb\.io\/?/i, '').replace(/^#+/, '#');
+      const enc = new TextEncoder();
+      const raw = enc.encode(code);
+      const buf = new Uint8Array(2 + raw.length);
+      buf[0] = 0x55; buf[1] = 0x01;
+      buf.set(raw, 2);
+      this._send(Array.from(buf));
+    },
+
+    leaveParty() {
+      this._send([0x55, 0x02]);
+      this._inParty = false;
+      this._partyCode = '';
+      this._members = {};
+      this._leaveTime = Date.now();
+      this._cleanTeamPlayers();
+      this._updateUI();
+      try { localStorage.removeItem('3rb_party_code'); } catch(e) {}
+      _0x40f48a.normal("Party", "Left party");
+    },
+
+    _cleanTeamPlayers() {
+      for (const _k of _0x12ac51.teamPlayers.keys()) {
+        if (typeof _k === 'string') _0x12ac51.teamPlayers["delete"](_k);
+      }
+      this._savedSkins.clear();
+      this._pendingSkins = {};
+      this._sharedSkins = {};
+      this._skinMapDirty = true;
+      _0x12ac51.partyCells.clear();
+    },
+
+    _interceptMessage(e) {
+      const d = e.data;
+      if (!(d instanceof ArrayBuffer) || d.byteLength < 2) return false;
+      const v = new DataView(d);
+      const op = v.getUint8(0);
+
+      if (op === 0x55) {
+        if (v.byteLength > 2 && v.getUint8(1) === 0x03) {
+          if (this._inParty) {
+            let off = 2;
+            const _nlen = [];
+            while (off < v.byteLength && v.getUint8(off) !== 0) { _nlen.push(v.getUint8(off)); off++; }
+            off++;
+            const _nnick = new TextDecoder().decode(new Uint8Array(_nlen));
+            const _slen = [];
+            while (off < v.byteLength && v.getUint8(off) !== 0) { _slen.push(v.getUint8(off)); off++; }
+            const _sskin = new TextDecoder().decode(new Uint8Array(_slen));
+            if (_nnick && _sskin && !_sskin.includes("XXXXXXX")) this._sharedSkins[_nnick] = _sskin;
+            return true;
+          }
+          return true;
+        }
+        if (this._inParty) return true;
+        if (this._leaveTime && Date.now() - this._leaveTime < 3000) return true;
+        let p = 1;
+        const c = [];
+        while (p < v.byteLength && v.getUint8(p) !== 0) { c.push(String.fromCharCode(v.getUint8(p))); p++; }
+        const code = c.join('');
+        if (!code || code === 'error') { this.leaveParty(); return false; }
+        this._inParty = true;
+        this._partyCode = code;
+        this._updateUI();
+        _0x40f48a.normal("Party", "Party code: " + code);
+        try { localStorage.setItem('3rb_party_code', code); } catch(e) {}
+        try { if (_0x90a1a7.skin && !_0x90a1a7.skin.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick] = _0x90a1a7.skin; } catch(e) {}
+        try { if (_0x90a1a7.skin2 && !_0x90a1a7.skin2.includes("XXXXXXX")) this._sharedSkins[_0x90a1a7.nick2] = _0x90a1a7.skin2; } catch(e) {}
+        try {
+          const _enc2 = new TextEncoder();
+          const _raw2 = _enc2.encode(code);
+          const _buf2 = new Uint8Array(2 + _raw2.length);
+          _buf2[0] = 0x55; _buf2[1] = 0x01;
+          _buf2.set(_raw2, 2);
+          if (_0x18a8d1.ws2 && _0x18a8d1.ws2.readyState === WebSocket.OPEN) {
+            _0x18a8d1.ws2.send(new Uint8Array(_buf2).buffer);
+          }
+        } catch(e) {}
+        return true;
+      }
+
+      if (op === 0x57) {
+        if (!this._inParty) return true;
+        if (this._processing57) return true;
+        this._processing57 = true;
+        try {
+        let off = 1;
+        const cnt = v.getUint16(off, true); off += 2;
+        const nm = {};
+        const newPartyCells = new Map();
+        for (let i = 0; i < cnt; i++) {
+          if (off + 4 > v.byteLength) break;
+          const id = v.getUint32(off, true); off += 4;
+          const nb = [];
+          while (off < v.byteLength && v.getUint8(off) !== 0) { nb.push(v.getUint8(off)); off++; }
+          off++;
+          const name = new TextDecoder().decode(new Uint8Array(nb));
+          if (off + 3 > v.byteLength) break;
+          const r = v.getUint8(off++);
+          const g = v.getUint8(off++);
+          const b = v.getUint8(off++);
+          const col = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+          if (off + 12 > v.byteLength) break;
+          const sz = v.getInt32(off, true); off += 4;
+          const px = v.getInt32(off, true); off += 4;
+          const py = v.getInt32(off, true); off += 4;
+          nm[id] = { id, name, col, px, py, sz };
+          const _r = Math.max(10, Math.sqrt(Math.abs(sz)) * 10);
+          newPartyCells.set(id.toString(), [{ x: px, y: py, r: _r }]);
+        }
+        this._members = nm;
+        _0x12ac51.partyCells = newPartyCells;
+        this._myId = null;
+        for (const _mk of Object.keys(nm)) {
+          const _mv = nm[_mk];
+          if (_mv.name === _0x90a1a7.nick) {
+            this._myId = _mv.id;
+            break;
+          }
+        }
+        if (this._myId !== null) {
+          _0x12ac51.teamPlayers.delete(String(this._myId));
+        }
+        for (const mid in nm) {
+          if (mid == this._myId) continue;
+          const nmd = nm[mid];
+          let p = _0x12ac51.teamPlayers.get(mid);
+          if (!p) {
+            p = new _0xb33099(mid);
+            p.nick = nmd.name;
+            p.colorHex = nmd.col;
+            p.team = 1;
+            p.isAlive = 1;
+            _0x12ac51.teamPlayers.set(mid, p);
+          }
+           p.isAlive = 1;
+           p.mass = nmd.sz;
+           p.x = nmd.px;
+           p.y = nmd.py;
+           if (Math.abs(p.animX - nmd.px) > 2000 || Math.abs(p.animY - nmd.py) > 2000) {
+             p.animX = nmd.px;
+             p.animY = nmd.py;
+           }
+         }
+         const _botNicks = [_0x90a1a7.nick, _0x90a1a7.nick2].filter(Boolean);
+         for (const _k of _0x12ac51.teamPlayers.keys()) {
+           if (typeof _k === 'string' && !nm[_k]) {
+             const _tp = _0x12ac51.teamPlayers.get(_k);
+             if (_tp && _botNicks.includes(_tp.nick)) continue;
+             if (_tp && _tp.skin) this._savedSkins.set(_k, _tp.skin);
+             _0x12ac51.teamPlayers["delete"](_k);
+           }
+         }
+        for (const _mid of _0x12ac51.teamPlayers.keys()) {
+          if (this._savedSkins.has(_mid)) {
+            const _tp = _0x12ac51.teamPlayers.get(_mid);
+            if (_tp && !_tp.skin) {
+              _tp.skin = this._savedSkins.get(_mid);
+            }
+            this._savedSkins.delete(_mid);
+          }
+        }
+        for (const _sid of Object.keys(this._pendingSkins)) {
+          const tp = _0x12ac51.teamPlayers.get(_sid);
+          if (tp) {
+            tp.skin = this._pendingSkins[_sid];
+            delete this._pendingSkins[_sid];
+          }
+        }
+        for (const _tpk of _0x12ac51.teamPlayers.keys()) {
+          const _tp = _0x12ac51.teamPlayers.get(_tpk);
+          if (_tp && !_tp.skin) {
+            let _shared = this._sharedSkins[_tp.nick];
+            if (!_shared) {
+              for (const _sn of Object.keys(this._sharedSkins)) {
+                if (_sn.toLowerCase() === _tp.nick.toLowerCase()) {
+                  _shared = this._sharedSkins[_sn];
+                  break;
+                }
+              }
+            }
+            if (_shared && !_shared.includes("XXXXXXX")) {
+              _tp.skin = _shared;
+              this._skinMapDirty = true;
+            }
+          }
+        }
+        this._broadcastCurrentSkins();
+        return true;
+        } finally { this._processing57 = false; }
+      }
+
+      if (op === 0x58) {
+        let off = 1;
+        const removeId = v.getUint32(off, true);
+        _0x12ac51.teamPlayers.delete(String(removeId));
+
+        return true;
+      }
+
+      if (op === 0x59) {
+        this._inParty = false;
+        this._members = {};
+        this._partyCode = '';
+        this._cleanTeamPlayers();
+        this._updateUI();
+        _0x40f48a.normal("Party", "Party disbanded");
+        return true;
+      }
+
+      return false;
+    },
+
+    _sendSkinPacket(skinUrl, nick) {
+    }
+  };
+  window.partyCode = function(code) {
+    if (_0xpartyNet && !_0xpartyNet._inParty && code) _0xpartyNet.joinParty(code);
+  };
+  window.partyDebug = function() {
+    if (!_0xpartyNet) return 'partyNet not initialized';
+    return {
+      inParty: _0xpartyNet._inParty,
+      sharedSkins: Object.assign({}, _0xpartyNet._sharedSkins),
+      members: _0xpartyNet._members ? _0xpartyNet._members.map(function(m) { return m.nick; }) : [],
+      leaveTime: _0xpartyNet._leaveTime
+    };
+  };
+  window.removeChatHistory = function(code) {
+    _0x14f7b2("#chatroom .chatroom-row").each(function() {
+      if (_0x14f7b2(this).text().indexOf(code) >= 0) _0x14f7b2(this).remove();
+    });
+    if (_0xpartyNet) _0xpartyNet._startAutoJoin(code);
+  };
+  _0xpartyNet.init();
+}(window, $, document);
