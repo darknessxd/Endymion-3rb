@@ -4691,7 +4691,7 @@
         }
         if (window.turnstile) {
           window.turnstile.render(".cf-turnstile", {
-            'sitekey': (window._3rbSitekey || "0x4AAAAAABwAtcdv_5-aS9cf"),
+            'sitekey': (window._3rbSitekey || "0x4AAAAAADre-KxtZJu7P6nr"),
             'callback': (_0x4a58da, _0x51a9e5) => {
               if (!_0x51a9e5 && !_0x4a58da) {
                 return _0x40f48a.warn('Multibox', "Unexpected response from turnstile API.");
